@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bottom_dialog"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bottom_dialog">
+
+            <ImageView
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="16dp"
+                android:id="@+id/vc_bs_iv_holder"
+                android:layout_width="100dp"
+                android:layout_centerHorizontal="true"
+                android:layout_height="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/holder"/>
+
+
+            <TextView
+                android:id="@+id/vc_bs_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/vc_bs_iv_holder"
+                android:layout_centerHorizontal="true"
+                android:text="GIẢM 10K ĐƠN 50K"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+
+            <RelativeLayout
+                android:layout_below="@id/vc_bs_tv_title"
+                android:id="@+id/vc_bs_rl_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_grey">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="@string/code"/>
+
+                <TextView
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:id="@+id/vc_bs_tv_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="GIAM10K"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="150dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/vc_bs_rl_date"
+                android:layout_below="@id/vc_bs_rl_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/whiteTextColor">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="@string/voucher_date"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/vc_bs_tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HSD: 01/01/2022"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginStart="150dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/vc_bs_rl_detail1"
+                android:layout_below="@id/vc_bs_rl_date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/light_grey">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:text="@string/voucher_detail"
+                    android:textColor="@color/black"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/vc_bs_rl_detail1"
+                android:id="@+id/vc_bs_rl_detail2">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:inputType="textMultiLine"
+                    android:textColor="@color/black"
+                    android:text="•	Giảm 10k cho đơn từ 50k \n\n• Không áp dụng cho một số nhà bán"
+                    tools:ignore="TextViewEdits" />
+            </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/light_grey"
+            android:layout_below="@+id/vc_bs_rl_detail2">
+
+        </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

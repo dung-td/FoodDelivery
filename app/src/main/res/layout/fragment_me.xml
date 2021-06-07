@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <FrameLayout
+        android:id="@+id/me_fl_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/img_user"
+                android:layout_width="130dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/male_user_96px"
+                android:scaleType="fitCenter"/>
+
+            <TextView
+                android:id="@+id/me_fl_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:text="Mohamed Salah"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="7dp"
+                android:background="@color/black"/>
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/me_fl_usersetting"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/me_fl_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:id="@+id/me_ln_info"
+                android:background="@color/white">
+
+                <ImageButton
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/contact"/>
+
+                <TextView
+                    android:layout_weight="4"
+                    android:id="@+id/me_tv_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/user_info"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
+
+                <ImageButton
+                    android:id="@+id/me_ib_info"
+                    android:layout_width="35dp"
+                    android:layout_gravity="center"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/ic_baseline_chevron_right_24" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/me_dotted1"
+                android:layout_below="@id/me_ln_info"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/dotted"/>
+
+            <LinearLayout
+                android:layout_below="@id/me_dotted1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/me_ln_payment"
+                android:background="@color/white">
+
+                <ImageButton
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/payment"/>
+
+                <TextView
+                    android:layout_weight="4"
+                    android:id="@+id/me_tv_payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/payment"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
+
+                <ImageButton
+                    android:id="@+id/me_ib_payment"
+                    android:layout_width="35dp"
+                    android:layout_gravity="center"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/ic_baseline_chevron_right_24"/>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/me_dotted2"
+                android:layout_below="@id/me_ln_payment"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/dotted"/>
+
+            <LinearLayout
+                android:layout_below="@id/me_dotted2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/me_ln_voucher"
+                android:background="@color/white">
+
+                <ImageButton
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/voucher"/>
+
+                <TextView
+                    android:layout_weight="4"
+                    android:id="@+id/me_tv_voucher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/voucher_title"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"/>
+
+                <ImageButton
+                    android:id="@+id/me_ib_voucher"
+                    android:layout_width="35dp"
+                    android:layout_gravity="center"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/ic_baseline_chevron_right_24"/>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/me_dotted3"
+                android:layout_below="@id/me_ln_voucher"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/dotted"/>
+
+            <LinearLayout
+                android:layout_marginTop="32dp"
+                android:layout_below="@id/me_dotted3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/me_ln_feedback"
+                android:background="@color/white">
+
+                <ImageButton
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/idea"/>
+
+                <TextView
+                    android:layout_weight="4"
+                    android:id="@+id/me_tv_feedback"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/feedback"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_gravity="center"/>
+
+                <ImageButton
+                    android:id="@+id/me_ib_feedback"
+                    android:layout_width="35dp"
+                    android:layout_gravity="center"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/ic_baseline_chevron_right_24"/>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/me_dotted4"
+                android:layout_below="@id/me_ln_feedback"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/dotted"/>
+
+            <LinearLayout
+                android:layout_below="@id/me_dotted4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/me_ln_setting"
+                android:background="@color/white">
+
+                <ImageButton
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/setting"/>
+
+                <TextView
+                    android:layout_weight="4"
+                    android:id="@+id/me_tv_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/setting_title"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center"/>
+
+                <ImageButton
+                    android:id="@+id/me_ib_setting"
+                    android:layout_width="35dp"
+                    android:layout_gravity="center"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/ic_baseline_chevron_right_24"/>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/me_dotted5"
+                android:layout_below="@id/me_ln_setting"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/dotted"/>
+
+            <LinearLayout
+                android:layout_below="@id/me_dotted5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/me_ln_logout"
+                android:background="@color/white">
+
+                <ImageButton
+                    android:layout_marginLeft="16dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/exit"/>
+
+                <TextView
+                    android:layout_weight="4"
+                    android:id="@+id/me_tv_logout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/logout"
+                    android:textSize="16sp"
+                    android:textColor="@color/black"
+                    android:layout_gravity="center" />
+
+                <ImageButton
+                    android:id="@+id/me_ib_logout"
+                    android:layout_width="35dp"
+                    android:layout_gravity="center"
+                    android:layout_height="35dp"
+                    android:layout_marginRight="16dp"
+                    android:background="@drawable/ic_baseline_chevron_right_24"/>
+            </LinearLayout>
+
+            <View
+                android:id="@+id/me_dotted6"
+                android:layout_below="@id/me_ln_logout"
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/dotted"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/me_ln_logout"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="160dp"
+                android:text="@string/app_version"
+                android:textStyle="italic"/>
+        </RelativeLayout>
+    </FrameLayout>
+</RelativeLayout>

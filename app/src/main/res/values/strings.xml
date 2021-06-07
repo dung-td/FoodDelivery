@@ -1,0 +1,80 @@
+<resources>
+    <string name="ic_home">Trang chủ</string>
+    <string name="ic_order">Đơn hàng</string>
+    <string name="ic_Notification">Thông báo</string>
+    <string name="ic_me">Cá nhân</string>
+    <string name="hint_finding">Tìm kiếms</string>
+    <string name="feedback">Góp ý</string>
+    <string name="setting_language">Cài đặt ngôn ngữ</string>
+    <string name="language">Ngôn ngữ</string>
+    <string name="language_vn">Tiếng Việt</string>
+    <string name="save_change">Lưu Thay Đổi</string>
+    <string name="setting_title">Cài đặt</string>
+    <string name="setting_app">Cài đặt ứng dụng</string>
+    <string name="notification">Thông báo</string>
+    <string name="account">Tài khoản</string>
+    <string name="voucher_title">Voucher</string>
+    <string name="user_info">Thông tin cá nhân</string>
+    <string name="payment">Phương thức thanh toán</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="app_version">FoodDelivery 1.0</string>
+    <string name="code">MÃ</string>
+    <string name="voucher_date">Hạn sử dụng</string>
+    <string name="voucher_detail">Chi tiết</string>
+    <string-array name="languages">
+        <item>Enligsh</item>
+        <item>Tiếng Việt</item>
+    </string-array>
+    <string name="app_name">FoodDelivery</string>
+    <string name="login_email_hint">Email</string>
+    <string name="login_password_hint">Mật khẩu</string>
+    <string name="have_account_login">Đã có\ntài khoản?\nĐăng nhập ngay!\n
+    </string>
+    <string name="forgot_pass">Quên mật khẩu?</string>
+    <string name="new_register">Người dùng mới? Đăng ký ngay!</string>
+    <string name="other_method">Đăng nhập với</string>
+    <string name="login">ĐĂNG NHẬP</string>
+    <string name="first_step">Bước đầu tiên\nđể bạn\ntham gia!
+    </string>
+    <string name="have_account">Đã có tài khoản?</string>
+    <string name="first_name">Họ và tên đệm</string>
+    <string name="last_name">Tên</string>
+    <string name="phoneNumber">Số điện thoại</string>
+    <string name="register">Đăng ký</string>
+    <string name="final_step">Bước cuối cùng\nXác thực!/></string>
+    <string name="finish_title">HOÀN TẤT</string>
+    <string name="send_again">Gửi lại</string>
+    <string name="or_verify_mail">Hoặc xác thực bằng email\nđã được gửi đến mail của bạn</string>
+    <string name="use_phone">Dùng số điện thoại</string>
+    <string name="continue_">Tiếp tục</string>
+    <string name="provide_info_help">Cung cấp thông tin để chúng tôi giúp bạn\nBạn có nhớ email đã đăng ký?</string>
+    <string name="make_selection">LỰA CHỌN</string>
+    <string name="make_selection_detail">Lựa chọn phương thức xác thực</string>
+    <string name="via_sms">Xác thực bằng số điện thoại</string>
+    <string name="via_mail">Xác thực bằng email</string>
+    <string name="new_password_title">MẬT KHẨU MỚI</string>
+    <string name="new_password_details">Danh tính của bạn đã được xác nhận!\nĐến lúc chọn mật khẩu mới</string>
+    <string name="new_password">Mật khẩu mới</string>
+    <string name="confirm_password">Xác nhận mật khẩu</string>
+    <string name="password_updated">CẬP NHẬT\nMẬT KHẨU</string>
+    <string name="password_updated_success_message">Mật khẩu của bạn đã được cập nhật</string>
+    <string name="OTP">OTP</string>
+    <string name="resend">Gửi lại mã?</string>
+    <string name="provide_otp_help">Vui lòng nhập mật mã OTP\nđược gửi đến</string>
+    <string name="user_not_exist">Thông tin không tồn tại trong hệ thống</string>
+    <string name="input_code_send_to">Nhập mã xác thực được \n gửi đến số</string>
+    <string name="address">Địa chỉ</string>
+    <string name="require">Bắt buộc</string>
+    <string name="email_pass_not_correct">Email hoặc mật khẩu không đúng</string>
+    <string name="please_enter_email">Vui lòng điền email!</string>
+    <string name="wrong_email_format">Sai định dạng email!</string>
+    <string name="please_enter_pass">Vui lòng điền mật khẩu</string>
+    <string name="email_has_been_used">Email đã có người sử dụng</string>
+    <string name="pls_enter_firstname">Vui lòng điền họ và tên đệm</string>
+    <string name="pls_enter_lastename">Vui lòng điền tên</string>
+    <string name="pls_enter_phone">Vui lòng điền số điện thoại</string>
+    <string name="wrong_phone_format">Sai định dạng số điện thoại</string>
+    <string name="pass_must_match">Mật khẩu phải trùng khớp</string>
+    <string name="pass_regex">Mật khẩu phải có ít nhất 8 ký tự, tồn tại chữ thường, chữ hoa, số và kí tự đặc biệt</string>
+    <string name="pls_enter_address">Vui lòng điền địa chỉ</string>
+</resources>

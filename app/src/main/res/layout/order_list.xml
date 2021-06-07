@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_ordlist_merchant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:text="Người bán"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/light_blue"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/tv_ordlist_merchant"
+            android:id="@+id/layout_ord1">
+
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/tv_ordlist_image"
+                android:background="@drawable/trasenvang"
+                android:layout_marginLeft="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:id="@+id/tv_ordlist_productname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:text="Tên sản phẩm"/>
+
+                <TextView
+                    android:id="@+id/tv_ordlist_productcate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textStyle="italic"
+                    android:textColor="@color/black"
+                    android:text="Phân loại"/>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_ordlist_quantity"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="15dp"
+                        android:textColor="@color/black"
+                        android:text="x1"/>
+
+                    <TextView
+                        android:id="@+id/tv_ordlist_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="25dp"
+                        android:textStyle="bold"
+                        android:text="10.000"
+                        android:textColor="@color/black"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+                        />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_below="@id/layout_ord1"
+            android:id="@+id/tv_ordlist_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/black"
+            android:text="2 sản phẩm nữa..."/>
+
+        <View style="@style/Divider.Horizontal"
+            android:layout_below="@id/tv_ordlist_details"
+            android:id="@+id/ordlist_dot1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/ordlist_dot1"
+            android:id="@+id/layout_ord2">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_ordlist_total"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:text="Tổng cộng (2 sản phẩm)"
+                    android:layout_marginLeft="10dp"/>
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:textAlignment="textEnd"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_ordlist_totalprice"
+                    android:text="10000"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/light_red"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <View style="@style/Divider.Horizontal"
+            android:layout_below="@id/layout_ord2"
+            android:id="@+id/ordlist_dot2"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ordlist_dot2"
+
+            android:layout_marginLeft="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_ordlist_status"
+                android:layout_marginLeft="15dp"
+                android:textStyle="italic"
+                android:textColor="@color/light_blue"
+                android:text="Đang giao hàng"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

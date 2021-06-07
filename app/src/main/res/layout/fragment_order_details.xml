@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.OrderDetailsFragment"
+    android:background="@color/gray"
+    android:padding="10dp"
+    >
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/fm_orddtail_appbar"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:backgroundTint="@color/grey"
+                android:background="@drawable/ic_baseline_arrow_back_24"
+                android:layout_marginStart="15dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/bt_fm_orddtail_back"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chi tiết đơn hàng"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fm_orddtail_appbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:id="@+id/fm_orddtail_view1"
+                android:background="@color/white">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tên khách hàng"
+                    android:textColor="@color/black"
+                    android:id="@+id/tv_fm_orddtail_nameCus"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tên địa chỉ"
+                    android:textColor="@color/black"
+                    android:id="@+id/tv_fm_orddtail_address"
+                    android:layout_below="@id/tv_fm_orddtail_nameCus"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thời gian giao hàng"
+                    android:id="@+id/tv_fm_orddtail_time"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/tv_fm_orddtail_address"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phương thức thanh toán"
+                    android:textColor="@color/black"
+                    android:id="@+id/tv_fm_orddtail_method"
+                    android:layout_below="@id/tv_fm_orddtail_time"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Người bán"
+                    android:textColor="@color/light_blue"
+                    android:id="@+id/tv_fm_orddtail_merchant"
+                    android:layout_below="@id/tv_fm_orddtail_method"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="200dp"
+                    android:text="Mã đơn hàng"
+                    android:textColor="@color/black"
+                    android:id="@+id/tv_fm_orddtail_ordid"
+                    android:layout_below="@id/tv_fm_orddtail_merchant"/>
+
+            </RelativeLayout>
+
+            <!--        <RelativeLayout-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="match_parent"-->
+            <!--            android:id="@+id/fm_orddtail_view2"-->
+            <!--            android:layout_below="@id/fm_orddtail_view1"-->
+            <!--            android:layout_marginTop="20dp"-->
+            <!--            android:background="@color/white">-->
+
+            <!--           -->
+            <!--        </RelativeLayout>-->
+
+            <com.example.fooddelivery.adapter.NonScrollListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/lv_orderdetails"
+                android:dividerHeight="10dp"
+                android:divider="@color/gray"
+                android:background="@color/white"
+                android:layout_below="@id/fm_orddtail_view1"
+                android:layout_marginTop="20dp"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fm_ordedtail_view3"
+                android:layout_below="@id/lv_orderdetails"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tạm tính: "
+                        android:textColor="@color/black"
+                        />
+                    <TextView
+                        android:id="@+id/tv_fm_orddtail_tmpprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:text="10000"
+                        android:textColor="@color/black"/>
+                </RelativeLayout>
+
+                <View style="@style/Divider.Horizontal"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phí vận chuyển: "
+                        android:textColor="@color/black"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_fm_orddtail_shipprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:text="10000 "
+                        android:textColor="@color/black"/>
+                </RelativeLayout>
+
+                <View style="@style/Divider.Horizontal"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mã giảm giá: "
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tv_fm_orddtail_voucher"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10000 "
+                        android:textColor="@color/black"/>
+                </RelativeLayout>
+
+                <View style="@style/Divider.Horizontal"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tổng cộng: "
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_fm_orddtail_totalprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:textColor="@color/black"
+                        android:text="10000 " />
+                </RelativeLayout>
+
+                <View style="@style/Divider.Horizontal"
+                    />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Đánh giá: "
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tv_fm_orddtail_comment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:text="Xem đánh giá "
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        android:textColor="@color/light_blue"
+                        android:textStyle="bold"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <android.widget.Button
+                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:text="Mua lại"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/light_red"
+                android:layout_below="@id/fm_ordedtail_view3"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/bt_fm_orddtail_buy"
+                android:layout_marginBottom="90dp"
+                />
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

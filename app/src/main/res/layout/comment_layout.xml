@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/img_user"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/male_user_96px"/>
+
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nguyễn Văn A"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:fontFamily="sans-serif-condensed-light"
+            android:layout_toEndOf="@+id/img_user"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/tv_user_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Món ngon, gói đẹp, giá tốt."
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:fontFamily="sans-serif-condensed-light"
+            android:layout_toEndOf="@+id/img_user"
+            android:layout_below="@+id/tv_user_name"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"/>
+
+        <LinearLayout
+            android:id="@+id/stars_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toEndOf="@+id/tv_user_name"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="200dp">
+
+            <TextView
+                android:id="@+id/tv_user_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5"
+                android:textSize="12dp"
+                android:textColor="@color/black"/>
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:background="@drawable/greenery_128px"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_user_comment_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/stars_user"
+            android:layout_toEndOf="@+id/tv_user_comment"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="100dp"
+            android:text="23/04/2021"
+            android:textColor="@color/black"
+            android:textSize="10dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/tv_user_comment"/>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

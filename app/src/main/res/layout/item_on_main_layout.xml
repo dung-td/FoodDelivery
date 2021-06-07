@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_item"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:src="@drawable/green_tea_freeze"
+                android:scaleType="fitCenter"/>
+
+            <ImageView
+                android:id="@+id/ic_love_item"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignTop="@+id/img_item"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_baseline_favorite_border_24"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_baseline_stars_24"/>
+
+            <TextView
+                android:id="@+id/tv_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4.5"
+                android:textColor="@color/black"
+                android:textSize="12dp"
+                android:layout_marginStart="5dp"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Freeze Trà Xanh"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="14dp"
+            android:fontFamily="sans-serif-condensed-light"/>
+
+        <TextView
+            android:id="@+id/tv_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="49.000 đ"
+            android:textSize="17dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-condensed-light"/>
+
+        <TextView
+            android:id="@+id/tv_item_merchant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Highlands BigC - Dĩ An, Bình Dương"
+            android:textSize="12dp"
+            android:textColor="@color/grey"
+            android:fontFamily="sans-serif-condensed-light"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

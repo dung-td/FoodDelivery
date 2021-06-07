@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.PaymentMethodFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/fm_method_appbar"
+        android:background="@color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:backgroundTint="@color/grey"
+                android:background="@drawable/ic_baseline_arrow_back_24"
+                android:layout_marginStart="15dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/bt_fm_method_back"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Phương thức thanh toán"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/fm_method_rl1"
+        android:layout_below="@id/fm_method_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:layout_marginLeft="20dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/cash"
+            android:id="@+id/im_fm_method_cash"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tiền mặt"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/im_fm_method_cash"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/black"
+            />
+        <ImageView
+            android:id="@+id/im_fm_method_cashcheck"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/check"/>
+        <View style="@style/Divider.Horizontal"
+            android:layout_below="@id/im_fm_method_cash"
+            android:layout_marginTop="3dp"
+            />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/fm_method_rl2"
+        android:layout_below="@id/fm_method_rl1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:layout_marginLeft="20dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/momoicon"
+            android:id="@+id/im_fm_method_momo"
+            />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_toRightOf="@id/im_fm_method_momo"
+            android:layout_marginLeft="20dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ví Momo"
+                android:layout_centerVertical="true"
+                android:textColor="@color/black"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0383303061"
+                android:layout_centerVertical="true"
+                android:id="@+id/tv_fm_method_momophone"
+                />
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:id="@+id/tv_fm_method_changemomo"
+            android:layout_marginRight="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thay đổi"
+            android:textStyle="bold"
+            android:textColor="@color/light_blue"
+            android:clickable="true"
+            />
+
+        <ImageView
+            android:id="@+id/im_fm_method_momocheck"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="30dp"
+            android:background="@drawable/check"/>
+
+        <View style="@style/Divider.Horizontal"
+            android:layout_below="@id/im_fm_method_momo"
+            android:layout_marginTop="3dp"
+            />
+    </RelativeLayout>
+
+    <android.widget.Button
+        android:id="@+id/bt_fm_perinfo_save"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_centerHorizontal="true"
+        android:background="@color/light_red"
+        android:text="Lưu thay đổi"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+</RelativeLayout>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/login_bk_color"
+    android:focusableInTouchMode="true"
+    tools:context=".activity.login.LoginActivity">
+
+
+    <Button
+        android:id="@+id/fp1_bt_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/back" />
+
+    <TextView
+        android:id="@+id/fp1_tv_title"
+        style="@style/viewParent.headerText.NoMode"
+        android:layout_below="@id/fp1_iv_icon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/forgot_pass" />
+
+    <ImageView
+        android:id="@+id/fp1_iv_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/password_reset" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/fp1_ti_emailphone"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fp1_tv_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        app:boxBackgroundColor="@color/whiteTextColor"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidthFocused="2dp"
+        app:endIconMode="clear_text"
+        app:endIconTint="@color/black"
+        app:startIconDrawable="@drawable/ic_baseline_alternate_email_24"
+        app:startIconTint="@color/black"
+        android:hint="@string/login_email_hint">
+
+        <EditText
+            android:id="@+id/fp1_et_emailphone"
+            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:inputType="textEmailAddress"
+            android:maxLines="1" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        style="@style/parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fp1_tv_title"
+        android:layout_marginTop="8dp"
+        android:text="@string/provide_info_help"
+        android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/fp1_tv_change"
+        style="@style/parent"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/fp1_ti_emailphone"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="end"
+        android:layout_marginTop="10dp"
+        android:text="@string/use_phone"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="@dimen/newsMoreTextSize" />
+
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+        android:id="@+id/fp1_bt_continue"
+        style="@style/loginButton"
+        android:layout_below="@id/fp1_tv_change"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/loginViewsMargin"
+        android:text="@string/continue_"
+        app:initialCornerAngle="27dp"
+        app:spinning_bar_color="#FFF"
+        app:spinning_bar_padding="6dp"
+        app:spinning_bar_width="4dp" />
+</RelativeLayout>

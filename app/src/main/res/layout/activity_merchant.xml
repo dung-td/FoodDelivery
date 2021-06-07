@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    tools:context=".activity.MerchantActivity">
+
+<!--    Content-->
+    <ScrollView
+        android:id="@+id/scroll_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+<!--            Banner-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.viewpager.widget.ViewPager
+                android:id="@+id/merchant_banner"
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+            </androidx.viewpager.widget.ViewPager>
+
+                <TextView
+                    android:id="@+id/tv_banner_index"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1/3"
+                    android:textColor="@color/black"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"/>
+
+<!--            Merchant Info-->
+            <RelativeLayout
+                android:id="@+id/merchant_info"
+                android:layout_width="match_parent"
+                android:layout_height="90dp">
+
+                <ImageView
+                    android:id="@+id/img_logo"
+                    android:layout_width="80dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/highland_logo"/>
+
+                <TextView
+                    android:id="@+id/tv_merchant_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Highland BigC - Dĩ An, Bình Dương"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_toEndOf="@+id/img_logo"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="13dp"
+                    android:fontFamily="sans-serif-condensed-light"/>
+
+<!--                Merchant Detail Info-->
+                <LinearLayout
+                    android:id="@+id/detail_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_toEndOf="@+id/img_logo"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@+id/tv_merchant_name">
+
+                    <ImageView
+                        android:id="@+id/ic_star"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:background="@drawable/star_512px"/>
+
+                    <TextView
+                        android:id="@+id/tv_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4.9"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="3dp"
+                        android:textColor="@color/black"/>
+
+                    <ImageView
+                        android:id="@+id/ic_time"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/clock_48px"/>
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="20 m"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="3dp"
+                        android:textColor="@color/black"/>
+
+                    <ImageView
+                        android:id="@+id/ic_location"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/marker_80px"/>
+
+                    <TextView
+                        android:id="@+id/tv_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 km"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="3dp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"/>
+
+<!--            Voucher Box-->
+            <LinearLayout
+                android:id="@+id/voucher_box"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ic_voucher"
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="18dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/voucher"/>
+
+                <TextView
+                    android:id="@+id/tv_voucher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Voucher"
+                    android:textColor="@color/black"
+                    android:layout_marginStart="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="17dp"/>
+
+                <TextView
+                    android:id="@+id/tv_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chi tiết"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/light_blue"
+                    android:layout_marginStart="150dp"
+                    android:layout_gravity="center_vertical"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"/>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+<!--            3 View Buttons and Content-->
+                <LinearLayout
+                    android:id="@+id/tablayout_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:tabIndicatorColor="@color/light_blue"
+                        app:tabSelectedTextColor="@color/black"
+                        app:tabTextColor="@color/grey"
+                        app:tabBackground="@color/white">
+                    </com.google.android.material.tabs.TabLayout>
+
+                    <com.example.fooddelivery.model.MyViewPager
+                        android:id="@+id/info_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                    </com.example.fooddelivery.model.MyViewPager>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </ScrollView>
+
+<!--    Tool bar-->
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:id="@+id/btn_back_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/circle_toolbar_button_background">
+        <ImageView
+            android:id="@+id/ic_back_arrow"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_love_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginStart="210dp"
+            android:layout_toEndOf="@+id/btn_back_background"
+            android:background="@drawable/circle_toolbar_button_background">
+        <ImageView
+            android:id="@+id/ic_love"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="1dp"
+            android:src="@drawable/ic_baseline_favorite_border_24"
+            android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_cart_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/btn_love_background"
+            android:background="@drawable/circle_toolbar_button_background">
+        <ImageView
+            android:id="@+id/ic_cart"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="3dp"
+            android:src="@drawable/ic_baseline_add_shopping_cart_24"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_more_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/btn_cart_background"
+            android:background="@drawable/circle_toolbar_button_background">
+        <ImageView
+            android:id="@+id/ic_more"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:gravity="center_horizontal"
+            android:src="@drawable/ic_baseline_more_horiz_24"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

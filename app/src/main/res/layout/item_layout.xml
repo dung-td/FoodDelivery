@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/img_item"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/trasenvang"/>
+
+        <ImageView
+            android:id="@+id/ic_love_item"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignTop="@+id/img_item"
+            android:layout_marginStart="110dp"
+            android:src="@drawable/ic_baseline_favorite_border_24"/>
+
+        <TextView
+            android:id="@+id/tv_item_name_vn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/img_item"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="5dp"
+            android:text="Trà Sen Vàng"
+            android:textColor="@color/black"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_item_name_en"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/img_item"
+            android:layout_below="@+id/tv_item_name_vn"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:text="Golden Lotus Tea"
+            android:textColor="@color/grey"
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_item_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/img_item"
+            android:layout_below="@+id/tv_item_name_en"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:text="49.000 đ"
+            android:textColor="@color/black"
+            android:textSize="30dp"/>
+
+        <ImageButton
+            android:id="@+id/btn_add_item"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_toEndOf="@+id/tv_item_price"
+            android:layout_below="@id/tv_item_name_en"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="7dp"
+            android:background="@drawable/plus_80px"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@drawable/dotted"
+            android:layout_below="@+id/tv_item_price"/>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

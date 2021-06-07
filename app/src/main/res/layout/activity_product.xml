@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.ProductActivity"
+    android:background="@color/white">
+
+    <ScrollView
+        android:id="@+id/scroll_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+            <!--            Product Image-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/product_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp">
+                </androidx.viewpager.widget.ViewPager>
+
+                <TextView
+                    android:id="@+id/tv_image_index"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1/3"
+                    android:textColor="@color/black"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"/>
+
+            <!--            Product Info-->
+            <RelativeLayout
+                android:id="@+id/merchant_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_product_name_vn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PhinDi Hạnh Nhân"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="20dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-condensed-light"/>
+
+                <ImageView
+                    android:id="@+id/ic_star"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_toEndOf="@+id/tv_product_name_vn"
+                    android:layout_marginStart="170dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/star_512px"/>
+
+                <TextView
+                    android:id="@+id/tv_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.9"
+                    android:layout_toEndOf="@id/ic_star"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="13dp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/tv_time_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="15 m, 2.5 km"
+                    android:layout_below="@id/ic_star"
+                    android:layout_toEndOf="@id/tv_product_name_en"
+                    android:layout_marginStart="65dp"
+                    android:layout_marginTop="7dp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/tv_product_name_en"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Iced PHIN Coffee with Almond Milk"
+                    android:layout_below="@id/tv_product_name_vn"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/grey"/>
+
+                <TextView
+                    android:id="@+id/tv_product_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="49.000 đ"
+                    android:layout_below="@id/tv_product_name_en"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    android:textStyle="bold"/>
+
+                <ImageButton
+                    android:id="@+id/btn_add_item"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_toEndOf="@+id/tv_product_price"
+                    android:layout_below="@id/tv_time_distance"
+                    android:layout_marginStart="210dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/plus_80px"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"/>
+
+<!--            Merchant Name-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_logo"
+                    android:layout_width="80dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/highland_logo"/>
+
+                <TextView
+                    android:id="@+id/tv_merchant_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/img_logo"
+                    android:text="Highland BigC - Dĩ An, Bình Dương"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="23dp"
+                    android:fontFamily="sans-serif-condensed-light"/>
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_below="@+id/tv_merchant_name"
+                    android:layout_toEndOf="@+id/img_logo"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/star_512px"/>
+
+                <TextView
+                    android:id="@+id/tv_merchant_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.5"
+                    android:textSize="17dp"
+                    android:layout_toEndOf="@id/img_logo"
+                    android:layout_below="@+id/tv_merchant_name"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="13dp"
+                    android:textColor="@color/black"/>
+
+                <ImageView
+                    android:id="@+id/btn_more_merchant_info"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_below="@+id/tv_merchant_name"
+                    android:layout_toEndOf="@+id/tv_merchant_rating"
+                    android:layout_marginStart="190dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/ic_baseline_chevron_right_24"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/black"
+                android:layout_marginTop="10dp"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+<!--                Khach hang comment-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Khách hàng nhận xét"
+                        android:textColor="@color/black"
+                        android:textSize="17dp"
+                        android:layout_marginStart="15dp"/>
+
+                    <TextView
+                        android:id="@+id/tv_comment_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="(20)"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="180dp"/>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="2dp"
+                    android:background="@color/white">
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!--    Tool bar-->
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:id="@+id/btn_back_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/circle_toolbar_button_background">
+            <ImageView
+                android:id="@+id/ic_back_arrow"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_baseline_arrow_back_24"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_love_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginStart="210dp"
+            android:layout_toEndOf="@+id/btn_back_background"
+            android:background="@drawable/circle_toolbar_button_background">
+            <ImageView
+                android:id="@+id/ic_love"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="1dp"
+                android:src="@drawable/ic_baseline_favorite_border_24"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_cart_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/btn_love_background"
+            android:background="@drawable/circle_toolbar_button_background">
+            <ImageView
+                android:id="@+id/ic_cart"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="3dp"
+                android:src="@drawable/ic_baseline_add_shopping_cart_24"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btn_more_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/btn_cart_background"
+            android:background="@drawable/circle_toolbar_button_background">
+            <ImageView
+                android:id="@+id/ic_more"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:gravity="center_horizontal"
+                android:src="@drawable/ic_baseline_more_horiz_24"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

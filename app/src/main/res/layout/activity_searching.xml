@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <!--    Back button + Title-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/grey"
+            android:background="@drawable/ic_baseline_arrow_back_24" />
+
+        <EditText
+            android:id="@+id/et_search_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="15dp"
+            android:hint="Bạn đang tìm gì?"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:singleLine="true"
+            android:background="@android:color/transparent"/>
+    </LinearLayout>
+
+    <!--    Recent searches-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tìm kiếm gần đây"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/btn_delete_searches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XÓA"
+            android:textSize="18dp"
+            android:textColor="@color/light_blue"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_searches"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/btn_delete_searches"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tv_no_search_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp"
+            android:textSize="18dp"
+            android:text="Không có dữ liệu tìm kiếm gần đây"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+
+    <!--    Recent watches-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="70dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đã xem"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/btn_delete_watches"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="XÓA"
+            android:textSize="18dp"
+            android:textColor="@color/light_blue"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="15dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_watches"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_delete_watches"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="15dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/tv_no_watch_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp"
+            android:textSize="18dp"
+            android:text="Không có dữ liệu xem gần đây"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/login_bk_color"
+    android:focusableInTouchMode="true"
+    tools:context=".activity.login.LoginActivity">
+
+    <Button
+        android:id="@+id/fp3_bt_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:background="@drawable/back"/>
+
+    <TextView
+        android:id="@+id/fp3_tv_title"
+        style="@style/viewParent.headerText.NoMode"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/fp3_iv_title"
+        android:text="@string/OTP" />
+
+    <ImageView
+        android:id="@+id/fp3_iv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/otp" />
+
+    <LinearLayout
+        android:id="@+id/linearCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fp3_tv_title"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginRight="16dp">
+
+        <EditText
+            android:id="@+id/et_code_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/et_code_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/et_code_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/et_code_4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/et_code_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/et_code_6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:inputType="numberPassword"
+            android:maxLength="1"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/fp3_provide_otp_help"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fp3_tv_title"
+        android:layout_marginTop="8dp"
+        style="@style/parent"
+        android:textAlignment="center"
+        android:text="@string/provide_otp_help" />
+
+    <TextView
+        android:id="@+id/fp3_tv_resend"
+        style="@style/parent"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/linearCode"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="end"
+        android:layout_marginTop="10dp"
+        android:text="@string/resend"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="@dimen/newsMoreTextSize" />
+
+    <br.com.simplepass.loading_button_lib.customViews.CircularProgressButton
+        android:id="@+id/fp3_bt_continue"
+        style="@style/loginButton"
+        android:layout_below="@id/fp3_tv_resend"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/loginViewsMargin"
+        android:text="@string/continue_"
+        app:initialCornerAngle="27dp"
+        app:spinning_bar_color="#FFF"
+        app:spinning_bar_padding="6dp"
+        app:spinning_bar_width="4dp" />
+</RelativeLayout>

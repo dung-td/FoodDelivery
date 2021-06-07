@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    tools:context=".activity.MerchantActivity">
+
+<!--    Rating section-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_avg_rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="4.9"
+            android:textSize="30dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tổng"
+            android:textSize="25dp"
+            android:textColor="@color/black"
+            android:layout_below="@+id/tv_avg_rating"
+            android:layout_marginStart="18dp"
+            android:textAlignment="center"/>
+
+<!--        5 stars rating-->
+        <LinearLayout
+            android:id="@+id/five_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toEndOf="@+id/tv_avg_rating"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="30dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <TextView
+                android:id="@+id/tv_five_stars_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(20)"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+
+<!--        4 stars rating-->
+        <LinearLayout
+            android:id="@+id/four_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toEndOf="@+id/five_stars"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="40dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <TextView
+                android:id="@+id/tv_four_stars_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(13)"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+
+<!--        3 stars rating-->
+        <LinearLayout
+            android:id="@+id/three_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/five_stars"
+            android:layout_toEndOf="@+id/tv_avg_rating"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="30dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <TextView
+                android:id="@+id/tv_three_stars_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(10)"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+
+<!--        2 star ratings-->
+        <LinearLayout
+            android:id="@+id/two_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/four_stars"
+            android:layout_toEndOf="@+id/three_stars"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="80dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <TextView
+                android:id="@+id/tv_two_stars_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(2)"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+
+<!--        1 star rating-->
+        <LinearLayout
+            android:id="@+id/one_stars"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/three_stars"
+            android:layout_toEndOf="@+id/tv_avg_rating"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="30dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/greenery_128px"/>
+
+            <TextView
+                android:id="@+id/tv_one_stars_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(1)"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:layout_marginStart="5dp"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_marginTop="15dp"/>
+
+    <!--    Comment Section-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="2dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteTextColor"
+    tools:context=".activity.login.ForgotPassActivity_2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/fp2_bt_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/back" />
+
+
+        <TextView
+            android:id="@+id/fp2_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/make_selection"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/fp3_tv_discription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:text="@string/make_selection_detail"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+
+        <RelativeLayout
+            android:id="@+id/fp3_fl_sms_box"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/primaryColor"
+            android:padding="5dp">
+
+
+            <ImageView
+                android:id="@+id/mobile_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/mobile" />
+
+
+            <TextView
+                android:id="@+id/fp2_tv_mobile_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_toRightOf="@id/mobile_icon"
+                android:text="@string/via_sms"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/fp2_tv_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fp2_tv_mobile_title"
+                android:layout_toRightOf="@id/mobile_icon"
+                android:text="+932606361"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent" />
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/fp2_fl_email_box"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="16dp"
+            android:background="@color/primaryColor"
+            android:padding="10dp">
+
+
+            <ImageView
+                android:id="@+id/mail_icon"
+                android:layout_width="60dp"
+                android:layout_height="55dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/email" />
+
+
+            <TextView
+                android:id="@+id/fp2_tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:layout_toRightOf="@id/mail_icon"
+                android:text="@string/via_mail"
+                android:textSize="20sp" />
+
+
+            <TextView
+                android:id="@+id/fp2_tv_email_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fp2_tv_email"
+                android:layout_toRightOf="@id/mail_icon"
+                android:text="support@gmail.com"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>
