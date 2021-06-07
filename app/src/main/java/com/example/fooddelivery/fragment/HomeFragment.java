@@ -23,11 +23,9 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     List<Product> products;
-    ModifyFirebase firebase;
 
     public HomeFragment() {
         products = new ArrayList<>();
-        firebase.getReference();
 
         products.add(new Product("Phở", "4.5","25.000"));
         products.add(new Product("Phở", "4.5","25.000"));
