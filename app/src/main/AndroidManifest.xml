@@ -25,30 +25,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name="com.example.fooddelivery.activity.login.LoginActivity">
+        <activity android:name=".activity.PaymentMethodActivity"></activity>
+        <activity android:name=".activity.PersonalInfoActivity" />
+        <activity android:name=".activity.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.fooddelivery.activity.login.SignUpActivity_1" />
-        <activity android:name="com.example.fooddelivery.activity.login.SignUpActivity_2" />
-        <activity android:name="com.example.fooddelivery.activity.login.ForgotPassActivity_1"/>
-        <activity android:name="com.example.fooddelivery.activity.login.ForgotPassActivity_2"/>
-        <activity android:name="com.example.fooddelivery.activity.login.ForgotPassActivity_3"/>
-        <activity android:name="com.example.fooddelivery.activity.login.ForgotPassActivity_4"/>
-        <activity android:name="com.example.fooddelivery.activity.login.ForgotPassActitivy_5"/>
-        <activity android:name="com.example.fooddelivery.activity.me.SettingActivity" />
-        <activity android:name="com.example.fooddelivery.activity.me.VoucherActivity" />
-        <activity android:name="com.example.fooddelivery.activity.LanguageSetting" />
-        <activity android:name="com.example.fooddelivery.activity.CartActivity" />
-        <activity android:name="com.example.fooddelivery.activity.me.FeedbackActivity" />
-        <activity android:name="com.example.fooddelivery.activity.ProductActivity" />
-        <activity android:name="com.example.fooddelivery.activity.SearchingActivity" />
-        <activity android:name="com.example.fooddelivery.activity.DrinkSectionActivity" />
-        <activity android:name="com.example.fooddelivery.activity.MerchantActivity" />
-        <activity android:name="com.example.fooddelivery.activity.MainActivity"/>
+        <activity android:name=".activity.login.SignUpActivity_1" />
+        <activity android:name=".activity.login.SignUpActivity_2" />
+        <activity android:name=".activity.login.ForgotPassActivity_1" />
+        <activity android:name=".activity.login.ForgotPassActivity_2" />
+        <activity android:name=".activity.login.ForgotPassActivity_3" />
+        <activity android:name=".activity.login.ForgotPassActivity_4" />
+        <activity android:name=".activity.login.ForgotPassActitivy_5" />
+        <activity android:name=".activity.me.SettingActivity" />
+        <activity android:name=".activity.me.VoucherActivity" />
+        <activity android:name=".activity.LanguageSetting" />
+        <activity android:name=".activity.CartActivity" />
+        <activity android:name=".activity.me.FeedbackActivity" />
+        <activity android:name=".activity.ProductActivity" />
+        <activity android:name=".activity.SearchingActivity" />
+        <activity android:name=".activity.DrinkSectionActivity" />
+        <activity android:name=".activity.MerchantActivity" />
+        <activity android:name=".activity.MainActivity" />
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"

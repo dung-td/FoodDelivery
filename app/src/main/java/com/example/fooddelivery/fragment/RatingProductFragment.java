@@ -73,7 +73,8 @@ public class RatingProductFragment extends DialogFragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().onBackPressed();
+                //getActivity().onBackPressed();
+                dismiss();
             }
         });
     }

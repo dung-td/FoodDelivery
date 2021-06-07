@@ -39,9 +39,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp">
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:layout_marginTop="100dp"
@@ -128,6 +127,7 @@
             android:layout_marginTop="20dp"/>
 
         <EditText
+            android:gravity="top|left"
             android:layout_width="350dp"
             android:layout_height="200dp"
             android:layout_below="@id/star_fm_rt_pd"
