@@ -68,8 +68,8 @@
                     android:id="@+id/ic_star"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:layout_toEndOf="@+id/tv_product_name_vn"
-                    android:layout_marginStart="170dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="45dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/star_512px"/>
 
@@ -78,8 +78,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="4.9"
-                    android:layout_toEndOf="@id/ic_star"
-                    android:layout_marginStart="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="13dp"
                     android:textColor="@color/black"/>
 
@@ -89,8 +89,8 @@
                     android:layout_height="wrap_content"
                     android:text="15 m, 2.5 km"
                     android:layout_below="@id/ic_star"
-                    android:layout_toEndOf="@id/tv_product_name_en"
-                    android:layout_marginStart="65dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="7dp"
                     android:textColor="@color/black"/>
 
@@ -116,13 +116,24 @@
                     android:textSize="25dp"
                     android:textStyle="bold"/>
 
+                <Spinner
+                    android:id="@+id/spinner_size"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_toEndOf="@+id/tv_product_price"
+                    android:layout_below="@+id/tv_product_name_en"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="18dp"
+                    android:spinnerMode="dropdown"
+                    android:background="@drawable/shape"/>
+
                 <ImageButton
                     android:id="@+id/btn_add_item"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_toEndOf="@+id/tv_product_price"
                     android:layout_below="@id/tv_time_distance"
-                    android:layout_marginStart="210dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/plus_80px"/>
 

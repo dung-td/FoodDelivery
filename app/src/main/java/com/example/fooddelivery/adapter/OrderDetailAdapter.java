@@ -54,7 +54,7 @@ public class OrderDetailAdapter extends BaseAdapter {
         category.setText("Loại hàng");
         // quantity.setText(listOrderItem.get(position).getQuantity());
         quantity.setText("x2");
-        price.setText(listOrderItem.get(position).getProduct().getPrice());
+        price.setText(listOrderItem.get(position).getProduct().getPrice().get(0));
 
         return convertView;
 

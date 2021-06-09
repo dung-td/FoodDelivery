@@ -3,17 +3,22 @@ package com.example.fooddelivery.adapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
+
 public class ImageAdapter extends PagerAdapter{
     Context mContext;
-    int[] sliderImageId;
+    ArrayList<Uri> sliderImageId;
 
-    public ImageAdapter(Context context, int[] id) {
+    public ImageAdapter(Context context, ArrayList<Uri> id) {
         this.mContext = context;
-        sliderImageId = id.clone();
+        sliderImageId = id;
     }
 
     @Override
@@ -25,7 +30,8 @@ public class ImageAdapter extends PagerAdapter{
     public Object instantiateItem(ViewGroup container, int position) {
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        imageView.setImageResource(sliderImageId[position]);
+        Glide.with(mContext).load(sliderImageId.get(position)).into(imageView);
+//        imageView.setImageResource(sliderImageId[position]);
         ((ViewPager) container).addView(imageView, 0);
         return imageView;
     }
@@ -37,6 +43,6 @@ public class ImageAdapter extends PagerAdapter{
 
     @Override
     public int getCount() {
-        return sliderImageId.length;
+        return sliderImageId.size();
     }
 }

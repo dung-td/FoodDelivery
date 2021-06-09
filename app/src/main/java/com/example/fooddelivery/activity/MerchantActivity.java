@@ -3,6 +3,7 @@ package com.example.fooddelivery.activity;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -19,8 +20,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.adapter.MyAdapter;
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.MyViewPager;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 import static android.graphics.Color.WHITE;
 
@@ -35,6 +39,7 @@ public class MerchantActivity extends AppCompatActivity {
     ViewPager viewPagerBanner;
     LinearLayout linearLayoutBack, linearLayoutLove, linearLayoutCart, linearLayoutMore;
     RelativeLayout relativeLayoutToolbar;
+    Merchant merchant;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -47,6 +52,7 @@ public class MerchantActivity extends AppCompatActivity {
         changeToolbarColor();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initView() {
         scrollViewContent = findViewById(R.id.scroll_content);
         buttonBack = findViewById(R.id.ic_back_arrow);
@@ -67,6 +73,8 @@ public class MerchantActivity extends AppCompatActivity {
         linearLayoutCart = findViewById(R.id.btn_cart_background);
         linearLayoutMore = findViewById(R.id.btn_more_background);
         relativeLayoutToolbar = findViewById(R.id.toolbar);
+        this.merchant = (Merchant) getIntent().getParcelableExtra("Merchant");
+        textViewMerchantName.setText(merchant.getName() + " - " + merchant.getAddress());
 
         tabLayout.addTab(tabLayout.newTab().setText("MENU"));
         tabLayout.addTab(tabLayout.newTab().setText("BÌNH LUẬN"));
@@ -106,14 +114,16 @@ public class MerchantActivity extends AppCompatActivity {
         });
 
 //        Banner ViewPager
-        int[] imageSlide = new int[]{R.drawable.tra_sen_vang, R.drawable.advertisement, R.drawable.phindi_banner};
+        ArrayList<Uri> imageSlide = new ArrayList<Uri>();
+//        imageSlide.add();
+//        int[] imageSlide = new int[]{R.drawable.tra_sen_vang, R.drawable.advertisement, R.drawable.phindi_banner};
         ImageAdapter adapterView = new ImageAdapter(this, imageSlide);
         viewPagerBanner.setAdapter(adapterView);
         viewPagerBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                textViewBannerIndex.setText((viewPagerBanner.getCurrentItem() + 1) + "/" + imageSlide.length);
+                textViewBannerIndex.setText((viewPagerBanner.getCurrentItem() + 1) + "/" + imageSlide.size());
             }
 
             @Override

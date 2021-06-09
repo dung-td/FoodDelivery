@@ -1,6 +1,7 @@
 package com.example.fooddelivery.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fooddelivery.activity.MainActivity;
 import com.example.fooddelivery.adapter.ItemOnMainAdapter;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.model.GridSpacingItemDecoration;
@@ -25,15 +27,6 @@ public class HomeFragment extends Fragment {
     List<Product> products;
 
     public HomeFragment() {
-        products = new ArrayList<>();
-
-        products.add(new Product("Phở", "4.5","25.000"));
-        products.add(new Product("Phở", "4.5","25.000"));
-        products.add(new Product("Phở", "4.5","25.000"));
-        products.add(new Product("Phở", "4.5","25.000"));
-    }
-
-    private void getDrinksFromDB() {
     }
 
     @Override
@@ -43,7 +36,11 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        products = new ArrayList<>();
+        products = MainActivity.productList;
 
         RecyclerView recyclerViewProducts = (RecyclerView)getView().findViewById(R.id.recycler_view_products);
         recyclerViewProducts.setHasFixedSize(true);

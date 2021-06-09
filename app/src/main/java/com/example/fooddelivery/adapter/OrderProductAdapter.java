@@ -60,7 +60,7 @@ public class OrderProductAdapter extends BaseAdapter {
         name.setText(listOrders.get(position).getFirstOrderItems().getProduct().getName());
         category.setText("Loại hàng");
         quantity.setText("x2");
-        price.setText(listOrders.get(position).getFirstOrderItems().getProduct().getPrice());
+        price.setText(listOrders.get(position).getFirstOrderItems().getProduct().getPrice().get(0));
         detail.setText("Còn 1 sản phẩm");
         total.setText(" Tổng cộng");
         //total_price.setText(listOrders.get(position).getTotalPrice());

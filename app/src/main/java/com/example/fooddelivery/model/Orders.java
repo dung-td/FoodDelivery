@@ -69,7 +69,7 @@ public class Orders {
         int price =0;
         for (int i=0; i<listOrderItems.size(); i++)
         {
-            price+=Integer.parseInt(listOrderItems.get(i).getProduct().getPrice()) * listOrderItems.get(i).quantity;
+            price+=Integer.parseInt(listOrderItems.get(i).getProduct().getPrice().get(0)) * listOrderItems.get(i).quantity;
         }
         return price;
     }

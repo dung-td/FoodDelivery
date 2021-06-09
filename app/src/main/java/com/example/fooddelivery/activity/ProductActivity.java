@@ -10,19 +10,26 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.fooddelivery.adapter.CommentAdapter;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.model.Comment;
+import com.example.fooddelivery.model.Merchant;
+import com.example.fooddelivery.model.ModifyFirebase;
+import com.example.fooddelivery.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +40,16 @@ public class ProductActivity extends AppCompatActivity {
 
     ScrollView scrollViewContent;
     ImageView buttonBack, buttonMore, buttonLove, buttonCart, buttonMerchantInfo;
-    TextView textViewImageIndex;
+    TextView textViewImageIndex, textViewProductNameVn, textViewProductPrice, textViewMerchantName, textViewProductRating;
     ViewPager viewPagerImage;
+    Spinner spinnerProductSize;
 
     LinearLayout linearLayoutBack, linearLayoutLove, linearLayoutCart, linearLayoutMore;
     RelativeLayout relativeLayoutToolbar;
     List<Comment> commentList;
+    ArrayList<String> productSize;
+    Merchant merchant;
+    Product product;
 
     @SuppressLint("NewApi")
     @Override
@@ -53,6 +64,7 @@ public class ProductActivity extends AppCompatActivity {
         forwardMerchantActivity();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initView() {
         scrollViewContent = findViewById(R.id.scroll_content);
         buttonBack = findViewById(R.id.ic_back_arrow);
@@ -61,12 +73,25 @@ public class ProductActivity extends AppCompatActivity {
         buttonMore = findViewById(R.id.ic_more);
         buttonMerchantInfo = findViewById(R.id.btn_more_merchant_info);
         textViewImageIndex = findViewById(R.id.tv_image_index);
+        textViewProductNameVn = findViewById(R.id.tv_product_name_vn);
+        textViewProductPrice = findViewById(R.id.tv_product_price);
+        textViewMerchantName = findViewById(R.id.tv_merchant_name);
+        textViewProductRating = findViewById(R.id.tv_rating);
         viewPagerImage = findViewById(R.id.product_image);
         linearLayoutBack = findViewById(R.id.btn_back_background);
         linearLayoutLove = findViewById(R.id.btn_love_background);
         linearLayoutCart = findViewById(R.id.btn_cart_background);
         linearLayoutMore = findViewById(R.id.btn_more_background);
         relativeLayoutToolbar = findViewById(R.id.toolbar);
+        spinnerProductSize = findViewById(R.id.spinner_size);
+        this.merchant = (Merchant) getIntent().getParcelableExtra("ClickedProductMerchant");
+        this.product = (Product) getIntent().getParcelableExtra("ClickedProduct");
+        textViewProductNameVn.setText(product.getName());
+        textViewProductPrice.setText(product.getPrice().get(0));
+        textViewProductRating.setText(product.getRating());
+        productSize = new ArrayList<String>();
+        productSize = product.getProductSize();
+        textViewMerchantName.setText(merchant.getName() + " - " + merchant.getAddress());
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,17 +99,40 @@ public class ProductActivity extends AppCompatActivity {
                 ProductActivity.super.onBackPressed();
             }
         });
+
+        initSpinnerProductSize();
+    }
+
+    private void initSpinnerProductSize() {
+        ArrayAdapter<String> staticAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, productSize);
+        staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerProductSize.setAdapter(staticAdapter);
+
+        spinnerProductSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                textViewProductPrice.setText(product.getPrice().get(position) + " đ");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public void initProductImageViewPager() {
-        int[] imageSlide = new int[]{R.drawable.tra_sen_vang, R.drawable.advertisement, R.drawable.phindi_banner};
+        ArrayList<Uri> imageSlide = new ArrayList<Uri>();
+        imageSlide = product.getImage();
         ImageAdapter adapterView = new ImageAdapter(this, imageSlide);
         viewPagerImage.setAdapter(adapterView);
+        ArrayList<Uri> finalImageSlide = imageSlide;
         viewPagerImage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                textViewImageIndex.setText((viewPagerImage.getCurrentItem() + 1) + "/" + imageSlide.length);
+                textViewImageIndex.setText((viewPagerImage.getCurrentItem() + 1) + "/" + finalImageSlide.size());
             }
 
             @Override
@@ -137,6 +185,7 @@ public class ProductActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MerchantActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("Merchant", merchant);
                 getApplicationContext().startActivity(intent);
             }
         });
