@@ -84,7 +84,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Thức ăn"
+                            android:text="@string/food"
                             android:textColor="@color/black"
                             android:textSize="16dp"
                             android:layout_gravity="center_horizontal"/>
@@ -107,7 +107,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Thức uống"
+                            android:text="@string/drink"
                             android:textColor="@color/black"
                             android:textSize="16dp"
                             android:layout_gravity="center_horizontal"/>
@@ -130,7 +130,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ăn vặt"
+                            android:text="@string/snack"
                             android:textColor="@color/black"
                             android:textSize="16dp"
                             android:layout_gravity="center_horizontal"/>
@@ -164,7 +164,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Yêu thích"
+                        android:text="@string/favorite"
                         android:textColor="@color/black"
                         android:textSize="16dp"
                         android:layout_gravity="center_horizontal"/>

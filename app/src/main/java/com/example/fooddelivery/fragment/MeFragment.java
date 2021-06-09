@@ -61,6 +61,8 @@ public class MeFragment extends Fragment {
                 startActivity(voucherActivity);
             }
         });
+
+
     }
 
     private void Init() {

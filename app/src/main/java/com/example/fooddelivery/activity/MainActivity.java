@@ -2,6 +2,7 @@ package com.example.fooddelivery.activity;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,7 +47,8 @@ public class MainActivity extends AppCompatActivity {
                             temp = new HomeFragment();
                             break;
                         case R.id.nav_order:
-                            temp = new OrderFragment();
+
+                            temp = new OrderFragment(MainActivity.this, returnLanguage());
                             break;
 //                        case R.id.nav_notification:
 //                            temp = new NotificationFragment();
@@ -63,5 +65,14 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    String returnLanguage()
+    {
+        String str = getString(R.string.ic_home);
+        if (str.equals("Home"))
+            return "en";
+        return "vi";
+    }
+
 
 }

@@ -42,5 +42,6 @@ public class SettingActivity extends AppCompatActivity {
         bt_language = findViewById(R.id.st_ib_language);
         bt_notification = findViewById(R.id.st_ib_notification);
         bt_account = findViewById(R.id.st_ib_account);
+
     }
 }
