@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginStart="15dp"
-            android:hint="Bạn đang tìm gì?"
+            android:hint="@string/what_r_u_lookin"
             android:textColor="@color/black"
             android:textSize="18dp"
             android:singleLine="true"
@@ -44,7 +44,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tìm kiếm gần đây"
+            android:text="@string/recent_search"
             android:textColor="@color/black"
             android:textSize="18dp"
             android:textStyle="bold"/>
@@ -53,7 +53,8 @@
             android:id="@+id/btn_delete_searches"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="XÓA"
+            android:text="@string/delete"
+            android:textAllCaps="true"
             android:textSize="18dp"
             android:textColor="@color/light_blue"
             android:layout_alignParentEnd="true"
@@ -91,7 +92,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đã xem"
+            android:text="@string/seen"
             android:textColor="@color/black"
             android:textSize="18dp"
             android:textStyle="bold"/>
@@ -100,7 +101,7 @@
             android:id="@+id/btn_delete_watches"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="XÓA"
+            android:text="@string/delete"
             android:textSize="18dp"
             android:textColor="@color/light_blue"
             android:layout_alignParentEnd="true"

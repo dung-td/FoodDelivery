@@ -1,15 +1,22 @@
 package com.example.fooddelivery.activity.me;
 
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.LanguageSetting;
 import com.example.fooddelivery.adapter.voucherStatusAdapter;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.Locale;
 
 public class VoucherActivity extends AppCompatActivity {
 
@@ -21,6 +28,7 @@ public class VoucherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voucher);
 
+        setLocal();
         Init();
         initTabLayoutAndViewPager();
     }
@@ -42,10 +50,32 @@ public class VoucherActivity extends AppCompatActivity {
 
     private void initTabLayoutAndViewPager() {
         voucherStatusAdapter adapter = new voucherStatusAdapter(getSupportFragmentManager(),
-                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, this);
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public void setLocal()
+    {
+        String langCode;
+        TextView tvVoucher = findViewById(R.id.tv_voucher);
+        LanguageSetting languageSetting = new LanguageSetting();
+
+        Log.e("Lang", languageSetting.getChosenLanguege());
+        if (tvVoucher.getText().equals("Voucher"))
+            langCode = "en";
+        else   {
+            langCode ="vi";
+        }
+
+        Locale locale = new Locale(langCode);
+        locale.setDefault(locale);
+
+        Resources resources = this.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 
 }

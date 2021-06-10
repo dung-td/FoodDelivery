@@ -29,7 +29,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Thông tin cá nhân"
+                android:text="@string/user_info"
+                android:textAllCaps="true"
                 android:textSize="20dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -84,7 +85,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Họ tên"
+                android:text="@string/full_name"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
@@ -152,7 +153,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Số điện thoại"
+                android:text="@string/phoneNumber"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
@@ -242,7 +243,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Địa chỉ nhận hàng"
+                android:text="@string/deliver_address"
                 android:textColor="@color/black"
                 android:layout_marginLeft="20dp"
                 android:textStyle="bold"/>
@@ -259,7 +260,7 @@
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mặc định"
+                android:text="@string/__default"
                 android:layout_marginLeft="20dp"
                 android:textSize="12dp"
                 />
@@ -284,7 +285,7 @@
     <android.widget.Button
         android:layout_height="60dp"
         android:layout_width="200dp"
-        android:text="Lưu thay đổi"
+        android:text="@string/save_change"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:background="@color/light_red"

@@ -1,17 +1,21 @@
 package com.example.fooddelivery.adapter;
 
+import android.app.Activity;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.example.fooddelivery.R;
 import com.example.fooddelivery.fragment.VoucherFragment;
 
 public class voucherStatusAdapter extends FragmentStatePagerAdapter {
-
-    public voucherStatusAdapter(@NonNull FragmentManager fm, int behavior) {
+    Activity activity;
+    public voucherStatusAdapter(@NonNull FragmentManager fm, int behavior, Activity activity) {
         super(fm, behavior);
+        this.activity = activity;
     }
 
 
@@ -31,16 +35,16 @@ public class voucherStatusAdapter extends FragmentStatePagerAdapter {
         String title = "";
         switch (position) {
             case 0:
-                title = "HIỆN CÓ";
+                title = activity.getBaseContext().getResources().getString(R.string.now_available);
                 break;
             case 1:
-                title = "ĐÃ DÙNG";
+                title = activity.getBaseContext().getResources().getString(R.string.used);
                 break;
             case 2:
-                title = "HẾT HẠN";
+                title = activity.getBaseContext().getResources().getString(R.string.expired);
                 break;
             default:
-                title = "HIỆN CÓ";
+                title = activity.getBaseContext().getResources().getString(R.string.now_available);
                 break;
         }
         return title;

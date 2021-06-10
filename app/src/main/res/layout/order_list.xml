@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:textColor="@color/black"
-            android:text="2 sản phẩm nữa..."/>
+            android:text="@string/more"/>
 
         <View style="@style/Divider.Horizontal"
             android:layout_below="@id/tv_ordlist_details"
@@ -121,7 +121,7 @@
                     android:textSize="18dp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:text="Tổng cộng (2 sản phẩm)"
+                    android:text="@string/total_amount"
                     android:layout_marginLeft="10dp"/>
 
                 <TextView

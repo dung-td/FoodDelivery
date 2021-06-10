@@ -79,7 +79,7 @@
             android:layout_marginTop="3dp"
             android:textColor="@color/light_blue"
             android:textSize="20dp"
-            android:text="Đóng cửa"
+            android:text="@string/closed"
             android:textStyle="bold"/>
     </LinearLayout>
 

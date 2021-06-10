@@ -162,7 +162,7 @@
             android:layout_width="200dp"
             android:textColor="@color/white"
             android:background="@color/light_red"
-            android:text="gửi đánh giá"
+            android:text="@string/send_comment"
             android:textStyle="bold"
             />
     </RelativeLayout>

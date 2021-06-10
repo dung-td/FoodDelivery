@@ -37,6 +37,7 @@
     </FrameLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/language_hint"
         android:hint="@string/language"
         android:background="@color/white"
         android:layout_marginTop="16dp"
