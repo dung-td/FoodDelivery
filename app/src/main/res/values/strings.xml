@@ -74,6 +74,13 @@
     <string name="pass_must_match">Mật khẩu phải trùng khớp</string>
     <string name="pass_regex">Mật khẩu phải có ít nhất 8 ký tự, tồn tại chữ thường, chữ hoa, số và kí tự đặc biệt</string>
     <string name="pls_enter_address">Vui lòng điền địa chỉ</string>
+
+    <string-array name="product_size">
+        <item>S</item>
+        <item>M</item>
+        <item>L</item>
+    </string-array>
+  
 <!--    <string name="first_step">Bước đầu tiên để bạn tham gia!</string>-->
     <string name="provide_otp_help">Vui lòng nhập mật mã OTP được gửi đến</string>
     <string name="user_not_exist">Thông tin không tồn tại trong hệ thống</string>

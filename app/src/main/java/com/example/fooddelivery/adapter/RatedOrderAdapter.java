@@ -60,7 +60,7 @@ public class RatedOrderAdapter extends BaseAdapter {
         productPhoto.setImageResource(R.drawable.trasenvang);
         name.setText(listOrderItem.get(position).getProduct().getName());
         category.setText("Loại hàng");
-        price.setText(listOrderItem.get(position).getProduct().getPrice());
+        price.setText(listOrderItem.get(position).getProduct().getPrice().get(0));
         avatar.setImageResource(R.color.light_blue);
         date.setText("1/1/2021");
         comment.setText("Đây là bình luận");
