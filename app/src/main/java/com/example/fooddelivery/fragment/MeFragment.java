@@ -1,5 +1,6 @@
 package com.example.fooddelivery.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -40,6 +41,8 @@ public class MeFragment extends Fragment {
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
     String userID = "Hp9LlgLygEstFV4sIpxc";
+
+    boolean shouldRefreshOnResume;
 
     @Nullable
     @Override
@@ -111,7 +114,7 @@ public class MeFragment extends Fragment {
         tv_userName = getView().findViewById(R.id.me_fl_name);
     }
 
-    void loadAvatar() {
+    public void loadAvatar() {
         StorageReference fileRef = reference.child("UserImage/"+userID);
         fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -138,5 +141,18 @@ public class MeFragment extends Fragment {
             }
 
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        shouldRefreshOnResume = true;
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (shouldRefreshOnResume) loadAvatar();
     }
 }

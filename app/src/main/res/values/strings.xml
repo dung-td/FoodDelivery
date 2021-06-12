@@ -122,6 +122,8 @@
     <string name="expired">Hết hạn</string>
     <string name="done">Xong</string>
     <string name="username">Tên đăng nhập</string>
+    <string name="update_ava_done">Cập nhật ảnh đại diện thành công</string>
+    <string name="update_infodata_done">Cập nhật dữ liệu người dùng thành công</string>
 
 
 </resources>

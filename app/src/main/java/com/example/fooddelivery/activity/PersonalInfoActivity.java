@@ -3,6 +3,9 @@ package com.example.fooddelivery.activity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -22,6 +25,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.fragment.HomeFragment;
+import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.model.ModifyFirebase;
 import com.example.fooddelivery.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -85,7 +90,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 onBackPressed();
             }
+
         });
+
+
 
         tv_ChangeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,14 +211,21 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Map<String, String> image = new HashMap<>();
-                        image.put("imageLink", uri.toString());
-                        image.put("timeUpload", new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()));
-                        root.collection("User").add(image);
+                        root.collection("User/")
+                                .document(userID)
+                                .update("profileImageLink", uri.toString())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(getApplicationContext(), getString(R.string.update_ava_done), Toast.LENGTH_LONG).show();
+                                    }
+                                });
                     }
                 });
             }
         });
+
+
     }
 
     void updateData() {
@@ -227,7 +242,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
         root.collection("User").document(userID)
                 .update("address", address,
                         "phone_number", phone,
-                        "email", email);
+                        "email", email)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.update_infodata_done), Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     void loadInformation() {

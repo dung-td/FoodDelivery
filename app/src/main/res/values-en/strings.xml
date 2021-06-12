@@ -110,4 +110,6 @@
     <string name="expired">Expired</string>
     <string name="done">Done</string>
     <string name="username">Username</string>
+    <string name="update_ava_done">Your avatar has updated successfully</string>
+    <string name="update_infodata_done">Your data has updated successfully</string>
 </resources>
