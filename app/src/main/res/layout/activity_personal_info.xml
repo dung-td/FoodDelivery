@@ -24,7 +24,7 @@
                 android:background="@drawable/ic_baseline_arrow_back_24"
                 android:layout_marginStart="15dp"
                 android:layout_centerVertical="true"
-                android:id="@+id/bt_method_back"/>
+                android:id="@+id/bt_perinfo_back"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -50,15 +50,16 @@
         <ImageView
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:background="@color/light_blue"
+            android:background="@drawable/male_user_96px"
             android:layout_centerHorizontal="true"
             android:id="@+id/im_perinfo"/>
 
         <TextView
+            android:id="@+id/tv_perinfo_changeavatar"
             android:layout_below="@id/im_perinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đổi ảnh"
+            android:text="@string/change"
             android:clickable="true"
             android:textColor="@color/light_blue"
             android:layout_alignParentRight="true"
@@ -119,7 +120,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tên đăng nhập"
+                android:text="@string/username"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
@@ -132,8 +133,11 @@
                 android:textSize="18dp"
                 android:textColor="@color/black"
                 />
+
         </LinearLayout>
+
     </RelativeLayout>
+
     <View style="@style/Divider.Horizontal"
         android:layout_below="@id/perinfo_rl3"
         />
@@ -167,17 +171,26 @@
                 android:textSize="18dp"
                 />
         </LinearLayout>
+
         <TextView
             android:id="@+id/tv_perinfo_changephone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thay đổi"
-            android:textStyle="bold"
-            android:textColor="@color/light_blue"
-            android:clickable="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:text="@string/change"
+            android:textColor="@color/light_blue"
+            android:textStyle="bold" />
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/et_perinfo_phone"
+            android:layout_marginLeft="20dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"/>
     </RelativeLayout>
     <View style="@style/Divider.Horizontal"
         android:layout_below="@id/perinfo_rl4"
@@ -212,18 +225,30 @@
                 android:textSize="18dp"
                 />
         </LinearLayout>
+
         <TextView
             android:id="@+id/tv_perinfo_changeemail"
-            android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thay đổi"
-            android:textStyle="bold"
-            android:textColor="@color/light_blue"
-            android:clickable="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:text="@string/change"
+            android:textColor="@color/light_blue"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/et_perinfo_email"
+            android:layout_marginLeft="20dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"/>
     </RelativeLayout>
+
+
     <View style="@style/Divider.Horizontal"
         android:layout_below="@id/perinfo_rl5"
         />
@@ -256,27 +281,41 @@
                 android:textSize="18dp"
                 android:textColor="@color/black"
                 />
-            <TextView
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/__default"
-                android:layout_marginLeft="20dp"
-                android:textSize="12dp"
-                />
+
 
         </LinearLayout>
+
         <TextView
             android:id="@+id/tv_perinfo_changeaddress"
-            android:layout_marginRight="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thay đổi"
-            android:textStyle="bold"
-            android:textColor="@color/light_blue"
-            android:clickable="true"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:clickable="true"
+            android:onClick="onClick"
+            android:text="@string/change"
+            android:textColor="@color/light_blue"
+            android:textStyle="bold" />
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:id="@+id/et_perinfo_address"
+            android:layout_marginLeft="20dp"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"/>
+
+        <TextView
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/__default"
+            android:layout_marginLeft="20dp"
+            android:textSize="12dp"
+            android:layout_marginTop="50dp"
+
+            />
     </RelativeLayout>
     <View style="@style/Divider.Horizontal"
         android:layout_below="@id/perinfo_rl6"
@@ -292,7 +331,7 @@
         android:layout_below="@id/perinfo_rl6"
         android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/bt_fm_perinfo_save"
+        android:id="@+id/bt_perinfo_save"
         android:layout_marginBottom="90dp"
         />
 

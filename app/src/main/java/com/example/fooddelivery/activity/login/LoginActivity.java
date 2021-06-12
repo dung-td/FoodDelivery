@@ -243,8 +243,7 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    void loadLanguage()
-    {
+    void loadLanguage() {
         String langPref = "lang_code";
         SharedPreferences prefs = getSharedPreferences("MyPref",
                 Activity.MODE_PRIVATE);

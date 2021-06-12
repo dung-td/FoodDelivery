@@ -3,7 +3,6 @@ package com.example.fooddelivery.activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,21 +10,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.fooddelivery.adapter.ItemOnMainAdapter;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.fragment.OrderFragment;
-import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.Product;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -114,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                             break;
 //                        case R.id.nav_notification:
 //                            temp = new NotificationFragment();
-//                            break;
+                           // break;
                         case R.id.nav_me:
                             temp = new MeFragment();
                             break;
@@ -135,6 +129,5 @@ public class MainActivity extends AppCompatActivity {
             return "en";
         return "vi";
     }
-
 
 }

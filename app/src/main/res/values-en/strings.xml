@@ -70,10 +70,10 @@
     <string name="pls_enter_phone">Please enter your phone</string>
     <string name="wrong_phone_format">Wrong phone number format</string>
     <string name="pass_must_match">Password is no match</string>
-    <string name="pass_regex">" Password must have at least 8 characters, contain lowercase letters, uppercase letters, numbers and special characters"</string>
+    <string name="pass_regex">Password must have at least 8 characters, contain lowercase letters, uppercase letters, numbers and special characters</string>
     <string name="pls_enter_address">Please enter your address</string>
     <string name="shopping_cart">SHOPPING CART</string>
-    <string name="deliver_address">" Delivery address"</string>
+    <string name="deliver_address">Delivery address</string>
     <string name="change">Change</string>
     <string name="total_amount">Total amount</string>
     <string name="freight_cost">Freight cost</string>
@@ -108,4 +108,6 @@
     <string name="used">Used</string>
     <string name="now_available">Now available</string>
     <string name="expired">Expired</string>
+    <string name="done">Done</string>
+    <string name="username">Username</string>
 </resources>
