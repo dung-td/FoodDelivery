@@ -17,6 +17,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.adapter.MyAdapter;
 import com.example.fooddelivery.R;
@@ -32,7 +33,7 @@ import static android.graphics.Color.WHITE;
 public class MerchantActivity extends AppCompatActivity {
 
     ScrollView scrollViewContent;
-    ImageView imageViewLogo, buttonBack, buttonMore, buttonLove, buttonCart;
+    ImageView imageViewLogo, buttonBack, buttonMore, buttonCart;
     TextView textViewBannerIndex, textViewMerchantName, textViewRating, textViewTime, textViewDistance;
     TabLayout tabLayout;
     MyViewPager viewPager;
@@ -50,13 +51,13 @@ public class MerchantActivity extends AppCompatActivity {
         initView();
         initTabLayoutAndViewPager();
         changeToolbarColor();
+        changeToolbarButtonColorToLighter();
     }
 
     @SuppressLint("SetTextI18n")
     private void initView() {
         scrollViewContent = findViewById(R.id.scroll_content);
         buttonBack = findViewById(R.id.ic_back_arrow);
-        buttonLove = findViewById(R.id.ic_love);
         buttonCart = findViewById(R.id.ic_cart);
         buttonMore = findViewById(R.id.ic_more);
         imageViewLogo = findViewById(R.id.img_logo);
@@ -73,7 +74,8 @@ public class MerchantActivity extends AppCompatActivity {
         linearLayoutCart = findViewById(R.id.btn_cart_background);
         linearLayoutMore = findViewById(R.id.btn_more_background);
         relativeLayoutToolbar = findViewById(R.id.toolbar);
-        this.merchant = (Merchant) getIntent().getParcelableExtra("Merchant");
+        this.merchant = (Merchant) LoginActivity.firebase.productList.get(getIntent().
+                getIntExtra("ClickedProductIndex", 0)).getMerchant();
         textViewMerchantName.setText(merchant.getName() + " - " + merchant.getAddress());
 
         tabLayout.addTab(tabLayout.newTab().setText("MENU"));
@@ -84,7 +86,7 @@ public class MerchantActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MerchantActivity.super.onBackPressed();
+                changeToolbarButtonColorToLighter();
             }
         });
     }
@@ -114,16 +116,13 @@ public class MerchantActivity extends AppCompatActivity {
         });
 
 //        Banner ViewPager
-        ArrayList<Uri> imageSlide = new ArrayList<Uri>();
-//        imageSlide.add();
-//        int[] imageSlide = new int[]{R.drawable.tra_sen_vang, R.drawable.advertisement, R.drawable.phindi_banner};
-        ImageAdapter adapterView = new ImageAdapter(this, imageSlide);
+        ImageAdapter adapterView = new ImageAdapter(this, merchant.getImage());
         viewPagerBanner.setAdapter(adapterView);
         viewPagerBanner.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                textViewBannerIndex.setText((viewPagerBanner.getCurrentItem() + 1) + "/" + imageSlide.size());
+                textViewBannerIndex.setText((viewPagerBanner.getCurrentItem() + 1) + "/" + merchant.getImage().size());
             }
 
             @Override
@@ -166,7 +165,6 @@ public class MerchantActivity extends AppCompatActivity {
     private void turnWhiteToolbar() {
         linearLayoutBack.setBackground(null);
         linearLayoutCart.setBackground(null);
-        linearLayoutLove.setBackground(null);
         linearLayoutMore.setBackground(null);
         relativeLayoutToolbar.setBackgroundColor(WHITE);
     }
@@ -174,19 +172,15 @@ public class MerchantActivity extends AppCompatActivity {
     private void turnTransparentToolbar() {
         linearLayoutBack.setBackgroundResource(R.drawable.circle_toolbar_button_background);
         linearLayoutCart.setBackgroundResource(R.drawable.circle_toolbar_button_background);
-        linearLayoutLove.setBackgroundResource(R.drawable.circle_toolbar_button_background);
         linearLayoutMore.setBackgroundResource(R.drawable.circle_toolbar_button_background);
         relativeLayoutToolbar.setBackground(null);
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint({"NewApi", "UseCompatLoadingForDrawables"})
     private void changeToolbarButtonColorToDarker() {
         Drawable drawable = getDrawable(R.drawable.ic_baseline_arrow_back_24);
         drawable.setTint(Color.parseColor("#00224b"));
         buttonBack.setImageDrawable(drawable);
-        drawable = getDrawable(R.drawable.ic_baseline_favorite_border_24);
-        drawable.setTint(Color.parseColor("#00224b"));
-        buttonLove.setImageDrawable(drawable);
         drawable = getDrawable(R.drawable.ic_baseline_add_shopping_cart_24);
         drawable.setTint(Color.parseColor("#00224b"));
         buttonCart.setImageDrawable(drawable);
@@ -195,14 +189,11 @@ public class MerchantActivity extends AppCompatActivity {
         buttonMore.setImageDrawable(drawable);
     }
 
-    @SuppressLint("NewApi")
+    @SuppressLint({"NewApi", "UseCompatLoadingForDrawables"})
     private void changeToolbarButtonColorToLighter() {
         Drawable drawable = getDrawable(R.drawable.ic_baseline_arrow_back_24);
         drawable.setTint(Color.parseColor("#FFFFFF"));
         buttonBack.setImageDrawable(drawable);
-        drawable = getDrawable(R.drawable.ic_baseline_favorite_border_24);
-        drawable.setTint(Color.parseColor("#FFFFFF"));
-        buttonLove.setImageDrawable(drawable);
         drawable = getDrawable(R.drawable.ic_baseline_add_shopping_cart_24);
         drawable.setTint(Color.parseColor("#FFFFFF"));
         buttonCart.setImageDrawable(drawable);

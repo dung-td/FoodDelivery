@@ -111,9 +111,9 @@
                     android:text="49.000 đ"
                     android:layout_below="@id/tv_product_name_en"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="12dp"
                     android:textColor="@color/black"
-                    android:textSize="25dp"
+                    android:textSize="30dp"
                     android:textStyle="bold"/>
 
                 <Spinner
@@ -206,7 +206,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="5dp"/>
 
 
             <LinearLayout
@@ -235,8 +235,7 @@
                         android:layout_height="wrap_content"
                         android:text="(20)"
                         android:textColor="@color/black"
-                        android:layout_marginStart="180dp"/>
-
+                        android:layout_marginStart="155dp"/>
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -265,6 +264,7 @@
             android:layout_marginTop="17dp"
             android:layout_marginStart="10dp"
             android:background="@drawable/circle_toolbar_button_background">
+
             <ImageView
                 android:id="@+id/ic_back_arrow"
                 android:layout_width="35dp"
@@ -281,17 +281,18 @@
             android:layout_marginStart="210dp"
             android:layout_toEndOf="@+id/btn_back_background"
             android:background="@drawable/circle_toolbar_button_background">
+
             <ImageView
                 android:id="@+id/ic_love"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="1dp"
-                android:src="@drawable/ic_baseline_favorite_border_24"
+                android:src="@drawable/ic_baseline_favourite_white_border_24"
                 android:layout_gravity="center"/>
         </LinearLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/btn_cart_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -299,14 +300,28 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/btn_love_background"
             android:background="@drawable/circle_toolbar_button_background">
+
             <ImageView
                 android:id="@+id/ic_cart"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center"
-                android:layout_marginStart="3dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginStart="0dp"
                 android:src="@drawable/ic_baseline_add_shopping_cart_24"/>
-        </LinearLayout>
+
+            <TextView
+                android:id="@+id/cart_badge"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:textColor="@color/black"
+                android:textSize="10sp"
+                android:gravity="center"
+                android:textAlignment="center"
+                android:backgroundTint="@android:color/transparent"
+                android:background="@drawable/circle_toolbar_button_background"
+                android:layout_gravity="top|end"/>
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/btn_more_background"

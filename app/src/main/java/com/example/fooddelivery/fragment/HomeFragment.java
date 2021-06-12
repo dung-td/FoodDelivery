@@ -1,10 +1,12 @@
 package com.example.fooddelivery.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,7 +14,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fooddelivery.activity.DrinkSectionActivity;
 import com.example.fooddelivery.activity.MainActivity;
+import com.example.fooddelivery.activity.ProductActivity;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.ItemOnMainAdapter;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.model.GridSpacingItemDecoration;
@@ -24,9 +29,23 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    List<Product> products;
+    LinearLayout sectionDrink;
+    public static ItemOnMainAdapter itemOnMainAdapter;
+    public static RecyclerView recyclerViewProducts;
 
     public HomeFragment() {
+    }
+
+    private void initClickListener() {
+        sectionDrink = getView().findViewById(R.id.section_drink);
+        sectionDrink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), DrinkSectionActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -38,14 +57,12 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initClickListener();
 
-        products = new ArrayList<>();
-        products = MainActivity.productList;
-
-        RecyclerView recyclerViewProducts = (RecyclerView)getView().findViewById(R.id.recycler_view_products);
+        recyclerViewProducts = (RecyclerView)getView().findViewById(R.id.recycler_view_products);
         recyclerViewProducts.setHasFixedSize(true);
 
-        ItemOnMainAdapter itemOnMainAdapter = new ItemOnMainAdapter(getContext(), products);
+        itemOnMainAdapter = new ItemOnMainAdapter(getContext(), LoginActivity.firebase.productList);
         GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
         int spanCount = 2; // 3 columns
         int spacing = 40; // 50px

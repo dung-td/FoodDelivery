@@ -68,7 +68,7 @@ public class OrderFragment extends Fragment {
         }
 
         Locale locale = new Locale(langCode);
-        locale.setDefault(locale);
+        Locale.setDefault(locale);
 
         Resources resources = activity.getResources();
         Configuration config = resources.getConfiguration();

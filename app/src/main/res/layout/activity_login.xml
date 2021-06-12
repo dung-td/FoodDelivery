@@ -106,6 +106,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="@dimen/loginViewsMargin"
                     android:text="@string/login"
+                    android:textAlignment="center"
                     app:initialCornerAngle="27dp"
                     app:spinning_bar_color="#FFF"
                     app:spinning_bar_padding="6dp"

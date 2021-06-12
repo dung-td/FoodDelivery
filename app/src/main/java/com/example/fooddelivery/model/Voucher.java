@@ -9,8 +9,6 @@ public class Voucher {
     public Voucher() {
     }
 
-    ;
-
     public Voucher(String title, String code, String date, String[] details) {
         Title = title;
         Code = code;

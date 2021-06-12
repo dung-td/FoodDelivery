@@ -51,7 +51,7 @@
             <RelativeLayout
                 android:id="@+id/merchant_info"
                 android:layout_width="match_parent"
-                android:layout_height="90dp">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/img_logo"
@@ -138,13 +138,15 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="7dp"
                 android:background="@color/black"/>
 
 <!--            Voucher Box-->
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/voucher_box"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -162,7 +164,8 @@
                     android:text="@string/voucher_title"
                     android:textColor="@color/black"
                     android:layout_marginStart="20dp"
-                    android:layout_gravity="center_vertical"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/ic_voucher"
                     android:textSize="17dp"/>
 
                 <TextView
@@ -172,10 +175,12 @@
                     android:text="@string/voucher_detail"
                     android:textSize="18dp"
                     android:textStyle="bold"
+                    android:layout_marginEnd="10dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
                     android:textColor="@color/light_blue"
-                    android:layout_marginStart="150dp"
                     android:layout_gravity="center_vertical"/>
-            </LinearLayout>
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -236,38 +241,21 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/btn_love_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-            android:layout_marginStart="210dp"
-            android:layout_toEndOf="@+id/btn_back_background"
-            android:background="@drawable/circle_toolbar_button_background">
-        <ImageView
-            android:id="@+id/ic_love"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="2dp"
-            android:layout_marginTop="1dp"
-            android:src="@drawable/ic_baseline_favorite_border_24"
-            android:layout_gravity="center"/>
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/btn_cart_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17dp"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/btn_love_background"
+            android:layout_marginStart="250dp"
+            android:layout_toEndOf="@+id/btn_back_background"
             android:background="@drawable/circle_toolbar_button_background">
-        <ImageView
-            android:id="@+id/ic_cart"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="3dp"
-            android:src="@drawable/ic_baseline_add_shopping_cart_24"/>
+
+            <ImageView
+                android:id="@+id/ic_cart"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="3dp"
+                android:src="@drawable/ic_baseline_add_shopping_cart_24"/>
         </LinearLayout>
 
         <LinearLayout

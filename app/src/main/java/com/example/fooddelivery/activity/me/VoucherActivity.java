@@ -70,7 +70,7 @@ public class VoucherActivity extends AppCompatActivity {
         }
 
         Locale locale = new Locale(langCode);
-        locale.setDefault(locale);
+        Locale.setDefault(locale);
 
         Resources resources = this.getResources();
         Configuration config = resources.getConfiguration();

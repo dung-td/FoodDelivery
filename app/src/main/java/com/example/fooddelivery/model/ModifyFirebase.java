@@ -1,13 +1,18 @@
 package com.example.fooddelivery.model;
 
+import android.content.Context;
+import android.content.res.Configuration;
 import android.net.Uri;
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
-import com.example.fooddelivery.fragment.HomeFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.fooddelivery.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -19,6 +24,7 @@ import com.google.firebase.storage.UploadTask;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -26,48 +32,54 @@ public class ModifyFirebase {
     private static final String TAG = "firebaseFirstore";
     private Object object;
     private String docRef;
-    private Uri image[];
+    private Uri[] image;
     private String collectionPath = "";
-    public ArrayList<Product> productList;
+    public ArrayList<Product> productList = new ArrayList<Product>();
+    public ArrayList<String> favouriteProductList = new ArrayList<String>();
+    public ArrayList<Merchant> merchantList = new ArrayList<Merchant>();
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
-    private boolean checkUsername = false;
+    private final boolean checkUsername = false;
     private boolean uIDCheck = false;
 
     public ModifyFirebase() {
-        root.collection("Product/")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            if (document == null)
-                                break;
-                            Product product = new Product();
-                            product.setId((String) document.getId());
-                            product.setName((String) document.get("Name"));
-                            product.setStatus((String) document.get("Status"));
-                            product.setPrice((ArrayList<String>) document.get("Price"));
-                            product.setPrice((ArrayList<String>) document.get("Size"));
-                            product.setRating((String) document.get("Rating"));
-                            getImageList(product);
-                        }
-                    }
-                });
-    };
-
-    private void getImage(Product p, String id) {
-        StorageReference fileRef = reference.child("ProductImage/" + p.getMerchant() + "/" + p.getId() + "/");
-        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                p.getImage().add(uri);
-            }
-        });
     }
 
-    private void getImageList(Product p) {
-        root.collection("Product/" + p.getId() + "/Photos/")
+    public void addProductToFavourite(Context context, String productId) {
+        Map<String, String> product = new HashMap<>();
+        product.put("ProductId", productId);
+        root.collection("User/9Iwrs6oipXaGZKYXS3ZkzuwsB9D2/Favourite/")
+                .document(productId)
+                .set(product)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, context.getString(R.string.add_favourite_success), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void removeProductFromFavourite(Context context, String productId) {
+        root.collection("User/9Iwrs6oipXaGZKYXS3ZkzuwsB9D2/Favourite/")
+                .document(productId)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, context.getString(R.string.remove_favourite_success), Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+    }
+
+    public void getData(final OnGetDataListener listener) {
+        listener.onStart();
+        root.collection("Merchant/")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -75,10 +87,92 @@ public class ModifyFirebase {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             if (document == null)
                                 break;
-                            getImage(p, document.getId());
+                            Merchant merchant = new Merchant();
+                            merchant.setName((String) document.get("Name"));
+                            merchant.setAddress((String) document.get("Address"));
+                            merchant.setId((String) document.getId());
+
+                            ArrayList<Uri> merchantImages = new ArrayList<Uri>();
+                            root.collection("Merchant/" + merchant.getId() + "/Photos/")
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                                if (document == null)
+                                                    break;
+                                                if (((String) document.get("Image_Link")) != null)
+                                                    merchantImages.add(Uri.parse((String) document.get("Image_Link")));
+                                            }
+                                            merchant.setImage(merchantImages);
+                                            merchantList.add(merchant);
+                                        }
+                                    });
+                        }
+
+                        root.collection("Product/")
+                                .get()
+                                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                            if (document == null)
+                                                break;
+                                            Product product = new Product();
+                                            product.setId((String) document.getId());
+                                            product.setName((String) document.get("Name"));
+                                            product.setEn_Name((String) document.get("Name_En"));
+                                            product.setStatus((String) document.get("Status"));
+                                            product.setPrice((ArrayList<String>) document.get("Price"));
+                                            product.setProductSize((ArrayList<String>) document.get("Size"));
+                                            product.setMerchant((Merchant) findMerchantFromId(((String) document.get("Merchant")).substring(9)));
+                                            product.setRating((String) document.get("Rating"));
+
+                                            ArrayList<Uri> images = new ArrayList<Uri>();
+                                            root.collection("Product/" + product.getId() + "/Photos/")
+                                                    .get()
+                                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                                                if (document == null)
+                                                                    break;
+                                                                if (((String) document.get("Image_Link")) != null)
+                                                                    images.add(Uri.parse((String) document.get("Image_Link")));
+                                                            }
+                                                            product.setImage(images);
+                                                            productList.add(product);
+                                                            if (productList.size() > 1 && merchantList.size() > 0)
+                                                                listener.onSuccess();
+                                                        }
+                                                    });
+                                        }
+//                                        listener.onSuccess();
+                                    }
+                                });
+                    }
+                });
+        root.collection("User/9Iwrs6oipXaGZKYXS3ZkzuwsB9D2/Favourite")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            if (document == null)
+                                break;
+                            favouriteProductList.add((String) document.get("ProductId"));
                         }
                     }
                 });
+    }
+
+
+    private Merchant findMerchantFromId(String id) {
+        for (Merchant mer : merchantList) {
+            if (mer.getId().equals(id))
+                return mer;
+        }
+        return null;
     }
 
     public void insertDataFirestore(String id) {  // Thêm vào Firestore

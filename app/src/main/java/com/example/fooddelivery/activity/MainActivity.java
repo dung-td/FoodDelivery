@@ -1,7 +1,13 @@
 package com.example.fooddelivery.activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -28,105 +34,57 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    public static ArrayList<Product> productList;
-    public static FirebaseFirestore root = FirebaseFirestore.getInstance();
     BottomNavigationView bottomNav;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initFirebaseData();
-    }
-
-    private void initFirebaseData() {
-        productList = new ArrayList<Product>();
-        root.collection("Product/")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            if (document == null)
-                                break;
-                            Product product = new Product();
-                            product.setId((String) document.getId());
-                            product.setName((String) document.get("Name"));
-                            product.setStatus((String) document.get("Status"));
-                            product.setPrice((ArrayList<String>) document.get("Price"));
-                            product.setProductSize((ArrayList<String>) document.get("Size"));
-                            product.setMerchant(splitMerchantId((String) document.get("Merchant")));
-                            product.setRating((String) document.get("Rating"));
-                            getImageList(product);
-                        }
-                        initView();
-                    }
-                });
-    }
-
-    private String splitMerchantId(String data) {
-        return data.substring(9);
-    }
-
-    private void getImageList(Product p) {
-        ArrayList<Uri> images = new ArrayList<Uri>();
-        root.collection("Product/" + p.getId() + "/Photos/")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            if (document == null)
-                                break;
-                            images.add(Uri.parse((String) document.get("Image_Link")));
-                        }
-                        p.setImage(images);
-                        productList.add(p);
-                    }
-                });
+        initView();
     }
 
     public void initView () {
         bottomNav = findViewById(R.id.bottomNavigationView);
         bottomNav.setBackground(null);
         bottomNav.getMenu().getItem(2).setEnabled(false);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        initBottomNavigation();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new HomeFragment()).commit();
     }
 
-    private final BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment temp = null;
-                    switch (item.getItemId()) {
-                        case R.id.nav_home:
-                            temp = new HomeFragment();
-                            break;
-                        case R.id.nav_order:
-
-                            temp = new OrderFragment(MainActivity.this, returnLanguage());
-                            break;
+    private void initBottomNavigation() {
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment temp = null;
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        temp = new HomeFragment();
+                        break;
+                    case R.id.nav_order:
+                        temp = new OrderFragment(MainActivity.this, returnLanguage());
+                        break;
 //                        case R.id.nav_notification:
 //                            temp = new NotificationFragment();
 //                            break;
-                        case R.id.nav_me:
-                            temp = new MeFragment();
-                            break;
-                    }
-
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    FragmentTransaction ft = fragmentManager.beginTransaction();
-                    ft.replace(R.id.fragment_container, temp);
-                    ft.commit();
-                    return true;
+                    case R.id.nav_me:
+                        temp = new MeFragment();
+                        break;
                 }
-            };
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.replace(R.id.fragment_container, temp);
+                ft.commit();
+                return true;
+            }
+        });
+    }
 
     String returnLanguage()
     {
@@ -135,6 +93,4 @@ public class MainActivity extends AppCompatActivity {
             return "en";
         return "vi";
     }
-
-
 }

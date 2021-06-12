@@ -108,4 +108,6 @@
     <string name="used">Used</string>
     <string name="now_available">Now available</string>
     <string name="expired">Expired</string>
+    <string name="add_favourite_success">Successfully added to favourite!</string>
+    <string name="remove_favourite_success">Successfully removed from favourite!</string>
 </resources>

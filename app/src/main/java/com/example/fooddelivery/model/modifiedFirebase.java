@@ -22,17 +22,15 @@ public class modifiedFirebase {
     private static final String TAG = "firebaseFirstore";
     private Object object;
     private String docRef;
-    private Uri image[];
+    private Uri[] image;
     private String collectionPath = "";
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
-    private boolean checkUsername = false;
+    private final boolean checkUsername = false;
     private boolean uIDCheck = false;
 
-
-
     public modifiedFirebase() {
-    };
+    }
 
     public void insertDataFirestore(String id) {
         root.collection(collectionPath).document(id).set(object)

@@ -1,8 +1,10 @@
 package com.example.fooddelivery.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,25 +20,27 @@ import com.bumptech.glide.Glide;
 import com.example.fooddelivery.activity.MainActivity;
 import com.example.fooddelivery.activity.ProductActivity;
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.Product;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.common.io.Resources;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.rpc.context.AttributeContext;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemOnMainAdapter extends RecyclerView.Adapter<ItemOnMainAdapter.ItemOnMainViewHolder> {
 
     private final Context context;
     private final List<Product> items;
-    private Merchant itemMerchant;
 
     public ItemOnMainAdapter(Context context, List<Product> items) {
         this.context = context;
         this.items = items;
-        this.itemMerchant = new Merchant();
     }
 
     @NonNull
@@ -51,36 +55,43 @@ public class ItemOnMainAdapter extends RecyclerView.Adapter<ItemOnMainAdapter.It
     @Override
     public void onBindViewHolder(@NonNull ItemOnMainViewHolder holder, int position) {
         Product p = items.get(position);
-        Glide.with(context).load(p.getImage().get(0)).into(holder.imageViewItem);
-//        holder.imageViewItem.setImageResource(p.getImage_id());
-        holder.textViewItemPrice.setText(p.getPrice().get(1) + " đ");
+        if (LoginActivity.firebase.favouriteProductList.contains(p.getId())) {
+            holder.isFavourite = true;
+            holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_24);
+        }
+
+        holder.textViewItemPrice.setText(p.getPrice().get(0) + " đ");
         holder.textViewItemName.setText(p.getName());
         holder.textViewRating.setText(p.getRating());
-        holder.textViewItemMerchant.setText(p.getMerchant());
+        holder.textViewItemMerchant.setText(p.getMerchant().getName());
+        Glide.with(context).load(p.getImage().get(0)).into(holder.imageViewItem);
         holder.cardViewProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getMerchantNameFromIdAndNavigate(p);
+                Intent intent = new Intent(context, ProductActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("ClickedProductIndex", position);
+                intent.putExtra("IsFavourite", holder.isFavourite);
+                context.startActivity(intent);
             }
         });
-    }
-
-    public void getMerchantNameFromIdAndNavigate(Product p) {
-        FirebaseFirestore.getInstance().document("Merchant/" + p.getMerchant())
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        itemMerchant = new Merchant(((String) documentSnapshot.get("Name")),
-                                ((String) documentSnapshot.get("Address")));
-
-                        Intent intent = new Intent(context, ProductActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("ClickedProductMerchant", itemMerchant);
-                        intent.putExtra("ClickedProduct", p);
-                        context.startActivity(intent);
-                    }
-                });
+        holder.imageViewLove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (LoginActivity.firebase.favouriteProductList.contains(p.getId())) {
+                    holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+                    LoginActivity.firebase.favouriteProductList.remove(p.getId());
+                    LoginActivity.firebase.removeProductFromFavourite(context, p.getId());
+                    holder.isFavourite = false;
+                }
+                else {
+                    holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_24);
+                    LoginActivity.firebase.favouriteProductList.add(p.getId());
+                    LoginActivity.firebase.addProductToFavourite(context, p.getId());
+                    holder.isFavourite = true;
+                }
+            }
+        });
     }
 
     @Override
@@ -96,6 +107,7 @@ public class ItemOnMainAdapter extends RecyclerView.Adapter<ItemOnMainAdapter.It
         CardView cardViewProduct;
         ImageView imageViewItem, imageViewLove;
         TextView textViewItemName, textViewItemMerchant, textViewItemPrice, textViewRating;
+        boolean isFavourite = false;
 
         public ItemOnMainViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -106,13 +118,6 @@ public class ItemOnMainAdapter extends RecyclerView.Adapter<ItemOnMainAdapter.It
             imageViewLove = itemView.findViewById(R.id.ic_love_item);
             textViewRating = itemView.findViewById(R.id.tv_rating);
             cardViewProduct = itemView.findViewById(R.id.cardview_product);
-
-            imageViewLove.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_24);
-                }
-            });
         }
     }
 }
