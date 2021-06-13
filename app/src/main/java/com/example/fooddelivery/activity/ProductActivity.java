@@ -37,6 +37,8 @@ import com.example.fooddelivery.R;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.Comment;
 import com.example.fooddelivery.model.Product;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +70,7 @@ public class ProductActivity extends AppCompatActivity {
     Product product;
     boolean isFavourite = false;
     boolean favouriteStateChange = false;
+
 
     @SuppressLint("NewApi")
     @Override

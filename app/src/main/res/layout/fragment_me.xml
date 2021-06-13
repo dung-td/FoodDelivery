@@ -57,13 +57,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:id="@+id/me_ln_info"
                 android:background="@color/white">
 
                 <ImageButton
                     android:layout_marginLeft="16dp"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_gravity="center"
                     android:background="@drawable/contact"/>
 
@@ -98,13 +99,15 @@
                 android:layout_below="@id/me_dotted1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:id="@+id/me_ln_payment"
                 android:background="@color/white">
 
                 <ImageButton
                     android:layout_marginLeft="16dp"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/payment"/>
 
                 <TextView
@@ -138,13 +141,15 @@
                 android:layout_below="@id/me_dotted2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
                 android:id="@+id/me_ln_voucher"
                 android:background="@color/white">
 
                 <ImageButton
                     android:layout_marginLeft="16dp"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/voucher"/>
 
                 <TextView
@@ -179,14 +184,15 @@
                 android:layout_below="@id/me_dotted3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
                 android:id="@+id/me_ln_feedback"
                 android:background="@color/white">
 
                 <ImageButton
                     android:layout_marginLeft="16dp"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/idea"/>
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/feedback"/>
 
                 <TextView
                     android:layout_weight="4"
@@ -219,13 +225,15 @@
                 android:layout_below="@id/me_dotted4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:id="@+id/me_ln_setting"
                 android:background="@color/white">
 
                 <ImageButton
                     android:layout_marginLeft="16dp"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/setting"/>
 
                 <TextView
@@ -264,9 +272,9 @@
 
                 <ImageButton
                     android:layout_marginLeft="16dp"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/exit"/>
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/logout"/>
 
                 <TextView
                     android:layout_weight="4"

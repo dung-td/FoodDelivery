@@ -4,6 +4,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -22,7 +23,7 @@ public class VoucherActivity extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
-    ImageButton buttonBack;
+    ImageButton bt_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +35,16 @@ public class VoucherActivity extends AppCompatActivity {
     }
 
     private void Init() {
-        buttonBack = findViewById(R.id.btn_back);
+        bt_back = findViewById(R.id.vc_bt_back);
         viewPager = findViewById(R.id.info_viewpager);
         tabLayout = findViewById(R.id.tab_button);
+
+        bt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

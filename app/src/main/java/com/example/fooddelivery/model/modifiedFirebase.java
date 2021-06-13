@@ -52,10 +52,15 @@ public class modifiedFirebase {
                         fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                Map<String, String> image = new HashMap<>();
-                                image.put("imageLink", uri.toString());
-                                image.put("timeUpload", new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()));
-                                root.collection(collectionPath + "/" + docRef + "/Photos").add(image);
+                                root.collection("User/")
+                                        .document("")
+                                        .update("profileImageLink", uri.toString())
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                            //  Thong bao doi anh thanh cong
+                                            }
+                                        });
                             }
                         });
                     }

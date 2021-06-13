@@ -1,7 +1,6 @@
 package com.example.fooddelivery.model;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.Toast;
@@ -11,20 +10,16 @@ import androidx.annotation.NonNull;
 import com.example.fooddelivery.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.List;
 import java.util.Map;
 
 
@@ -32,12 +27,14 @@ public class ModifyFirebase {
     private static final String TAG = "firebaseFirstore";
     private Object object;
     private String docRef;
+    private String userId;
     private Uri[] image;
     private String collectionPath = "";
     public ArrayList<Product> cartList = new ArrayList<>();
     public ArrayList<Product> productList = new ArrayList<Product>();
     public ArrayList<String> favouriteProductList = new ArrayList<String>();
     public ArrayList<Merchant> merchantList = new ArrayList<Merchant>();
+    public ArrayList<Voucher> voucherList = new ArrayList<Voucher>();
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
     private final boolean checkUsername = false;
@@ -49,7 +46,7 @@ public class ModifyFirebase {
     public void addProductToFavourite(Context context, String productId) {
         Map<String, String> product = new HashMap<>();
         product.put("ProductId", productId);
-        root.collection("User/9Iwrs6oipXaGZKYXS3ZkzuwsB9D2/Favourite/")
+        root.collection("User/" + userId + "/Favourite/")
                 .document(productId)
                 .set(product)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -61,7 +58,7 @@ public class ModifyFirebase {
     }
 
     public void removeProductFromFavourite(Context context, String productId) {
-        root.collection("User/9Iwrs6oipXaGZKYXS3ZkzuwsB9D2/Favourite/")
+        root.collection("User/" + userId + "/Favourite/")
                 .document(productId)
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -80,6 +77,36 @@ public class ModifyFirebase {
 
     public void addProductToCart(String productId) {
 
+    public void getVoucher() {
+        root.collection("User/" + userId + "/Voucher/")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.d(TAG, "get from user");
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            if (document == null)
+                                break;
+                            Voucher voucher = new Voucher();
+                            voucher.setStatus(document.get("status").toString());
+                            root.collection("Voucher")
+                                    .document(document.getId())
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            Log.d(TAG, "get from voucher");
+                                            voucher.setCode(documentSnapshot.get("code").toString());
+                                            voucher.setTitle(documentSnapshot.get("title").toString());
+                                            voucher.setDate(documentSnapshot.get("date").toString());
+                                            voucher.setValues((List<String>)documentSnapshot.get("value"));
+                                            voucher.setDetails((List<String>)documentSnapshot.get("details"));
+                                            voucherList.add(voucher);
+                                        }
+                                    });
+                        }
+                    }
+                });
     }
 
     public void getData(final OnGetDataListener listener) {
@@ -160,8 +187,9 @@ public class ModifyFirebase {
                                 });
                     }
                 });
-        //Load favourite list
-        root.collection("User/9Iwrs6oipXaGZKYXS3ZkzuwsB9D2/Favourite")
+
+
+        root.collection("User/" + userId + "/Favourite")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -178,19 +206,7 @@ public class ModifyFirebase {
 
     }
 
-
-    private Merchant findMerchantFromId(String id) {
-        for (Merchant mer : merchantList) {
-            if (mer.getId().equals(id))
-                return mer;
-        }
-        return null;
-    }
-
-    public void insertDataFirestore(String id) {  // Thêm vào Firestore
-        // CollectionPath là đường dẫn đến nơi cần thêm
-        // ID là khóa, không cần thêm cũng được, nó sự tự động tạo ra
-        // Object là đối tượng cần thêm, thường là class
+    public void insertDataFirestore(String id) {
         root.collection(collectionPath).document(id).set(object)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -200,31 +216,13 @@ public class ModifyFirebase {
                 });
     }
 
-    private void uploadImage() { // Upload ảnh lên Storage rồi lưu đường dẫn ở Firestore
-        for (Uri img : image) {
-            if (img != null) {
-                StorageReference fileRef = reference.child("Images" + System.currentTimeMillis() + "." + getExtension(img));
-                fileRef.putFile(img).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                Map<String, String> image = new HashMap<>();
-                                image.put("imageLink", uri.toString());
-                                image.put("timeUpload", new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()));
-                                root.collection(collectionPath + "/" + docRef + "/Photos").add(image);
-                            }
-                        });
-                    }
-                });
-            }
-        }
-    }
 
-    private String getExtension(Uri uri) {
-        String stringUri = uri.toString();
-        return stringUri.substring(stringUri.lastIndexOf("."));
+    private Merchant findMerchantFromId(String id) {
+        for (Merchant mer : merchantList) {
+            if (mer.getId().equals(id))
+                return mer;
+        }
+        return null;
     }
 
     public boolean checkUID(String uID) {
@@ -271,6 +269,14 @@ public class ModifyFirebase {
 
     public void setDocRef(String docRef) {
         this.docRef = docRef;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Uri[] getImage() {

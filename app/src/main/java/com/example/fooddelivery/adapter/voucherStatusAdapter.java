@@ -21,6 +21,7 @@ public class voucherStatusAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+
         return new VoucherFragment(position);
     }
     // this counts total number of tabs
