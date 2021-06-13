@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -22,20 +23,19 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.CommentAdapter;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.adapter.ItemOnMainAdapter;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.Comment;
-import com.example.fooddelivery.model.Merchant;
-import com.example.fooddelivery.model.ModifyFirebase;
 import com.example.fooddelivery.model.Product;
 
 import java.util.ArrayList;
@@ -49,8 +49,13 @@ public class ProductActivity extends AppCompatActivity {
 
     ScrollView scrollViewContent;
     ImageView buttonBack, buttonMore, buttonLove, buttonCart, buttonMerchantInfo, imageViewMerchantLogo;
-    TextView textViewImageIndex, textViewProductNameVn, textViewProductPrice, textViewMerchantName, textViewProductRating,
-                cartBadge, textViewProductNameEn;
+    TextView textViewImageIndex;
+    TextView textViewProductNameVn;
+    TextView textViewProductPrice;
+    TextView textViewMerchantName;
+    TextView textViewProductRating;
+    static TextView cartBadge;
+    TextView textViewProductNameEn;
     ViewPager viewPagerImage;
     ImageButton buttonAddToCart;
     Spinner spinnerProductSize;
@@ -80,24 +85,25 @@ public class ProductActivity extends AppCompatActivity {
         forwardMerchantActivity();
         addProductToFavourite();
         addProductToCart();
+        initButtonMoreMenuPopup();
     }
 
     private void addProductToCart() {
         buttonAddToCart.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                int quantity = 0;
-                if (!cartBadge.getText().toString().equals("")) {
-                    quantity = Integer.parseInt(cartBadge.getText().toString()) + 1;
-                    cartBadge.setText(quantity + "");
-                }
-                else {
-                    cartBadge.setText("1");
-                }
-                cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
+                LoginActivity.firebase.cartList.add(product);
+                updateCartBadge();
             }
         });
+    }
+
+    public static void updateCartBadge() {
+        cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
+        cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
+        HomeFragment.updateCartBadge();
     }
 
     private void addProductToFavourite() {
@@ -145,6 +151,13 @@ public class ProductActivity extends AppCompatActivity {
         imageViewMerchantLogo = findViewById(R.id.img_logo);
         spinnerProductSize = findViewById(R.id.spinner_size);
 
+        //Cart icon
+        if (LoginActivity.firebase.cartList.size() > 0) {
+            cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
+            cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
+        }
+
+        //Product info
         this.product = (Product) LoginActivity.firebase.productList.get(getIntent().
                 getIntExtra("ClickedProductIndex", 0));
         textViewProductNameVn.setText(product.getName());
@@ -153,9 +166,15 @@ public class ProductActivity extends AppCompatActivity {
         textViewProductRating.setText(product.getRating());
         productSize = new ArrayList<String>();
         productSize = product.getProductSize();
-        textViewMerchantName.setText(product.getMerchant().getName() + " - " + product.getMerchant().getAddress());
-        imageViewMerchantLogo.setImageURI(product.getMerchant().getImage().get(0));
 
+        //Merchant info
+        textViewMerchantName.setText(product.getMerchant().getName() + " - " + product.getMerchant().getAddress());
+        if (product.getMerchant().getImage().size() > 0) { //Merchant logo
+            imageViewMerchantLogo.setBackground(null);
+            Glide.with(getApplicationContext()).load(product.getMerchant().getImage().get(0)).into(imageViewMerchantLogo);
+        }
+
+        //Back button
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
@@ -166,6 +185,8 @@ public class ProductActivity extends AppCompatActivity {
                 ProductActivity.super.onBackPressed();
             }
         });
+
+        //Init spinner
         initSpinnerProductSize();
     }
 
@@ -318,5 +339,41 @@ public class ProductActivity extends AppCompatActivity {
         drawable = getDrawable(R.drawable.ic_baseline_more_horiz_24);
         drawable.setTint(Color.parseColor("#FFFFFF"));
         buttonMore.setImageDrawable(drawable);
+    }
+
+    private void initButtonMoreMenuPopup() {
+        LayoutInflater layoutInflater= (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = layoutInflater.inflate(R.layout.more_popup_layout, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView,330, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        buttonMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(popupWindow.isShowing())
+                    popupWindow.dismiss();
+                else
+                    popupWindow.showAsDropDown(buttonMore, 105, 30);
+            }
+        });
+        TextView buttonHome = popupView.findViewById(R.id.more_popup_item_home);
+        buttonHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+        TextView buttonMe = popupView.findViewById(R.id.more_popup_item_me);
+        buttonMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }

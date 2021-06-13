@@ -155,7 +155,7 @@
                     android:layout_height="70dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/highland_logo"/>
+                    android:background="@drawable/untitled_icon"/>
 
                 <TextView
                     android:id="@+id/tv_merchant_name"

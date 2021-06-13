@@ -10,8 +10,8 @@
 <!--    Cart + Back button-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/light_blue"
+        android:layout_height="60dp"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <ImageButton
@@ -20,13 +20,14 @@
             android:layout_height="35dp"
             android:layout_marginStart="15dp"
             android:layout_gravity="center"
+            android:backgroundTint="@color/grey"
             android:background="@drawable/ic_baseline_arrow_back_24" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/shopping_cart"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
             android:layout_marginStart="110dp"

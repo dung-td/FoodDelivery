@@ -300,7 +300,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/me_ln_logout"
                 android:layout_marginTop="20dp"
-                android:layout_marginStart="160dp"
+                android:layout_centerHorizontal="true"
                 android:text="@string/app_version"
                 android:textStyle="italic"/>
         </RelativeLayout>

@@ -1,14 +1,20 @@
 package com.example.fooddelivery.activity;
 
 import android.annotation.SuppressLint;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -17,12 +23,16 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.adapter.MyAdapter;
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.fragment.HomeFragment;
+import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.MyViewPager;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -34,11 +44,17 @@ public class MerchantActivity extends AppCompatActivity {
 
     ScrollView scrollViewContent;
     ImageView imageViewLogo, buttonBack, buttonMore, buttonCart;
-    TextView textViewBannerIndex, textViewMerchantName, textViewRating, textViewTime, textViewDistance;
+    TextView textViewBannerIndex;
+    TextView textViewMerchantName;
+    TextView textViewRating;
+    TextView textViewTime;
+    TextView textViewDistance;
+    static TextView cartBadge;
     TabLayout tabLayout;
     MyViewPager viewPager;
     ViewPager viewPagerBanner;
-    LinearLayout linearLayoutBack, linearLayoutLove, linearLayoutCart, linearLayoutMore;
+    LinearLayout linearLayoutBack, linearLayoutLove, linearLayoutMore;
+    FrameLayout layoutCart;
     RelativeLayout relativeLayoutToolbar;
     Merchant merchant;
 
@@ -52,6 +68,7 @@ public class MerchantActivity extends AppCompatActivity {
         initTabLayoutAndViewPager();
         changeToolbarColor();
         changeToolbarButtonColorToLighter();
+        initButtonMoreMenuPopup();
     }
 
     @SuppressLint("SetTextI18n")
@@ -65,18 +82,29 @@ public class MerchantActivity extends AppCompatActivity {
         textViewMerchantName = findViewById(R.id.tv_merchant_name);
         textViewRating = findViewById(R.id.tv_rating);
         textViewTime = findViewById(R.id.tv_time);
+        cartBadge = findViewById(R.id.cart_badge);
         textViewDistance = findViewById(R.id.tv_distance);
         tabLayout = findViewById(R.id.tab_button);
         viewPager = findViewById(R.id.info_viewpager);
         viewPagerBanner = findViewById(R.id.merchant_banner);
         linearLayoutBack = findViewById(R.id.btn_back_background);
         linearLayoutLove = findViewById(R.id.btn_love_background);
-        linearLayoutCart = findViewById(R.id.btn_cart_background);
+        layoutCart = findViewById(R.id.btn_cart_background);
         linearLayoutMore = findViewById(R.id.btn_more_background);
         relativeLayoutToolbar = findViewById(R.id.toolbar);
         this.merchant = (Merchant) LoginActivity.firebase.productList.get(getIntent().
                 getIntExtra("ClickedProductIndex", 0)).getMerchant();
         textViewMerchantName.setText(merchant.getName() + " - " + merchant.getAddress());
+        if (merchant.getImage().size() > 0) {
+            imageViewLogo.setBackground(null);
+            Glide.with(getApplicationContext()).load(merchant.getImage().get(0)).into(imageViewLogo);
+        }
+
+        //Cart icon
+        if (LoginActivity.firebase.cartList.size() > 0) {
+            cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
+            cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
+        }
 
         tabLayout.addTab(tabLayout.newTab().setText("MENU"));
         tabLayout.addTab(tabLayout.newTab().setText("BÌNH LUẬN"));
@@ -87,8 +115,15 @@ public class MerchantActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 changeToolbarButtonColorToLighter();
+                MerchantActivity.super.onBackPressed();
             }
         });
+    }
+
+    @SuppressLint("SetTextI18n")
+    public static void updateCart() {
+        cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
+        cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
     }
 
     private void initTabLayoutAndViewPager() {
@@ -164,14 +199,14 @@ public class MerchantActivity extends AppCompatActivity {
 
     private void turnWhiteToolbar() {
         linearLayoutBack.setBackground(null);
-        linearLayoutCart.setBackground(null);
+        layoutCart.setBackground(null);
         linearLayoutMore.setBackground(null);
         relativeLayoutToolbar.setBackgroundColor(WHITE);
     }
 
     private void turnTransparentToolbar() {
         linearLayoutBack.setBackgroundResource(R.drawable.circle_toolbar_button_background);
-        linearLayoutCart.setBackgroundResource(R.drawable.circle_toolbar_button_background);
+        layoutCart.setBackgroundResource(R.drawable.circle_toolbar_button_background);
         linearLayoutMore.setBackgroundResource(R.drawable.circle_toolbar_button_background);
         relativeLayoutToolbar.setBackground(null);
     }
@@ -200,5 +235,42 @@ public class MerchantActivity extends AppCompatActivity {
         drawable = getDrawable(R.drawable.ic_baseline_more_horiz_24);
         drawable.setTint(Color.parseColor("#FFFFFF"));
         buttonMore.setImageDrawable(drawable);
+    }
+
+    private void initButtonMoreMenuPopup() {
+        LayoutInflater layoutInflater= (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = layoutInflater.inflate(R.layout.more_popup_layout, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView,330, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        buttonMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(popupWindow.isShowing())
+                    popupWindow.dismiss();
+                else
+                    popupWindow.showAsDropDown(buttonMore, 105, 30);
+            }
+        });
+        TextView buttonHome = popupView.findViewById(R.id.more_popup_item_home);
+        buttonHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+        TextView buttonMe = popupView.findViewById(R.id.more_popup_item_me);
+        buttonMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("Fragment", "MeFragment");
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }

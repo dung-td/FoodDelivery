@@ -110,4 +110,6 @@
     <string name="expired">Expired</string>
     <string name="add_favourite_success">Successfully added to favourite!</string>
     <string name="remove_favourite_success">Successfully removed from favourite!</string>
+    <string name="data_loading">Loading</string>
+    <string name="press_back_twice_to_exit">Press back twice to exit!</string>
 </resources>

@@ -76,6 +76,8 @@
     <string name="pls_enter_address">Vui lòng điền địa chỉ</string>
     <string name="add_favourite_success">Đã thêm vào danh sách yêu thích!</string>
     <string name="remove_favourite_success">Đã xóa khỏi danh sách yêu thích!</string>
+    <string name="data_loading">Đang tải</string>
+    <string name="press_back_twice_to_exit">Nhấn back lần nữa để thoát!</string>
 
     <string-array name="product_size">
         <item>S</item>

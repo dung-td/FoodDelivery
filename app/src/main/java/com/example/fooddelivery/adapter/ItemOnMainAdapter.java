@@ -59,6 +59,10 @@ public class ItemOnMainAdapter extends RecyclerView.Adapter<ItemOnMainAdapter.It
             holder.isFavourite = true;
             holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_24);
         }
+        else {
+            holder.isFavourite = false;
+            holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_border_24);
+        }
 
         holder.textViewItemPrice.setText(p.getPrice().get(0) + " đ");
         holder.textViewItemName.setText(p.getName());

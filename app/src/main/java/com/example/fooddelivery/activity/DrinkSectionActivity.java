@@ -2,11 +2,14 @@ package com.example.fooddelivery.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.fooddelivery.adapter.MyOnSectionAdapter;
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.MyViewPager;
 import com.google.android.material.tabs.TabLayout;
 
@@ -33,6 +36,13 @@ public class DrinkSectionActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("GẦN ĐÂY"));
         tabLayout.addTab(tabLayout.newTab().setText("ĐÁNH GIÁ CAO"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        buttonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrinkSectionActivity.super.onBackPressed();
+            }
+        });
     }
 
     private void initTabLayoutAndViewPager() {

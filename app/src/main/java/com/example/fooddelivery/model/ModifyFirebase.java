@@ -34,6 +34,7 @@ public class ModifyFirebase {
     private String docRef;
     private Uri[] image;
     private String collectionPath = "";
+    public ArrayList<Product> cartList = new ArrayList<>();
     public ArrayList<Product> productList = new ArrayList<Product>();
     public ArrayList<String> favouriteProductList = new ArrayList<String>();
     public ArrayList<Merchant> merchantList = new ArrayList<Merchant>();
@@ -77,8 +78,13 @@ public class ModifyFirebase {
                 });
     }
 
+    public void addProductToCart(String productId) {
+
+    }
+
     public void getData(final OnGetDataListener listener) {
         listener.onStart();
+        //Load merchant list
         root.collection("Merchant/")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -110,6 +116,7 @@ public class ModifyFirebase {
                                     });
                         }
 
+                        //Load Product list
                         root.collection("Product/")
                                 .get()
                                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -128,6 +135,7 @@ public class ModifyFirebase {
                                             product.setMerchant((Merchant) findMerchantFromId(((String) document.get("Merchant")).substring(9)));
                                             product.setRating((String) document.get("Rating"));
 
+                                            //Load product images
                                             ArrayList<Uri> images = new ArrayList<Uri>();
                                             root.collection("Product/" + product.getId() + "/Photos/")
                                                     .get()
@@ -152,6 +160,7 @@ public class ModifyFirebase {
                                 });
                     }
                 });
+        //Load favourite list
         root.collection("User/9Iwrs6oipXaGZKYXS3ZkzuwsB9D2/Favourite")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -164,6 +173,9 @@ public class ModifyFirebase {
                         }
                     }
                 });
+
+        //Load product in cart
+
     }
 
 
