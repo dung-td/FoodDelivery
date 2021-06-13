@@ -119,7 +119,9 @@
     <string name="product">sản phẩm</string>
     <string name="delivering">Đang giao</string>
     <string name="history">Lịch sử</string>
-    <string name="used">Đã dùng</string>
     <string name="now_available">Hiện có</string>
+    <string name="HSD">HSD: </string>
+    <string name="used">Đã dùng</string>
     <string name="expired">Hết hạn</string>
+    <string name="dont_have_any_voucher">Bạn chưa có mã giảm giá nào!</string>
 </resources>

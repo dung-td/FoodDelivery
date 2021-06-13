@@ -37,6 +37,8 @@ import com.example.fooddelivery.model.Comment;
 import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.ModifyFirebase;
 import com.example.fooddelivery.model.Product;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +65,7 @@ public class ProductActivity extends AppCompatActivity {
     Product product;
     boolean isFavourite = false;
     boolean favouriteStateChange = false;
+
 
     @SuppressLint("NewApi")
     @Override
@@ -144,7 +147,6 @@ public class ProductActivity extends AppCompatActivity {
         relativeLayoutToolbar = findViewById(R.id.toolbar);
         imageViewMerchantLogo = findViewById(R.id.img_logo);
         spinnerProductSize = findViewById(R.id.spinner_size);
-
         this.product = (Product) LoginActivity.firebase.productList.get(getIntent().
                 getIntExtra("ClickedProductIndex", 0));
         textViewProductNameVn.setText(product.getName());

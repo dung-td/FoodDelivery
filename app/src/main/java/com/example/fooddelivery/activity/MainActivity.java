@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.ItemOnMainAdapter;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.fragment.MeFragment;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+        getData();
     }
 
     public void initView () {
@@ -55,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new HomeFragment()).commit();
+    }
+
+    private void getData() {
+        LoginActivity.firebase.getVoucher();
     }
 
     private void initBottomNavigation() {

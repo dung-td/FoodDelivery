@@ -56,14 +56,13 @@ public class LoginActivity extends AppCompatActivity {
     Button bt_login;
     TextView tv_forgotPass, tv_register;
     ProgressBar pb_wating;
-    ImageView iv_register;
+    ImageView iv_register, iv_google_signin;
 
     private GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
     public static ModifyFirebase firebase;
-    //    private CallbackManager mCallbackManager;
-    //    private LoginButton bt_lg_fb;
+    public static String userID;
 
     public LoginActivity() {
     }
@@ -97,15 +96,21 @@ public class LoginActivity extends AppCompatActivity {
         tv_register = findViewById(R.id.lg_tv_register);
         pb_wating = findViewById(R.id.lg_pb_wating);
         iv_register = findViewById(R.id.lg_iv_register);
+        iv_google_signin = findViewById(R.id.lg_bt_google);
 
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                pb_wating.setVisibility(View.VISIBLE);
-//                pb_wating.setIndeterminate(true);
-//                login();
-                loginComplete();
+                pb_wating.setVisibility(View.VISIBLE);
+                pb_wating.setIndeterminate(true);
+                loginWithEmailAndPassWord();
+            }
+        });
 
+        iv_google_signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signInWithGoogle();
             }
         });
 
@@ -139,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
-    private void signInGoogle() {
+    private void signInWithGoogle() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
@@ -155,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
-                Log.w(TAG, "Google sign in failed", e);
+                Log.d(TAG, "Google sign in failed", e);
             }
         }
     }
@@ -174,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
                             loginComplete();
 
                         } else {
-                            Log.e(TAG, task.getException().getMessage());
+                            Log.d(TAG, task.getException().getMessage());
                         }
                     }
                 });
@@ -190,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
                             loginComplete();
                         } else {
                             pb_wating.setVisibility(View.INVISIBLE);
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            Log.d(TAG, "signInWithEmail:failure", task.getException());
                             Toast.makeText(LoginActivity.this, getResources().getString(R.string.email_pass_not_correct),
                                     Toast.LENGTH_SHORT).show();
                         }
@@ -206,15 +211,17 @@ public class LoginActivity extends AppCompatActivity {
         firebase.insertDataFirestore(user.getUid());
     }
 
-    public void login() {
+    public void loginWithEmailAndPassWord() {
         if (checkRequirements())
-            signInWithEmailAndPassword(et_email.getText().toString(), et_pass.toString());
+            signInWithEmailAndPassword(et_email.getText().toString(), et_pass.getText().toString());
         else {
             pb_wating.setVisibility(View.INVISIBLE);
         }
     }
 
     private void loginComplete() {
+        userID = mAuth.getUid();
+        firebase.setUserId(userID);
         ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this);
         firebase.getData(new OnGetDataListener() {
             @Override
@@ -242,10 +249,6 @@ public class LoginActivity extends AppCompatActivity {
     public void forgotPass() {
         Intent forgotPass = new Intent(LoginActivity.this, ForgotPassActivity_1.class);
         startActivity(forgotPass);
-    }
-
-    public void loginWithGoogle(View view) {
-        signInGoogle();
     }
 
     private boolean checkRequirements() {
