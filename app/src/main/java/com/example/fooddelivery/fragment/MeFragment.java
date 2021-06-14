@@ -1,5 +1,6 @@
 package com.example.fooddelivery.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,9 +13,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.MainActivity;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.me.FeedbackActivity;
 import com.example.fooddelivery.activity.me.SettingActivity;
 import com.example.fooddelivery.activity.me.VoucherActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MeFragment extends Fragment {
 
@@ -50,7 +54,8 @@ public class MeFragment extends Fragment {
         bt_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FirebaseAuth.getInstance().signOut();
+                login();
             }
         });
 
@@ -72,5 +77,10 @@ public class MeFragment extends Fragment {
         bt_feedback = getView().findViewById(R.id.me_ib_feedback);
         bt_info = getView().findViewById(R.id.me_ib_info);
         bt_payment = getView().findViewById(R.id.me_ib_payment);
+    }
+
+    private void login() {
+        Intent loginActivity = new Intent(MeFragment.super.getContext(), LoginActivity.class);
+        startActivity(loginActivity);
     }
 }

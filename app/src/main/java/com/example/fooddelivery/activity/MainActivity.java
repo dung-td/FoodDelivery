@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getData() {
         LoginActivity.firebase.getVoucher();
+        LoginActivity.firebase.getComment();
     }
 
     private void initBottomNavigation() {

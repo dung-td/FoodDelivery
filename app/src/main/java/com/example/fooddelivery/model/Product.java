@@ -20,6 +20,7 @@ public class Product {
     private ArrayList<String> Price = new ArrayList<String>();
     private ArrayList<Uri> Image = new ArrayList<Uri>();
     private ArrayList<String> ProductSize = new ArrayList<String>();
+    private ArrayList<Comment> CommentList = new ArrayList<Comment>();
 
     public Product() {
         Id = "sample";
@@ -150,5 +151,13 @@ public class Product {
 
     public void setEn_Name(String en_Name) {
         En_Name = en_Name;
+    }
+
+    public ArrayList<Comment> getCommentList() {
+        return CommentList;
+    }
+
+    public void setCommentList(ArrayList<Comment> commentList) {
+        CommentList = commentList;
     }
 }

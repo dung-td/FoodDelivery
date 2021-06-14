@@ -263,10 +263,7 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     public void getCommentList() {
-        commentList = new ArrayList<>();
-        commentList.add(new Comment(1, "Nguyễn Văn A", "Món ngon, gói đẹp, giá tốt.", R.drawable.male_user_96px, "29/04/2021" , 5));
-        commentList.add(new Comment(2, "Nguyễn Văn B", "Món ngon, gói đẹp, giá tốt.", R.drawable.male_user_96px, "20/04/2021" , 4));
-        commentList.add(new Comment(3, "Nguyễn Văn C", "Món ngon, gói đẹp, giá tốt.", R.drawable.male_user_96px, "12/04/2021" , 1));
+        commentList = product.getCommentList();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

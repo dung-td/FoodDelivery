@@ -49,9 +49,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_toEndOf="@+id/tv_user_name"
             android:layout_marginTop="5dp"
-            android:layout_marginStart="200dp">
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp">
 
             <TextView
                 android:id="@+id/tv_user_rating"
@@ -74,9 +74,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/stars_user"
-            android:layout_toEndOf="@+id/tv_user_comment"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="15dp"
-            android:layout_marginStart="100dp"
+            android:layout_marginRight="16dp"
             android:text="23/04/2021"
             android:textColor="@color/black"
             android:textSize="10dp"/>
