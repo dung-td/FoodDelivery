@@ -25,6 +25,8 @@ import com.example.fooddelivery.activity.me.VoucherActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,7 +42,10 @@ public class MeFragment extends Fragment {
 
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
-    String userID = "Hp9LlgLygEstFV4sIpxc";
+   // String userID = "KrSKPkEqkMP5KuzR60QBiBcWsoE2";
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userID = user.getUid();
 
     boolean shouldRefreshOnResume;
 
@@ -135,7 +140,7 @@ public class MeFragment extends Fragment {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         //User userInfo = document.toObject(User.class);
-                        tv_userName.setText(document.get("last_name").toString() + " " + document.get("middle_name").toString() + " " + document.get("first_name").toString());
+                        tv_userName.setText(document.get("last_Name").toString() +  " " + document.get("first_Name").toString());
                     }
                 }
             }

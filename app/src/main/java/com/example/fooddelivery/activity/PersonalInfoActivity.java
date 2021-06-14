@@ -21,13 +21,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.SignUpActivity_1;
+import com.example.fooddelivery.activity.login.SignUpActivity_2;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.model.ModifyFirebase;
+import com.example.fooddelivery.model.Regex;
 import com.example.fooddelivery.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -40,6 +44,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -60,18 +65,22 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     EditText et_Email, et_Phone, et_Address;
     TextView tv_ChangeAvatar, tv_ChangeEmail, tv_ChangePhone, tv_ChangeAddress;
-    Button bt_SaveChanges;
     TextView tv_Email, tv_Phone, tv_Address, tv_Name, tv_Username;
     ImageView iv_Avatar;
     ImageButton bt_back;
+    ProgressBar progressBar;
 
     Uri imageUri;
+
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userID = user.getUid();
+
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
 
-    boolean uploadAvatar = false;
-    String userID = "Hp9LlgLygEstFV4sIpxc";
+    Regex regex = new Regex();
+    //String userID = "KrSKPkEqkMP5KuzR60QBiBcWsoE2";
+    String oldEmail, oldPhone, oldAddress;
 
 
     @Override
@@ -82,8 +91,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
         loadLanguage();
         initView();
 
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setIndeterminate(true);
         loadInformation();
         loadAvatar();
+
 
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,8 +105,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         });
 
-
-
         tv_ChangeAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,15 +112,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
             }
         });
 
-        bt_SaveChanges.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (uploadAvatar) {
-                    updateAvatar();
-                }
-                updateData();
-            }
-        });
 
     }
 
@@ -131,9 +132,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
         tv_Username = (TextView)findViewById(R.id.tv_perinfo_username);
         tv_Name = (TextView)findViewById(R.id.tv_perinfo_name);
 
-        bt_SaveChanges = (Button) findViewById(R.id.bt_perinfo_save);
-
         iv_Avatar = (ImageView) findViewById(R.id.im_perinfo);
+
+        progressBar = (ProgressBar)findViewById(R.id.perinfo_wating);
+        progressBar.setVisibility(View.INVISIBLE);
 
         et_Address.setVisibility(View.GONE);
         et_Phone.setVisibility(View.GONE);
@@ -150,35 +152,78 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     void finishChangeInfomation(EditText et_Info, TextView tv_Info, TextView confirm) {
-        tv_Info.setVisibility(View.VISIBLE);
-        tv_Info.setText(et_Info.getText());
+        if (et_Info.getText().toString().isEmpty())
+        {
+            et_Info.setError(getString(R.string.data_empty));
+            et_Info.requestFocus();
+        } else {
+            tv_Info.setVisibility(View.VISIBLE);
+            tv_Info.setText(et_Info.getText());
 
-        et_Info.setVisibility(View.GONE);
+            et_Info.setVisibility(View.GONE);
 
-        confirm.setText(getString(R.string.change));
+            confirm.setText(getString(R.string.change));
+        }
     }
 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_perinfo_changeemail:
-                if (tv_ChangeEmail.getText().equals(getString(R.string.change)))
+                // Thay đổi
+                if (tv_ChangeEmail.getText().equals(getString(R.string.change))){
                     beginChangeInfomation(et_Email, tv_Email, tv_ChangeEmail);
-                else
-                    finishChangeInfomation(et_Email, tv_Email, tv_ChangeEmail);
+
+                }
+                else {
+                    if (validEmail())
+                    {
+                        if (!oldEmail.equals(et_Email.getText().toString()))
+                        {
+                            changeEmail(et_Email.getText().toString());
+                        }
+                        finishChangeInfomation(et_Email, tv_Email, tv_ChangeEmail);
+                    }
+
+                }
                 break;
 
             case R.id.tv_perinfo_changephone:
-                if (tv_ChangePhone.getText().equals(getString(R.string.change)))
+
+                if (tv_ChangePhone.getText().equals(getString(R.string.change))){
                     beginChangeInfomation(et_Phone, tv_Phone, tv_ChangePhone);
-                else
-                    finishChangeInfomation(et_Phone, tv_Phone, tv_ChangePhone);
+
+                }
+                else {
+                    if (validPhone())
+                    {
+                        progressBar.setVisibility(View.VISIBLE);
+                        progressBar.setIndeterminate(true);
+                        Log.e("Old phone", oldPhone);
+                        Log.e("newPhone", et_Phone.getText().toString());
+                        if (!oldPhone.equals(et_Phone.getText().toString()))
+                        {
+                            Log.e("Change phone", "go to change phone");
+                            changePhone(et_Phone.getText().toString());
+                        }
+                        finishChangeInfomation(et_Phone, tv_Phone, tv_ChangePhone);
+                    }
+
+                }
                 break;
 
             case R.id.tv_perinfo_changeaddress:
-                if (tv_ChangeAddress.getText().equals(getString(R.string.change)))
+                if (tv_ChangeAddress.getText().equals(getString(R.string.change))){
                     beginChangeInfomation(et_Address, tv_Address, tv_ChangeAddress);
+                }
                 else
+                {
+                    if (!oldAddress.equals(et_Address.getText().toString()) ) {
+                        progressBar.setVisibility(View.VISIBLE);
+                        progressBar.setIndeterminate(true);
+                        updateAddress();
+                    }
                     finishChangeInfomation(et_Address, tv_Address, tv_ChangeAddress);
+                }
                 break;
         }
     }
@@ -190,8 +235,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             imageUri = result.getUri();
+
+            updateAvatar();
             iv_Avatar.setImageURI(imageUri);
-            uploadAvatar = true;
         }
     }
 
@@ -227,29 +273,20 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
 
     }
-
-    void updateData() {
-        String phone = tv_Phone.getText().toString();
-        String email = tv_Email.getText().toString();
-        String address = tv_Address.getText().toString();
-
-        Map<String, String> map = new HashMap<>();
-
-        map.put("address", address);
-        map.put("phone_number", phone);
-        map.put("email", email);
+    void updateAddress(){
+        String address = et_Address.getText().toString();
 
         root.collection("User").document(userID)
-                .update("address", address,
-                        "phone_number", phone,
-                        "email", email)
+                .update("address", address)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(), getString(R.string.update_infodata_done), Toast.LENGTH_LONG).show();
                     }
                 });
     }
+
 
     void loadInformation() {
         DocumentReference docRef = root.collection("User").document(userID);
@@ -260,17 +297,20 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         //User userInfo = document.toObject(User.class);
-                        tv_Username.setText(document.get("username").toString());
+                        //tv_Username.setText(document.get("username").toString());
                         tv_Address.setText(document.get("address").toString());
-                        tv_Phone.setText(document.get("phone_number").toString());
+                        tv_Phone.setText(document.get("phone_Number").toString());
                         tv_Email.setText(document.get("email").toString());
-                        tv_Name.setText(document.get("last_name").toString() +" "+ document.get("middle_name").toString() +" "+ document.get("first_name").toString());
+                        tv_Name.setText(document.get("last_Name").toString() +" "+ document.get("first_Name").toString());
+
+                        oldAddress = tv_Address.getText().toString();
+                        oldPhone = tv_Phone.getText().toString();
+                        oldEmail = tv_Email.getText().toString();
                     }
                 }
             }
         });
     }
-
     void loadAvatar() {
         StorageReference fileRef = reference.child("UserImage/"+userID);
         fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -278,10 +318,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
             public void onSuccess(Uri uri) {
                 Log.e("Avatar", uri.toString());
                 Picasso.get().load(uri).into(iv_Avatar);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }
-
     void loadLanguage() {
         String langPref = "lang_code";
         SharedPreferences prefs = getSharedPreferences("MyPref",
@@ -297,5 +337,140 @@ public class PersonalInfoActivity extends AppCompatActivity {
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
+
+    boolean validEmail() {
+        Log.e("Email", et_Email.getText().toString());
+        if (!regex.validateEmail(et_Email.getText().toString())) {
+            Log.e("Email", "wrong email");
+            et_Email.setError(getString(R.string.wrong_email_format));
+            et_Email.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+    boolean validPhone(){
+        if (et_Phone.getText().toString().length() != 10 ||
+                !et_Phone.getText().toString().startsWith("0")) {
+            et_Phone.setError(getString(R.string.wrong_phone_format));
+            et_Phone.requestFocus();
+            return false;
+        }
+        return true;
+    }
+
+    void changeEmail(String email) {
+        root.collection("User")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (!task.getResult().isEmpty()) {
+                                et_Email.setError(getString(R.string.email_has_been_used));
+                                et_Email.requestFocus();
+
+                            }
+                            else
+                                sendVerifyEmail(email);
+                        }
+                    }
+                });
+
+    }
+    void changePhone(String phone) {
+        root.collection("User")
+                .whereEqualTo("phone_number", phone)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            Log.e("Open", "Open verify phone activity");
+                            if (!task.getResult().isEmpty()) {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                et_Phone.setError(getString(R.string.phone_been_used));
+                                et_Phone.requestFocus();
+                            }
+                            else {
+                                Intent verifyPhone = new Intent(PersonalInfoActivity.this, VerifyPhoneActivity.class);
+                                sendPhoneNumber(verifyPhone, phone);
+                                startActivity(verifyPhone);
+                            }
+                        }
+                    }
+                });
+
+    }
+
+
+    private void sendVerifyEmail(String email) {
+
+        Log.e("Send email", "SEND");
+//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+//        mAuth.sendPasswordResetEmail(email)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        updateEmail(email);
+//                    }
+//                });
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+
+        user.verifyBeforeUpdateEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            updateEmail(email);
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.verify_failed), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+    void updateEmail(String email) {
+        FirebaseFirestore root = FirebaseFirestore.getInstance();
+
+        root.collection("User").document(userID)
+                .update("email", email)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.update_infodata_done), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    private void sendPhoneNumber(Intent verifyPhone, String phone) {
+        verifyPhone.putExtra("firstname", "");
+        verifyPhone.putExtra("lastname","");
+        verifyPhone.putExtra("phone", phone);
+        verifyPhone.putExtra("email", tv_Email.getText().toString());
+        verifyPhone.putExtra("address", "");
+        verifyPhone.putExtra("password", "");
+    }
+
+    boolean shouldRefreshOnResume;
+    @Override
+    protected void onPause() {
+        super.onPause();
+        shouldRefreshOnResume = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (shouldRefreshOnResume) {
+            loadAvatar();
+            loadInformation();
+        }
     }
 }

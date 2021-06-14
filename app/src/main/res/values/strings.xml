@@ -124,6 +124,9 @@
     <string name="username">Tên đăng nhập</string>
     <string name="update_ava_done">Cập nhật ảnh đại diện thành công</string>
     <string name="update_infodata_done">Cập nhật dữ liệu người dùng thành công</string>
+    <string name="data_empty">Dữ liệu trống</string>
+    <string name="phone_been_used">Số điện thoại đã được sử dụng</string>
+    <string name="verify_failed">Xác thực không thành công</string>
 
 
 </resources>

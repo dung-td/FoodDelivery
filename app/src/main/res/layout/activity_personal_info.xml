@@ -40,6 +40,14 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ProgressBar
+        android:id="@+id/perinfo_wating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:backgroundTint="@color/whiteTextColor" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -190,7 +198,8 @@
             android:layout_marginLeft="20dp"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:inputType="phone"/>
     </RelativeLayout>
     <View style="@style/Divider.Horizontal"
         android:layout_below="@id/perinfo_rl4"
@@ -245,7 +254,8 @@
             android:layout_marginLeft="20dp"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:textSize="18dp"/>
+            android:textSize="18dp"
+            android:inputType="textEmailAddress"/>
     </RelativeLayout>
 
 
@@ -320,19 +330,4 @@
     <View style="@style/Divider.Horizontal"
         android:layout_below="@id/perinfo_rl6"
         />
-
-    <android.widget.Button
-        android:layout_height="60dp"
-        android:layout_width="200dp"
-        android:text="@string/save_change"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:background="@color/light_red"
-        android:layout_below="@id/perinfo_rl6"
-        android:layout_marginTop="100dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/bt_perinfo_save"
-        android:layout_marginBottom="90dp"
-        />
-
-</RelativeLayout>
+    </RelativeLayout>
