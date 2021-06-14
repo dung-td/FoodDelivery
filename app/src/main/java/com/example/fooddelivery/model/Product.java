@@ -3,36 +3,41 @@ package com.example.fooddelivery.model;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product implements Parcelable {
+public class Product {
     private String Id;
     private String Name;
+    private String En_Name;
     private String Rating;
     private String Status;
     private Timestamp Create;
-    private String Merchant;
+    private Merchant Merchant;
     private String Sales;
     private ArrayList<String> Price = new ArrayList<String>();
     private ArrayList<Uri> Image = new ArrayList<Uri>();
     private ArrayList<String> ProductSize = new ArrayList<String>();
+    private ArrayList<Comment> CommentList = new ArrayList<Comment>();
 
     public Product() {
         Id = "sample";
+        En_Name = "";
         Name = "Empty";
         Rating = "4.0";
         Status = "InStock";
         Price.add("30000");
         Create = new Timestamp(System.currentTimeMillis());
-        Uri uri = Uri.parse("android.resource://com.example.merchanttask/drawable/highland_logo");
+        Uri uri = Uri.parse("android.resource://com.example.merchanttask/drawable/untitled_icon");
         Image.add(uri);
-    };
+    }
 
     public Product(String name, String rating, String status, String price, Uri image, Timestamp create) {
         Id = "sample";
         Name = name;
+        En_Name = "";
         Rating = rating;
         Status = status;
         Price.add(price);
@@ -40,9 +45,10 @@ public class Product implements Parcelable {
         Create = create;
     }
 
-    public Product(String name,Uri image, String rating, String price) {
+    public Product(String name, Uri image, String rating, String price) {
         Id = "sample";
         Name = name;
+        En_Name = "";
         Rating = rating;
         Status = "InStock";
         Price.add(price);
@@ -53,67 +59,26 @@ public class Product implements Parcelable {
     public Product(String name, String rating, String price) {
         Id = "sample";
         Name = name;
+        En_Name = "";
         Rating = rating;
         Status = "InStock";
         Price.add(price);
     }
 
-    protected Product(Parcel in) {
-        Id = in.readString();
-        Name = in.readString();
-        Rating = in.readString();
-        Status = in.readString();
-        Merchant = in.readString();
-        Sales = in.readString();
-        Price = in.createStringArrayList();
-        Image = in.createTypedArrayList(Uri.CREATOR);
-        ProductSize = in.createStringArrayList();
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(Id);
-        dest.writeString(Name);
-        dest.writeString(Rating);
-        dest.writeString(Status);
-        dest.writeString(Merchant);
-        dest.writeString(Sales);
-        dest.writeStringList(Price);
-        dest.writeTypedList(Image);
-        dest.writeStringList(ProductSize);
-    }
-
-    public static final Creator<Product> CREATOR = new Creator<Product>() {
-        @Override
-        public Product createFromParcel(Parcel in) {
-            return new Product(in);
-        }
-
-        @Override
-        public Product[] newArray(int size) {
-            return new Product[size];
-        }
-    };
-
     public void setProductSize(ArrayList<String> productSize) {
         ProductSize = productSize;
-    }
-
-    public void setMerchant(String merchant) {
-        Merchant = merchant;
     }
 
     public void setSales(String sales) {
         Sales = sales;
     }
 
-    public String getMerchant() {
+    public Merchant getMerchant() {
         return Merchant;
+    }
+
+    public void setMerchant(com.example.fooddelivery.model.Merchant merchant) {
+        Merchant = merchant;
     }
 
     public String getSales() {
@@ -178,5 +143,21 @@ public class Product implements Parcelable {
 
     public ArrayList<String> getProductSize() {
         return ProductSize;
+    }
+
+    public String getEn_Name() {
+        return En_Name;
+    }
+
+    public void setEn_Name(String en_Name) {
+        En_Name = en_Name;
+    }
+
+    public ArrayList<Comment> getCommentList() {
+        return CommentList;
+    }
+
+    public void setCommentList(ArrayList<Comment> commentList) {
+        CommentList = commentList;
     }
 }

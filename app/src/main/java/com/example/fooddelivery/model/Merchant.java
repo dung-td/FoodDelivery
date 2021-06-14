@@ -1,55 +1,40 @@
 package com.example.fooddelivery.model;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Merchant implements Parcelable {
+import java.util.ArrayList;
+
+public class Merchant {
+    private String Id;
     private String Name;
     private String Address;
     private String Email;
     private String Phone;
+    private ArrayList<Uri> Image = new ArrayList<Uri>();
 
     public Merchant() {
-        Name = Address = Email = Phone = "Empty";
+        Id = Name = Address = Email = Phone = "Empty";
+        Uri uri = Uri.parse("android.resource://com.example.merchanttask/drawable/untitled_icon");
+        Image.add(uri);
     }
 
     public Merchant(String name, String address) {
         Name = name;
         Address = address;
         Email = Phone = "Empty";
+        Uri uri = Uri.parse("android.resource://com.example.merchanttask/drawable/untitled_icon");
+        Image.add(uri);
     }
 
-    protected Merchant(Parcel in) {
-        Name = in.readString();
-        Address = in.readString();
-        Email = in.readString();
-        Phone = in.readString();
+    public String getId() {
+        return Id;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setId(String id) {
+        Id = id;
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(Name);
-        dest.writeString(Address);
-        dest.writeString(Email);
-        dest.writeString(Phone);
-    }
-
-    public static final Creator<Merchant> CREATOR = new Creator<Merchant>() {
-        @Override
-        public Merchant createFromParcel(Parcel in) {
-            return new Merchant(in);
-        }
-
-        @Override
-        public Merchant[] newArray(int size) {
-            return new Merchant[size];
-        }
-    };
 
     public String getName() {
         return Name;
@@ -81,5 +66,13 @@ public class Merchant implements Parcelable {
 
     public void setPhone(String phone) {
         Phone = phone;
+    }
+
+    public ArrayList<Uri> getImage() {
+        return Image;
+    }
+
+    public void setImage(ArrayList<Uri> image) {
+        Image = image;
     }
 }

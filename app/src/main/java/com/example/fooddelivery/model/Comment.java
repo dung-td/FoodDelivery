@@ -1,44 +1,60 @@
 package com.example.fooddelivery.model;
 
 public class Comment {
-    private final int id;
-    private final String user_name;
-    private final String comment;
-    private final int user_image;
+    String iD;
+    String userName;
+    String date;
+    String details;
+    String rating;
 
-    public String getUser_name() {
-        return user_name;
+    public Comment() {
     }
 
-    public String getComment() {
-        return comment;
+    public Comment(String iD, String userName, String date, String details, String rating) {
+        this.iD = iD;
+        this.userName = userName;
+        this.date = date;
+        this.details = details;
+        this.rating = rating;
     }
 
-    public int getUser_image() {
-        return user_image;
+    public String getiD() {
+        return iD;
+    }
+
+    public void setiD(String iD) {
+        this.iD = iD;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getDate() {
         return date;
     }
 
-    public int getStar() {
-        return star;
-    }
-
-    private final String date;
-    private final int star;
-
-    public Comment(int id, String name, String comment, int img, String date, int star) {
-        this.id = id;
-        this.user_name = name;
-        this.comment = comment;
-        this.user_image = img;
+    public void setDate(String date) {
         this.date = date;
-        this.star = star;
     }
 
-    public int getId() {
-        return id;
+    public String getDetails() {
+        return details;
+    }
+
+    public void setDetails(String details) {
+        this.details = details;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.model.ModifyFirebase;
 import com.example.fooddelivery.model.Product;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -33,6 +34,7 @@ public class ItemOnSectionFragment extends Fragment {
 
     public ItemOnSectionFragment() {
         productList = new ArrayList<>();
+        productList = LoginActivity.firebase.productList;
     }
 
     @Override
@@ -50,12 +52,4 @@ public class ItemOnSectionFragment extends Fragment {
         ProductOnSectionAdapter productAdapter = new ProductOnSectionAdapter(getContext(), productList);
         recyclerView.setAdapter(productAdapter);
     }
-
-//    private void initRecyclerViewAndAdapter () {
-//        RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view_item);
-//        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
-//        recyclerView.setLayoutManager(layoutManager);
-//        ProductOnSectionAdapter productAdapter = new ProductOnSectionAdapter(getContext(), productList);
-//        recyclerView.setAdapter(productAdapter);
-//    }
 }

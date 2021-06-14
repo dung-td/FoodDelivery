@@ -22,17 +22,15 @@ public class modifiedFirebase {
     private static final String TAG = "firebaseFirstore";
     private Object object;
     private String docRef;
-    private Uri image[];
+    private Uri[] image;
     private String collectionPath = "";
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
-    private boolean checkUsername = false;
+    private final boolean checkUsername = false;
     private boolean uIDCheck = false;
 
-
-
     public modifiedFirebase() {
-    };
+    }
 
     public void insertDataFirestore(String id) {
         root.collection(collectionPath).document(id).set(object)
@@ -54,10 +52,15 @@ public class modifiedFirebase {
                         fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
                             public void onSuccess(Uri uri) {
-                                Map<String, String> image = new HashMap<>();
-                                image.put("imageLink", uri.toString());
-                                image.put("timeUpload", new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()));
-                                root.collection(collectionPath + "/" + docRef + "/Photos").add(image);
+                                root.collection("User/")
+                                        .document("")
+                                        .update("profileImageLink", uri.toString())
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                            //  Thong bao doi anh thanh cong
+                                            }
+                                        });
                             }
                         });
                     }

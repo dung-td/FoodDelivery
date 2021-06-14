@@ -58,12 +58,13 @@ public class SignUpActivity_2 extends AppCompatActivity {
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
-
             verificationId = s;
+            Log.d(TAG, "CODE SEND");
         }
 
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+            Log.d(TAG, "complete");
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 verifyCode(code);
@@ -160,11 +161,12 @@ public class SignUpActivity_2 extends AppCompatActivity {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber("+84" + phoneNumber)       // Phone number to verify
-                        .setTimeout(120L, TimeUnit.SECONDS) // Timeout and unit
+                        .setTimeout(1L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
                         .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
+        Log.d(TAG, "CREATE OPTIONS");
     }
 
     private void verifyCode(String code) {

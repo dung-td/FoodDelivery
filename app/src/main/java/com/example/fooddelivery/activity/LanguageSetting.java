@@ -79,7 +79,7 @@ public class LanguageSetting extends AppCompatActivity {
     {
         Locale locale = new Locale(langCode);
         createShareReferences(langCode);
-        locale.setDefault(locale);
+        Locale.setDefault(locale);
 
         Resources resources = activity.getResources();
         Configuration config = resources.getConfiguration();

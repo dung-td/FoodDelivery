@@ -7,29 +7,38 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.CommentAdapter;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.Comment;
-import com.example.fooddelivery.model.Merchant;
-import com.example.fooddelivery.model.ModifyFirebase;
 import com.example.fooddelivery.model.Product;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,30 +47,86 @@ import static android.graphics.Color.WHITE;
 
 public class ProductActivity extends AppCompatActivity {
 
+    public static Activity fa;
+
     ScrollView scrollViewContent;
-    ImageView buttonBack, buttonMore, buttonLove, buttonCart, buttonMerchantInfo;
-    TextView textViewImageIndex, textViewProductNameVn, textViewProductPrice, textViewMerchantName, textViewProductRating;
+    ImageView buttonBack, buttonMore, buttonLove, buttonCart, buttonMerchantInfo, imageViewMerchantLogo;
+    TextView textViewImageIndex;
+    TextView textViewProductNameVn;
+    TextView textViewProductPrice;
+    TextView textViewMerchantName;
+    TextView textViewProductRating;
+    static TextView cartBadge;
+    TextView textViewProductNameEn;
     ViewPager viewPagerImage;
+    ImageButton buttonAddToCart;
     Spinner spinnerProductSize;
 
-    LinearLayout linearLayoutBack, linearLayoutLove, linearLayoutCart, linearLayoutMore;
+    LinearLayout linearLayoutBack, linearLayoutLove, linearLayoutMore;
+    FrameLayout frameLayoutCart;
     RelativeLayout relativeLayoutToolbar;
     List<Comment> commentList;
     ArrayList<String> productSize;
-    Merchant merchant;
     Product product;
+    boolean isFavourite = false;
+    boolean favouriteStateChange = false;
+
 
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+        fa = this;
 
         initView();
+        changeToolbarButtonColorToLighter();
+        changeLoveIcon();
         initProductImageViewPager();
         initRecyclerViewComment();
         changeToolbarColor();
         forwardMerchantActivity();
+        addProductToFavourite();
+        addProductToCart();
+        initButtonMoreMenuPopup();
+    }
+
+    private void addProductToCart() {
+        buttonAddToCart.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View v) {
+                LoginActivity.firebase.cartList.add(product);
+                updateCartBadge();
+            }
+        });
+    }
+
+    public static void updateCartBadge() {
+        cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
+        cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
+        HomeFragment.updateCartBadge();
+    }
+
+    private void addProductToFavourite() {
+        buttonLove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isFavourite) {
+                    isFavourite = false;
+                    buttonLove.setImageResource(R.drawable.ic_baseline_favourite_white_border_24);
+                    LoginActivity.firebase.favouriteProductList.remove(product.getId());
+                    LoginActivity.firebase.removeProductFromFavourite(getApplicationContext(), product.getId());
+                }
+                else {
+                    isFavourite = true;
+                    buttonLove.setImageResource(R.drawable.ic_baseline_favorite_24);
+                    LoginActivity.firebase.favouriteProductList.add(product.getId());
+                    LoginActivity.firebase.addProductToFavourite(getApplicationContext(), product.getId());
+                }
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -71,36 +136,77 @@ public class ProductActivity extends AppCompatActivity {
         buttonLove = findViewById(R.id.ic_love);
         buttonCart = findViewById(R.id.ic_cart);
         buttonMore = findViewById(R.id.ic_more);
+        buttonAddToCart = findViewById(R.id.btn_add_item);
         buttonMerchantInfo = findViewById(R.id.btn_more_merchant_info);
         textViewImageIndex = findViewById(R.id.tv_image_index);
         textViewProductNameVn = findViewById(R.id.tv_product_name_vn);
         textViewProductPrice = findViewById(R.id.tv_product_price);
         textViewMerchantName = findViewById(R.id.tv_merchant_name);
         textViewProductRating = findViewById(R.id.tv_rating);
+        textViewProductNameEn = findViewById(R.id.tv_product_name_en);
+        cartBadge = findViewById(R.id.cart_badge);
         viewPagerImage = findViewById(R.id.product_image);
         linearLayoutBack = findViewById(R.id.btn_back_background);
         linearLayoutLove = findViewById(R.id.btn_love_background);
-        linearLayoutCart = findViewById(R.id.btn_cart_background);
+        frameLayoutCart = findViewById(R.id.btn_cart_background);
         linearLayoutMore = findViewById(R.id.btn_more_background);
         relativeLayoutToolbar = findViewById(R.id.toolbar);
+        imageViewMerchantLogo = findViewById(R.id.img_logo);
         spinnerProductSize = findViewById(R.id.spinner_size);
-        this.merchant = (Merchant) getIntent().getParcelableExtra("ClickedProductMerchant");
-        this.product = (Product) getIntent().getParcelableExtra("ClickedProduct");
+
+        //Cart icon
+        if (LoginActivity.firebase.cartList.size() > 0) {
+            cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
+            cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
+        }
+
+        //Product info
+        this.product = (Product) LoginActivity.firebase.productList.get(getIntent().
+                getIntExtra("ClickedProductIndex", 0));
         textViewProductNameVn.setText(product.getName());
+        textViewProductNameEn.setText(product.getEn_Name());
         textViewProductPrice.setText(product.getPrice().get(0));
         textViewProductRating.setText(product.getRating());
         productSize = new ArrayList<String>();
         productSize = product.getProductSize();
-        textViewMerchantName.setText(merchant.getName() + " - " + merchant.getAddress());
 
+        //Merchant info
+        textViewMerchantName.setText(product.getMerchant().getName() + " - " + product.getMerchant().getAddress());
+        if (product.getMerchant().getImage().size() > 0) { //Merchant logo
+            imageViewMerchantLogo.setBackground(null);
+            Glide.with(getApplicationContext()).load(product.getMerchant().getImage().get(0)).into(imageViewMerchantLogo);
+        }
+
+        //Back button
         buttonBack.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
+                if (isFavourite != favouriteStateChange) {
+                    HomeFragment.itemOnMainAdapter.notifyDataSetChanged();
+                }
                 ProductActivity.super.onBackPressed();
             }
         });
 
+        //Init spinner
         initSpinnerProductSize();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (isFavourite != favouriteStateChange) {
+            HomeFragment.itemOnMainAdapter.notifyDataSetChanged();
+        }
+        super.onBackPressed();
+    }
+
+    private void changeLoveIcon() {
+        if (getIntent().getExtras().getBoolean("IsFavourite")) {
+            isFavourite = true;
+            favouriteStateChange = true;
+            buttonLove.setImageResource(R.drawable.ic_baseline_favorite_24);
+        }
     }
 
     private void initSpinnerProductSize() {
@@ -112,7 +218,7 @@ public class ProductActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                textViewProductPrice.setText(product.getPrice().get(position) + " đ");
+                textViewProductPrice.setText(product.getPrice().get(position) + " d");
             }
 
             @Override
@@ -157,10 +263,7 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     public void getCommentList() {
-        commentList = new ArrayList<>();
-        commentList.add(new Comment(1, "Nguyễn Văn A", "Món ngon, gói đẹp, giá tốt.", R.drawable.male_user_96px, "29/04/2021" , 5));
-        commentList.add(new Comment(2, "Nguyễn Văn B", "Món ngon, gói đẹp, giá tốt.", R.drawable.male_user_96px, "20/04/2021" , 4));
-        commentList.add(new Comment(3, "Nguyễn Văn C", "Món ngon, gói đẹp, giá tốt.", R.drawable.male_user_96px, "12/04/2021" , 1));
+        commentList = product.getCommentList();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -185,7 +288,7 @@ public class ProductActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MerchantActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("Merchant", merchant);
+                intent.putExtra("ClickProductIndex", getIntent().getIntExtra("ClickedProductIndex", 0));
                 getApplicationContext().startActivity(intent);
             }
         });
@@ -193,7 +296,7 @@ public class ProductActivity extends AppCompatActivity {
 
     private void turnWhiteToolbar() {
         linearLayoutBack.setBackground(null);
-        linearLayoutCart.setBackground(null);
+        frameLayoutCart.setBackground(null);
         linearLayoutLove.setBackground(null);
         linearLayoutMore.setBackground(null);
         relativeLayoutToolbar.setBackgroundColor(WHITE);
@@ -201,7 +304,7 @@ public class ProductActivity extends AppCompatActivity {
 
     private void turnTransparentToolbar() {
         linearLayoutBack.setBackgroundResource(R.drawable.circle_toolbar_button_background);
-        linearLayoutCart.setBackgroundResource(R.drawable.circle_toolbar_button_background);
+        frameLayoutCart.setBackgroundResource(R.drawable.circle_toolbar_button_background);
         linearLayoutLove.setBackgroundResource(R.drawable.circle_toolbar_button_background);
         linearLayoutMore.setBackgroundResource(R.drawable.circle_toolbar_button_background);
         relativeLayoutToolbar.setBackground(null);
@@ -225,17 +328,52 @@ public class ProductActivity extends AppCompatActivity {
 
     @SuppressLint({"NewApi", "UseCompatLoadingForDrawables"})
     private void changeToolbarButtonColorToLighter() {
-        Drawable drawable = getDrawable(R.drawable.ic_baseline_arrow_back_24);
+        Drawable drawable = getDrawable(R.drawable.ic_baseline_favourite_white_border_24);
+        buttonLove.setImageDrawable(drawable);
+        drawable = getDrawable(R.drawable.ic_baseline_arrow_back_24);
         drawable.setTint(Color.parseColor("#FFFFFF"));
         buttonBack.setImageDrawable(drawable);
-        drawable = getDrawable(R.drawable.ic_baseline_favorite_border_24);
-        drawable.setTint(Color.parseColor("#FFFFFF"));
-        buttonLove.setImageDrawable(drawable);
         drawable = getDrawable(R.drawable.ic_baseline_add_shopping_cart_24);
         drawable.setTint(Color.parseColor("#FFFFFF"));
         buttonCart.setImageDrawable(drawable);
         drawable = getDrawable(R.drawable.ic_baseline_more_horiz_24);
         drawable.setTint(Color.parseColor("#FFFFFF"));
         buttonMore.setImageDrawable(drawable);
+    }
+
+    private void initButtonMoreMenuPopup() {
+        LayoutInflater layoutInflater= (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View popupView = layoutInflater.inflate(R.layout.more_popup_layout, null);
+        final PopupWindow popupWindow = new PopupWindow(popupView,330, LinearLayout.LayoutParams.WRAP_CONTENT);
+
+        buttonMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(popupWindow.isShowing())
+                    popupWindow.dismiss();
+                else
+                    popupWindow.showAsDropDown(buttonMore, 105, 30);
+            }
+        });
+        TextView buttonHome = popupView.findViewById(R.id.more_popup_item_home);
+        buttonHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+        TextView buttonMe = popupView.findViewById(R.id.more_popup_item_me);
+        buttonMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }

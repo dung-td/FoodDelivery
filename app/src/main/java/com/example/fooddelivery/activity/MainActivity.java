@@ -1,15 +1,26 @@
 package com.example.fooddelivery.activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
-
+import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
+import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.adapter.ItemOnMainAdapter;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.R;
@@ -22,105 +33,82 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    public static ArrayList<Product> productList;
-    public static FirebaseFirestore root = FirebaseFirestore.getInstance();
     BottomNavigationView bottomNav;
+
+    boolean doubleBackToExitPressedOnce = false;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initFirebaseData();
+        initView();
+        getData();
     }
 
-    private void initFirebaseData() {
-        productList = new ArrayList<Product>();
-        root.collection("Product/")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            if (document == null)
-                                break;
-                            Product product = new Product();
-                            product.setId((String) document.getId());
-                            product.setName((String) document.get("Name"));
-                            product.setStatus((String) document.get("Status"));
-                            product.setPrice((ArrayList<String>) document.get("Price"));
-                            product.setProductSize((ArrayList<String>) document.get("Size"));
-                            product.setMerchant(splitMerchantId((String) document.get("Merchant")));
-                            product.setRating((String) document.get("Rating"));
-                            getImageList(product);
-                        }
-                        initView();
-                    }
-                });
-    }
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            finish();
+            return;
+        }
 
-    private String splitMerchantId(String data) {
-        return data.substring(9);
-    }
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, getText(R.string.press_back_twice_to_exit), Toast.LENGTH_SHORT).show();
 
-    private void getImageList(Product p) {
-        ArrayList<Uri> images = new ArrayList<Uri>();
-        root.collection("Product/" + p.getId() + "/Photos/")
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            if (document == null)
-                                break;
-                            images.add(Uri.parse((String) document.get("Image_Link")));
-                        }
-                        p.setImage(images);
-                        productList.add(p);
-                    }
-                });
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce = false;
+            }
+        }, 2000);
     }
 
     public void initView () {
         bottomNav = findViewById(R.id.bottomNavigationView);
         bottomNav.setBackground(null);
         bottomNav.getMenu().getItem(2).setEnabled(false);
-        bottomNav.setOnNavigationItemSelectedListener(navListener);
+        initBottomNavigation();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new HomeFragment()).commit();
     }
 
-    private final BottomNavigationView.OnNavigationItemSelectedListener navListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                    Fragment temp = null;
-                    switch (item.getItemId()) {
-                        case R.id.nav_home:
-                            temp = new HomeFragment();
-                            break;
-                        case R.id.nav_order:
+    private void getData() {
+        LoginActivity.firebase.getVoucher();
+        LoginActivity.firebase.getComment();
+    }
 
-                            temp = new OrderFragment(MainActivity.this, returnLanguage());
-                            break;
-//                        case R.id.nav_notification:
-//                            temp = new NotificationFragment();
-                           // break;
-                        case R.id.nav_me:
-                            temp = new MeFragment();
-                            break;
+    private void initBottomNavigation() {
+        bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment temp = null;
+                switch (item.getItemId()) {
+                    case R.id.nav_home:
+                        temp = new HomeFragment();
+                        break;
+                    case R.id.nav_order:
+                        temp = new OrderFragment(MainActivity.this, returnLanguage());
+                        break;
+                    case R.id.nav_me:
+                        temp = new MeFragment();
+                        break;
                     }
-
-                    FragmentManager fragmentManager = getSupportFragmentManager();
-                    FragmentTransaction ft = fragmentManager.beginTransaction();
-                    ft.replace(R.id.fragment_container, temp);
-                    ft.commit();
-                    return true;
                 }
-            };
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction ft = fragmentManager.beginTransaction();
+                ft.replace(R.id.fragment_container, temp);
+                ft.commit();
+                return true;
+            }
+        });
+    }
 
     String returnLanguage()
     {
@@ -129,5 +117,4 @@ public class MainActivity extends AppCompatActivity {
             return "en";
         return "vi";
     }
-
 }

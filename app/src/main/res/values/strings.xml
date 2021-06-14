@@ -74,6 +74,10 @@
     <string name="pass_must_match">Mật khẩu phải trùng khớp</string>
     <string name="pass_regex">Mật khẩu phải có ít nhất 8 ký tự, tồn tại chữ thường, chữ hoa, số và kí tự đặc biệt</string>
     <string name="pls_enter_address">Vui lòng điền địa chỉ</string>
+    <string name="add_favourite_success">Đã thêm vào danh sách yêu thích!</string>
+    <string name="remove_favourite_success">Đã xóa khỏi danh sách yêu thích!</string>
+    <string name="data_loading">Đang tải</string>
+    <string name="press_back_twice_to_exit">Nhấn back lần nữa để thoát!</string>
 
     <string-array name="product_size">
         <item>S</item>
@@ -117,9 +121,11 @@
     <string name="product">sản phẩm</string>
     <string name="delivering">Đang giao</string>
     <string name="history">Lịch sử</string>
-    <string name="used">Đã dùng</string>
     <string name="now_available">Hiện có</string>
+    <string name="HSD">HSD: </string>
+    <string name="used">Đã dùng</string>
     <string name="expired">Hết hạn</string>
+    <string name="dont_have_any_voucher">Bạn chưa có mã giảm giá nào!</string>
     <string name="done">Xong</string>
     <string name="username">Tên đăng nhập</string>
     <string name="update_ava_done">Cập nhật ảnh đại diện thành công</string>
@@ -127,6 +133,4 @@
     <string name="data_empty">Dữ liệu trống</string>
     <string name="phone_been_used">Số điện thoại đã được sử dụng</string>
     <string name="verify_failed">Xác thực không thành công</string>
-
-
 </resources>

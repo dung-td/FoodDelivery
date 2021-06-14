@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardview_product"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
@@ -15,7 +16,7 @@
             android:id="@+id/img_item"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginTop="7dp"
+            android:layout_centerVertical="true"
             android:background="@drawable/trasenvang"/>
 
         <ImageView
@@ -23,6 +24,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignTop="@+id/img_item"
+            android:layout_marginTop="15dp"
             android:layout_marginStart="95dp"
             android:src="@drawable/ic_baseline_favorite_border_24"/>
 
@@ -42,9 +44,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_below="@+id/tv_item_name_merchant"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="5dp"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp">
 
             <ImageView
                 android:layout_width="35dp"
@@ -74,6 +76,17 @@
             android:textColor="@color/black"
             android:textSize="30dp"/>
 
+        <Spinner
+            android:id="@+id/spinner_size"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tv_item_name_merchant"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="58dp"
+            android:layout_marginEnd="20dp"
+            android:spinnerMode="dropdown"
+            android:background="@drawable/shape"/>
+
         <TextView
             android:id="@+id/tv_distance_info"
             android:layout_width="wrap_content"
@@ -81,9 +94,9 @@
             android:text="15min, 1.5km"
             android:textColor="@color/black"
             android:textSize="17dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="65dp"
-            android:layout_marginRight="5dp"
+            android:layout_toEndOf="@+id/img_item"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
             android:layout_below="@+id/tv_item_name_merchant"/>
 
         <View

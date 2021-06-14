@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.ProductAdapter;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.model.Product;
@@ -23,9 +24,7 @@ public class ItemFragment extends Fragment {
 
     public ItemFragment() {
         productList = new ArrayList<>();
-        productList.add(new Product("Trà Sen Vàng", "4.9", "49.000"));
-        productList.add(new Product("Freeze Trà Xanh", "4.7", "49.000"));
-        productList.add(new Product("Trà Sen Vàng", "4.9", "49.000"));
+        productList = LoginActivity.firebase.productList;
         // Required empty public constructor
     }
 

@@ -1,5 +1,6 @@
 package com.example.fooddelivery.fragment;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -83,7 +84,8 @@ public class MeFragment extends Fragment {
         bt_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FirebaseAuth.getInstance().signOut();
+                login();
             }
         });
 
@@ -159,5 +161,10 @@ public class MeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (shouldRefreshOnResume) loadAvatar();
+    }
+
+    private void login() {
+        Intent loginActivity = new Intent(MeFragment.super.getContext(), LoginActivity.class);
+        startActivity(loginActivity);
     }
 }
