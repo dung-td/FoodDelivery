@@ -38,17 +38,9 @@ public class CommentFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view_comment);
-//        getMerchantItems();
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         CommentAdapter commentAdapter = new CommentAdapter(getContext(), commentList);
         recyclerView.setAdapter(commentAdapter);
     }
-
-//    private void getMerchantItems() {
-//        commentList = new ArrayList<>();
-//        commentList.add(new Comment(1, "Nguyễn Văn A", "Món ngon, gói đẹp, giá tốt.", R.drawable.male_user_96px, "29/04/2021" , 5));
-//        commentList.add(new Comment(2, "Nguyễn Văn B", "Món ngon, gói đẹp, giá tốt.", R.drawable.male_user_96px, "20/04/2021" , 4));
-//        commentList.add(new Comment(3, "Nguyễn Văn C", "Món ngon, gói đẹp, giá tốt.", R.drawable.male_user_96px, "12/04/2021" , 1));
-//    }
 }

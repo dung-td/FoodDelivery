@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class WatchedSectionActivity extends AppCompatActivity {
 
     TextView textViewNoData;
-    ImageButton buttonBack;
+    ImageButton buttonBack, buttonRemoveData;
     RecyclerView recyclerViewProduct;
 
     @Override
@@ -33,12 +33,19 @@ public class WatchedSectionActivity extends AppCompatActivity {
 
     private void initView() {
         buttonBack = findViewById(R.id.btn_back);
+        buttonRemoveData = findViewById(R.id.btn_remove_data);
         recyclerViewProduct = findViewById(R.id.recycler_view_product);
         textViewNoData = findViewById(R.id.tv_no_data);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 WatchedSectionActivity.super.onBackPressed();
+            }
+        });
+        buttonRemoveData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

@@ -66,9 +66,18 @@ public class Product implements Parcelable {
         Price.add(price);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    protected Product(Parcel in) {
+        Id = in.readString();
+        Name = in.readString();
+        En_Name = in.readString();
+        Rating = in.readString();
+        Status = in.readString();
+        Merchant = in.readParcelable(com.example.fooddelivery.model.Merchant.class.getClassLoader());
+        Sales = in.readString();
+        Price = in.createStringArrayList();
+        Image = in.createTypedArrayList(Uri.CREATOR);
+        ProductSize = in.createStringArrayList();
+        CommentList = in.createTypedArrayList(Comment.CREATOR);
     }
 
     @Override
@@ -83,19 +92,12 @@ public class Product implements Parcelable {
         dest.writeStringList(Price);
         dest.writeTypedList(Image);
         dest.writeStringList(ProductSize);
+        dest.writeTypedList(CommentList);
     }
 
-    protected Product(Parcel in) {
-        Id = in.readString();
-        Name = in.readString();
-        En_Name = in.readString();
-        Rating = in.readString();
-        Status = in.readString();
-        Merchant = in.readParcelable(com.example.fooddelivery.model.Merchant.class.getClassLoader());
-        Sales = in.readString();
-        Price = in.createStringArrayList();
-        Image = in.createTypedArrayList(Uri.CREATOR);
-        ProductSize = in.createStringArrayList();
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {

@@ -54,6 +54,7 @@ public class ProductActivity extends AppCompatActivity {
     TextView textViewProductPrice;
     TextView textViewMerchantName;
     TextView textViewProductRating;
+    TextView textViewTotalComment;
     static TextView cartBadge;
     TextView textViewProductNameEn;
     ViewPager viewPagerImage;
@@ -142,6 +143,7 @@ public class ProductActivity extends AppCompatActivity {
         textViewProductPrice = findViewById(R.id.tv_product_price);
         textViewMerchantName = findViewById(R.id.tv_merchant_name);
         textViewProductRating = findViewById(R.id.tv_rating);
+        textViewTotalComment = findViewById(R.id.tv_comment_total);
         textViewProductNameEn = findViewById(R.id.tv_product_name_en);
         cartBadge = findViewById(R.id.cart_badge);
         viewPagerImage = findViewById(R.id.product_image);
@@ -260,8 +262,10 @@ public class ProductActivity extends AppCompatActivity {
         recyclerViewComment.setAdapter(commentAdapter);
     }
 
+    @SuppressLint("SetTextI18n")
     public void getCommentList() {
         commentList = product.getCommentList();
+        textViewTotalComment.setText("(" + commentList.size() + ")");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -286,8 +290,7 @@ public class ProductActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MerchantActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("ClickProductIndex", getIntent().getIntExtra("ClickedProductIndex", 0));
-                getApplicationContext().startActivity(intent);
+                startActivity(intent);
             }
         });
     }

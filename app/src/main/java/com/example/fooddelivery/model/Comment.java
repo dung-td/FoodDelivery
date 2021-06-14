@@ -1,6 +1,9 @@
 package com.example.fooddelivery.model;
 
-public class Comment {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Comment implements Parcelable {
     String iD;
     String userName;
     String date;
@@ -17,6 +20,40 @@ public class Comment {
         this.details = details;
         this.rating = rating;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(iD);
+        dest.writeString(userName);
+        dest.writeString(date);
+        dest.writeString(details);
+        dest.writeString(rating);
+    }
+
+    protected Comment(Parcel in) {
+        iD = in.readString();
+        userName = in.readString();
+        date = in.readString();
+        details = in.readString();
+        rating = in.readString();
+    }
+
+    public static final Creator<Comment> CREATOR = new Creator<Comment>() {
+        @Override
+        public Comment createFromParcel(Parcel in) {
+            return new Comment(in);
+        }
+
+        @Override
+        public Comment[] newArray(int size) {
+            return new Comment[size];
+        }
+    };
 
     public String getiD() {
         return iD;
