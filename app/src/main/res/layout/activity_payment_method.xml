@@ -138,7 +138,7 @@
     </RelativeLayout>
 
     <android.widget.Button
-        android:id="@+id/bt_perinfo_save"
+        android:id="@+id/bt_paymentmethod_save"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_centerHorizontal="true"

@@ -80,8 +80,8 @@
         <item>M</item>
         <item>L</item>
     </string-array>
-  
-<!--    <string name="first_step">Bước đầu tiên để bạn tham gia!</string>-->
+
+    <!--    <string name="first_step">Bước đầu tiên để bạn tham gia!</string>-->
     <string name="provide_otp_help">Vui lòng nhập mật mã OTP được gửi đến</string>
     <string name="user_not_exist">Thông tin không tồn tại trong hệ thống</string>
     <string name="shopping_cart">GIỎ HÀNG</string>
@@ -120,4 +120,13 @@
     <string name="used">Đã dùng</string>
     <string name="now_available">Hiện có</string>
     <string name="expired">Hết hạn</string>
+    <string name="done">Xong</string>
+    <string name="username">Tên đăng nhập</string>
+    <string name="update_ava_done">Cập nhật ảnh đại diện thành công</string>
+    <string name="update_infodata_done">Cập nhật dữ liệu người dùng thành công</string>
+    <string name="data_empty">Dữ liệu trống</string>
+    <string name="phone_been_used">Số điện thoại đã được sử dụng</string>
+    <string name="verify_failed">Xác thực không thành công</string>
+
+
 </resources>
