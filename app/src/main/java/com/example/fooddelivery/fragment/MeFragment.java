@@ -12,9 +12,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.me.FeedbackActivity;
 import com.example.fooddelivery.activity.me.SettingActivity;
 import com.example.fooddelivery.activity.me.VoucherActivity;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MeFragment extends Fragment {
 
@@ -50,7 +52,10 @@ public class MeFragment extends Fragment {
         bt_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FirebaseAuth.getInstance().signOut();
+                Intent loginActivity = new Intent(MeFragment.super.getContext(), LoginActivity.class);
+                loginActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(loginActivity);
             }
         });
 

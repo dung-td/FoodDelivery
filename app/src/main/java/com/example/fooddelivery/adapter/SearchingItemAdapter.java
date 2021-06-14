@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.SearchingActivity;
+import com.example.fooddelivery.activity.main.SearchingActivity;
 
 import java.util.List;
 

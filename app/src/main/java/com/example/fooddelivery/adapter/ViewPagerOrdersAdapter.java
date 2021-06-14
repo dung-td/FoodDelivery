@@ -1,10 +1,6 @@
 package com.example.fooddelivery.adapter;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,11 +8,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.LanguageSetting;
-import com.example.fooddelivery.activity.MainActivity;
 import com.example.fooddelivery.fragment.ListOrdersFragment;
-
-import java.util.Locale;
 
 public class ViewPagerOrdersAdapter extends FragmentStatePagerAdapter {
     Activity activity;

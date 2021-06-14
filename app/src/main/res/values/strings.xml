@@ -78,6 +78,7 @@
     <string name="remove_favourite_success">Đã xóa khỏi danh sách yêu thích!</string>
     <string name="data_loading">Đang tải</string>
     <string name="press_back_twice_to_exit">Nhấn back lần nữa để thoát!</string>
+    <string name="no_data">Không có dữ liệu!</string>
 
     <string-array name="product_size">
         <item>S</item>
@@ -106,7 +107,7 @@
     <string name="seen">Đã xem</string>
     <string name="overall">Tổng</string>
     <string name="food">Thức ăn</string>
-    <string name="snack">Ăn vặt</string>
+    <string name="watched">Đã xem</string>
     <string name="favorite">Yêu thích</string>
     <string name="closed">Đóng cửa</string>
     <string name="your_comment">Đánh giá của bạn</string>

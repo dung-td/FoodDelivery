@@ -1,12 +1,9 @@
 package com.example.fooddelivery.activity;
 
 import android.annotation.SuppressLint;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,17 +22,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.adapter.MyAdapter;
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.fragment.HomeFragment;
-import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.MyViewPager;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
 
 import static android.graphics.Color.WHITE;
 

@@ -3,7 +3,7 @@ package com.example.fooddelivery.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.MainActivity;
 import com.example.fooddelivery.activity.MerchantActivity;
 import com.example.fooddelivery.activity.ProductActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
@@ -62,15 +61,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.textViewNameEn.setText(p.getEn_Name());
 
         Glide.with(context).load(p.getImage().get(0)).into(holder.imageViewProduct);
-        holder.textViewPrice.setText(p.getPrice().get(0) + " đ");
+        holder.textViewPrice.setText(p.getPrice().get(0) + " d");
         holder.cardViewProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProductActivity.fa.finish();
+//                ProductActivity.fa.finish();
                 Intent intent = new Intent(context, ProductActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("ClickedProductIndex", position);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("IsFavourite", holder.isFavourite);
+                intent.putExtra("Product", (Parcelable) p);
                 context.startActivity(intent);
             }
         });

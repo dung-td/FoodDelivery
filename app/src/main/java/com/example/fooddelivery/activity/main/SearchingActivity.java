@@ -1,4 +1,4 @@
-package com.example.fooddelivery.activity;
+package com.example.fooddelivery.activity.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;

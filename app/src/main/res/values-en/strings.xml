@@ -90,7 +90,7 @@
     <string name="seen">Seen</string>
     <string name="overall">Overall</string>
     <string name="food">Food</string>
-    <string name="snack">Snack</string>
+    <string name="watched">Watched</string>
     <string name="favorite">Favorite</string>
     <string name="closed">Closed</string>
     <string name="your_comment">Your comment</string>
@@ -114,4 +114,5 @@
     <string name="data_loading">Loading</string>
     <string name="press_back_twice_to_exit">Press back twice to exit!</string>
     <string name="dont_have_any_voucher">You do not have any voucher</string>
+    <string name="no_data">No data found!</string>
 </resources>

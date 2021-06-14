@@ -101,15 +101,16 @@
 
                     //first 3 icon
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:weightSum="3">
+                        android:layout_gravity="center_horizontal"
+                        android:weightSum="2">
 
                         //food section
                         <LinearLayout
                             android:id="@+id/section_food"
-                            android:layout_width="wrap_content"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/primary_color_shape"
@@ -134,7 +135,7 @@
                         //drink section
                         <LinearLayout
                             android:id="@+id/section_drink"
-                            android:layout_width="wrap_content"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="@drawable/primary_color_shape"
@@ -155,31 +156,6 @@
                                 android:textSize="16dp"
                                 android:layout_gravity="center_horizontal"/>
                         </LinearLayout>
-
-                        //fast food section
-                        <LinearLayout
-                            android:id="@+id/section_snack"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/primary_color_shape"
-                            android:layout_gravity="center_horizontal"
-                            android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
-                                android:layout_gravity="center_horizontal"
-                                android:src="@drawable/sandwich_160px"/>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/snack"
-                                android:textColor="@color/black"
-                                android:textSize="16dp"
-                                android:layout_gravity="center_horizontal"/>
-                        </LinearLayout>
                     </LinearLayout>
 
                     //more dots
@@ -190,31 +166,63 @@
                         android:layout_gravity="center_horizontal"
                         android:src="@drawable/ic_baseline_more_horiz_24"/>
 
-                    //love section
+                    //love and watched sections
                     <LinearLayout
-                        android:id="@+id/section_love"
-                        android:layout_width="140dp"
+                        android:layout_width="300dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginStart="4dp"
-                        android:background="@drawable/primary_color_shape"
-                        android:layout_gravity="center_horizontal"
-                        android:orientation="vertical">
+                        android:layout_gravity="center_horizontal">
 
-                        <ImageView
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_gravity="center_horizontal"
-                            android:src="@drawable/love_512px"/>
-
-                        <TextView
-                            android:layout_width="wrap_content"
+                        //love section
+                        <LinearLayout
+                            android:id="@+id/section_love"
+                            android:layout_width="150dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/favorite"
-                            android:textColor="@color/black"
-                            android:textSize="16dp"
-                            android:layout_gravity="center_horizontal"/>
+                            android:layout_weight="1"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="4dp"
+                            android:background="@drawable/primary_color_shape"
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/love_512px"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/favorite"
+                                android:textColor="@color/black"
+                                android:textSize="16dp"
+                                android:layout_gravity="center_horizontal"/>
+                        </LinearLayout>
+
+                        //watched section
+                        <LinearLayout
+                            android:id="@+id/section_watched"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/primary_color_shape"
+                            android:layout_gravity="center_horizontal"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_gravity="center_horizontal"
+                                android:src="@drawable/eye_128px"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/watched"
+                                android:textColor="@color/black"
+                                android:textSize="16dp"
+                                android:layout_gravity="center_horizontal"/>
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 

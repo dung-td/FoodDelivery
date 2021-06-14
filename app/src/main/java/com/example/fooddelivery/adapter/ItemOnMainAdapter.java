@@ -1,11 +1,9 @@
 package com.example.fooddelivery.adapter;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,20 +15,11 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.fooddelivery.activity.MainActivity;
 import com.example.fooddelivery.activity.ProductActivity;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
-import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.Product;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.common.io.Resources;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.rpc.context.AttributeContext;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ItemOnMainAdapter extends RecyclerView.Adapter<ItemOnMainAdapter.ItemOnMainViewHolder> {
@@ -74,7 +63,7 @@ public class ItemOnMainAdapter extends RecyclerView.Adapter<ItemOnMainAdapter.It
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProductActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("ClickedProductIndex", position);
+                intent.putExtra("Product", (Parcelable) p);
                 intent.putExtra("IsFavourite", holder.isFavourite);
                 context.startActivity(intent);
             }
