@@ -32,6 +32,7 @@ public class ModifyFirebase {
     private String collectionPath = "";
     public ArrayList<Product> cartList = new ArrayList<>();
     public ArrayList<Product> productList = new ArrayList<Product>();
+    public ArrayList<String> watchedList = new ArrayList<>();
     public ArrayList<String> favouriteProductList = new ArrayList<String>();
     public ArrayList<Merchant> merchantList = new ArrayList<Merchant>();
     public ArrayList<Voucher> voucherList = new ArrayList<Voucher>();
@@ -77,6 +78,37 @@ public class ModifyFirebase {
 
     public void addProductToCart(String productId) {
 
+    }
+
+    public void addProductToWatched(String productId) {
+        Map<String, String> product = new HashMap<>();
+        product.put("ProductId", productId);
+        root.collection("User/" + userId + "/Watched/")
+                .document(productId)
+                .set(product)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
+    }
+
+    public void getWatchedProductList(final OnGetDataListener listener) {
+        listener.onStart();
+        root.collection("User/" + userId + "/Watched")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            if (document == null)
+                                break;
+                            watchedList.add((String) document.get("ProductId"));
+                        }
+                        listener.onSuccess();
+                    }
+                });
     }
 
     public void getVoucher() {

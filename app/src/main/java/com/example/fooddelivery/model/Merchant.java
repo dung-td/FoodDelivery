@@ -6,7 +6,7 @@ import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-public class Merchant {
+public class Merchant implements Parcelable{
     private String Id;
     private String Name;
     private String Address;
@@ -27,6 +27,42 @@ public class Merchant {
         Uri uri = Uri.parse("android.resource://com.example.merchanttask/drawable/untitled_icon");
         Image.add(uri);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(Id);
+        dest.writeString(Name);
+        dest.writeString(Address);
+        dest.writeString(Email);
+        dest.writeString(Phone);
+        dest.writeTypedList(Image);
+    }
+
+    protected Merchant(Parcel in) {
+        Id = in.readString();
+        Name = in.readString();
+        Address = in.readString();
+        Email = in.readString();
+        Phone = in.readString();
+        Image = in.createTypedArrayList(Uri.CREATOR);
+    }
+
+    public static final Creator<Merchant> CREATOR = new Creator<Merchant>() {
+        @Override
+        public Merchant createFromParcel(Parcel in) {
+            return new Merchant(in);
+        }
+
+        @Override
+        public Merchant[] newArray(int size) {
+            return new Merchant[size];
+        }
+    };
 
     public String getId() {
         return Id;

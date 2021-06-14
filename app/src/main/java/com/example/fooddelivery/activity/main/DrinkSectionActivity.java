@@ -1,15 +1,13 @@
-package com.example.fooddelivery.activity;
+package com.example.fooddelivery.activity.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.fooddelivery.adapter.MyOnSectionAdapter;
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.MyViewPager;
 import com.google.android.material.tabs.TabLayout;
 

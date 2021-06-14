@@ -86,7 +86,9 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
-                login();
+                Intent loginActivity = new Intent(MeFragment.super.getContext(), LoginActivity.class);
+                loginActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(loginActivity);
             }
         });
 
@@ -162,10 +164,5 @@ public class MeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (shouldRefreshOnResume) loadAvatar();
-    }
-
-    private void login() {
-        Intent loginActivity = new Intent(MeFragment.super.getContext(), LoginActivity.class);
-        startActivity(loginActivity);
     }
 }

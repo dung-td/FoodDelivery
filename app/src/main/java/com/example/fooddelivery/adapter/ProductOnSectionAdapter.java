@@ -3,6 +3,7 @@ package com.example.fooddelivery.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +65,7 @@ public class ProductOnSectionAdapter extends RecyclerView.Adapter<ProductOnSecti
             public void onClick(View v) {
                 Intent intent = new Intent(context, ProductActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("ClickedProductIndex", position);
+                intent.putExtra("Product", (Parcelable) p);
                 intent.putExtra("IsFavourite", holder.isFavourite);
                 context.startActivity(intent);
             }

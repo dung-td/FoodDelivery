@@ -47,13 +47,15 @@
         <activity android:name=".activity.me.SettingActivity" />
         <activity android:name=".activity.me.VoucherActivity" />
         <activity android:name=".activity.LanguageSetting" />
-        <activity android:name=".activity.CartActivity" />
+        <activity android:name=".activity.main.CartActivity" />
         <activity android:name=".activity.me.FeedbackActivity" />
         <activity android:name=".activity.ProductActivity" />
-        <activity android:name=".activity.SearchingActivity" />
-        <activity android:name=".activity.DrinkSectionActivity" />
+        <activity android:name=".activity.main.SearchingActivity" />
+        <activity android:name=".activity.main.DrinkSectionActivity" />
+        <activity android:name=".activity.main.FavouriteSectionActivity"/>
+        <activity android:name=".activity.main.WatchedSectionActivity"/>
         <activity android:name=".activity.MerchantActivity" />
-        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.main.MainActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

@@ -3,7 +3,6 @@ package com.example.fooddelivery.fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,24 +16,21 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.fooddelivery.activity.CartActivity;
-import com.example.fooddelivery.activity.DrinkSectionActivity;
-import com.example.fooddelivery.activity.MainActivity;
-import com.example.fooddelivery.activity.ProductActivity;
+import com.example.fooddelivery.activity.main.CartActivity;
+import com.example.fooddelivery.activity.main.DrinkSectionActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.main.FavouriteSectionActivity;
+import com.example.fooddelivery.activity.main.WatchedSectionActivity;
 import com.example.fooddelivery.adapter.ItemOnMainAdapter;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.model.GridSpacingItemDecoration;
-import com.example.fooddelivery.model.ModifyFirebase;
-import com.example.fooddelivery.model.Product;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.example.fooddelivery.model.OnGetDataListener;
 
 public class HomeFragment extends Fragment {
 
-    LinearLayout sectionDrink;
+    LinearLayout sectionDrink, sectionFavourite, sectionWatched;
     FrameLayout cartBackground;
+    boolean isFirstClick = true;
     public static TextView cartBadge;
     public static ItemOnMainAdapter itemOnMainAdapter;
     public static RecyclerView recyclerViewProducts;
@@ -44,6 +40,8 @@ public class HomeFragment extends Fragment {
 
     private void initClickListener() {
         sectionDrink = getView().findViewById(R.id.section_drink);
+        sectionFavourite = getView().findViewById(R.id.section_love);
+        sectionWatched = getView().findViewById(R.id.section_watched);
         cartBackground = getView().findViewById(R.id.btn_cart_background);
         sectionDrink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +49,40 @@ public class HomeFragment extends Fragment {
                 Intent intent = new Intent(getContext(), DrinkSectionActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+            }
+        });
+        sectionFavourite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FavouriteSectionActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+        sectionWatched.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isFirstClick) {
+                    isFirstClick = false;
+                    LoginActivity.firebase.getWatchedProductList(new OnGetDataListener() {
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                            Intent intent = new Intent(getContext(), WatchedSectionActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                    });
+                }
+                else {
+                    Intent intent = new Intent(getContext(), WatchedSectionActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                }
             }
         });
         cartBackground.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +122,7 @@ public class HomeFragment extends Fragment {
     }
 
     public static void updateCartBadge() {
-        if (LoginActivity.firebase.cartList.size() > 0) {
+        if (LoginActivity.firebase.cartList != null && LoginActivity.firebase.cartList.size() > 0) {
             cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
             cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
         }

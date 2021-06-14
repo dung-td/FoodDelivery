@@ -1,4 +1,4 @@
-package com.example.fooddelivery.activity;
+package com.example.fooddelivery.activity.main;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;

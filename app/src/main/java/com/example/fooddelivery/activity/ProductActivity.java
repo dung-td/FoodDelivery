@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,14 +30,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.adapter.CommentAdapter;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.Comment;
 import com.example.fooddelivery.model.Product;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,6 +87,7 @@ public class ProductActivity extends AppCompatActivity {
         addProductToFavourite();
         addProductToCart();
         initButtonMoreMenuPopup();
+        addProductToWatchedList();
     }
 
     private void addProductToCart() {
@@ -161,8 +160,7 @@ public class ProductActivity extends AppCompatActivity {
         }
 
         //Product info
-        this.product = (Product) LoginActivity.firebase.productList.get(getIntent().
-                getIntExtra("ClickedProductIndex", 0));
+        this.product = (Product) getIntent().getParcelableExtra("Product");
         textViewProductNameVn.setText(product.getName());
         textViewProductNameEn.setText(product.getEn_Name());
         textViewProductPrice.setText(product.getPrice().get(0));
@@ -375,5 +373,12 @@ public class ProductActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void addProductToWatchedList () {
+        if (!LoginActivity.firebase.watchedList.contains(product.getId())) {
+            LoginActivity.firebase.watchedList.add(product.getId());
+            LoginActivity.firebase.addProductToWatched(product.getId());
+        }
     }
 }

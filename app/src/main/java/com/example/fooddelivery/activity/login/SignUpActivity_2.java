@@ -18,7 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.binaryfork.spanny.Spanny;
-import com.example.fooddelivery.activity.MainActivity;
+import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.model.User;
 import com.example.fooddelivery.model.modifiedFirebase;

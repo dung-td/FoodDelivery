@@ -4,11 +4,12 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Product {
+public class Product implements Parcelable {
     private String Id;
     private String Name;
     private String En_Name;
@@ -64,6 +65,50 @@ public class Product {
         Status = "InStock";
         Price.add(price);
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(Id);
+        dest.writeString(Name);
+        dest.writeString(En_Name);
+        dest.writeString(Rating);
+        dest.writeString(Status);
+        dest.writeParcelable(Merchant, flags);
+        dest.writeString(Sales);
+        dest.writeStringList(Price);
+        dest.writeTypedList(Image);
+        dest.writeStringList(ProductSize);
+    }
+
+    protected Product(Parcel in) {
+        Id = in.readString();
+        Name = in.readString();
+        En_Name = in.readString();
+        Rating = in.readString();
+        Status = in.readString();
+        Merchant = in.readParcelable(com.example.fooddelivery.model.Merchant.class.getClassLoader());
+        Sales = in.readString();
+        Price = in.createStringArrayList();
+        Image = in.createTypedArrayList(Uri.CREATOR);
+        ProductSize = in.createStringArrayList();
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     public void setProductSize(ArrayList<String> productSize) {
         ProductSize = productSize;
