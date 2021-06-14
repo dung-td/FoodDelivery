@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.PersonalInfoActivity;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.me.FeedbackActivity;
 import com.example.fooddelivery.activity.me.SettingActivity;
 import com.example.fooddelivery.activity.me.VoucherActivity;

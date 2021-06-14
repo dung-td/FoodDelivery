@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
                         temp = new MeFragment();
                         break;
                     }
-                }
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction ft = fragmentManager.beginTransaction();
