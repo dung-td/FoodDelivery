@@ -1,4 +1,7 @@
-package com.example.fooddelivery.activity.login;
+package com.example.fooddelivery.activity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -10,20 +13,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.binaryfork.spanny.Spanny;
-import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.ForgotPassActitivy_5;
+import com.example.fooddelivery.activity.login.ForgotPassActivity_2;
+import com.example.fooddelivery.activity.login.SignUpActivity_2;
 import com.example.fooddelivery.model.User;
 import com.example.fooddelivery.model.modifiedFirebase;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -34,22 +34,27 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class SignUpActivity_2 extends AppCompatActivity {
-
-    private static final String TAG = "PHONE VERIFY";
+public class VerifyPhoneActivity extends AppCompatActivity {
 
     EditText et_code_1, et_code_2, et_code_3, et_code_4, et_code_5, et_code_6;
     Button bt_finish, bt_resend;
-    ImageView bt_back;
-    TextView tv_sms, tv_mail;
+    TextView tv_sms;
 
     String verificationId;
     User userInfo;
-    String uID;
     String codeByUser;
+    //String userID = "KrSKPkEqkMP5KuzR60QBiBcWsoE2";
+
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    String userID = user.getUid();
 
     FirebaseAuth mAuth;
     modifiedFirebase firebase;
@@ -58,13 +63,14 @@ public class SignUpActivity_2 extends AppCompatActivity {
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
+
             verificationId = s;
-            Log.d(TAG, "CODE SEND");
+
+            Log.e("verificationId",verificationId );
         }
 
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-            Log.d(TAG, "complete");
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 verifyCode(code);
@@ -73,27 +79,18 @@ public class SignUpActivity_2 extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
-
+            Toast.makeText(getApplicationContext(), getString(R.string.verify_failed), Toast.LENGTH_LONG).show();
         }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_up_2);
+        setContentView(R.layout.activity_verify_phone);
 
         Init();
 
         sendVerificationCode(userInfo.getPhone_Number());
-
-        bt_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent previousSU = new Intent(SignUpActivity_2.this, SignUpActivity_1.class);
-                SendInformation(previousSU, userInfo);
-                startActivity(previousSU);
-            }
-        });
 
         bt_finish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,123 +109,30 @@ public class SignUpActivity_2 extends AppCompatActivity {
                 verifyCode(codeByUser);
             }
         });
-    }
 
-    private void Init() {
-        bt_resend = findViewById(R.id.su2_bt_send);
-        bt_finish = findViewById(R.id.su2_bt_finish);
-        bt_back = findViewById(R.id.su2_bt_back);
-        et_code_1 = findViewById(R.id.su2_et_code_1);
-        et_code_2 = findViewById(R.id.su2_et_code_2);
-        et_code_3 = findViewById(R.id.su2_et_code_3);
-        et_code_4 = findViewById(R.id.su2_et_code_4);
-        et_code_5 = findViewById(R.id.su2_et_code_5);
-        et_code_6 = findViewById(R.id.su2_et_code_6);
-        tv_sms = findViewById(R.id.su2_tv_smshelper);
-        tv_mail = findViewById(R.id.su2_tv_emailhelper);
-        setTextChangedListener();
-
-        userInfo = new User();
-        userInfo = GetExtras();
-
-        Spanny spanny = new Spanny("Nhập mã xác được được \n gửi đến số ")
-                .append(userInfo.getPhone_Number(), new StyleSpan(Typeface.BOLD_ITALIC));
-        tv_sms.setText(spanny);
-
-        spanny = new Spanny("Hoặc xác thực bằng mail \n được gửi đến ")
-                .append(userInfo.getEmail(), new StyleSpan(Typeface.BOLD_ITALIC));
-        tv_mail.setText(spanny);
-
-        firebase = new modifiedFirebase();
-        firebase.setObject(userInfo);
-        firebase.setCollectionPath("User");
-
-        mAuth = FirebaseAuth.getInstance();
-    }
-
-    private User GetExtras() {
-        Intent i = getIntent();
-        return new User(
-                i.getStringExtra("firstname"),
-                i.getStringExtra("lastname"),
-                i.getStringExtra("phone"),
-                i.getStringExtra("email"),
-                i.getStringExtra("address"),
-                i.getStringExtra("password"));
+        bt_resend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendVerificationCode(userInfo.getPhone_Number());
+            }
+        });
     }
 
     private void sendVerificationCode(String phoneNumber) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber("+84" + phoneNumber)       // Phone number to verify
-                        .setTimeout(1L, TimeUnit.SECONDS) // Timeout and unit
+                        .setTimeout(120L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
                         .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
-        Log.d(TAG, "CREATE OPTIONS");
     }
 
     private void verifyCode(String code) {
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId, code);
-        signInWithPhoneAuthCredential(credential);
-    }
-
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(SignUpActivity_2.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = task.getResult().getUser();
-                            uID = user.getUid();
-                            if (!firebase.checkUID(uID))
-                                addNewUser(user);
-                            loginComplete(user);
-                        } else {
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                Toast.makeText(SignUpActivity_2.this, "Mã đã hết hạn", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    }
-                });
-    }
-
-    private void addNewUser(FirebaseUser user) {
-        user.updatePassword(userInfo.getPassword());
-        user.updateEmail(userInfo.getEmail());
-        user.sendEmailVerification()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
-
-        firebase.setObject(userInfo);
-        firebase.setCollectionPath("User");
-        firebase.insertDataFirestore(user.getUid());
-    }
-
-    private void loginComplete(FirebaseUser user) {
-        Intent mainActivity = new Intent(SignUpActivity_2.this, MainActivity.class);
-        startActivity(mainActivity);
-    }
-
-    private void SendInformation(Intent previousSU, User userInfo) {
-        previousSU.putExtra("firstname", userInfo.getFirst_Name());
-        previousSU.putExtra("lastname", userInfo.getLast_Name());
-        previousSU.putExtra("phone", userInfo.getPhone_Number());
-        previousSU.putExtra("email", userInfo.getEmail());
-        previousSU.putExtra("address", userInfo.getAddress());
-        previousSU.putExtra("password", userInfo.getPassword());
+           Log.e("verificationId", verificationId);
+           updatePhone();
+           finish();
     }
 
     private void setTextChangedListener() {
@@ -357,4 +261,64 @@ public class SignUpActivity_2 extends AppCompatActivity {
         });
 
     }
+
+    void updatePhone() {
+         FirebaseFirestore root = FirebaseFirestore.getInstance();
+
+        root.collection("User").document(userID)
+                .update("phone_Number", userInfo.getPhone_Number())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.update_infodata_done), Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
+
+    private void Init() {
+        bt_resend = findViewById(R.id.phone_bt_send);
+        bt_finish = findViewById(R.id.phone_bt_finish);
+
+        et_code_1 = findViewById(R.id.phone_et_code_1);
+        et_code_2 = findViewById(R.id.phone_et_code_2);
+        et_code_3 = findViewById(R.id.phone_et_code_3);
+        et_code_4 = findViewById(R.id.phone_et_code_4);
+        et_code_5 = findViewById(R.id.phone_et_code_5);
+        et_code_6 = findViewById(R.id.phone_et_code_6);
+        tv_sms = findViewById(R.id.su2_tv_smshelper);
+
+        setTextChangedListener();
+
+        userInfo = new User();
+        userInfo = GetExtras();
+
+        Spanny spanny = new Spanny("Nhập mã xác được được \n gửi đến số ")
+                .append(userInfo.getPhone_Number(), new StyleSpan(Typeface.BOLD_ITALIC));
+        tv_sms.setText(spanny);
+
+
+        firebase = new modifiedFirebase();
+        firebase.setObject(userInfo);
+        firebase.setCollectionPath("User");
+
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+    private User GetExtras() {
+        Intent i = getIntent();
+        return new User(
+                i.getStringExtra("firstname"),
+                i.getStringExtra("lastname"),
+                i.getStringExtra("phone"),
+                i.getStringExtra("email"),
+                i.getStringExtra("address"),
+                i.getStringExtra("password"));
+    }
+
 }

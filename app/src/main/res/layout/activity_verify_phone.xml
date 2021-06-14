@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.VerifyPhoneActivity">
+
+    <View
+        android:layout_width="500dp"
+        android:layout_height="400dp"
+        android:layout_marginLeft="-250dp"
+        android:layout_marginTop="-140dp"
+        android:background="@drawable/elipse" />
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="330dp"
+        android:layout_height="350dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="140dp"
+        app:cardCornerRadius="10dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+
+                android:id="@+id/su2_tv_smshelper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:gravity="center_horizontal"
+                android:text="@string/input_code_send_to"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                />
+
+            <LinearLayout
+                android:id="@+id/linearCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/su2_tv_smshelper"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp">
+
+                <EditText
+                    android:id="@+id/phone_et_code_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/primaryTextColor"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textAlignment="center" />
+
+                <EditText
+                    android:id="@+id/phone_et_code_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/primaryTextColor"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textAlignment="center" />
+
+                <EditText
+                    android:id="@+id/phone_et_code_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/primaryTextColor"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textAlignment="center" />
+
+                <EditText
+                    android:id="@+id/phone_et_code_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/primaryTextColor"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textAlignment="center" />
+
+                <EditText
+                    android:id="@+id/phone_et_code_5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/primaryTextColor"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textAlignment="center" />
+
+                <EditText
+                    android:id="@+id/phone_et_code_6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/primaryTextColor"
+                    android:inputType="numberPassword"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
+
+            <android.widget.Button
+                android:id="@+id/phone_bt_finish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_background_blue"
+                android:text="@string/finish_title"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteTextColor" />
+
+            <android.widget.Button
+
+                android:id="@+id/phone_bt_send"
+                android:layout_width="159dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearCode"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_background_blue"
+                android:text="@string/send_again"
+                android:textAllCaps="false"
+                android:textColor="@color/whiteTextColor" />
+
+
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <ImageView
+        android:id="@+id/su2_bt_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="11dp"
+        android:layout_marginBottom="30dp"
+        android:adjustViewBounds="false"
+        android:src="@drawable/ic_back_img_2" />
+
+</RelativeLayout>

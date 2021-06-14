@@ -4,19 +4,26 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.adapter.ItemOnMainAdapter;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.fragment.OrderFragment;
 import com.example.fooddelivery.model.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -63,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getData() {
-//        LoginActivity.firebase.getVoucher();
+        LoginActivity.firebase.getVoucher();
+        LoginActivity.firebase.getComment();
     }
 
     private void initBottomNavigation() {
@@ -78,12 +86,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_order:
                         temp = new OrderFragment(MainActivity.this, returnLanguage());
                         break;
-//                        case R.id.nav_notification:
-//                            temp = new NotificationFragment();
-//                            break;
                     case R.id.nav_me:
                         temp = new MeFragment();
                         break;
+                    }
                 }
 
                 FragmentManager fragmentManager = getSupportFragmentManager();

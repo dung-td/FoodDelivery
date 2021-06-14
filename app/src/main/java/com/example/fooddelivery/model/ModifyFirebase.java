@@ -117,7 +117,6 @@ public class ModifyFirebase {
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Log.d(TAG, "get from user");
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                             if (document == null)
                                 break;
@@ -129,18 +128,46 @@ public class ModifyFirebase {
                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                            Log.d(TAG, "get from voucher");
                                             voucher.setCode(documentSnapshot.get("code").toString());
                                             voucher.setTitle(documentSnapshot.get("title").toString());
                                             voucher.setDate(documentSnapshot.get("date").toString());
-                                            voucher.setValues((List<String>)documentSnapshot.get("value"));
-                                            voucher.setDetails((List<String>)documentSnapshot.get("details"));
+                                            voucher.setValues((List<String>) documentSnapshot.get("value"));
+                                            voucher.setDetails((List<String>) documentSnapshot.get("details"));
                                             voucherList.add(voucher);
                                         }
                                     });
                         }
                     }
                 });
+    }
+
+    public void getComment() {
+        int index = 0;
+        for (Product product : productList) {
+            ArrayList<Comment> comments = new ArrayList<Comment>();
+            int finalIndex = index;
+            root.collection("Product/" + product.getId() + "/Comment/")
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            Log.d(TAG, "Got comment from product");
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                if (document == null)
+                                    break;
+                                Comment comment = new Comment();
+                                comment.setiD(document.getId());
+                                comment.setUserName(document.get("userName").toString());
+                                comment.setDate(document.get("date").toString());
+                                comment.setDetails(document.get("details").toString());
+                                comment.setRating(document.get("rating").toString());
+                                comments.add(comment);
+                            }
+                            productList.get(finalIndex).setCommentList(comments);
+                        }
+                    });
+            index++;
+        }
     }
 
     public void getData(final OnGetDataListener listener) {
