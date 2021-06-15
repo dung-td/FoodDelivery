@@ -3,19 +3,26 @@ package com.example.fooddelivery.model;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.fooddelivery.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,6 +46,8 @@ public class ModifyFirebase {
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
     private final boolean checkUsername = false;
     private boolean uIDCheck = false;
+    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private String userAvatarUri;
 
     public ModifyFirebase() {
     }
@@ -245,7 +254,6 @@ public class ModifyFirebase {
                 });
     }
 
-
     private Merchant findMerchantFromId(String id) {
         for (Merchant mer : merchantList) {
             if (mer.getId().equals(id))
@@ -253,6 +261,47 @@ public class ModifyFirebase {
         }
         return null;
     }
+
+    public User getUserInformation() {
+        User newUser = new User();
+        DocumentReference docRef = root.collection("User").document(user.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        newUser.setAddress(document.get("address").toString());
+                        newUser.setPhone_Number(document.get("phone_Number").toString());
+                       // newUser.setEmail(document.get("email").toString());
+                        newUser.setEmail(user.getEmail().toString());
+                        newUser.setLast_Name(document.get("last_Name").toString());
+                        newUser.setFirst_Name(document.get("first_Name").toString());
+                    }
+                }
+            }
+        });
+
+        return newUser;
+
+    }
+
+    public void getUserAvatarUri(CallBackData callBack) {
+        DocumentReference docRef = root.collection("User").document(user.getUid());
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                       userAvatarUri = document.get("profileImageLink").toString();
+                    }
+                }
+                callBack.firebaseResponseCallback(userAvatarUri);
+            }
+        });
+    }
+
 
     public boolean checkUID(String uID) {
         uIDCheck = false;

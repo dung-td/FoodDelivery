@@ -121,4 +121,7 @@
     <string name="data_empty">Your data is empty</string>
     <string name="phone_been_used">This phone number has been used</string>
     <string name="verify_failed">Authentication failed</string>
+    <string name="verified_email_sent">Verification email has been sent to the email address</string>
+    <string name="verfiedcode">"The code "</string>
+    <string name="is_sent">"was sent to "</string>
 </resources>

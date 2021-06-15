@@ -1,6 +1,8 @@
 package com.example.fooddelivery.model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     String First_Name;
     String Last_Name;
     String Phone_Number;

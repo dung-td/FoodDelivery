@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
             }
         });
         cartBadge = getView().findViewById(R.id.cart_badge);
-        updateCartBadge();
+        //updateCartBadge();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class HomeFragment extends Fragment {
         recyclerViewProducts = (RecyclerView)getView().findViewById(R.id.recycler_view_products);
         recyclerViewProducts.setHasFixedSize(true);
 
-        itemOnMainAdapter = new ItemOnMainAdapter(getContext(), LoginActivity.firebase.productList);
+     //   itemOnMainAdapter = new ItemOnMainAdapter(getContext(), LoginActivity.firebase.productList);
         GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
         int spanCount = 2;
         int spacing = 40;

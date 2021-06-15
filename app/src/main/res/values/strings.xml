@@ -133,4 +133,7 @@
     <string name="data_empty">Dữ liệu trống</string>
     <string name="phone_been_used">Số điện thoại đã được sử dụng</string>
     <string name="verify_failed">Xác thực không thành công</string>
+    <string name="verified_email_sent">Email xác thực đã được gửi đến địa chỉ mail</string>
+    <string name="verfiedcode">Mã xác thực</string>
+    <string name="is_sent">được gửi đến</string>
 </resources>
