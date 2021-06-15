@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.login.SignUpActivity_1;
@@ -72,20 +73,14 @@ public class PersonalInfoActivity extends AppCompatActivity {
     ImageView iv_Avatar;
     ImageButton bt_back;
     ProgressBar progressBar;
-
     Uri imageUri;
-
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String userID = user.getUid();
-
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
 
     Regex regex = new Regex();
     String oldEmail, oldPhone, oldAddress;
     User currentUser = new User();
-
-
+    String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,6 +133,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         et_Address.setVisibility(View.GONE);
         et_Phone.setVisibility(View.GONE);
         et_Email.setVisibility(View.GONE);
+
+        currentUser = LoginActivity.firebase.getUser();
+        userID = LoginActivity.firebase.getUserId();
     }
 
     void beginChangeInfomation(EditText et_Info, TextView tv_Info, TextView confirm) {
@@ -251,15 +249,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
             iv_Avatar.setImageURI(imageUri);
         }
 
-        ModifyFirebase modifyFirebase = new ModifyFirebase();
-        currentUser = modifyFirebase.getUserInformation();
-        setInformation();
-
         progressBar.setVisibility(View.INVISIBLE);
     }
 
     void updateAvatar() {
-        StorageReference fileRef = reference.child("UserImage/"+userID);
+        StorageReference fileRef = reference.child("UserImage/"+ userID);
 
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -280,8 +274,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 });
             }
         });
-
-
     }
     void updateAddress(){
         String address = et_Address.getText().toString();
@@ -291,6 +283,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        currentUser.setAddress(address);
                         progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(), getString(R.string.update_infodata_done), Toast.LENGTH_LONG).show();
                     }
@@ -325,21 +318,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
 //        progressBar.setVisibility(View.INVISIBLE);
 //    }
 
-
-    void loadInformation() {
-        Intent intent = getIntent();
-        currentUser = (User) intent.getSerializableExtra("user");
-
-        setInformation();
-
-    }
-
-    void setInformation()
+    void loadInformation()
     {
         tv_Address.setText(currentUser.getAddress());
         tv_Phone.setText(currentUser.getPhone_Number());
         tv_Email.setText(currentUser.getEmail());
-        tv_Name.setText(currentUser.getLast_Name()+" "+currentUser.getFirst_Name());
+        tv_Name.setText(String.format("%s %s", currentUser.getLast_Name(), currentUser.getFirst_Name()));
+        Glide.with(PersonalInfoActivity.this).load(currentUser.getProfileImage());
 
         oldAddress = tv_Address.getText().toString();
         oldPhone = tv_Phone.getText().toString();
@@ -493,15 +478,14 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
 
     private void sendVerifyEmail(String email) {
-
-        Log.e("Send email", "SEND");
-
         Toast.makeText(this, getString(R.string.verified_email_sent)+ " " +email, Toast.LENGTH_LONG).show();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         user.verifyBeforeUpdateEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
+                        Log.e("Send email", "SEND");
                         user.reload();
                         if (task.isSuccessful() && user.isEmailVerified()) {
                             Log.e("verifyBeforeUpdateEmail", "verifyBeforeUpdateEmail");
@@ -517,11 +501,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), getString(R.string.verify_failed), Toast.LENGTH_LONG).show();
                     }
                 });
-
-
         progressBar.setVisibility(View.INVISIBLE);
-
-
     }
     //void updateEmail(String email) {
 //        FirebaseFirestore root = FirebaseFirestore.getInstance();

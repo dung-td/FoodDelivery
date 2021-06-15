@@ -289,5 +289,6 @@ public class LoginActivity extends AppCompatActivity {
     private void navigateToMainActivity () {
         Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(mainActivity);
+        finish();
     }
 }

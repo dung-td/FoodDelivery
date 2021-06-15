@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.PersonalInfoActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
@@ -41,31 +42,24 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 public class MeFragment extends Fragment {
 
     ImageButton bt_setting, bt_voucher, bt_logout, bt_feedback, bt_info, bt_payment;
     ImageView imageUser;
     TextView tv_userName;
     //ProgressBar progressBar;
-
-
 //    private FirebaseFirestore root = FirebaseFirestore.getInstance();
 //    private StorageReference reference = FirebaseStorage.getInstance().getReference();
 //
 //    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 //    String userID = user.getUid();
-
-    User currentUser = new User();
     String uriAvatar;
 
     boolean shouldRefreshOnResume;
     public  MeFragment()
     {}
-
-    public MeFragment(User currentUser, String uriAvatar) {
-        this.currentUser = currentUser;
-        this.uriAvatar = uriAvatar;
-    }
 
     @Nullable
     @Override
@@ -79,10 +73,8 @@ public class MeFragment extends Fragment {
 
         Init();
 
-       // Log.e("UserID", user.getUid());
 
-        loadAvatar();
-        loadName();
+        loadInfo();
 
         bt_setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,8 +112,6 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent personalInfoActivity = new Intent(MeFragment.super.getContext(), PersonalInfoActivity.class);
-                personalInfoActivity.putExtra("user", currentUser);
-                personalInfoActivity.putExtra("uriAvatar", uriAvatar);
                 startActivity(personalInfoActivity);
             }
         });
@@ -144,79 +134,17 @@ public class MeFragment extends Fragment {
         //progressBar = getView().findViewById(R.id.me_wating);
     }
 
-    void loadAvatar() {
-        if (uriAvatar != null)
-        {
-            Log.e("Set Avatar uriAvatar", uriAvatar.toString());
-            Picasso.get().load(Uri.parse(uriAvatar)).into(imageUser);
-        }
-    }
-
-    void loadName(){
-        if (currentUser!= null) {
-            tv_userName.setText(currentUser.getLast_Name() + " " + currentUser.getFirst_Name());
-            Log.e("user ", "user not null");
-        }
-    }
-
-//    public void loadAvatar() {
-//        progressBar.setVisibility(View.VISIBLE);
-//        progressBar.setIndeterminate(true);
-//        StorageReference fileRef = reference.child("UserImage/"+userID);
-//        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//            @Override
-//            public void onSuccess(Uri uri) {
-//                Log.e("Avatar", uri.toString());
-//                Picasso.get().load(uri).into(imageUser);
-//            }
-//        });
-//        progressBar.setVisibility(View.INVISIBLE);
-//    }
-//
-//    void loadName() {
-//        progressBar.setVisibility(View.VISIBLE);
-//        progressBar.setIndeterminate(true);
-//        DocumentReference docRef = root.collection("User").document(userID);
-//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        //User userInfo = document.toObject(User.class);
-//                        tv_userName.setText(document.get("last_Name").toString() +  " " + document.get("first_Name").toString());
-//                    }
-//                }
-//            }
-//        });
-//        progressBar.setVisibility(View.INVISIBLE);
-//    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        shouldRefreshOnResume = true;
+    void loadInfo() {
+        User temp = LoginActivity.firebase.getUser();
+        tv_userName.setText(String.format("%s %s", temp.getFirst_Name(), temp.getLast_Name()));
+        Glide.with(requireActivity()).load(temp.getProfileImage()).into(imageUser);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (shouldRefreshOnResume) ;
-        {
-            ModifyFirebase firebase = new ModifyFirebase();
-            firebase.getUserAvatarUri(new CallBackData() {
-                @Override
-                public void firebaseResponseCallback(String result) {
-                    Picasso.get().load(Uri.parse(uriAvatar)).into(imageUser);
-                }
-                @Override
-                public void firebaseResponseCallback(boolean result) {
-
-                }
-            });
-
-            this.currentUser = firebase.getUserInformation();
-        }
+        User temp = LoginActivity.firebase.getUser();
+        Glide.with(requireActivity()).load(temp.getProfileImage()).into(imageUser);
     }
 
     private void login() {

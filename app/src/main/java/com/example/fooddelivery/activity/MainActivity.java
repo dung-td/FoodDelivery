@@ -54,15 +54,11 @@ public class MainActivity extends AppCompatActivity {
 
     boolean doubleBackToExitPressedOnce = false;
 
-    User currentUser = new User();
-    String currentUserAvatar = new String();
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
         getData();
-        loadUserInformation();
     }
 
     @Override
@@ -97,28 +93,8 @@ public class MainActivity extends AppCompatActivity {
     private void getData() {
         //LoginActivity.firebase.getVoucher();
       //  LoginActivity.firebase.getComment();
+        LoginActivity.firebase.getUserInfo();
     }
-
-    void loadUserInformation() {
-        ModifyFirebase firebase = new ModifyFirebase();
-        this.currentUser = firebase.getUserInformation();
-
-        firebase.getUserAvatarUri(new CallBackData() {
-                                      @Override
-                                      public void firebaseResponseCallback(String result) {
-                                          currentUserAvatar = result;
-                                      }
-
-                                      @Override
-                                      public void firebaseResponseCallback(boolean result) {
-
-                                      }
-                                  });
-
-        Log.e("currentUserAvatar", currentUserAvatar);
-
-    }
-
 
     private void initBottomNavigation() {
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -133,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                         temp = new OrderFragment(MainActivity.this, returnLanguage());
                         break;
                     case R.id.nav_me:
-                        temp = new MeFragment(currentUser, currentUserAvatar);
+                        temp = new MeFragment();
                         break;
                     }
 

@@ -46,8 +46,7 @@ public class ModifyFirebase {
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
     private final boolean checkUsername = false;
     private boolean uIDCheck = false;
-    private FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    private String userAvatarUri;
+    private User user = new User();
 
     public ModifyFirebase() {
     }
@@ -262,46 +261,33 @@ public class ModifyFirebase {
         return null;
     }
 
-    public User getUserInformation() {
-        User newUser = new User();
-        DocumentReference docRef = root.collection("User").document(user.getUid());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        newUser.setAddress(document.get("address").toString());
-                        newUser.setPhone_Number(document.get("phone_Number").toString());
-                       // newUser.setEmail(document.get("email").toString());
-                        newUser.setEmail(user.getEmail().toString());
-                        newUser.setLast_Name(document.get("last_Name").toString());
-                        newUser.setFirst_Name(document.get("first_Name").toString());
+    public void getUserInfo() {
+        root.collection("User").document(userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null) {
+                                user.Email = document.get("email").toString();
+                                user.Address = document.get("address").toString();
+                                user.First_Name = document.get("first_Name").toString();
+                                user.Last_Name = document.get("last_Name").toString();
+                                user.Phone_Number = document.get("phone_Number").toString();
+
+                                StorageReference fileRef = reference.child("UserImage/"+ userId);
+                                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        user.setProfileImage(uri);
+                                    }
+                                });
+                            }
+                        }
                     }
-                }
-            }
-        });
-
-        return newUser;
-
+                });
     }
-
-    public void getUserAvatarUri(CallBackData callBack) {
-        DocumentReference docRef = root.collection("User").document(user.getUid());
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                       userAvatarUri = document.get("profileImageLink").toString();
-                    }
-                }
-                callBack.firebaseResponseCallback(userAvatarUri);
-            }
-        });
-    }
-
 
     public boolean checkUID(String uID) {
         uIDCheck = false;
@@ -391,5 +377,13 @@ public class ModifyFirebase {
 
     public boolean isCheckUsername() {
         return checkUsername;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
