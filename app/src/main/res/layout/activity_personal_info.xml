@@ -40,14 +40,6 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ProgressBar
-        android:id="@+id/perinfo_wating"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:backgroundTint="@color/whiteTextColor" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -113,48 +105,17 @@
         android:layout_below="@id/perinfo_rl2"
         />
 
-    <RelativeLayout
-        android:id="@+id/perinfo_rl3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/perinfo_rl2"
-        android:layout_marginTop="1dp"
-        android:background="@color/white">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/username"
-                android:layout_marginLeft="20dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
-            <TextView
-                android:id="@+id/tv_perinfo_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tên đăng nhập"
-                android:layout_marginLeft="20dp"
-                android:textSize="18dp"
-                android:textColor="@color/black"
-                />
 
-        </LinearLayout>
-
-    </RelativeLayout>
 
     <View style="@style/Divider.Horizontal"
-        android:layout_below="@id/perinfo_rl3"
+        android:layout_below="@id/perinfo_rl2"
         />
 
     <RelativeLayout
         android:id="@+id/perinfo_rl4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/perinfo_rl3"
+        android:layout_below="@id/perinfo_rl2"
         android:layout_marginTop="1dp"
         android:background="@color/white">
         <LinearLayout
@@ -330,4 +291,12 @@
     <View style="@style/Divider.Horizontal"
         android:layout_below="@id/perinfo_rl6"
         />
+
+    <ProgressBar
+        android:id="@+id/perinfo_wating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="180dp"
+        android:backgroundTint="@color/whiteTextColor" />
     </RelativeLayout>

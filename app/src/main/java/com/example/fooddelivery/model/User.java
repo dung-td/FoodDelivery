@@ -1,5 +1,7 @@
 package com.example.fooddelivery.model;
 
+import android.net.Uri;
+
 public class User {
     String First_Name;
     String Last_Name;
@@ -7,6 +9,7 @@ public class User {
     String Email;
     String Address;
     String Password;
+    Uri ProfileImage;
 
     public User() {}
 
@@ -17,6 +20,16 @@ public class User {
         Email = email;
         Address = address;
         Password = password;
+    }
+
+    public User(String first_Name, String last_Name, String phone_Number, String email, String address, String password, Uri profileImage) {
+        First_Name = first_Name;
+        Last_Name = last_Name;
+        Phone_Number = phone_Number;
+        Email = email;
+        Address = address;
+        Password = password;
+        this.ProfileImage = profileImage;
     }
 
     public String getFirst_Name() {
@@ -65,5 +78,13 @@ public class User {
 
     public void setPassword(String password) {
         Password = password;
+    }
+
+    public Uri getProfileImage() {
+        return ProfileImage;
+    }
+
+    public void setProfileImage(Uri profileImage) {
+        this.ProfileImage = profileImage;
     }
 }
