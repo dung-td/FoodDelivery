@@ -34,7 +34,11 @@ public class ItemOnSectionFragment extends Fragment {
 
     public ItemOnSectionFragment() {
         productList = new ArrayList<>();
-        productList = LoginActivity.firebase.productList;
+        ArrayList<Product> list = new ArrayList<>();
+        for (Product p : LoginActivity.firebase.productList) {
+            if (p.getType().equals("Drink"))
+                productList.add(p);
+        }
     }
 
     @Override

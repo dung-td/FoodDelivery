@@ -22,6 +22,7 @@ import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.ProductActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.fragment.HomeFragment;
+import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
 
 import java.util.List;
@@ -57,17 +58,37 @@ public class ProductOnSectionAdapter extends RecyclerView.Adapter<ProductOnSecti
             holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_border_24);
         }
         holder.textViewName.setText(p.getName() + " - " + p.getMerchant().getName());
+        holder.imageViewProduct.setImageDrawable(null);
         Glide.with(context).load(p.getImage().get(0)).into(holder.imageViewProduct);
         holder.textViewPrice.setText(p.getPrice().get(0) + " d");
         holder.textViewRating.setText(p.getRating());
         holder.cardViewProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ProductActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("Product", (Parcelable) p);
-                intent.putExtra("IsFavourite", holder.isFavourite);
-                context.startActivity(intent);
+                if (p.getImage().size() <= 1) {
+                    p.getFullListProductImage(new OnGetDataListener() {
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                            Intent intent = new Intent(context, ProductActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("Product", (Parcelable) p);
+                            intent.putExtra("IsFavourite", holder.isFavourite);
+                            context.startActivity(intent);
+                        }
+                    });
+                }
+                else {
+                    Intent intent = new Intent(context, ProductActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("Product", (Parcelable) p);
+                    intent.putExtra("IsFavourite", holder.isFavourite);
+                    context.startActivity(intent);
+                }
             }
         });
         holder.imageViewLove.setOnClickListener(new View.OnClickListener() {
@@ -90,22 +111,27 @@ public class ProductOnSectionAdapter extends RecyclerView.Adapter<ProductOnSecti
             }
         });
 
-        ArrayAdapter<String> staticAdapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item, p.getProductSize());
-        staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        holder.spinnerProductSize.setAdapter(staticAdapter);
+        if (p.getType().equals("Drink")) {
+            ArrayAdapter<String> staticAdapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item, p.getProductSize());
+            staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            holder.spinnerProductSize.setAdapter(staticAdapter);
 
-        holder.spinnerProductSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                holder.textViewPrice.setText(p.getPrice().get(position) + " d");
-            }
+            holder.spinnerProductSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    holder.textViewPrice.setText(p.getPrice().get(position) + " d");
+                }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+                }
+            });
+        }
+        else {
+            holder.spinnerProductSize.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

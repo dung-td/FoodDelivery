@@ -287,7 +287,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 });
     }
 
-
     void loadInformation() {
         DocumentReference docRef = root.collection("User").document(userID);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

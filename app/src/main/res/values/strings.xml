@@ -79,6 +79,10 @@
     <string name="data_loading">Đang tải</string>
     <string name="press_back_twice_to_exit">Nhấn back lần nữa để thoát!</string>
     <string name="no_data">Không có dữ liệu!</string>
+    <string name="remove_watched_success">Đã xóa danh sách đã xem!</string>
+    <string name="title_remove_data">Xóa dữ liệu</string>
+    <string name="msg_remove_watched_data">Bạn chắc chắn muốn xóa danh sách đã xem?</string>
+    <string name="msg_cancel">Hủy</string>
 
     <string-array name="product_size">
         <item>S</item>
@@ -134,4 +138,5 @@
     <string name="data_empty">Dữ liệu trống</string>
     <string name="phone_been_used">Số điện thoại đã được sử dụng</string>
     <string name="verify_failed">Xác thực không thành công</string>
+    <string name="no_search_data">Không có dữ liệu tìm kiếm gần đây</string>
 </resources>

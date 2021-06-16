@@ -36,6 +36,8 @@ import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.Comment;
+import com.example.fooddelivery.model.Merchant;
+import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
 
 import java.util.ArrayList;
@@ -75,6 +77,7 @@ public class ProductActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
         setContentView(R.layout.activity_product);
         fa = this;
 
@@ -210,22 +213,27 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     private void initSpinnerProductSize() {
-        ArrayAdapter<String> staticAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, productSize);
-        staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerProductSize.setAdapter(staticAdapter);
+        if (product.getType().equals("Drink")) {
+            ArrayAdapter<String> staticAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, productSize);
+            staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerProductSize.setAdapter(staticAdapter);
 
-        spinnerProductSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @SuppressLint("SetTextI18n")
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                textViewProductPrice.setText(product.getPrice().get(position) + " d");
-            }
+            spinnerProductSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    textViewProductPrice.setText(product.getPrice().get(position) + " d");
+                }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
+                }
+            });
+        }
+        else {
+            spinnerProductSize.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void initProductImageViewPager() {
@@ -288,9 +296,26 @@ public class ProductActivity extends AppCompatActivity {
         buttonMerchantInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MerchantActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                int index = 0;
+                for (int i = 0; index < LoginActivity.firebase.merchantList.size(); i++) {
+                    if (LoginActivity.firebase.merchantList.get(index).getId().equals(product.getMerchant().getId())) {
+                        index = i;
+                        break;
+                    }
+                }
+                LoginActivity.firebase.loadFullListMerchantImage(LoginActivity.firebase.merchantList.get(index), new OnGetDataListener() {
+                    @Override
+                    public void onStart() {
+
+                    }
+
+                    @Override
+                    public void onSuccess() {
+                        Intent intent = new Intent(getApplicationContext(), MerchantActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                });
             }
         });
     }

@@ -57,7 +57,7 @@
     <string name="resend">Send code again?</string>
     <string name="provide_otp_help">Please enter OTP key we sent</string>
     <string name="input_code_send_to">Enter the verification code sent to</string>
-    <string name="user_not_exist">" Information does not exist in the system"</string>
+    <string name="user_not_exist">Information does not exist in the system</string>
     <string name="address">Address</string>
     <string name="require">Required</string>
     <string name="email_pass_not_correct">Email or password is not correct</string>
@@ -122,4 +122,9 @@
     <string name="data_empty">Your data is empty</string>
     <string name="phone_been_used">This phone number has been used</string>
     <string name="verify_failed">Authentication failed</string>
+    <string name="remove_watched_success">Successfully removed watched data!</string>
+    <string name="title_remove_data">Remove data</string>
+    <string name="msg_remove_watched_data">Are you sure to remove all watched data?</string>
+    <string name="msg_cancel">Cancel</string>
+    <string name="no_search_data">No recent search found</string>
 </resources>
