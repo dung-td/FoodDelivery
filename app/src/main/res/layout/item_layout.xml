@@ -18,7 +18,7 @@
             android:layout_height="120dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:background="@drawable/trasenvang"/>
+            android:src="@drawable/untitled_icon"/>
 
         <ImageView
             android:id="@+id/ic_love_item"

@@ -1,11 +1,14 @@
 package com.example.fooddelivery.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +23,9 @@ import com.example.fooddelivery.activity.main.CartActivity;
 import com.example.fooddelivery.activity.main.DrinkSectionActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.main.FavouriteSectionActivity;
+import com.example.fooddelivery.activity.main.FoodSectionActivity;
+import com.example.fooddelivery.activity.main.MainActivity;
+import com.example.fooddelivery.activity.main.SearchingActivity;
 import com.example.fooddelivery.activity.main.WatchedSectionActivity;
 import com.example.fooddelivery.adapter.ItemOnMainAdapter;
 import com.example.fooddelivery.R;
@@ -28,9 +34,11 @@ import com.example.fooddelivery.model.OnGetDataListener;
 
 public class HomeFragment extends Fragment {
 
-    LinearLayout sectionDrink, sectionFavourite, sectionWatched;
+    LinearLayout sectionDrink, sectionFavourite, sectionWatched, sectionFood;
+    EditText editTextSearch;
     FrameLayout cartBackground;
-    boolean isFirstClick = true;
+    public static boolean isWatchedFirstClick = true;
+    public static boolean isSearchFirstClick = true;
     public static TextView cartBadge;
     public static ItemOnMainAdapter itemOnMainAdapter;
     public static RecyclerView recyclerViewProducts;
@@ -38,11 +46,15 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initClickListener() {
         sectionDrink = getView().findViewById(R.id.section_drink);
         sectionFavourite = getView().findViewById(R.id.section_love);
         sectionWatched = getView().findViewById(R.id.section_watched);
+        sectionFood = getView().findViewById(R.id.section_food);
         cartBackground = getView().findViewById(R.id.btn_cart_background);
+        editTextSearch = getView().findViewById(R.id.et_search_bar);
+        cartBadge = getView().findViewById(R.id.cart_badge);
         sectionDrink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,8 +74,8 @@ public class HomeFragment extends Fragment {
         sectionWatched.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isFirstClick) {
-                    isFirstClick = false;
+                if (isWatchedFirstClick) {
+                    isWatchedFirstClick = false;
                     LoginActivity.firebase.getWatchedProductList(new OnGetDataListener() {
                         @Override
                         public void onStart() {
@@ -85,6 +97,14 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
+        sectionFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), FoodSectionActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
         cartBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +113,18 @@ public class HomeFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        cartBadge = getView().findViewById(R.id.cart_badge);
+        editTextSearch.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    Intent intent = new Intent(getContext(), SearchingActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
         updateCartBadge();
     }
 

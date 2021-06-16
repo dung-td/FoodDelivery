@@ -37,6 +37,7 @@ public class ModifyFirebase {
     private String userId;
     private Uri[] image;
     private String collectionPath = "";
+    public ArrayList<SearchString> searchList = new ArrayList<>();
     public ArrayList<Product> cartList = new ArrayList<>();
     public ArrayList<Product> productList = new ArrayList<Product>();
     public ArrayList<String> watchedList = new ArrayList<>();
@@ -101,6 +102,22 @@ public class ModifyFirebase {
 
                     }
                 });
+    }
+
+    public void removeWatchedProductData(final OnGetDataListener listener) {
+        listener.onStart();
+        for (String productId : watchedList) {
+            root.collection("User/" + userId + "/Watched/")
+                    .document(productId)
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            watchedList.remove(productId);
+                        }
+                    });
+        }
+        listener.onSuccess();
     }
 
     public void getWatchedProductList(final OnGetDataListener listener) {
@@ -224,8 +241,10 @@ public class ModifyFirebase {
                                             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                                                 if (document == null)
                                                     break;
-                                                if (((String) document.get("Image_Link")) != null)
+                                                if (((String) document.get("Image_Link")) != null) {
                                                     merchantImages.add(Uri.parse((String) document.get("Image_Link")));
+                                                    break;
+                                                }
                                             }
                                             merchant.setImage(merchantImages);
                                             merchantList.add(merchant);
@@ -249,8 +268,9 @@ public class ModifyFirebase {
                                             product.setStatus((String) document.get("Status"));
                                             product.setPrice((ArrayList<String>) document.get("Price"));
                                             product.setProductSize((ArrayList<String>) document.get("Size"));
-                                            product.setMerchant((Merchant) findMerchantFromId(((String) document.get("Merchant")).substring(9)));
+//                                            product.setMerchant((Merchant) findMerchantFromId(((String) document.get("Merchant")).substring(9)));
                                             product.setRating((String) document.get("Rating"));
+                                            product.setType((String) document.get("Type"));
 
                                             //Load product images
                                             ArrayList<Uri> images = new ArrayList<Uri>();
@@ -262,17 +282,19 @@ public class ModifyFirebase {
                                                             for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                                                                 if (document == null)
                                                                     break;
-                                                                if (((String) document.get("Image_Link")) != null)
+                                                                if (((String) document.get("Image_Link")) != null) {
                                                                     images.add(Uri.parse((String) document.get("Image_Link")));
+                                                                    break;
+                                                                }
                                                             }
                                                             product.setImage(images);
+                                                            product.setMerchant((Merchant) findMerchantFromId(((String) document.get("Merchant")).substring(9)));
                                                             productList.add(product);
-                                                            if (productList.size() > 1 && merchantList.size() > 0)
+                                                            if (productList.size() > 1 && merchantList.size() > 1)
                                                                 listener.onSuccess();
                                                         }
                                                     });
                                         }
-//                                        listener.onSuccess();
                                     }
                                 });
                     }
@@ -293,7 +315,63 @@ public class ModifyFirebase {
                 });
 
         //Load product in cart
+    }
 
+    public void loadFullListMerchantImage(Merchant merchant, final OnGetDataListener listener) {
+        listener.onStart();
+        ArrayList<Uri> merchantImages = new ArrayList<Uri>();
+        root.collection("Merchant/" + merchant.getId() + "/Photos/")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            if (document == null)
+                                break;
+                            if (((String) document.get("Image_Link")) != null) {
+                                merchantImages.add(Uri.parse((String) document.get("Image_Link")));
+                            }
+                        }
+                        merchant.setImage(merchantImages);
+                        listener.onSuccess();
+                    }
+                });
+    }
+
+    public void getSearchData(final OnGetDataListener listener) {
+        listener.onStart();
+        root.collection("User/" + userId + "/Search/")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            if (document == null)
+                                break;
+                            SearchString data = new SearchString();
+                            data.setId((String) document.getId());
+                            data.setDetail((String) document.get("SearchString"));
+                            searchList.add(data);
+                        }
+                        listener.onSuccess();
+                    }
+                });
+    }
+
+    public void removeSearchData(final OnGetDataListener listener) {
+        listener.onStart();
+        for (SearchString search : searchList) {
+            root.collection("User/" + userId + "/Search/")
+                    .document(search.getId())
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            searchList.remove(search);
+                        }
+                    });
+        }
+        listener.onSuccess();
     }
 
     public void insertDataFirestore(String id) {

@@ -290,34 +290,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 });
     }
 
-
-   //void loadInformation() {
-//        progressBar.setVisibility(View.VISIBLE);
-//        progressBar.setIndeterminate(true);
-//        DocumentReference docRef = root.collection("User").document(userID);
-//        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if (task.isSuccessful()) {
-//                    DocumentSnapshot document = task.getResult();
-//                    if (document.exists()) {
-//                        //User userInfo = document.toObject(User.class);
-//                        //tv_Username.setText(document.get("username").toString());
-//                        tv_Address.setText(document.get("address").toString());
-//                        tv_Phone.setText(document.get("phone_Number").toString());
-//                        tv_Email.setText(document.get("email").toString());
-//                        tv_Name.setText(document.get("last_Name").toString() +" "+ document.get("first_Name").toString());
-//
-//                        oldAddress = tv_Address.getText().toString();
-//                        oldPhone = tv_Phone.getText().toString();
-//                        oldEmail = tv_Email.getText().toString();
-//                    }
-//                }
-//            }
-//        });
-//        progressBar.setVisibility(View.INVISIBLE);
-//    }
-
     void loadInformation()
     {
         tv_Address.setText(currentUser.getAddress());

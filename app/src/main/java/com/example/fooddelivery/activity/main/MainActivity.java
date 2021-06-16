@@ -44,10 +44,9 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNav;
+    public static BottomNavigationView bottomNav;
 
     boolean doubleBackToExitPressedOnce = false;
-    public static Product productOnSection;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

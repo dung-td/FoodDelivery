@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.fooddelivery.activity.ProductActivity;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
 
 import java.util.List;
@@ -52,20 +53,39 @@ public class ItemOnMainAdapter extends RecyclerView.Adapter<ItemOnMainAdapter.It
             holder.isFavourite = false;
             holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_border_24);
         }
-
-        holder.textViewItemPrice.setText(p.getPrice().get(0) + " đ");
+        holder.textViewItemPrice.setText(p.getPrice().get(0) + " d");
         holder.textViewItemName.setText(p.getName());
         holder.textViewRating.setText(p.getRating());
-        holder.textViewItemMerchant.setText(p.getMerchant().getName());
+        if (p.getMerchant() != null)
+            holder.textViewItemMerchant.setText(p.getMerchant().getName());
         Glide.with(context).load(p.getImage().get(0)).into(holder.imageViewItem);
         holder.cardViewProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ProductActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("Product", (Parcelable) p);
-                intent.putExtra("IsFavourite", holder.isFavourite);
-                context.startActivity(intent);
+                if (p.getImage().size() <= 1) {
+                    p.getFullListProductImage(new OnGetDataListener() {
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onSuccess() {
+                            Intent intent = new Intent(context, ProductActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("Product", (Parcelable) p);
+                            intent.putExtra("IsFavourite", holder.isFavourite);
+                            context.startActivity(intent);
+                        }
+                    });
+                }
+                else {
+                    Intent intent = new Intent(context, ProductActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("Product", (Parcelable) p);
+                    intent.putExtra("IsFavourite", holder.isFavourite);
+                    context.startActivity(intent);
+                }
             }
         });
         holder.imageViewLove.setOnClickListener(new View.OnClickListener() {

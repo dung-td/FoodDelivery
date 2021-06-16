@@ -4,6 +4,11 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -18,6 +23,7 @@ public class Product implements Parcelable {
     private Timestamp Create;
     private Merchant Merchant;
     private String Sales;
+    private String Type;
     private ArrayList<String> Price = new ArrayList<String>();
     private ArrayList<Uri> Image = new ArrayList<Uri>();
     private ArrayList<String> ProductSize = new ArrayList<String>();
@@ -29,6 +35,7 @@ public class Product implements Parcelable {
         Name = "Empty";
         Rating = "4.0";
         Status = "InStock";
+        Type = "Drink";
         Price.add("30000");
         Create = new Timestamp(System.currentTimeMillis());
         Uri uri = Uri.parse("android.resource://com.example.merchanttask/drawable/untitled_icon");
@@ -44,6 +51,7 @@ public class Product implements Parcelable {
         Price.add(price);
         Image.add(image);
         Create = create;
+        Type = "Drink";
     }
 
     public Product(String name, Uri image, String rating, String price) {
@@ -52,6 +60,7 @@ public class Product implements Parcelable {
         En_Name = "";
         Rating = rating;
         Status = "InStock";
+        Type = "Drink";
         Price.add(price);
         Image.add(image);
         Create = new Timestamp(System.currentTimeMillis());
@@ -63,6 +72,7 @@ public class Product implements Parcelable {
         En_Name = "";
         Rating = rating;
         Status = "InStock";
+        Type = "Drink";
         Price.add(price);
     }
 
@@ -74,6 +84,7 @@ public class Product implements Parcelable {
         Status = in.readString();
         Merchant = in.readParcelable(com.example.fooddelivery.model.Merchant.class.getClassLoader());
         Sales = in.readString();
+        Type = in.readString();
         Price = in.createStringArrayList();
         Image = in.createTypedArrayList(Uri.CREATOR);
         ProductSize = in.createStringArrayList();
@@ -89,6 +100,7 @@ public class Product implements Parcelable {
         dest.writeString(Status);
         dest.writeParcelable(Merchant, flags);
         dest.writeString(Sales);
+        dest.writeString(Type);
         dest.writeStringList(Price);
         dest.writeTypedList(Image);
         dest.writeStringList(ProductSize);
@@ -206,5 +218,35 @@ public class Product implements Parcelable {
 
     public void setCommentList(ArrayList<Comment> commentList) {
         CommentList = commentList;
+    }
+
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String type) {
+        Type = type;
+    }
+
+    public void getFullListProductImage(final OnGetDataListener listener) {
+        listener.onStart();
+        FirebaseFirestore root = FirebaseFirestore.getInstance();
+        ArrayList<Uri> images = new ArrayList<Uri>();
+        root.collection("Product/" + this.getId() + "/Photos/")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            if (document == null)
+                                break;
+                            if (((String) document.get("Image_Link")) != null) {
+                                images.add(Uri.parse((String) document.get("Image_Link")));
+                            }
+                        }
+                        setImage(images);
+                        listener.onSuccess();
+                    }
+                });
     }
 }
