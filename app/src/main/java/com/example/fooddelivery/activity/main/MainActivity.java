@@ -3,13 +3,10 @@ package com.example.fooddelivery.activity.main;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
-<<<<<<< HEAD:app/src/main/java/com/example/fooddelivery/activity/main/MainActivity.java
-=======
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
->>>>>>> ChangePhoneNumberAndEmail-:app/src/main/java/com/example/fooddelivery/activity/MainActivity.java
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,13 +23,10 @@ import com.example.fooddelivery.fragment.OrderFragment;
 import com.example.fooddelivery.model.CallBackData;
 import com.example.fooddelivery.model.ModifyFirebase;
 import com.example.fooddelivery.model.Product;
-<<<<<<< HEAD:app/src/main/java/com/example/fooddelivery/activity/main/MainActivity.java
-=======
 import com.example.fooddelivery.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
->>>>>>> ChangePhoneNumberAndEmail-:app/src/main/java/com/example/fooddelivery/activity/MainActivity.java
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -92,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        //LoginActivity.firebase.getVoucher();
-      //  LoginActivity.firebase.getComment();
+        LoginActivity.firebase.getVoucher();
+        LoginActivity.firebase.getComment();
         LoginActivity.firebase.getUserInfo();
     }
 

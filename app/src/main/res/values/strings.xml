@@ -137,4 +137,15 @@
     <string name="verified_email_sent">Email xác thực đã được gửi đến địa chỉ mail</string>
     <string name="verfiedcode">Mã xác thực</string>
     <string name="is_sent">được gửi đến</string>
+    <string name="feedback_title_hint">Chủ đề</string>
+    <string name="language_en">Tiếng Anh</string>
+    <string name="send_feedback">Gửi góp ý</string>
+    <string name="feedback_details_hint">Chi tiết</string>
+    <string name="describe_details">Mô tả chi tiết</string>
+    <string name="send_feedback_success">Gửi góp ý thành công!</string>
+    <string name="send_feedback_fail">Gửi góp ý thất bại, vui lòng thử lại</string>
+    <string-array name="feedback_title">
+        <item>Góp ý cho ứng dụng</item>
+        <item>Báo lỗi</item>
+    </string-array>
 </resources>

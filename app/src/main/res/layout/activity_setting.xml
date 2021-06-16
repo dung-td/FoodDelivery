@@ -22,7 +22,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/ic_baseline_arrow_back_ios_24" />
+                android:background="@drawable/back" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -114,13 +114,6 @@
             </LinearLayout>
         </RelativeLayout>
     </FrameLayout>
-
-    <View
-        android:id="@+id/setting_dotted"
-        android:layout_below="@+id/setting_fl_app"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:background="@drawable/dotted"/>
 
     <FrameLayout
         android:id="@+id/setting_fl_account"

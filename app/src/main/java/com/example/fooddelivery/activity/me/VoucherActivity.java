@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.LanguageSetting;
 import com.example.fooddelivery.adapter.voucherStatusAdapter;
 import com.google.android.material.tabs.TabLayout;
 

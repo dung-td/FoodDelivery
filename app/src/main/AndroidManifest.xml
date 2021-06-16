@@ -46,7 +46,7 @@
         <activity android:name=".activity.login.ForgotPassActitivy_5" />
         <activity android:name=".activity.me.SettingActivity" />
         <activity android:name=".activity.me.VoucherActivity" />
-        <activity android:name=".activity.LanguageSetting" />
+        <activity android:name=".activity.me.LanguageSetting" />
         <activity android:name=".activity.main.CartActivity" />
         <activity android:name=".activity.me.FeedbackActivity" />
         <activity android:name=".activity.ProductActivity" />
