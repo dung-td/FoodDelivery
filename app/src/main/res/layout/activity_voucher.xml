@@ -6,11 +6,10 @@
     android:orientation="vertical">
 
     <!--    Back button + Title-->
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:background="@color/white">
 
         <ImageButton
             android:id="@+id/vc_bt_back"
@@ -19,6 +18,7 @@
             android:layout_marginStart="15dp"
             android:layout_gravity="center"
             android:backgroundTint="@color/grey"
+            android:layout_centerVertical="true"
             android:background="@drawable/ic_baseline_arrow_back_24" />
 
         <TextView
@@ -30,8 +30,9 @@
             android:textSize="20dp"
             android:textStyle="bold"
             android:layout_marginStart="100dp"
-            android:layout_gravity="center"/>
-    </LinearLayout>
+           android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"

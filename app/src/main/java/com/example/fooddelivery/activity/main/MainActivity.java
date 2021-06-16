@@ -86,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        LoginActivity.firebase.getVoucher();
+        LoginActivity.firebase.getVoucherList();
+        LoginActivity.firebase.getAvailableVoucherList();
         LoginActivity.firebase.getComment();
         LoginActivity.firebase.getUserInfo();
     }

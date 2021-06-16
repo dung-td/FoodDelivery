@@ -43,6 +43,7 @@ public class ModifyFirebase {
     public ArrayList<String> favouriteProductList = new ArrayList<String>();
     public ArrayList<Merchant> merchantList = new ArrayList<Merchant>();
     public ArrayList<Voucher> voucherList = new ArrayList<Voucher>();
+    public ArrayList<Voucher> availableVoucherList = new ArrayList<Voucher>();
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
     private final boolean checkUsername = false;
@@ -119,18 +120,18 @@ public class ModifyFirebase {
                 });
     }
 
-    public void getVoucher() {
+    public void getVoucherList() {
         root.collection("User/" + userId + "/Voucher/")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            if (document == null)
-                                break;
+                            Log.d("GOT" , document.getId());
                             Voucher voucher = new Voucher();
                             voucher.setStatus(document.get("status").toString());
-                            root.collection("Voucher")
+                            voucher.setId(document.getId());
+                            root.collection("Voucher/")
                                     .document(document.getId())
                                     .get()
                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -144,6 +145,26 @@ public class ModifyFirebase {
                                             voucherList.add(voucher);
                                         }
                                     });
+                        }
+                    }
+                });
+    }
+
+    public void getAvailableVoucherList() {
+        root.collection("Voucher/")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Voucher voucher = new Voucher();
+                            voucher.setId(document.getId());
+                            voucher.setCode(document.get("code").toString());
+                            voucher.setTitle(document.get("title").toString());
+                            voucher.setDate(document.get("date").toString());
+                            voucher.setValues((List<String>) document.get("value"));
+                            voucher.setDetails((List<String>) document.get("details"));
+                            availableVoucherList.add(voucher);
                         }
                     }
                 });
@@ -317,6 +338,20 @@ public class ModifyFirebase {
                                 });
                             }
                         }
+                    }
+                });
+    }
+
+    public void addVoucherToList(Context context, String voucherId) {
+        Map<String, String> voucher = new HashMap<>();
+        voucher.put("status", "Hiện có");
+        root.collection("User/" + userId + "/Voucher/")
+                .document(voucherId)
+                .set(voucher)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Thêm voucher thành công, vào ví để kiểm tra!", Toast.LENGTH_SHORT);
                     }
                 });
     }

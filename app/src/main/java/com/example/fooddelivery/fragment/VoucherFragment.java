@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,12 +16,10 @@ import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.VoucherAdapter;
 import com.example.fooddelivery.model.Voucher;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 public class VoucherFragment extends Fragment {
 
@@ -30,6 +27,7 @@ public class VoucherFragment extends Fragment {
     ArrayList<Voucher> listAvailable = new ArrayList<Voucher>();
     ArrayList<Voucher> listUsed = new ArrayList<Voucher>();
     ArrayList<Voucher> listExpired = new ArrayList<Voucher>();
+
     public VoucherFragment() {
 
     }
@@ -40,7 +38,7 @@ public class VoucherFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_voucher, container, false);
+        View view = inflater.inflate(R.layout.fragment_voucher, container, false);
         return view;
     }
 
@@ -54,23 +52,29 @@ public class VoucherFragment extends Fragment {
     }
 
     private void InitList() {
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         for (Voucher v : LoginActivity.firebase.voucherList) {
-            switch (v.getStatus()) {
-                case "Hiện có":
-                    listAvailable.add(v);
-                    break;
-                case "Đã dùng":
-                    listUsed.add(v);
-                    break;
-                case "Hết hạn":
+            try {
+                if (format.parse(v.getDate()).after(new Date())) {
+                    switch (v.getStatus()) {
+                        case "Hiện có":
+                            listAvailable.add(v);
+                            break;
+                        case "Đã dùng":
+                            listUsed.add(v);
+                            break;
+                    }
+                } else {
                     listExpired.add(v);
-                    break;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         }
     }
 
     private void Init() {
-        RecyclerView voucher = (RecyclerView)getView().findViewById(R.id.voucherRecyclerView);
+        RecyclerView voucher = (RecyclerView) getView().findViewById(R.id.voucherRecyclerView);
         VoucherAdapter voucherAdapter;
         switch (position) {
             case 0:
@@ -86,8 +90,8 @@ public class VoucherFragment extends Fragment {
                 voucherAdapter = new VoucherAdapter(getContext(), listAvailable);
                 break;
         }
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
-        voucher.setLayoutManager(linearLayoutManager2);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        voucher.setLayoutManager(linearLayoutManager);
         voucher.setAdapter(voucherAdapter);
     }
 }

@@ -144,6 +144,8 @@
     <string name="describe_details">Mô tả chi tiết</string>
     <string name="send_feedback_success">Gửi góp ý thành công!</string>
     <string name="send_feedback_fail">Gửi góp ý thất bại, vui lòng thử lại</string>
+    <string name="voucher">Mã khuyến mại</string>
+    <string name="already_got">Đã lấy</string>
     <string-array name="feedback_title">
         <item>Góp ý cho ứng dụng</item>
         <item>Báo lỗi</item>

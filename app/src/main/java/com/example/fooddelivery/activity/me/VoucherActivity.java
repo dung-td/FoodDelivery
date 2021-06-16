@@ -41,7 +41,7 @@ public class VoucherActivity extends AppCompatActivity {
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                VoucherActivity.super.onBackPressed();
             }
         });
     }
