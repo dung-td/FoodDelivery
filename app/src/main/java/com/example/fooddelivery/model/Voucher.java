@@ -3,70 +3,80 @@ package com.example.fooddelivery.model;
 import java.util.List;
 
 public class Voucher {
-    String Title;
-    String Code;
-    String Date;
-    List<String> Details;
-    List<String> Values;
-    String Status;
+    String id;
+    String title;
+    String code;
+    String date;
+    List<String> details;
+    List<String> values;
+    String status;
 
     public Voucher() {
     }
 
-    public Voucher(String title, String code, String date, List<String> details, List<String> values, String status) {
-        Title = title;
-        Code = code;
-        Date = date;
-        Details = details;
-        Values = values;
-        Status = status;
+    public Voucher(String id, String title, String code, String date, List<String> details, List<String> values, String status) {
+        this.id = id;
+        this.title = title;
+        this.code = code;
+        this.date = date;
+        this.details = details;
+        this.values = values;
+        this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
     public String getCode() {
-        return Code;
+        return code;
     }
 
     public void setCode(String code) {
-        Code = code;
+        this.code = code;
     }
 
     public String getDate() {
-        return Date;
+        return date;
     }
 
     public void setDate(String date) {
-        Date = date;
+        this.date = date;
     }
 
     public List<String> getDetails() {
-        return Details;
+        return details;
     }
 
     public void setDetails(List<String> details) {
-        Details = details;
+        this.details = details;
     }
 
     public List<String> getValues() {
-        return Values;
+        return values;
     }
 
     public void setValues(List<String> values) {
-        Values = values;
+        this.values = values;
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(String status) {
-        Status = status;
+        this.status = status;
     }
 }

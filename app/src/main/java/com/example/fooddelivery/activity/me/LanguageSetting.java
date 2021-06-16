@@ -1,4 +1,4 @@
-package com.example.fooddelivery.activity;
+package com.example.fooddelivery.activity.me;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,12 +13,15 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.activity.me.SettingActivity;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Locale;
 
@@ -49,7 +52,7 @@ public class LanguageSetting extends AppCompatActivity {
         temp.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                 chosenLanguege = parent.getItemAtPosition(position).toString();
+                chosenLanguege = parent.getItemAtPosition(position).toString();
             }
         });
 

@@ -127,4 +127,18 @@
     <string name="msg_remove_watched_data">Are you sure to remove all watched data?</string>
     <string name="msg_cancel">Cancel</string>
     <string name="no_search_data">No recent search found</string>
+    <string name="verified_email_sent">Verification email has been sent to the email address</string>
+    <string name="verfiedcode">"The code "</string>
+    <string name="is_sent">"was sent to "</string>
+    <string name="feedback_title_hint">Subject</string>
+    <string name="language_en">English</string>
+    <string name="send_feedback">Send feedback</string>
+    <string name="feedback_details_hint">Details</string>
+    <string name="describe_details">Describe details</string>
+    <string name="send_feedback_success">Send feedback successful!</string>
+    <string name="send_feedback_fail">Send feedback fail, please try again!</string>
+    <string-array name="feedback_title">
+        <item>Feedback of application</item>
+        <item>Report error</item>
+    </string-array>
 </resources>

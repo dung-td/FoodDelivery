@@ -1,6 +1,7 @@
 package com.example.fooddelivery.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,72 +13,90 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.main.AvailableVoucherActivity;
 import com.example.fooddelivery.model.Voucher;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherViewHolder> {
+public class VoucherAdapter2 extends RecyclerView.Adapter<VoucherAdapter2.VoucherViewHolder2> {
     Context context;
 
-    List<Voucher> vouchers;
-
-    public VoucherAdapter() {
+    public VoucherAdapter2() {
     }
 
-    public VoucherAdapter(Context context, List<Voucher> vouchers) {
+    public VoucherAdapter2(Context context) {
         this.context = context;
-        this.vouchers = vouchers;
     }
 
     @NonNull
     @Override
-    public VoucherViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.voucher_template, parent, false);
-        return new VoucherViewHolder(view);
+    public VoucherViewHolder2 onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.voucher_template_2, parent, false);
+        return new VoucherViewHolder2(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VoucherViewHolder holder, int position) {
-        Voucher voucher = vouchers.get(position);
+    public void onBindViewHolder(@NonNull VoucherViewHolder2 holder, int position) {
+        Voucher voucher = LoginActivity.firebase.availableVoucherList.get(position);
         setData(holder, voucher);
         setClickDetails(holder, voucher);
     }
 
-    private void setClickDetails(VoucherViewHolder holder, Voucher voucher) {
+    private void setClickDetails(VoucherViewHolder2 holder, Voucher voucher) {
         holder.ib_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clickOpenBottomSheetDialog(voucher);
             }
         });
+
+        holder.ib_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addToVoucherList(voucher);
+            }
+        });
     }
 
-    private void setData(VoucherViewHolder holder, Voucher v) {
+    private void addToVoucherList(Voucher v) {
+        if (!LoginActivity.firebase.voucherList.contains(v)) {
+            LoginActivity.firebase.addVoucherToList(context, v.getId());
+            LoginActivity.firebase.voucherList.add(v);
+        }
+    }
+
+    private void setData(VoucherViewHolder2 holder, Voucher v) {
         holder.imgVoucher.setImageResource(R.drawable.voucher);
         holder.tv_title.setText(v.getTitle());
         holder.tv_date.setText(String.format("%s %s", context.getResources().getString(R.string.HSD), v.getDate()));
+        if (LoginActivity.firebase.voucherList.contains(v)) {
+            holder.ib_add.setText(R.string.already_got);
+        }
     }
 
     @Override
     public int getItemCount() {
-        return vouchers != null ? vouchers.size() : 0;
+        return LoginActivity.firebase.availableVoucherList != null ?
+                LoginActivity.firebase.availableVoucherList.size() : 0;
     }
 
-    public final class VoucherViewHolder extends RecyclerView.ViewHolder {
+    public final class VoucherViewHolder2 extends RecyclerView.ViewHolder {
         ImageView imgVoucher;
-        TextView tv_title, tv_date;
+        TextView tv_title, tv_date, ib_add;
         ImageButton ib_details;
 
-        public VoucherViewHolder(@NonNull View itemView) {
+        public VoucherViewHolder2(@NonNull View itemView) {
             super(itemView);
 
-            imgVoucher = itemView.findViewById(R.id.vc_iv_image);
-            tv_title = itemView.findViewById(R.id.vc_tv_title);
-            tv_date = itemView.findViewById(R.id.vc_tv_date);
-            ib_details = itemView.findViewById(R.id.vc_ib_details);
+            imgVoucher = itemView.findViewById(R.id.vc2_iv_image);
+            tv_title = itemView.findViewById(R.id.vc2_tv_title);
+            tv_date = itemView.findViewById(R.id.vc2_tv_date);
+            ib_details = itemView.findViewById(R.id.vc2_ib_details);
+            ib_add = itemView.findViewById(R.id.vc2_ib_add);
         }
     }
 

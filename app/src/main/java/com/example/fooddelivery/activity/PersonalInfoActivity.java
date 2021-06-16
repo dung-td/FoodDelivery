@@ -25,11 +25,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.login.SignUpActivity_1;
 import com.example.fooddelivery.activity.login.SignUpActivity_2;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.fragment.MeFragment;
+import com.example.fooddelivery.model.CallBackData;
 import com.example.fooddelivery.model.ModifyFirebase;
 import com.example.fooddelivery.model.Regex;
 import com.example.fooddelivery.model.User;
@@ -39,6 +42,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -69,20 +73,14 @@ public class PersonalInfoActivity extends AppCompatActivity {
     ImageView iv_Avatar;
     ImageButton bt_back;
     ProgressBar progressBar;
-
     Uri imageUri;
-
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String userID = user.getUid();
-
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
 
     Regex regex = new Regex();
-    //String userID = "KrSKPkEqkMP5KuzR60QBiBcWsoE2";
     String oldEmail, oldPhone, oldAddress;
-
-
+    User currentUser = new User();
+    String userID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,11 +89,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
         loadLanguage();
         initView();
 
-        progressBar.setVisibility(View.VISIBLE);
-        progressBar.setIndeterminate(true);
         loadInformation();
         loadAvatar();
-
 
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +106,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 CropImage.activity().setAspectRatio(1, 1).start(PersonalInfoActivity.this);
             }
         });
-
 
     }
 
@@ -129,7 +123,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
         tv_Address = (TextView) findViewById(R.id.tv_perinfo_address);
         tv_Phone = (TextView) findViewById(R.id.tv_perinfo_phone);
         tv_Email = (TextView) findViewById(R.id.tv_perinfo_email);
-        tv_Username = (TextView)findViewById(R.id.tv_perinfo_username);
         tv_Name = (TextView)findViewById(R.id.tv_perinfo_name);
 
         iv_Avatar = (ImageView) findViewById(R.id.im_perinfo);
@@ -140,6 +133,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
         et_Address.setVisibility(View.GONE);
         et_Phone.setVisibility(View.GONE);
         et_Email.setVisibility(View.GONE);
+
+        currentUser = LoginActivity.firebase.getUser();
+        userID = LoginActivity.firebase.getUserId();
     }
 
     void beginChangeInfomation(EditText et_Info, TextView tv_Info, TextView confirm) {
@@ -169,7 +165,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_perinfo_changeemail:
-                // Thay đổi
                 if (tv_ChangeEmail.getText().equals(getString(R.string.change))){
                     beginChangeInfomation(et_Email, tv_Email, tv_ChangeEmail);
 
@@ -179,9 +174,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     {
                         if (!oldEmail.equals(et_Email.getText().toString()))
                         {
+                            progressBar.setVisibility(View.VISIBLE);
+                            progressBar.setIndeterminate(true);
                             changeEmail(et_Email.getText().toString());
                         }
-                        finishChangeInfomation(et_Email, tv_Email, tv_ChangeEmail);
+                        else
+                            progressBar.setVisibility(View.INVISIBLE);
+
+                        if (newEmail || oldEmail.equals(et_Email.getText().toString())) {
+                            finishChangeInfomation(et_Email, tv_Email, tv_ChangeEmail);
+                        }
                     }
 
                 }
@@ -191,7 +193,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
                 if (tv_ChangePhone.getText().equals(getString(R.string.change))){
                     beginChangeInfomation(et_Phone, tv_Phone, tv_ChangePhone);
-
                 }
                 else {
                     if (validPhone())
@@ -202,9 +203,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
                         Log.e("newPhone", et_Phone.getText().toString());
                         if (!oldPhone.equals(et_Phone.getText().toString()))
                         {
-                            Log.e("Change phone", "go to change phone");
+                            Log.e("Change phone", "go to change phone" + et_Phone.getText().toString());
                             changePhone(et_Phone.getText().toString());
                         }
+                        else
+                            progressBar.setVisibility(View.INVISIBLE);
                         finishChangeInfomation(et_Phone, tv_Phone, tv_ChangePhone);
                     }
 
@@ -222,6 +225,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
                         progressBar.setIndeterminate(true);
                         updateAddress();
                     }
+                    else
+                        progressBar.setVisibility(View.INVISIBLE);
+
                     finishChangeInfomation(et_Address, tv_Address, tv_ChangeAddress);
                 }
                 break;
@@ -232,6 +238,9 @@ public class PersonalInfoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setIndeterminate(true);
+
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK && data != null) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             imageUri = result.getUri();
@@ -239,17 +248,12 @@ public class PersonalInfoActivity extends AppCompatActivity {
             updateAvatar();
             iv_Avatar.setImageURI(imageUri);
         }
+
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     void updateAvatar() {
-//        StorageReference fileRef = reference.child(
-//                "User/" + user.getUid() +"."+
-//                imageUri.toString().substring(imageUri.toString().lastIndexOf(".")));
-
-//        StorageReference fileRef = reference.child("UserImage/"+userID+
-//                        imageUri.toString().substring(imageUri.toString().lastIndexOf(".")));
-
-        StorageReference fileRef = reference.child("UserImage/"+userID);
+        StorageReference fileRef = reference.child("UserImage/"+ userID);
 
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -270,8 +274,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 });
             }
         });
-
-
     }
     void updateAddress(){
         String address = et_Address.getText().toString();
@@ -281,46 +283,46 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        currentUser.setAddress(address);
                         progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(), getString(R.string.update_infodata_done), Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
-    void loadInformation() {
-        DocumentReference docRef = root.collection("User").document(userID);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        //User userInfo = document.toObject(User.class);
-                        //tv_Username.setText(document.get("username").toString());
-                        tv_Address.setText(document.get("address").toString());
-                        tv_Phone.setText(document.get("phone_Number").toString());
-                        tv_Email.setText(document.get("email").toString());
-                        tv_Name.setText(document.get("last_Name").toString() +" "+ document.get("first_Name").toString());
+    void loadInformation()
+    {
+        tv_Address.setText(currentUser.getAddress());
+        tv_Phone.setText(currentUser.getPhone_Number());
+        tv_Email.setText(currentUser.getEmail());
+        tv_Name.setText(String.format("%s %s", currentUser.getLast_Name(), currentUser.getFirst_Name()));
+        Glide.with(PersonalInfoActivity.this).load(currentUser.getProfileImage());
 
-                        oldAddress = tv_Address.getText().toString();
-                        oldPhone = tv_Phone.getText().toString();
-                        oldEmail = tv_Email.getText().toString();
-                    }
-                }
-            }
-        });
+        oldAddress = tv_Address.getText().toString();
+        oldPhone = tv_Phone.getText().toString();
+        oldEmail = tv_Email.getText().toString();
     }
+
     void loadAvatar() {
-        StorageReference fileRef = reference.child("UserImage/"+userID);
-        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Log.e("Avatar", uri.toString());
-                Picasso.get().load(uri).into(iv_Avatar);
-                progressBar.setVisibility(View.INVISIBLE);
-            }
-        });
+//        progressBar.setVisibility(View.VISIBLE);
+//        progressBar.setIndeterminate(true);
+//        StorageReference fileRef = reference.child("UserImage/"+userID);
+//        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//            @Override
+//            public void onSuccess(Uri uri) {
+//                Log.e("Avatar", uri.toString());
+//                Picasso.get().load(uri).into(iv_Avatar);
+//            }
+//        });
+//        progressBar.setVisibility(View.INVISIBLE);
+
+        String uri = getIntent().getStringExtra("uriAvatar");
+        if (uri!=null)
+        {
+            Picasso.get().load(Uri.parse(uri)).into(iv_Avatar);
+        }
     }
+
     void loadLanguage() {
         String langPref = "lang_code";
         SharedPreferences prefs = getSharedPreferences("MyPref",
@@ -359,43 +361,85 @@ public class PersonalInfoActivity extends AppCompatActivity {
         return true;
     }
 
+    boolean newEmail = false;
     void changeEmail(String email) {
-        root.collection("User")
-                .whereEqualTo("email", email)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            if (!task.getResult().isEmpty()) {
-                                et_Email.setError(getString(R.string.email_has_been_used));
-                                et_Email.requestFocus();
+//        root.collection("User")
+//                .whereEqualTo("email", email)
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            if (!task.getResult().isEmpty()) {
+//                                et_Email.setError(getString(R.string.email_has_been_used));
+//                                et_Email.requestFocus();
+//                                Log.e(getString(R.string.email_has_been_used), getString(R.string.email_has_been_used));
+//                                progressBar.setVisibility(View.INVISIBLE);
+//                            }
+//                            else {
+//                                Log.e("sendVerifyEmail", "sendVerifyEmail");
+//                                sendVerifyEmail(email);
+//                            }
+//
+//                        }
+//                    }
+//                });
 
-                            }
-                            else
-                                sendVerifyEmail(email);
-                        }
-                    }
-                });
+        checkExistedEmail(email, new CallBackData() {
+            @Override
+            public void firebaseResponseCallback(String result) {
+
+            }
+
+            @Override
+            public void firebaseResponseCallback(boolean result) {
+                if (result) {
+                    et_Email.setError(getString(R.string.email_has_been_used));
+                    et_Email.requestFocus();
+                    Log.e(getString(R.string.email_has_been_used), getString(R.string.email_has_been_used));
+                    progressBar.setVisibility(View.INVISIBLE);
+                }else{
+                    sendVerifyEmail(email);
+                }
+
+            }
+        });
 
     }
+
+    public void checkExistedEmail(String email, CallBackData callback){
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
+            @Override
+            public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
+                boolean isExist = false;
+
+                if (!task.getResult().getSignInMethods().isEmpty())
+                    isExist = true;
+
+                callback.firebaseResponseCallback(isExist);
+            }
+        });
+    }
+
     void changePhone(String phone) {
         root.collection("User")
-                .whereEqualTo("phone_number", phone)
+                .whereEqualTo("phone_Number", phone)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            Log.e("Open", "Open verify phone activity");
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Log.e("Change phone", phone);
                             if (!task.getResult().isEmpty()) {
-                                progressBar.setVisibility(View.INVISIBLE);
+
                                 et_Phone.setError(getString(R.string.phone_been_used));
                                 et_Phone.requestFocus();
                             }
                             else {
                                 Intent verifyPhone = new Intent(PersonalInfoActivity.this, VerifyPhoneActivity.class);
-                                sendPhoneNumber(verifyPhone, phone);
+                                verifyPhone.putExtra("phone", phone);
                                 startActivity(verifyPhone);
                             }
                         }
@@ -406,70 +450,40 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
 
     private void sendVerifyEmail(String email) {
+        Toast.makeText(this, getString(R.string.verified_email_sent)+ " " +email, Toast.LENGTH_LONG).show();
 
-        Log.e("Send email", "SEND");
-//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//        mAuth.sendPasswordResetEmail(email)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        updateEmail(email);
-//                    }
-//                });
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        FirebaseUser user = auth.getCurrentUser();
-
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         user.verifyBeforeUpdateEmail(email)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            updateEmail(email);
+                        Log.e("Send email", "SEND");
+                        user.reload();
+                        if (task.isSuccessful() && user.isEmailVerified()) {
+                            Log.e("verifyBeforeUpdateEmail", "verifyBeforeUpdateEmail");
+                           // updateEmail(email);
+                            newEmail = true;
                         }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Log.e("Send email failed", e.getLocalizedMessage());
                         Toast.makeText(getApplicationContext(), getString(R.string.verify_failed), Toast.LENGTH_LONG).show();
                     }
                 });
+        progressBar.setVisibility(View.INVISIBLE);
     }
-    void updateEmail(String email) {
-        FirebaseFirestore root = FirebaseFirestore.getInstance();
-
-        root.collection("User").document(userID)
-                .update("email", email)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Toast.makeText(getApplicationContext(), getString(R.string.update_infodata_done), Toast.LENGTH_LONG).show();
-                    }
-                });
-    }
-
-    private void sendPhoneNumber(Intent verifyPhone, String phone) {
-        verifyPhone.putExtra("firstname", "");
-        verifyPhone.putExtra("lastname","");
-        verifyPhone.putExtra("phone", phone);
-        verifyPhone.putExtra("email", tv_Email.getText().toString());
-        verifyPhone.putExtra("address", "");
-        verifyPhone.putExtra("password", "");
-    }
-
-    boolean shouldRefreshOnResume;
-    @Override
-    protected void onPause() {
-        super.onPause();
-        shouldRefreshOnResume = true;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (shouldRefreshOnResume) {
-            loadAvatar();
-            loadInformation();
-        }
-    }
+    //void updateEmail(String email) {
+//        FirebaseFirestore root = FirebaseFirestore.getInstance();
+//        root.collection("User").document(userID)
+//                .update("email", email)
+//                .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Toast.makeText(getApplicationContext(), getString(R.string.update_infodata_done), Toast.LENGTH_LONG).show();
+//                    }
+//                });
+//    }
 }

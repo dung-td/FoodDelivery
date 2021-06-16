@@ -27,7 +27,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activity.VerifyPhoneActivity"></activity>
+        <activity android:name=".activity.main.AvailableVoucherActivity"></activity>
+        <activity android:name=".activity.VerifyPhoneActivity" />
         <activity android:name=".activity.PaymentMethodActivity" />
         <activity android:name=".activity.PersonalInfoActivity" />
         <activity android:name=".activity.login.LoginActivity">
@@ -46,7 +47,7 @@
         <activity android:name=".activity.login.ForgotPassActitivy_5" />
         <activity android:name=".activity.me.SettingActivity" />
         <activity android:name=".activity.me.VoucherActivity" />
-        <activity android:name=".activity.LanguageSetting" />
+        <activity android:name=".activity.me.LanguageSetting" />
         <activity android:name=".activity.main.CartActivity" />
         <activity android:name=".activity.me.FeedbackActivity" />
         <activity android:name=".activity.ProductActivity" />

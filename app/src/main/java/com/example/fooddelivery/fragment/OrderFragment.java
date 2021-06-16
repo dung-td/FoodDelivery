@@ -1,7 +1,6 @@
 package com.example.fooddelivery.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -18,7 +17,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.LanguageSetting;
+import com.example.fooddelivery.activity.me.LanguageSetting;
 import com.example.fooddelivery.adapter.ViewPagerOrdersAdapter;
 import com.google.android.material.tabs.TabLayout;
 

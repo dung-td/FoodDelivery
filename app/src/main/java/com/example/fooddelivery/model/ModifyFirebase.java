@@ -3,19 +3,26 @@ package com.example.fooddelivery.model;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.fooddelivery.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,10 +44,12 @@ public class ModifyFirebase {
     public ArrayList<String> favouriteProductList = new ArrayList<String>();
     public ArrayList<Merchant> merchantList = new ArrayList<Merchant>();
     public ArrayList<Voucher> voucherList = new ArrayList<Voucher>();
+    public ArrayList<Voucher> availableVoucherList = new ArrayList<Voucher>();
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
     private final boolean checkUsername = false;
     private boolean uIDCheck = false;
+    private User user = new User();
 
     public ModifyFirebase() {
     }
@@ -128,18 +137,18 @@ public class ModifyFirebase {
                 });
     }
 
-    public void getVoucher() {
+    public void getVoucherList() {
         root.collection("User/" + userId + "/Voucher/")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            if (document == null)
-                                break;
+                            Log.d("GOT" , document.getId());
                             Voucher voucher = new Voucher();
                             voucher.setStatus(document.get("status").toString());
-                            root.collection("Voucher")
+                            voucher.setId(document.getId());
+                            root.collection("Voucher/")
                                     .document(document.getId())
                                     .get()
                                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -153,6 +162,26 @@ public class ModifyFirebase {
                                             voucherList.add(voucher);
                                         }
                                     });
+                        }
+                    }
+                });
+    }
+
+    public void getAvailableVoucherList() {
+        root.collection("Voucher/")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Voucher voucher = new Voucher();
+                            voucher.setId(document.getId());
+                            voucher.setCode(document.get("code").toString());
+                            voucher.setTitle(document.get("title").toString());
+                            voucher.setDate(document.get("date").toString());
+                            voucher.setValues((List<String>) document.get("value"));
+                            voucher.setDetails((List<String>) document.get("details"));
+                            availableVoucherList.add(voucher);
                         }
                     }
                 });
@@ -355,13 +384,54 @@ public class ModifyFirebase {
                 });
     }
 
-
     private Merchant findMerchantFromId(String id) {
         for (Merchant mer : merchantList) {
             if (mer.getId().equals(id))
                 return mer;
         }
         return null;
+    }
+
+    public void getUserInfo() {
+        root.collection("User").document(userId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null) {
+                                user.Email = document.get("email").toString();
+                                user.Address = document.get("address").toString();
+                                user.First_Name = document.get("first_Name").toString();
+                                user.Last_Name = document.get("last_Name").toString();
+                                user.Phone_Number = document.get("phone_Number").toString();
+
+                                StorageReference fileRef = reference.child("UserImage/"+ userId);
+                                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        user.setProfileImage(uri);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void addVoucherToList(Context context, String voucherId) {
+        Map<String, String> voucher = new HashMap<>();
+        voucher.put("status", "Hiện có");
+        root.collection("User/" + userId + "/Voucher/")
+                .document(voucherId)
+                .set(voucher)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "Thêm voucher thành công, vào ví để kiểm tra!", Toast.LENGTH_SHORT);
+                    }
+                });
     }
 
     public boolean checkUID(String uID) {
@@ -452,5 +522,13 @@ public class ModifyFirebase {
 
     public boolean isCheckUsername() {
         return checkUsername;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

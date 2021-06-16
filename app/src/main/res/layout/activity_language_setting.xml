@@ -13,7 +13,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/light_blue">
+            android:background="@color/white">
 
             <ImageButton
                 android:id="@+id/st_lg_ib_back"
@@ -22,7 +22,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/ic_baseline_arrow_back_24" />
+                android:background="@drawable/back" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="@string/setting_language"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textSize="20dp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -39,7 +39,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/language_hint"
         android:hint="@string/language"
-        android:background="@color/white"
+        android:background="@color/light_grey"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -69,5 +69,17 @@
         android:textColor="@color/white"
         android:layout_marginBottom="16dp"
         android:text="@string/save_change"/>
+
+    <Button
+        android:id="@+id/st_lg_bt_save2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/light_red"
+        android:text="@string/save_change"
+        android:textColor="@color/white" />
 
 </RelativeLayout>
