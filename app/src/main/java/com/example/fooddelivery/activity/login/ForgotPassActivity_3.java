@@ -30,8 +30,10 @@ import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
 
+import es.dmoral.toasty.Toasty;
+
 public class ForgotPassActivity_3 extends AppCompatActivity {
-    private static final String TAG = "PHONE VERIFY";
+    private static final String TAG = "SMS";
 
     Button bt_back, bt_continue;
     EditText et_code_1, et_code_2, et_code_3, et_code_4, et_code_5, et_code_6;
@@ -43,15 +45,17 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
-    private final PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+    PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationId = s;
+            Log.d(TAG, "CODE SEND");
         }
 
         @Override
         public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+            Log.d(TAG, "complete");
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 verifyCode(code);
@@ -60,7 +64,7 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
-
+            Toasty.error(ForgotPassActivity_3.this, getString(R.string.error_happend_try_again)).show();
         }
     };
 
@@ -87,6 +91,15 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
         tv_status = findViewById(R.id.fp3_provide_otp_help);
         setTextChangedListener();
 
+        Intent i = getIntent();
+        phoneNumber = i.getStringExtra("phone");
+
+        Spanny spanny = new Spanny("Nhập mã xác thực được \n gửi đến số ")
+                .append(phoneNumber, new StyleSpan(Typeface.BOLD_ITALIC));
+        tv_status.setText(spanny);
+
+        mAuth = FirebaseAuth.getInstance();
+
         bt_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,25 +119,24 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
             }
         });
 
-        Intent i = getIntent();
-        phoneNumber = i.getStringExtra("phone");
-
-        Spanny spanny = new Spanny("Nhập mã xác thực được \n gửi đến số")
-                .append(phoneNumber, new StyleSpan(Typeface.BOLD_ITALIC));
-        tv_status.setText(spanny);
-
-        mAuth = FirebaseAuth.getInstance();
+        bt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ForgotPassActivity_3.super.onBackPressed();
+            }
+        });
     }
 
     private void sendVerificationCode(String phoneNumber) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber("+84" + phoneNumber)       // Phone number to verify
-                        .setTimeout(120L, TimeUnit.SECONDS) // Timeout and unit
+                        .setTimeout(1L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
                         .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
+        Log.d(TAG, "CREATE OPTIONS");
     }
 
     private void verifyCode(String code) {
@@ -149,7 +161,7 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                Toast.makeText(ForgotPassActivity_3.this, "Mã không chính xác hoặc đã hết hạn", Toast.LENGTH_LONG).show();
+                                Toasty.error(ForgotPassActivity_3.this, "Mã không chính xác hoặc đã hết hạn", Toast.LENGTH_LONG).show();
                             }
                         }
                     }

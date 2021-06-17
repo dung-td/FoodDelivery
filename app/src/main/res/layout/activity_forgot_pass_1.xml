@@ -53,19 +53,20 @@
 
         <EditText
             android:id="@+id/fp1_et_emailphone"
-            android:layout_height="wrap_content"
             android:layout_width="300dp"
+            android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:id="@+id/fp1_tv_info"
         style="@style/parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/fp1_tv_title"
         android:layout_marginTop="8dp"
-        android:text="@string/provide_info_help"
+        android:text="@string/provide_email_help"
         android:textAlignment="center" />
 
     <TextView

@@ -107,7 +107,6 @@ public class LanguageSetting extends AppCompatActivity {
         languages = getResources().getStringArray(R.array.languages);
         languageAdapter = new ArrayAdapter<>(LanguageSetting.this, R.layout.dropdown_item, languages);
         temp.setAdapter(languageAdapter);
-
     }
 
     public String getChosenLanguege() {

@@ -26,6 +26,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import es.dmoral.toasty.Toasty;
+
 public class FeedbackActivity extends AppCompatActivity {
     ImageButton bt_back;
     Button bt_send;
@@ -94,7 +96,7 @@ public class FeedbackActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Toast.makeText(FeedbackActivity.this, R.string.send_feedback_success, Toast.LENGTH_SHORT).show();
+                        Toasty.success(FeedbackActivity.this, R.string.send_feedback_success).show();
                         bar.setVisibility(View.GONE);
                         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                         FeedbackActivity.super.onBackPressed();
@@ -104,7 +106,7 @@ public class FeedbackActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(FeedbackActivity.this, R.string.send_feedback_fail, Toast.LENGTH_SHORT).show();
+                        Toasty.error(FeedbackActivity.this, R.string.send_feedback_fail, Toast.LENGTH_SHORT).show();
                         bar.setVisibility(View.GONE);
                         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                         FeedbackActivity.super.onBackPressed();

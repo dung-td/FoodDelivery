@@ -34,8 +34,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.auth.UserInfo;
 
 import java.util.concurrent.TimeUnit;
+
+import es.dmoral.toasty.Toasty;
 
 public class SignUpActivity_2 extends AppCompatActivity {
 
@@ -48,11 +51,10 @@ public class SignUpActivity_2 extends AppCompatActivity {
 
     String verificationId;
     User userInfo;
-    String uID;
+    String uid;
     String codeByUser;
 
     FirebaseAuth mAuth;
-    modifiedFirebase firebase;
 
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
@@ -73,7 +75,7 @@ public class SignUpActivity_2 extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
-
+            Toasty.error(SignUpActivity_2.this, getString(R.string.error_happend_try_again)).show();
         }
     };
 
@@ -89,9 +91,7 @@ public class SignUpActivity_2 extends AppCompatActivity {
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent previousSU = new Intent(SignUpActivity_2.this, SignUpActivity_1.class);
-                SendInformation(previousSU, userInfo);
-                startActivity(previousSU);
+                SignUpActivity_2.super.onBackPressed();
             }
         });
 
@@ -105,7 +105,7 @@ public class SignUpActivity_2 extends AppCompatActivity {
                         et_code_5.getText().toString() +
                         et_code_6.getText().toString();
                 if (codeByUser.isEmpty() || codeByUser.length() < 6) {
-                    et_code_6.setError("Sai mật mã OTP");
+                    et_code_6.setError(getString(R.string.wrong_otp));
                     et_code_1.requestFocus();
                     return;
                 }
@@ -139,15 +139,12 @@ public class SignUpActivity_2 extends AppCompatActivity {
                 .append(userInfo.getEmail(), new StyleSpan(Typeface.BOLD_ITALIC));
         tv_mail.setText(spanny);
 
-        firebase = new modifiedFirebase();
-        firebase.setObject(userInfo);
-        firebase.setCollectionPath("User");
-
         mAuth = FirebaseAuth.getInstance();
     }
 
     private User GetExtras() {
         Intent i = getIntent();
+        uid = i.getStringExtra("uid");
         return new User(
                 i.getStringExtra("firstname"),
                 i.getStringExtra("lastname"),
@@ -175,25 +172,37 @@ public class SignUpActivity_2 extends AppCompatActivity {
     }
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(SignUpActivity_2.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = task.getResult().getUser();
-                            uID = user.getUid();
-                            if (!firebase.checkUID(uID))
-                                addNewUser(user);
-                            loginComplete(user);
-                        } else {
-                            Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                Toast.makeText(SignUpActivity_2.this, "Mã đã hết hạn", Toast.LENGTH_LONG).show();
+        if (uid.equals("")) {
+            mAuth.signInWithCredential(credential)
+                    .addOnCompleteListener(SignUpActivity_2.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Log.d(TAG, "signInWithCredential:success");
+                                FirebaseUser user = task.getResult().getUser();
+                                uid = user.getUid();
+                                if (!LoginActivity.firebase.checkUID(uid))
+                                    addNewUser(user);
+                                loginComplete();
+                            } else {
+                                Log.w(TAG, "signInWithCredential:failure", task.getException());
+                                if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                    Toasty.error(SignUpActivity_2.this, getString(R.string.expired_code), Toast.LENGTH_LONG).show();
+                                }
                             }
                         }
-                    }
-                });
+                    });
+        } else {
+            mAuth.getCurrentUser().updatePhoneNumber(credential)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            uid = mAuth.getCurrentUser().getUid();
+                            addNewUser(mAuth.getCurrentUser());
+                            loginComplete();
+                        }
+                    });
+        }
     }
 
     private void addNewUser(FirebaseUser user) {
@@ -203,21 +212,20 @@ public class SignUpActivity_2 extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-
+                        Log.e("email verify", "success");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
+                Log.e("email verify", e.getMessage());
             }
         });
 
-        firebase.setObject(userInfo);
-        firebase.setCollectionPath("User");
-        firebase.insertDataFirestore(user.getUid());
+        LoginActivity.firebase.addNewUser(userInfo, uid);
     }
 
-    private void loginComplete(FirebaseUser user) {
+    private void loginComplete() {
+        LoginActivity.userID = mAuth.getCurrentUser().getUid();
         Intent mainActivity = new Intent(SignUpActivity_2.this, MainActivity.class);
         startActivity(mainActivity);
     }

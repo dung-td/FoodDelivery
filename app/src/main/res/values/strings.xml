@@ -46,7 +46,6 @@
     <string name="or_verify_mail">Hoặc xác thực bằng email đã được gửi đến mail của bạn</string>
     <string name="use_phone">Dùng số điện thoại</string>
     <string name="continue_">Tiếp tục</string>
-    <string name="provide_info_help">Cung cấp thông tin để chúng tôi giúp bạn Bạn có nhớ email đã đăng ký?</string>
     <string name="make_selection">LỰA CHỌN</string>
     <string name="make_selection_detail">Lựa chọn phương thức xác thực</string>
     <string name="via_sms">Xác thực bằng số điện thoại</string>
@@ -151,6 +150,15 @@
     <string name="send_feedback_fail">Gửi góp ý thất bại, vui lòng thử lại</string>
     <string name="voucher">Mã khuyến mại</string>
     <string name="already_got">Đã lấy</string>
+    <string name="checking_info">Đang kiểm tra thông tin...</string>
+    <string name="error_happend_try_again">Đã có lỗi xảy ra, vui lòng thử lại!</string>
+    <string name="wrong_otp">Sai mật mã OTP</string>
+    <string name="expired_code">Mã đã hết hạn</string>
+    <string name="login_fail">Đăng nhập thất bại</string>
+    <string name="use_email">Sử dụng email</string>
+    <string name="use_phoneNum">Sử dụng số điện thoại</string>
+    <string name="provide_email_help">Cung cấp thông tin để chúng tôi giúp bạn\nBạn có nhớ email đã đăng ký?</string>
+    <string name="provide_phone_help">Cung cấp thông tin để chúng tôi giúp bạn\nBạn có nhớ số điện thoại đã đăng ký?</string>
     <string-array name="feedback_title">
         <item>Góp ý cho ứng dụng</item>
         <item>Báo lỗi</item>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/feedback"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_grey">
@@ -31,56 +31,60 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="@string/feedback"
-                android:textSize="20dp"
                 android:textColor="@color/black"
+                android:textSize="20dp"
                 android:textStyle="bold" />
         </RelativeLayout>
     </FrameLayout>
 
     <FrameLayout
-        android:layout_below="@id/me_fl_feedback"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/me_fl_feedback">
+
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/feedback_hint"
-                android:hint="@string/feedback_title_hint"
-                android:background="@color/light_grey"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/light_grey"
+                android:hint="@string/feedback_title_hint">
+
                 <AutoCompleteTextView
                     android:id="@+id/auto_topics"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:textColor="@color/black"
+                    android:inputType="none"
                     android:text="@string/feedback"
-                    android:inputType="none"/>
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/feedback_details"
-                android:hint="@string/describe_details"
-                android:layout_below="@id/feedback_hint"
-                android:background="@color/light_grey"
-                android:layout_marginTop="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                android:layout_below="@id/feedback_hint"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginRight="16dp"
+                android:background="@color/light_grey"
+                android:hint="@string/describe_details">
+
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/fb_et_details"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:textColor="@color/black"
-                    android:inputType="text"/>
+                    android:inputType="text"
+                    android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <ProgressBar
@@ -90,7 +94,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:indeterminate="true"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/fb_bt_send"
@@ -99,10 +103,10 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="100dp"
-                android:backgroundTint="@color/light_red"
-                android:textColor="@color/white"
                 android:layout_marginBottom="16dp"
-                android:text="@string/send_feedback"/>
+                android:backgroundTint="@color/light_red"
+                android:text="@string/send_feedback"
+                android:textColor="@color/white" />
         </RelativeLayout>
     </FrameLayout>
 

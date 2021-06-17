@@ -434,6 +434,24 @@ public class ModifyFirebase {
                 });
     }
 
+    public void addNewUser(User user, String uid) {
+        Map<String, String> u = new HashMap<>();
+        u.put("first_Name", user.getFirst_Name());
+        u.put("last_Name", user.getLast_Name());
+        u.put("address", user.getAddress());
+        u.put("phone_Number", user.getPhone_Number());
+        u.put("email", user.getEmail());
+        root.collection("User")
+                .document(uid)
+                .set(u)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
+    }
+
     public boolean checkUID(String uID) {
         uIDCheck = false;
         root.collection("User").document(uID).get()
@@ -450,18 +468,6 @@ public class ModifyFirebase {
             }
         });
         return uIDCheck;
-    }
-
-    public boolean checkEmail(String email) {
-        root.collection("User")
-                .whereEqualTo("email", email)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    }
-                });
-        return false;
     }
 
     public Object getObject() {

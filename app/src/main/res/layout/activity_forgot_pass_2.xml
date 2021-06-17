@@ -85,6 +85,7 @@
 
 
             <Button
+                android:id="@+id/fp2_bt_phone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent" />
@@ -114,7 +115,7 @@
 
 
             <TextView
-                android:id="@+id/fp2_tv_email"
+                android:id="@+id/fp2_tv_email_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
@@ -124,10 +125,10 @@
 
 
             <TextView
-                android:id="@+id/fp2_tv_email_title"
+                android:id="@+id/fp2_tv_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fp2_tv_email"
+                android:layout_below="@id/fp2_tv_email_title"
                 android:layout_toRightOf="@id/mail_icon"
                 android:text="support@gmail.com"
                 android:textColor="@color/black"
@@ -135,6 +136,7 @@
 
 
             <Button
+                android:id="@+id/fp2_bt_email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent" />

@@ -1,28 +1,35 @@
 package com.example.fooddelivery.activity.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.model.Regex;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class ForgotPassActivity_1 extends AppCompatActivity {
     Regex regex;
     EditText et_credentials;
+    TextInputLayout ti_credentials;
     Button bt_continue, bt_back;
-    TextView tv_change;
+    TextView tv_change, tv_info;
     boolean StatusEmail = true;
-
+    ProgressDialog progressDialog;
     private FirebaseFirestore root;
 
     @Override
@@ -37,28 +44,37 @@ public class ForgotPassActivity_1 extends AppCompatActivity {
         regex = new Regex();
         root = FirebaseFirestore.getInstance();
         et_credentials = findViewById(R.id.fp1_et_emailphone);
+        ti_credentials = findViewById(R.id.fp1_ti_emailphone);
         bt_continue = findViewById(R.id.fp1_bt_continue);
         tv_change = findViewById(R.id.fp1_tv_change);
+        tv_info = findViewById(R.id.fp1_tv_info);
         bt_back = findViewById(R.id.fp1_bt_back);
+
+        progressDialog = new ProgressDialog(ForgotPassActivity_1.this);
 
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent loginActivity = new Intent(ForgotPassActivity_1.this, LoginActivity.class);
-                startActivity(loginActivity);
+                ForgotPassActivity_1.super.onBackPressed();
             }
         });
 
         bt_continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.setMessage(getString(R.string.checking_info));
+                progressDialog.show();
                 String credentials = et_credentials.getText().toString();
                 if (StatusEmail) {
                     if (regex.validateEmail(credentials))
                         checkEmail(credentials);
+                    else
+                        progressDialog.dismiss();
                 } else {
                     if (regex.validatePassword(credentials))
-                        continueFP2(credentials);
+                        checkPhone(credentials);
+                    else
+                        progressDialog.dismiss();
                 }
             }
         });
@@ -68,18 +84,23 @@ public class ForgotPassActivity_1 extends AppCompatActivity {
             public void onClick(View v) {
                 StatusEmail = !StatusEmail;
                 if (StatusEmail) {
-                    et_credentials.setHint(getString(R.string.phoneNumber));
+                    ti_credentials.setHint(getString(R.string.phoneNumber));
+                    ti_credentials.setStartIconDrawable(getDrawable(R.drawable.ic_baseline_phone_24));
                     et_credentials.setInputType(InputType.TYPE_CLASS_PHONE);
+                    tv_change.setText(R.string.use_email);
+                    tv_info.setText(R.string.provide_email_help);
                 } else {
-                    et_credentials.setHint(getString(R.string.login_email_hint));
+                    ti_credentials.setHint(getString(R.string.login_email_hint));
+                    ti_credentials.setStartIconDrawable(getDrawable(R.drawable.ic_baseline_alternate_email_24));
                     et_credentials.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                    tv_change.setText(R.string.use_phoneNum);
+                    tv_info.setText(R.string.provide_phone_help);
                 }
             }
         });
     }
 
     private void continueFP2(String credentials_2) {
-
         Intent forgotPass2 = new Intent(ForgotPassActivity_1.this, ForgotPassActivity_2.class);
         if (StatusEmail) {
             forgotPass2.putExtra("email", et_credentials.getText().toString());
@@ -92,35 +113,38 @@ public class ForgotPassActivity_1 extends AppCompatActivity {
     }
 
     public void checkEmail(String email) {
-        root.collection("User")
+        root.collection("User/")
                 .whereEqualTo("email", email)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        Log.d("get info", String.valueOf(queryDocumentSnapshots.size()));
                         if (queryDocumentSnapshots.isEmpty()) {
                             et_credentials.setError(getResources().getString(R.string.user_not_exist));
-                        }
-                        else {
-                            continueFP2(queryDocumentSnapshots.getDocuments().get(0).get("phone_number").toString());
+                            progressDialog.dismiss();
+                        } else {
+                            continueFP2(queryDocumentSnapshots.getDocuments().get(0).get("phone_Number").toString());
+                            progressDialog.dismiss();
                         }
                     }
                 });
     }
 
     public void checkPhone(String phone) {
-        root.collection("User")
-                .whereEqualTo("phone", phone)
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        root.collection("User/")
+                .whereEqualTo("phone_Number", phone)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if (queryDocumentSnapshots.isEmpty()) {
                             et_credentials.setError(getResources().getString(R.string.user_not_exist));
-                        }
-                        else {
-
+                            progressDialog.dismiss();
+                        } else {
                             continueFP2(queryDocumentSnapshots.getDocuments().get(0).get("email").toString());
+                            progressDialog.dismiss();
                         }
                     }
                 });
