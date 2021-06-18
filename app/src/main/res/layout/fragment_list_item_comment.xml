@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.OrderCommentFragment">
+    tools:context=".fragment.ListItemCommentFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -46,6 +45,12 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fm_ordcmt_appbar">
         <com.example.fooddelivery.adapter.NonScrollListView
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp"
@@ -56,6 +61,7 @@
             android:divider="@color/gray"
             android:dividerHeight="15dp"
             android:id="@+id/lv_fm_ordcmt"
+            android:layout_marginBottom="100dp"
             />
-    </com.google.android.material.appbar.AppBarLayout>
+    </ScrollView>
 </RelativeLayout>

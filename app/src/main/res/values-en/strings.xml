@@ -141,4 +141,9 @@
         <item>Feedback of application</item>
         <item>Report error</item>
     </string-array>
+    <string name="order_received">Received this Order</string>
+    <string name="canceled">Canceled</string>
+    <string name="customer">Customer</string>
+    <string name="time">Time</string>
+    <string name="cod">Cash on delivery</string>
 </resources>

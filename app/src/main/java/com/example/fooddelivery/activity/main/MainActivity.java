@@ -85,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getData() {
-        LoginActivity.firebase.getVoucherList();
-        LoginActivity.firebase.getAvailableVoucherList();
+//        LoginActivity.firebase.getVoucherList();
+//        LoginActivity.firebase.getAvailableVoucherList();
         LoginActivity.firebase.getComment();
         LoginActivity.firebase.getUserInfo();
     }
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                         temp = new HomeFragment();
                         break;
                     case R.id.nav_order:
-                        temp = new OrderFragment(MainActivity.this, returnLanguage());
+                        temp = new OrderFragment(MainActivity.this);
                         break;
                     case R.id.nav_me:
                         temp = new MeFragment();
@@ -117,13 +117,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    String returnLanguage()
-    {
-        String str = getString(R.string.ic_home);
-        if (str.equals("Home"))
-            return "en";
-        return "vi";
-    }
 
 
 }

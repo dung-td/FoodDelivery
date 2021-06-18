@@ -155,4 +155,9 @@
         <item>Góp ý cho ứng dụng</item>
         <item>Báo lỗi</item>
     </string-array>
+    <string name="order_received">Đã nhận Đơn hàng</string>
+    <string name="canceled">Đã huỷ</string>
+    <string name="customer">Khách hàng</string>
+    <string name="time">Thời gian</string>
+    <string name="cod">Tiền mặt</string>
 </resources>

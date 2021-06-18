@@ -1,62 +1,108 @@
 package com.example.fooddelivery.model;
 
+import com.google.firebase.Timestamp;
+import com.google.firestore.v1.StructuredQuery;
+import com.google.type.DateTime;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Orders {
-    int user_id;
-    int shipper_id;
+    String orderID;
     String status;
-    String created_at;
+    Timestamp date;
+    int discount;
+    int freightCost;
+    int totalAmount;
+    String voucherID;
+    String method;
     ArrayList<OrderItem> listOrderItems;
 
-    public Orders(int user_id, int shipper_id, String status, String created_at, ArrayList<OrderItem> listOrderItems) {
-        this.user_id = user_id;
-        this.shipper_id = shipper_id;
+    public Orders(){}
+
+    public Orders(String status, Timestamp date, int discount, int freightCost, int totalAmount, String voucherID, String method, ArrayList<OrderItem> listOrderItems) {
         this.status = status;
-        this.created_at = created_at;
+        this.date = date;
+        this.discount = discount;
+        this.freightCost = freightCost;
+        this.totalAmount = totalAmount;
+        this.voucherID = voucherID;
+        this.method = method;
         this.listOrderItems = listOrderItems;
     }
 
-    //region GET_SET
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-
-    public void setShipper_id(int shipper_id) {
-        this.shipper_id = shipper_id;
+    //region GET SET
+    public String getStatus() {
+        return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
     }
 
-    public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+    public Timestamp getDate() {
+        return date;
+    }
+
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    public int getFreightCost() {
+        return freightCost;
+    }
+
+    public void setFreightCost(int freightCost) {
+        this.freightCost = freightCost;
+    }
+
+    public int getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(int totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public String getVoucherID() {
+        return voucherID;
+    }
+
+    public void setVoucherID(String voucherID) {
+        this.voucherID = voucherID;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+
+    public void setMethod(String  method) {
+        this.method = method;
+    }
+
+    public String getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(String orderID) {
+        this.orderID = orderID;
+    }
+
+    public ArrayList<OrderItem> getListOrderItems() {
+        return listOrderItems;
     }
 
     public void setListOrderItems(ArrayList<OrderItem> listOrderItems) {
         this.listOrderItems = listOrderItems;
-    }
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public int getShipper_id() {
-        return shipper_id;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getCreated_at() {
-        return created_at;
-    }
-
-    public List<OrderItem> getListOrderItems() {
-        return listOrderItems;
     }
 
     public OrderItem getFirstOrderItems() {
@@ -64,15 +110,16 @@ public class Orders {
     }
     //endregion
 
-    public int getTotalPrice()
+    public int getTmpPrice()
     {
-        int price =0;
-        for (int i=0; i<listOrderItems.size(); i++)
-        {
-            price+=Integer.parseInt(listOrderItems.get(i).getProduct().getPrice().get(0)) * listOrderItems.get(i).quantity;
-        }
+        int price = 0;
+
+        for (OrderItem orderItem: listOrderItems)
+            price += orderItem.getPrice();
+
         return price;
     }
+
 
 }
 

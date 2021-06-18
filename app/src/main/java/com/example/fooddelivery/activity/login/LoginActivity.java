@@ -43,6 +43,7 @@ import java.util.Locale;
 public class LoginActivity extends AppCompatActivity {
 
     String uID;
+    public static String language;
     private static final String TAG = "GOOGLE SIGN IN";
     EditText et_email, et_pass;
     Button bt_login;
@@ -265,7 +266,7 @@ public class LoginActivity extends AppCompatActivity {
         String langPref = "lang_code";
         SharedPreferences prefs = getSharedPreferences("MyPref",
                 Activity.MODE_PRIVATE);
-        String language = prefs.getString(langPref, "");
+        language = prefs.getString(langPref, "");
 
         Log.e("language", language);
 

@@ -22,6 +22,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firestore.v1.StructuredQuery;
+import com.google.type.DateTime;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,6 +47,7 @@ public class ModifyFirebase {
     public ArrayList<Merchant> merchantList = new ArrayList<Merchant>();
     public ArrayList<Voucher> voucherList = new ArrayList<Voucher>();
     public ArrayList<Voucher> availableVoucherList = new ArrayList<Voucher>();
+    public ArrayList<Orders> ordersList = new ArrayList<>();
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
     private final boolean checkUsername = false;
@@ -87,7 +90,6 @@ public class ModifyFirebase {
     }
 
     public void addProductToCart(String productId) {
-
     }
 
     public void addProductToWatched(String productId) {
@@ -298,6 +300,7 @@ public class ModifyFirebase {
                                     }
                                 });
                     }
+
                 });
 
 
@@ -315,6 +318,9 @@ public class ModifyFirebase {
                 });
 
         //Load product in cart
+
+        //Load Orders
+        getListOrdersOfUser();
     }
 
     public void loadFullListMerchantImage(Merchant merchant, final OnGetDataListener listener) {
@@ -452,6 +458,162 @@ public class ModifyFirebase {
         return uIDCheck;
     }
 
+    //region ORDERS
+    ArrayList <Map<String, String>> listMap = new ArrayList<>();
+    public ArrayList <OrderItem> getListOrderedItems(String orderID) {
+       ArrayList <OrderItem> orderItemArrayList = new ArrayList<>();
+
+
+        root.collection("User/" + userId + "/Order/").document(orderID)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                            if (documentSnapshot != null)
+                            {
+                                listMap = (ArrayList <Map<String, String>>)documentSnapshot.get("listItems");
+
+                                for (Map item : listMap) {
+                                    Product product = new Product();
+                                    product = getProductById(item.get("product").toString());
+
+                                    OrderItem orderItem = new OrderItem(
+                                            orderID,
+                                            product,
+                                            Integer.parseInt(item.get("quantity").toString()),
+                                            Integer.parseInt(item.get("price").toString()),
+                                            findCommentById(product.getId(), item.get("comment").toString()),
+                                            item.get("size").toString()
+                                    );
+
+                                    orderItemArrayList.add(orderItem);
+                            }
+                        }
+                    }
+                });
+        return orderItemArrayList;
+    }
+
+    public Product getProductById(String productID) {
+        Product product = new Product();
+        root.collection("Product/").document(productID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null) {
+                                product.setId(productID);
+                                product.setEn_Name(document.get("Name_En").toString());
+                                product.setName(document.get("Name").toString());
+                                product.setMerchant((Merchant) findMerchantFromId(((String) document.get("Merchant")).substring(9)));
+
+                                ArrayList<Uri> images = new ArrayList<Uri>();
+                                root.collection("Product/" + product.getId() + "/Photos/")
+                                        .get()
+                                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                                for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                                    if (document == null)
+                                                        break;
+                                                    if (((String) document.get("Image_Link")) != null) {
+                                                        images.add(Uri.parse((String) document.get("Image_Link")));
+                                                        break;
+                                                    }
+                                                }
+                                                product.setImage(images);
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
+
+
+        if (product.getImage() == null)
+            Log.e("product.getImage() ", "null");
+        else Log.e("product.getImage() not ", "null");
+        return product;
+    }
+
+    public Comment findCommentById(String productId, String commentId){
+        Comment comment = new Comment();
+
+        if (commentId.equals("null")) {
+            return null;
+        }
+
+        root.collection("Product/"+ productId +"/Comment/").document(commentId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null) {
+                                comment.setiD(commentId);
+                                comment.setDate(document.get("date").toString());
+                                comment.setDetails(document.get("details").toString());
+                                comment.setRating(document.get("rating").toString());
+                                comment.setUserName(document.get("userName").toString());
+                            }
+                        }
+                    }
+                });
+            return comment;
+    }
+
+    public Orders getOrderById(String orderID){
+        Orders orders = new Orders();
+        root.collection("User/" + userId + "/Order")
+                .document(orderID)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot != null)
+                            {
+                                orders.orderID = orderID;
+                                orders.date = documentSnapshot.getTimestamp("date");
+                                orders.discount = Integer.parseInt(documentSnapshot.get("discount").toString());
+                                orders.status = documentSnapshot.get("status").toString();
+                                orders.freightCost=Integer.parseInt(documentSnapshot.get("freight_cost").toString());
+                                orders.listOrderItems = getListOrderedItems(orderID);
+                                orders.method = documentSnapshot.get("payment_method").toString();
+                                orders.status = documentSnapshot.get("status").toString();
+                                orders.totalAmount = Integer.parseInt(documentSnapshot.get("total_amount").toString());
+                                orders.voucherID = documentSnapshot.get("voucher").toString();
+                            }
+
+                    }
+                });
+        return orders;
+    }
+
+    public void getListOrdersOfUser() {
+        root.collection("User/" + userId + "/Order")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            if (document == null)
+                                break;
+                           Orders newOrders = new Orders();
+                           newOrders = getOrderById(document.getId());
+                           ordersList.add(newOrders);
+                        }
+
+                    }
+                });
+    }
+
+    //endregion
+    
+
     public boolean checkEmail(String email) {
         root.collection("User")
                 .whereEqualTo("email", email)
@@ -530,5 +692,13 @@ public class ModifyFirebase {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public ArrayList<Orders> getOrdersList() {
+        return ordersList;
+    }
+
+    public void setOrdersList(ArrayList<Orders> ordersList) {
+        this.ordersList = ordersList;
     }
 }
