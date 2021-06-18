@@ -236,8 +236,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onStart() {
                 progressDialog.setMessage(getString(R.string.data_loading));
+                progressDialog.show();
             }
-
+            
             @Override
             public void onSuccess() {
                 if (progressDialog != null && progressDialog.isShowing()) {

@@ -75,7 +75,7 @@ public class ForgotPassActivity_2 extends AppCompatActivity {
                         Log.e("Email verify", "success");
                         progressDialog.dismiss();
                         Intent forgotPassActivity5 = new Intent(ForgotPassActivity_2.this, ForgotPassActitivy_5.class);
-                        forgotPassActivity5.putExtra("email", "true");
+                        forgotPassActivity5.putExtra("type", "email");
                         startActivity(forgotPassActivity5);
                     }
                 }).addOnFailureListener(new OnFailureListener() {

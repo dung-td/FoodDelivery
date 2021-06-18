@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import es.dmoral.toasty.Toasty;
+
 public class ForgotPassActivity_1 extends AppCompatActivity {
     Regex regex;
     EditText et_credentials;
@@ -68,13 +70,18 @@ public class ForgotPassActivity_1 extends AppCompatActivity {
                 if (StatusEmail) {
                     if (regex.validateEmail(credentials))
                         checkEmail(credentials);
-                    else
+                    else {
                         progressDialog.dismiss();
+                        Toasty.error(ForgotPassActivity_1.this, getResources().getString(R.string.wrong_email_format)).show();
+                    }
+
                 } else {
-                    if (regex.validatePassword(credentials))
+                    if (credentials.length() == 10)
                         checkPhone(credentials);
-                    else
+                    else {
                         progressDialog.dismiss();
+                        Toasty.error(ForgotPassActivity_1.this, getResources().getString(R.string.wrong_phone_format)).show();
+                    }
                 }
             }
         });
@@ -82,20 +89,20 @@ public class ForgotPassActivity_1 extends AppCompatActivity {
         tv_change.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StatusEmail = !StatusEmail;
                 if (StatusEmail) {
                     ti_credentials.setHint(getString(R.string.phoneNumber));
                     ti_credentials.setStartIconDrawable(getDrawable(R.drawable.ic_baseline_phone_24));
                     et_credentials.setInputType(InputType.TYPE_CLASS_PHONE);
                     tv_change.setText(R.string.use_email);
-                    tv_info.setText(R.string.provide_email_help);
+                    tv_info.setText(R.string.provide_phone_help);
                 } else {
                     ti_credentials.setHint(getString(R.string.login_email_hint));
                     ti_credentials.setStartIconDrawable(getDrawable(R.drawable.ic_baseline_alternate_email_24));
                     et_credentials.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                     tv_change.setText(R.string.use_phoneNum);
-                    tv_info.setText(R.string.provide_phone_help);
+                    tv_info.setText(R.string.provide_email_help);
                 }
+                StatusEmail = !StatusEmail;
             }
         });
     }
@@ -121,7 +128,7 @@ public class ForgotPassActivity_1 extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         Log.d("get info", String.valueOf(queryDocumentSnapshots.size()));
                         if (queryDocumentSnapshots.isEmpty()) {
-                            et_credentials.setError(getResources().getString(R.string.user_not_exist));
+                            Toasty.error(ForgotPassActivity_1.this, getResources().getString(R.string.user_not_exist)).show();
                             progressDialog.dismiss();
                         } else {
                             continueFP2(queryDocumentSnapshots.getDocuments().get(0).get("phone_Number").toString());
@@ -140,7 +147,7 @@ public class ForgotPassActivity_1 extends AppCompatActivity {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         if (queryDocumentSnapshots.isEmpty()) {
-                            et_credentials.setError(getResources().getString(R.string.user_not_exist));
+                            Toasty.error(ForgotPassActivity_1.this, getResources().getString(R.string.user_not_exist)).show();
                             progressDialog.dismiss();
                         } else {
                             continueFP2(queryDocumentSnapshots.getDocuments().get(0).get("email").toString());

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whiteTextColor"
+    android:padding="15dp"
     tools:context=".activity.login.ForgotPassActivity_2">
 
     <LinearLayout
@@ -15,8 +16,6 @@
             android:id="@+id/fp2_bt_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="16dp"
             android:background="@drawable/back" />
 
 

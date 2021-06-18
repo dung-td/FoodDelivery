@@ -94,6 +94,8 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
         Intent i = getIntent();
         phoneNumber = i.getStringExtra("phone");
 
+        Log.e(TAG, "CREATE OPTIONS");
+
         Spanny spanny = new Spanny("Nhập mã xác thực được \n gửi đến số ")
                 .append(phoneNumber, new StyleSpan(Typeface.BOLD_ITALIC));
         tv_status.setText(spanny);
@@ -161,7 +163,7 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                Toasty.error(ForgotPassActivity_3.this, "Mã không chính xác hoặc đã hết hạn", Toast.LENGTH_LONG).show();
+                                Toasty.error(ForgotPassActivity_3.this, getString(R.string.expired_code), Toast.LENGTH_LONG).show();
                             }
                         }
                     }
@@ -169,7 +171,7 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
     }
 
     private void continueFP4() {
-        Intent forgotPass4 = new Intent(ForgotPassActivity_3.this, ForgotPassActivity_1.class);
+        Intent forgotPass4 = new Intent(ForgotPassActivity_3.this, ForgotPassActivity_4.class);
         startActivity(forgotPass4);
     }
 

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.example.fooddelivery.R;
@@ -25,6 +26,14 @@ public class AvailableVoucherActivity extends AppCompatActivity {
 
     private void Init() {
         bt_back = findViewById(R.id.voucher_ib_back);
+
+        bt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AvailableVoucherActivity.super.onBackPressed();
+            }
+        });
+
         availableVoucher = findViewById(R.id.voucherAvailableRecyclerView);
         VoucherAdapter2 voucherAdapter = new VoucherAdapter2(AvailableVoucherActivity.this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AvailableVoucherActivity.this, RecyclerView.VERTICAL, false);

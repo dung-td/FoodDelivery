@@ -51,7 +51,7 @@
     <string name="via_sms">Xác thực bằng số điện thoại</string>
     <string name="via_mail">Xác thực bằng email</string>
     <string name="new_password_title">MẬT KHẨU MỚI</string>
-    <string name="new_password_details">Danh tính của bạn đã được xác nhận! Đến lúc chọn mật khẩu mới</string>
+    <string name="new_password_details">Danh tính của bạn đã được xác nhận!\nĐến lúc chọn mật khẩu mới</string>
     <string name="new_password">Mật khẩu mới</string>
     <string name="confirm_password">Xác nhận mật khẩu</string>
     <string name="password_updated">CẬP NHẬT\nMẬT KHẨU</string>
@@ -145,7 +145,7 @@
     <string name="language_en">Tiếng Anh</string>
     <string name="send_feedback">Gửi góp ý</string>
     <string name="feedback_details_hint">Chi tiết</string>
-    <string name="describe_details">Mô tả chi tiết</string>
+    <string name="describe_details">Mô tả chi tiết</string>n
     <string name="send_feedback_success">Gửi góp ý thành công!</string>
     <string name="send_feedback_fail">Gửi góp ý thất bại, vui lòng thử lại</string>
     <string name="voucher">Mã khuyến mại</string>
@@ -159,6 +159,11 @@
     <string name="use_phoneNum">Sử dụng số điện thoại</string>
     <string name="provide_email_help">Cung cấp thông tin để chúng tôi giúp bạn\nBạn có nhớ email đã đăng ký?</string>
     <string name="provide_phone_help">Cung cấp thông tin để chúng tôi giúp bạn\nBạn có nhớ số điện thoại đã đăng ký?</string>
+    <string name="email_sent_to_your_mailbox">Một email hướng dẫn\nđã được gửi đến hòm thư của bạn</string>
+    <string name="menu_title">MENU</string>
+    <string name="comment_title">BÌNH LUẬN</string>
+    <string name="info_title">THÔNG TIN</string>
+    <string name="exist_voucher">Voucher đã ở trong ví của bạn</string>
     <string-array name="feedback_title">
         <item>Góp ý cho ứng dụng</item>
         <item>Báo lỗi</item>

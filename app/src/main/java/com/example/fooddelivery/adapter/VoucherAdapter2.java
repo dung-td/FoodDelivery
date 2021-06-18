@@ -1,7 +1,6 @@
 package com.example.fooddelivery.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
-import com.example.fooddelivery.activity.main.AvailableVoucherActivity;
 import com.example.fooddelivery.model.Voucher;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-import java.util.ArrayList;
-import java.util.List;
+import es.dmoral.toasty.Toasty;
 
 
 public class VoucherAdapter2 extends RecyclerView.Adapter<VoucherAdapter2.VoucherViewHolder2> {
@@ -57,24 +54,32 @@ public class VoucherAdapter2 extends RecyclerView.Adapter<VoucherAdapter2.Vouche
         holder.ib_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToVoucherList(voucher);
+                String status = holder.ib_add.getText().toString();
+                if (status.equals(context.getResources().getString(R.string.already_got))) {
+                    Toasty.warning(context, R.string.exist_voucher).show();
+                } else {
+                    addToVoucherList(voucher);
+                    holder.ib_add.setText(R.string.already_got);
+                }
             }
         });
     }
 
     private void addToVoucherList(Voucher v) {
-        if (!LoginActivity.firebase.voucherList.contains(v)) {
-            LoginActivity.firebase.addVoucherToList(context, v.getId());
-            LoginActivity.firebase.voucherList.add(v);
-        }
+        LoginActivity.firebase.addVoucherToList(context, v.getId());
+        v.setStatus("Hiện có");
+        LoginActivity.firebase.voucherList.add(v);
     }
 
     private void setData(VoucherViewHolder2 holder, Voucher v) {
         holder.imgVoucher.setImageResource(R.drawable.voucher);
         holder.tv_title.setText(v.getTitle());
         holder.tv_date.setText(String.format("%s %s", context.getResources().getString(R.string.HSD), v.getDate()));
-        if (LoginActivity.firebase.voucherList.contains(v)) {
-            holder.ib_add.setText(R.string.already_got);
+        for (Voucher voucher : LoginActivity.firebase.voucherList) {
+            if (v.getCode().equals(voucher.getCode())) {
+                holder.ib_add.setText(R.string.already_got);
+                break;
+            }
         }
     }
 
@@ -97,6 +102,12 @@ public class VoucherAdapter2 extends RecyclerView.Adapter<VoucherAdapter2.Vouche
             tv_date = itemView.findViewById(R.id.vc2_tv_date);
             ib_details = itemView.findViewById(R.id.vc2_ib_details);
             ib_add = itemView.findViewById(R.id.vc2_ib_add);
+
+            ib_add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
         }
     }
 

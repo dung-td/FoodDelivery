@@ -137,6 +137,22 @@
     <string name="describe_details">Describe details</string>
     <string name="send_feedback_success">Send feedback successful!</string>
     <string name="send_feedback_fail">Send feedback fail, please try again!</string>
+    <string name="voucher">Voucher</string>
+    <string name="already_got">Already got</string>
+    <string name="checking_info">Checking information…</string>
+    <string name="error_happend_try_again">An unexpected error has occurred. Please try again!</string>
+    <string name="wrong_otp">Invalid OTP</string>
+    <string name="expired_code">OTP has expired</string>
+    <string name="login_fail">Login fail</string>
+    <string name="use_email">Use email</string>
+    <string name="use_phoneNum">Use phone number</string>
+    <string name="provide_email_help">Please provide us your informations\nDo you remember your registered email?</string>
+    <string name="provide_phone_help">Cung cấp thông tin để chúng tôi giúp bạn\nDo you remember your registered phone number?</string>
+    <string name="email_sent_to_your_mailbox">An email has been sent to you\nwith password reset instructions</string>
+    <string name="menu_title">MENU</string>
+    <string name="comment_title">COMMENT</string>
+    <string name="exist_voucher">This voucher is already in your voucher list</string>
+    <string name="info_title">INFOMATION</string>
     <string-array name="feedback_title">
         <item>Feedback of application</item>
         <item>Report error</item>

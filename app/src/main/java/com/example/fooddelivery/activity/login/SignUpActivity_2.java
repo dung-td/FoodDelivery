@@ -42,7 +42,7 @@ import es.dmoral.toasty.Toasty;
 
 public class SignUpActivity_2 extends AppCompatActivity {
 
-    private static final String TAG = "PHONE VERIFY";
+    private static final String TAG = "SMS";
 
     EditText et_code_1, et_code_2, et_code_3, et_code_4, et_code_5, et_code_6;
     Button bt_finish, bt_resend;

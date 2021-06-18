@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -22,6 +23,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.main.AvailableVoucherActivity;
 import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.adapter.MyAdapter;
@@ -42,6 +44,7 @@ public class MerchantActivity extends AppCompatActivity {
     TextView textViewRating;
     TextView textViewTime;
     TextView textViewDistance;
+    TextView textViewVoucher;
     static TextView cartBadge;
     TabLayout tabLayout;
     MyViewPager viewPager;
@@ -78,6 +81,7 @@ public class MerchantActivity extends AppCompatActivity {
         textViewTime = findViewById(R.id.tv_time);
         cartBadge = findViewById(R.id.cart_badge);
         textViewDistance = findViewById(R.id.tv_distance);
+        textViewVoucher = findViewById(R.id.tv_voucher_detail);
         tabLayout = findViewById(R.id.tab_button);
         viewPager = findViewById(R.id.info_viewpager);
         viewPagerBanner = findViewById(R.id.merchant_banner);
@@ -100,10 +104,18 @@ public class MerchantActivity extends AppCompatActivity {
             cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
         }
 
-        tabLayout.addTab(tabLayout.newTab().setText("MENU"));
-        tabLayout.addTab(tabLayout.newTab().setText("BÌNH LUẬN"));
-        tabLayout.addTab(tabLayout.newTab().setText("THÔNG TIN"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.menu_title));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.comment_title));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.info_title));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+        textViewVoucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent avalableVoucher = new Intent(MerchantActivity.this, AvailableVoucherActivity.class);
+                startActivity(avalableVoucher);
+            }
+        });
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
