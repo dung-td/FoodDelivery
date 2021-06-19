@@ -123,7 +123,9 @@ public class RatingOrderItemsAdapter extends BaseAdapter {
         comment.setText(listOrderItem.get(position).getComment().getDetails());
         userID.setText(listOrderItem.get(position).getComment().getUserName());
 
-        star.setNumStars(Integer.parseInt(listOrderItem.get(position).getComment().getRating()));
+
+        star.setRating(Integer.parseInt(listOrderItem.get(position).getComment().getRating()));
+        //star.setNumStars(5);
 
         bt_Rate.setVisibility(View.GONE);
     }

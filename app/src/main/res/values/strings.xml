@@ -160,4 +160,7 @@
     <string name="customer">Khách hàng</string>
     <string name="time">Thời gian</string>
     <string name="cod">Tiền mặt</string>
+    <string name="send_comment_success">Gửi đánh giá thành công</string>
+    <string name="send_comment_fail">Gửi đánh giá thất bại, vui lòng thử lại</string>
+    <string name="rating_null">Chưa đánh giá</string>
 </resources>

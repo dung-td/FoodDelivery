@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,11 +55,9 @@ public class OrderDetailsFragment extends Fragment {
     }
 
     public OrderDetailsFragment(Orders orders) {
-        // Required empty public constructor
         this.orders=orders;
         this.listOrderItem = orders.getListOrderItems();
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,9 +80,7 @@ public class OrderDetailsFragment extends Fragment {
         bt_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //getActivity().onBackPressed();
                 getFragmentManager().popBackStack();
-
             }
         });
 
@@ -116,7 +113,7 @@ public class OrderDetailsFragment extends Fragment {
 
          lv_OrdersList= (ListView) getView().findViewById(R.id.lv_orderdetails);
          adapter = new OrderDetailAdapter(getActivity(), listOrderItem );
-        lv_OrdersList.setAdapter(adapter);
+         lv_OrdersList.setAdapter(adapter);
 
          tv_tmpPrice = (TextView)getView().findViewById(R.id.tv_fm_orddtail_tmpprice);
          tv_shipPrice = (TextView)getView().findViewById(R.id.tv_fm_orddtail_shipprice);
@@ -127,7 +124,6 @@ public class OrderDetailsFragment extends Fragment {
 
          bt_BuyAgain = (Button)getView().findViewById(R.id.bt_fm_orddtail_buy);
          bt_Back = (ImageButton) getView().findViewById(R.id.bt_fm_orddtail_back);
-
 
     }
 
@@ -150,7 +146,7 @@ public class OrderDetailsFragment extends Fragment {
 
 
         tv_merchant.setText(orders.getListOrderItems().get(0).getProduct().getMerchant().getName());
-        tv_idOrder.setText(getString(R.string.order_id) + orders.getOrderID());
+        tv_idOrder.setText(getString(R.string.order_id) + ": " + orders.getOrderID());
 
         tv_tmpPrice.setText(Integer.toString(orders.getTmpPrice()));
         tv_shipPrice.setText(Integer.toString(orders.getFreightCost()));

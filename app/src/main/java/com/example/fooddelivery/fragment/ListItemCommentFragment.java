@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.RatingOrderItemsAdapter;
 import com.example.fooddelivery.model.OrderItem;
 import com.example.fooddelivery.model.Product;
@@ -71,5 +72,11 @@ public class ListItemCommentFragment extends Fragment {
         lv_Commented.setAdapter(adapter);
 
         bt_Back = (ImageButton)getView().findViewById(R.id.bt_fm_ordcmt_back);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        listOrderItem = LoginActivity.firebase.getListOrderedItems(listOrderItem.get(0).getOrder_id());
     }
 }

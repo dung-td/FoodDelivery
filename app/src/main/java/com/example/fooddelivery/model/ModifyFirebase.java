@@ -1,6 +1,7 @@
 package com.example.fooddelivery.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.PersonalInfoActivity;
+import com.example.fooddelivery.activity.VerifyPhoneActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -220,6 +223,9 @@ public class ModifyFirebase {
 
     public void getData(final OnGetDataListener listener) {
         listener.onStart();
+        //Load Orders
+        getListOrdersOfUser();
+
         //Load merchant list
         root.collection("Merchant/")
                 .get()
@@ -319,8 +325,7 @@ public class ModifyFirebase {
 
         //Load product in cart
 
-        //Load Orders
-        getListOrdersOfUser();
+
     }
 
     public void loadFullListMerchantImage(Merchant merchant, final OnGetDataListener listener) {
@@ -461,7 +466,7 @@ public class ModifyFirebase {
     //region ORDERS
     ArrayList <Map<String, String>> listMap = new ArrayList<>();
     public ArrayList <OrderItem> getListOrderedItems(String orderID) {
-       ArrayList <OrderItem> orderItemArrayList = new ArrayList<>();
+        ArrayList <OrderItem> orderItemArrayList = new ArrayList<>();
 
 
         root.collection("User/" + userId + "/Order/").document(orderID)
@@ -470,24 +475,24 @@ public class ModifyFirebase {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
 
-                            if (documentSnapshot != null)
-                            {
-                                listMap = (ArrayList <Map<String, String>>)documentSnapshot.get("listItems");
+                        if (documentSnapshot != null)
+                        {
+                            listMap = (ArrayList <Map<String, String>>)documentSnapshot.get("listItems");
 
-                                for (Map item : listMap) {
-                                    Product product = new Product();
-                                    product = getProductById(item.get("product").toString());
+                            for (Map item : listMap) {
+                                Product product = new Product();
+                                product = getProductById(item.get("product").toString());
 
-                                    OrderItem orderItem = new OrderItem(
-                                            orderID,
-                                            product,
-                                            Integer.parseInt(item.get("quantity").toString()),
-                                            Integer.parseInt(item.get("price").toString()),
-                                            findCommentById(product.getId(), item.get("comment").toString()),
-                                            item.get("size").toString()
-                                    );
+                                OrderItem orderItem = new OrderItem(
+                                        orderID,
+                                        product,
+                                        Integer.parseInt(item.get("quantity").toString()),
+                                        Integer.parseInt(item.get("price").toString()),
+                                        findCommentById(item.get("product").toString(), item.get("comment").toString()),
+                                        item.get("size").toString()
+                                );
 
-                                    orderItemArrayList.add(orderItem);
+                                orderItemArrayList.add(orderItem);
                             }
                         }
                     }
@@ -532,38 +537,33 @@ public class ModifyFirebase {
                     }
                 });
 
-
-        if (product.getImage() == null)
-            Log.e("product.getImage() ", "null");
-        else Log.e("product.getImage() not ", "null");
         return product;
     }
 
     public Comment findCommentById(String productId, String commentId){
         Comment comment = new Comment();
 
-        if (commentId.equals("null")) {
+        if (commentId.equals("null"))
             return null;
-        }
 
-        root.collection("Product/"+ productId +"/Comment/").document(commentId)
+        root.collection("Product/" + productId + "/Comment")
+                .document(commentId)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot document = task.getResult();
-                            if (document != null) {
-                                comment.setiD(commentId);
-                                comment.setDate(document.get("date").toString());
-                                comment.setDetails(document.get("details").toString());
-                                comment.setRating(document.get("rating").toString());
-                                comment.setUserName(document.get("userName").toString());
-                            }
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot != null)
+                        {
+                            comment.setiD(commentId);
+                            comment.setDate(documentSnapshot.get("date").toString());
+                            comment.setDetails(documentSnapshot.get("details").toString());
+                            comment.setRating(documentSnapshot.get("rating").toString());
+                            comment.setUserName(documentSnapshot.get("userName").toString());
                         }
                     }
                 });
-            return comment;
+
+        return comment;
     }
 
     public Orders getOrderById(String orderID){
@@ -610,7 +610,6 @@ public class ModifyFirebase {
                     }
                 });
     }
-
     //endregion
     
 

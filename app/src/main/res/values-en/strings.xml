@@ -146,4 +146,7 @@
     <string name="customer">Customer</string>
     <string name="time">Time</string>
     <string name="cod">Cash on delivery</string>
+    <string name="send_comment_success">Send your rating successfully!</string>
+    <string name="send_comment_fail">Send your rating fail. please try again</string>
+    <string name="rating_null">Your rating is null</string>
 </resources>

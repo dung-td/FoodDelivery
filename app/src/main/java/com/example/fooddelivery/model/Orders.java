@@ -115,7 +115,7 @@ public class Orders {
         int price = 0;
 
         for (OrderItem orderItem: listOrderItems)
-            price += orderItem.getPrice();
+            price = price + orderItem.getPrice() * orderItem.getQuantity();
 
         return price;
     }

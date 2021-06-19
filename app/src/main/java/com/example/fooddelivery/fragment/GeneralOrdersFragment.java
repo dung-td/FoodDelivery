@@ -29,15 +29,15 @@ public class GeneralOrdersFragment extends Fragment {
     ArrayList<Orders> listOrders = new ArrayList<>();
 
     public GeneralOrdersFragment() {
-        this.listOrders = LoginActivity.firebase.ordersList;
+
     }
 
-    public  GeneralOrdersFragment(ArrayList<Orders> listOrders)
-    {
+    public  GeneralOrdersFragment(ArrayList<Orders> listOrders) {
         this.listOrders = listOrders;
-        if (listOrders==null)
-            Log.e("List orders", "general null");
-        else Log.e("List orders general ", "not null");
+        if (listOrders.size() == 0)
+            Log.e("General Orders Fragment", " size: 0");
+        else
+            Log.e("General Orders Fragment", Integer.toString(listOrders.size()));
     }
 
 
@@ -63,7 +63,6 @@ public class GeneralOrdersFragment extends Fragment {
         lv_OrdersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("Click", "Click");
                 OrderDetailsFragment nextFrag= new OrderDetailsFragment(listOrders.get(position));
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, nextFrag, null)
