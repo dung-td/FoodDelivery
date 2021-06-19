@@ -14,14 +14,14 @@
         android:background="@color/white">
 
         <ImageView
-            android:id="@+id/vc_iv_image"
+            android:id="@+id/vc2_iv_image"
             android:layout_marginLeft="8dp"
             android:layout_width="64dp"
             android:layout_height="64dp" />
 
         <TextView
-            android:id="@+id/vc_tv_title"
-            android:layout_toRightOf="@id/vc_iv_image"
+            android:id="@+id/vc2_tv_title"
+            android:layout_toRightOf="@id/vc2_iv_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -32,23 +32,35 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/vc_tv_date"
-            android:layout_toRightOf="@id/vc_iv_image"
-            android:layout_width="match_parent"
+            android:id="@+id/vc2_tv_date"
+            android:layout_toRightOf="@id/vc2_iv_image"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/vc_tv_title"
+            android:layout_below="@id/vc2_tv_title"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:textColor="@color/black" />
 
         <ImageButton
-            android:id="@+id/vc_ib_details"
+            android:id="@+id/vc2_ib_details"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
             android:background="@drawable/detail" />
+
+        <TextView
+            android:id="@+id/vc2_ib_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/light_blue"
+            android:layout_below="@id/vc2_ib_details"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:textStyle="italic"
+            android:text="Lấy"/>
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

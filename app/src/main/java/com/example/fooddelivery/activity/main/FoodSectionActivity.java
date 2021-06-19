@@ -1,6 +1,7 @@
 package com.example.fooddelivery.activity.main;
 
-import android.opengl.Visibility;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -12,15 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
-import com.example.fooddelivery.adapter.ChosenItemAdapter;
-import com.example.fooddelivery.adapter.ProductAdapter;
 import com.example.fooddelivery.adapter.ProductOnSectionAdapter;
+import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
 
 import java.util.ArrayList;
 
-public class FavouriteSectionActivity extends AppCompatActivity {
-
+public class FoodSectionActivity extends AppCompatActivity {
     TextView textViewNoData;
     ImageButton buttonBack;
     RecyclerView recyclerViewProduct;
@@ -28,8 +27,7 @@ public class FavouriteSectionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-        setContentView(R.layout.activity_favourite_section);
+        setContentView(R.layout.activity_food_section);
 
         initView();
         initRecyclerViewProduct();
@@ -37,30 +35,27 @@ public class FavouriteSectionActivity extends AppCompatActivity {
 
     private void initView() {
         buttonBack = findViewById(R.id.btn_back);
-        textViewNoData = findViewById(R.id.tv_no_data);
         recyclerViewProduct = findViewById(R.id.recycler_view_product);
-
+        textViewNoData = findViewById(R.id.tv_no_data);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FavouriteSectionActivity.super.onBackPressed();
+                FoodSectionActivity.super.onBackPressed();
             }
         });
     }
 
     private void initRecyclerViewProduct() {
-        ArrayList<Product> favouriteList = new ArrayList<>();
-        for (Product p: LoginActivity.firebase.productList) {
-            if (LoginActivity.firebase.favouriteProductList.contains(p.getId())) {
-                favouriteList.add(p);
+        ArrayList<Product> foodList = new ArrayList<>();
+        for (Product p : LoginActivity.firebase.productList) {
+            if (p.getType().equals("Food")) {
+                foodList.add(p);
             }
         }
-        if (!favouriteList.isEmpty())
-            textViewNoData.setVisibility(View.GONE);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewProduct.setLayoutManager(layoutManager);
-        ProductOnSectionAdapter productAdapter = new ProductOnSectionAdapter(this, favouriteList);
+        ProductOnSectionAdapter productAdapter = new ProductOnSectionAdapter(this, foodList);
         recyclerViewProduct.setAdapter(productAdapter);
     }
 }

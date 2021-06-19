@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.LanguageSetting;
 import com.example.fooddelivery.fragment.MeFragment;
 
 public class SettingActivity extends AppCompatActivity {

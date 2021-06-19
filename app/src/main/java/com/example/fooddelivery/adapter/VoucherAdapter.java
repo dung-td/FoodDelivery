@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.main.AvailableVoucherActivity;
 import com.example.fooddelivery.model.Voucher;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -20,6 +21,7 @@ import java.util.List;
 
 public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherViewHolder> {
     Context context;
+
     List<Voucher> vouchers;
 
     public VoucherAdapter() {
@@ -56,7 +58,7 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
     private void setData(VoucherViewHolder holder, Voucher v) {
         holder.imgVoucher.setImageResource(R.drawable.voucher);
         holder.tv_title.setText(v.getTitle());
-        holder.tv_date.setText(context.getResources().getString(R.string.HSD) + v.getDate());
+        holder.tv_date.setText(String.format("%s %s", context.getResources().getString(R.string.HSD), v.getDate()));
     }
 
     @Override
@@ -96,7 +98,7 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
 
         tv_title.setText(v.getTitle());
         tv_code.setText(v.getCode());
-        tv_date.setText("HSD: " + v.getDate());
+        tv_date.setText(v.getDate());
 
         String details = "";
         for (String s : v.getDetails()) {

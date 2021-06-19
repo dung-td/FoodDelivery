@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.inline.InlineContentView;
 
@@ -18,12 +19,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.PersonalInfoActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.me.FeedbackActivity;
 import com.example.fooddelivery.activity.me.SettingActivity;
 import com.example.fooddelivery.activity.me.VoucherActivity;
+import com.example.fooddelivery.model.CallBackData;
+import com.example.fooddelivery.model.CallBackData;
+import com.example.fooddelivery.model.ModifyFirebase;
+import com.example.fooddelivery.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -36,20 +42,24 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 public class MeFragment extends Fragment {
 
     ImageButton bt_setting, bt_voucher, bt_logout, bt_feedback, bt_info, bt_payment;
     ImageView imageUser;
     TextView tv_userName;
-
-    private FirebaseFirestore root = FirebaseFirestore.getInstance();
-    private StorageReference reference = FirebaseStorage.getInstance().getReference();
-   // String userID = "KrSKPkEqkMP5KuzR60QBiBcWsoE2";
-
-    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-    String userID = user.getUid();
+    //ProgressBar progressBar;
+//    private FirebaseFirestore root = FirebaseFirestore.getInstance();
+//    private StorageReference reference = FirebaseStorage.getInstance().getReference();
+//
+//    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//    String userID = user.getUid();
+    String uriAvatar;
 
     boolean shouldRefreshOnResume;
+    public  MeFragment()
+    {}
 
     @Nullable
     @Override
@@ -63,8 +73,8 @@ public class MeFragment extends Fragment {
 
         Init();
 
-        loadAvatar();
-        loadName();
+
+        loadInfo();
 
         bt_setting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,47 +132,20 @@ public class MeFragment extends Fragment {
         imageUser = getView().findViewById(R.id.img_user);
 
         tv_userName = getView().findViewById(R.id.me_fl_name);
+
+        //progressBar = getView().findViewById(R.id.me_wating);
     }
 
-    public void loadAvatar() {
-        StorageReference fileRef = reference.child("UserImage/"+userID);
-        fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Log.e("Avatar", uri.toString());
-                Picasso.get().load(uri).into(imageUser);
-            }
-        });
-    }
-
-    void loadName()
-    {
-        DocumentReference docRef = root.collection("User").document(userID);
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        //User userInfo = document.toObject(User.class);
-                        tv_userName.setText(document.get("last_Name").toString() +  " " + document.get("first_Name").toString());
-                    }
-                }
-            }
-
-        });
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        shouldRefreshOnResume = true;
-
+    void loadInfo() {
+        User temp = LoginActivity.firebase.getUser();
+        tv_userName.setText(String.format("%s %s", temp.getFirst_Name(), temp.getLast_Name()));
+        Glide.with(requireActivity()).load(temp.getProfileImage()).into(imageUser);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (shouldRefreshOnResume) loadAvatar();
+        User temp = LoginActivity.firebase.getUser();
+        Glide.with(requireActivity()).load(temp.getProfileImage()).into(imageUser);
     }
 }

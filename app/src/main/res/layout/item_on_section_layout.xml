@@ -17,7 +17,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_centerVertical="true"
-            android:background="@drawable/trasenvang"/>
+            android:src="@drawable/untitled_icon"/>
 
         <ImageView
             android:id="@+id/ic_love_item"

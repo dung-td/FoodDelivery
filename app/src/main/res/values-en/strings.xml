@@ -57,7 +57,7 @@
     <string name="resend">Send code again?</string>
     <string name="provide_otp_help">Please enter OTP key we sent</string>
     <string name="input_code_send_to">Enter the verification code sent to</string>
-    <string name="user_not_exist">" Information does not exist in the system"</string>
+    <string name="user_not_exist">Information does not exist in the system</string>
     <string name="address">Address</string>
     <string name="require">Required</string>
     <string name="email_pass_not_correct">Email or password is not correct</string>
@@ -122,4 +122,39 @@
     <string name="data_empty">Your data is empty</string>
     <string name="phone_been_used">This phone number has been used</string>
     <string name="verify_failed">Authentication failed</string>
+    <string name="remove_watched_success">Successfully removed watched data!</string>
+    <string name="title_remove_data">Remove data</string>
+    <string name="msg_remove_watched_data">Are you sure to remove all watched data?</string>
+    <string name="msg_cancel">Cancel</string>
+    <string name="no_search_data">No recent search found</string>
+    <string name="verified_email_sent">Verification email has been sent to the email address</string>
+    <string name="verfiedcode">"The code "</string>
+    <string name="is_sent">"was sent to "</string>
+    <string name="feedback_title_hint">Subject</string>
+    <string name="language_en">English</string>
+    <string name="send_feedback">Send feedback</string>
+    <string name="feedback_details_hint">Details</string>
+    <string name="describe_details">Describe details</string>
+    <string name="send_feedback_success">Send feedback successful!</string>
+    <string name="send_feedback_fail">Send feedback fail, please try again!</string>
+    <string name="voucher">Voucher</string>
+    <string name="already_got">Already got</string>
+    <string name="checking_info">Checking information…</string>
+    <string name="error_happend_try_again">An unexpected error has occurred. Please try again!</string>
+    <string name="wrong_otp">Invalid OTP</string>
+    <string name="expired_code">OTP has expired</string>
+    <string name="login_fail">Login fail</string>
+    <string name="use_email">Use email</string>
+    <string name="use_phoneNum">Use phone number</string>
+    <string name="provide_email_help">Please provide us your informations\nDo you remember your registered email?</string>
+    <string name="provide_phone_help">Cung cấp thông tin để chúng tôi giúp bạn\nDo you remember your registered phone number?</string>
+    <string name="email_sent_to_your_mailbox">An email has been sent to you\nwith password reset instructions</string>
+    <string name="menu_title">MENU</string>
+    <string name="comment_title">COMMENT</string>
+    <string name="exist_voucher">This voucher is already in your voucher list</string>
+    <string name="info_title">INFOMATION</string>
+    <string-array name="feedback_title">
+        <item>Feedback of application</item>
+        <item>Report error</item>
+    </string-array>
 </resources>

@@ -54,7 +54,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/delete"
-            android:textAllCaps="true"
             android:textSize="18dp"
             android:textColor="@color/light_blue"
             android:layout_alignParentEnd="true"
@@ -78,54 +77,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="30dp"
             android:textSize="18dp"
-            android:text="Không có dữ liệu tìm kiếm gần đây"
-            android:visibility="invisible"/>
-    </RelativeLayout>
-
-    <!--    Recent watches-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="70dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/seen"
-            android:textColor="@color/black"
-            android:textSize="18dp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/btn_delete_watches"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delete"
-            android:textSize="18dp"
-            android:textColor="@color/light_blue"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="15dp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_watches"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_delete_watches"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="15dp">
-
-        </androidx.recyclerview.widget.RecyclerView>
-
-        <TextView
-            android:id="@+id/tv_no_watch_data"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="30dp"
-            android:textSize="18dp"
-            android:text="Không có dữ liệu xem gần đây"
-            android:visibility="invisible"/>
+            android:text="@string/no_search_data"
+            android:visibility="visible"/>
     </RelativeLayout>
 </LinearLayout>

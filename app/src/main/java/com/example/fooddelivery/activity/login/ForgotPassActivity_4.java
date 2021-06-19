@@ -31,11 +31,12 @@ public class ForgotPassActivity_4 extends AppCompatActivity {
         et_pass = findViewById(R.id.fp4_et_pass);
         et_repass = findViewById(R.id.fp4_et_repass);
 
+        regex = new Regex();
+
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent forgotPass3 = new Intent(ForgotPassActivity_4.this, ForgotPassActivity_3.class);
-                startActivity(forgotPass3);
+                ForgotPassActivity_4.super.onBackPressed();
             }
         });
 
@@ -46,6 +47,7 @@ public class ForgotPassActivity_4 extends AppCompatActivity {
                     FirebaseAuth mAuth = FirebaseAuth.getInstance();
                     mAuth.getCurrentUser().updatePassword(et_pass.getText().toString());
                     Intent forgotPass5 = new Intent(ForgotPassActivity_4.this, ForgotPassActitivy_5.class);
+                    forgotPass5.putExtra("type", "phone");
                     startActivity(forgotPass5);
                     finish();
                 }

@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whiteTextColor"
-    android:padding="30dp"
+    android:padding="15dp"
+    android:focusableInTouchMode="true"
     tools:context=".activity.login.ForgotPassActivity_4">
 
     <LinearLayout
@@ -63,7 +64,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/fp4_ti_pass"
-                style="@style/modifiedEditText"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
@@ -87,11 +88,11 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/fp4_ti_repass"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fp4_ti_pass"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
                 android:hint="@string/confirm_password"
                 android:textColorHint="@color/black"
                 app:boxBackgroundColor="@color/whiteTextColor"
@@ -117,7 +118,7 @@
                 android:layout_below="@id/fp4_ti_repass"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/loginViewsMargin"
+                android:layout_marginTop="36dp"
                 android:text="@string/continue_"
                 app:initialCornerAngle="27dp"
                 app:spinning_bar_color="#FFF"

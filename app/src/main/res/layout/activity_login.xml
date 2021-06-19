@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
@@ -10,22 +11,27 @@
     android:gravity="center"
     tools:context=".activity.login.LoginActivity">
 
-    <FrameLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/login_bk_color"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        tools:context=".activity.login.LoginActivity">
 
-        <View
-            android:layout_width="480dp"
-            android:layout_height="400dp"
-            android:layout_marginLeft="-200dp"
-            android:layout_marginTop="-200dp"
-            android:background="@drawable/elipse" />
-
-
-        <ScrollView
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp">
+            android:layout_height="wrap_content">
+
+            <View
+                android:layout_width="480dp"
+                android:layout_height="400dp"
+                android:layout_marginLeft="-200dp"
+                android:layout_marginTop="-200dp"
+                android:background="@drawable/elipse" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -33,31 +39,18 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
 
-                    <TextView
-                        style="@style/viewParent.headerText.NoMode"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:text="@string/have_account_login" />
-                </RelativeLayout>
-
-                <ProgressBar
-                    android:id="@+id/lg_pb_wating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="invisible"
-                    android:indeterminate="true"/>
+                <TextView
+                    android:layout_marginTop="32dp"
+                    style="@style/viewParent.headerText.NoMode"
+                    android:text="@string/have_account_login" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputEmail"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="70dp"
                     android:hint="@string/login_email_hint"
                     android:textColorHint="@color/black"
                     app:endIconMode="clear_text"
@@ -68,8 +61,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textEmailAddress"
-                        android:textSize="17sp"
-                        android:maxLines="1"/>
+                        android:maxLines="1"
+                        android:textSize="17sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -78,17 +71,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:hint="@string/login_password_hint"
                     android:textColorHint="@color/black"
                     app:endIconMode="password_toggle"
-                    app:startIconDrawable="@drawable/lock"
-                    android:hint="@string/login_password_hint">
+                    app:startIconDrawable="@drawable/lock">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/lg_et_password"
                         style="@style/modifiedEditText"
                         android:inputType="textPassword"
-                        android:textSize="17sp"
-                        android:maxLines="1" />
+                        android:maxLines="1"
+                        android:textSize="17sp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
@@ -165,25 +158,24 @@
                         android:src="@drawable/google_icon" />
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
-    </FrameLayout>
+        </FrameLayout>
 
-    <View
-        android:layout_width="11dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/ic_side_bg" />
+        <View
+            android:layout_width="11dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/ic_side_bg" />
 
-    <ImageView
-        android:id="@+id/lg_iv_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="11dp"
-        android:layout_marginBottom="0dp"
-        android:src="@drawable/ic_add_img"
-        tools:ignore="NotSibling" />
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/lg_iv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="11dp"
+            android:src="@drawable/ic_add_img"
+            tools:ignore="NotSibling"/>
+    </RelativeLayout>
+</ScrollView>

@@ -1,7 +1,9 @@
 package com.example.fooddelivery.activity.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,6 +17,7 @@ import com.example.fooddelivery.R;
 import com.example.fooddelivery.model.Regex;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -22,13 +25,13 @@ public class SignUpActivity_1 extends AppCompatActivity {
 
     EditText et_email, et_lastname, et_firstname,
             et_phone, et_address, et_pass1, et_pass2;
+    TextInputLayout ti_email;
     ImageView bt_next, bt_back;
-    ProgressBar progressBar;
-    ImageView bt_signin_gg;
     TextView tv_haveaccont;
-
+    ProgressDialog progressDialog;
     Regex regex;
     FirebaseFirestore root;
+    String uid;
 
 
     @Override
@@ -49,19 +52,27 @@ public class SignUpActivity_1 extends AppCompatActivity {
         et_address =  findViewById(R.id.su1_et_address);
         et_pass1 = findViewById(R.id.su1_et_pass);
         et_pass2 = findViewById(R.id.su1_et_repass);
+        ti_email = findViewById(R.id.su1_ti_email);
         bt_next =findViewById(R.id.su1_bt_next);
         bt_back = findViewById(R.id.su1_bt_back);
         tv_haveaccont = findViewById(R.id.su1_tv_haveaccount);
-        bt_signin_gg = findViewById(R.id.su1_iv_gg);
-        progressBar = findViewById(R.id.su1_pb_wating);
-        progressBar.setVisibility(View.INVISIBLE);
+
+        progressDialog = new ProgressDialog(SignUpActivity_1.this);
+
+        String email = getIntent().getStringExtra("email");
+        uid = getIntent().getStringExtra("uid");
+
+        if (!email.equals("")) {
+            et_email.setText(email);
+            et_email.setEnabled(false);
+            ti_email.setEndIconMode(TextInputLayout.END_ICON_NONE);
+        }
 
         bt_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (checkRequirements()) {
-                    progressBar.setVisibility(View.VISIBLE);
-                    progressBar.setIndeterminate(true);
+                    progressDialog.setMessage(getString(R.string.checking_info));
                     checkEmail();
                 }
             }
@@ -70,23 +81,14 @@ public class SignUpActivity_1 extends AppCompatActivity {
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent login = new Intent(SignUpActivity_1.this, LoginActivity.class);
-                startActivity(login);
-                finish();
+                SignUpActivity_1.super.onBackPressed();
             }
         });
 
         tv_haveaccont.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-        });
-
-        bt_signin_gg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                SignUpActivity_1.super.onBackPressed();
             }
         });
     }
@@ -100,14 +102,14 @@ public class SignUpActivity_1 extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             if (!task.getResult().isEmpty()) {
-                                progressBar.setVisibility(View.INVISIBLE);
+                                progressDialog.dismiss();
                                 et_email.setError(getString(R.string.email_has_been_used));
                                 et_email.requestFocus();
                             } else {
-                                progressBar.setVisibility(View.INVISIBLE);
-                                Intent nextSU = new Intent(SignUpActivity_1.this, SignUpActivity_2.class);
-                                SendInformation(nextSU);
-                                startActivity(nextSU);
+                                progressDialog.dismiss();
+                                Intent signUp2 = new Intent(SignUpActivity_1.this, SignUpActivity_2.class);
+                                SendInformation(signUp2);
+                                startActivity(signUp2);
                             }
                         }
                     }
@@ -122,6 +124,7 @@ public class SignUpActivity_1 extends AppCompatActivity {
         nextSU.putExtra("email", et_email.getText().toString());
         nextSU.putExtra("address", et_address.getText().toString());
         nextSU.putExtra("password", et_pass1.getText().toString());
+        nextSU.putExtra("uid", uid);
     }
 
     private boolean checkRequirements() {

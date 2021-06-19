@@ -169,7 +169,7 @@
                     android:textSize="17dp"/>
 
                 <TextView
-                    android:id="@+id/tv_detail"
+                    android:id="@+id/tv_voucher_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/voucher_detail"

@@ -17,30 +17,17 @@
         android:orientation="vertical"
         android:padding="20dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ProgressBar
-                android:id="@+id/su1_pb_wating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:backgroundTint="@color/whiteTextColor" />
-
-            <TextView
-                style="@style/viewParent.headerText.NoMode"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:text="@string/first_step"
-                android:textColor="@color/whiteTextColor" />
-        </RelativeLayout>
+        <TextView
+            style="@style/viewParent.headerText.NoMode"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="@string/first_step"
+            android:textColor="@color/whiteTextColor" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="20dp"
             app:cardBackgroundColor="@color/whiteTextColor"
             app:cardCornerRadius="10dp">
 
@@ -53,7 +40,7 @@
                 <ScrollView
                     android:id="@+id/su1_sv_info"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="400dp"
                     android:padding="20dp">
 
                     <RelativeLayout
@@ -176,12 +163,11 @@
                             app:endIconTint="@color/black"
                             app:startIconDrawable="@drawable/ic_baseline_home_24"
                             app:startIconTint="@color/black">
-
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/su1_et_address"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:inputType="textPostalAddress"
+                                android:inputType="text"
                                 android:maxLines="1" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -232,10 +218,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textPassword"
-                                android:maxLines="1"/>
+                                android:maxLines="1" />
                         </com.google.android.material.textfield.TextInputLayout>
-
-
                     </RelativeLayout>
                 </ScrollView>
 
@@ -265,16 +249,6 @@
                 android:layout_weight="3"
                 android:background="@color/whiteTextColor" />
 
-            <TextView
-                style="@style/viewParent.headerText.NoMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:text="@string/other_method"
-                android:textAlignment="center"
-                android:textColor="@color/whiteTextColor"
-                android:textSize="12sp" />
-
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"
@@ -287,15 +261,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="30dp"
-            android:gravity="center">
-
-            <ImageView
-                android:id="@+id/su1_iv_gg"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/google_icon" />
-        </LinearLayout>
+            android:gravity="center"/>
     </LinearLayout>
 
     <View

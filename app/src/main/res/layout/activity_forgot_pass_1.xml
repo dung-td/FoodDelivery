@@ -7,6 +7,7 @@
     android:layout_gravity="center"
     android:background="@color/login_bk_color"
     android:focusableInTouchMode="true"
+    android:padding="15dp"
     tools:context=".activity.login.LoginActivity">
 
 
@@ -14,8 +15,6 @@
         android:id="@+id/fp1_bt_back"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:background="@drawable/back" />
 
     <TextView
@@ -37,7 +36,7 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/fp1_ti_emailphone"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/fp1_tv_title"
         android:layout_centerHorizontal="true"
@@ -53,19 +52,20 @@
 
         <EditText
             android:id="@+id/fp1_et_emailphone"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="300dp"
             android:inputType="textEmailAddress"
             android:maxLines="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:id="@+id/fp1_tv_info"
         style="@style/parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/fp1_tv_title"
         android:layout_marginTop="8dp"
-        android:text="@string/provide_info_help"
+        android:text="@string/provide_email_help"
         android:textAlignment="center" />
 
     <TextView
