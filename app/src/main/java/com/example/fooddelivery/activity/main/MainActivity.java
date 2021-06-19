@@ -15,6 +15,7 @@ import com.example.fooddelivery.adapter.ItemOnMainAdapter;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.fragment.NotificationFragment;
 import com.example.fooddelivery.fragment.OrderFragment;
 import com.example.fooddelivery.model.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -88,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.nav_me:
                         temp = new MeFragment();
+                        break;
+                    case R.id.nav_notification:
+                        temp = new NotificationFragment();
                         break;
                     }
 
