@@ -1,17 +1,11 @@
 package com.example.fooddelivery.model;
 
-import com.google.firebase.Timestamp;
-import com.google.firestore.v1.StructuredQuery;
-import com.google.type.DateTime;
-
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class Orders {
     String orderID;
     String status;
-    Timestamp date;
+    String time;
     int discount;
     int freightCost;
     int totalAmount;
@@ -21,9 +15,9 @@ public class Orders {
 
     public Orders(){}
 
-    public Orders(String status, Timestamp date, int discount, int freightCost, int totalAmount, String voucherID, String method, ArrayList<OrderItem> listOrderItems) {
+    public Orders(String status, String date, int discount, int freightCost, int totalAmount, String voucherID, String method, ArrayList<OrderItem> listOrderItems) {
         this.status = status;
-        this.date = date;
+        this.time = date;
         this.discount = discount;
         this.freightCost = freightCost;
         this.totalAmount = totalAmount;
@@ -41,12 +35,12 @@ public class Orders {
         this.status = status;
     }
 
-    public Timestamp getDate() {
-        return date;
+    public String getTime() {
+        return time;
     }
 
-    public void setDate(Timestamp date) {
-        this.date = date;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public int getDiscount() {

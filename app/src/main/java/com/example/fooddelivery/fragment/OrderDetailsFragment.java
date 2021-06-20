@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import com.example.fooddelivery.adapter.OrderDetailAdapter;
 import com.example.fooddelivery.model.OrderItem;
 import com.example.fooddelivery.model.Orders;
 import com.example.fooddelivery.model.PaymentMethod;
-import com.example.fooddelivery.model.Product;
 import com.example.fooddelivery.model.User;
 
 import java.util.ArrayList;
@@ -138,11 +136,10 @@ public class OrderDetailsFragment extends Fragment {
                 + currentUser.getAddress());
 
         tv_timeOrdered.setText(getString(R.string.time) +": "+
-                orders.getDate().toDate());
+                orders.getTime().toString());
 
         if (orders.getMethod().equals(PaymentMethod.COD.toString()))
         tv_method.setText(getString(R.string.payment) + ": " + getString(R.string.cod));
-        else tv_method.setText(getString(R.string.payment) + ": " + PaymentMethod.MoMo.toString());
 
 
         tv_merchant.setText(orders.getListOrderItems().get(0).getProduct().getMerchant().getName());

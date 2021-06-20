@@ -1,33 +1,23 @@
 package com.example.fooddelivery.model;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.PersonalInfoActivity;
-import com.example.fooddelivery.activity.VerifyPhoneActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firestore.v1.StructuredQuery;
-import com.google.type.DateTime;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -577,7 +567,7 @@ public class ModifyFirebase {
                             if (documentSnapshot != null)
                             {
                                 orders.orderID = orderID;
-                                orders.date = documentSnapshot.getTimestamp("date");
+                                orders.time = documentSnapshot.get("time").toString();
                                 orders.discount = Integer.parseInt(documentSnapshot.get("discount").toString());
                                 orders.status = documentSnapshot.get("status").toString();
                                 orders.freightCost=Integer.parseInt(documentSnapshot.get("freight_cost").toString());
