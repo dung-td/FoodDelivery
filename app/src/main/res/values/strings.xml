@@ -91,8 +91,6 @@
     <string name="today">Hôm nay</string>
     <string name="deliver_now">Giao ngay</string>
     <string name="choose_later_time">Vui lòng chọn thời gian trễ hơn thời gian hiện tại!</string>
-    <string name="comment_title">BÌNH LUẬN</string>
-    <string name="info_title">THÔNG TIN</string>
     <string name="chose">Đã chọn</string>
     <string name="order_confirmation">Hãy chắc chắn bạn đã kiểm tra kỹ đơn hàng của mình. Bằng cách nhấn xác nhận bên dưới
         sẽ hoàn tất việc đặt hàng và không thể hoàn tác.</string>

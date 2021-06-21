@@ -42,7 +42,6 @@
     <string name="or_verify_mail">Or verify with the inbox sent to your email</string>
     <string name="use_phone">Use phone number</string>
     <string name="continue_">Continue</string>
-    <string name="provide_info_help">" Please provide your information for us to help you. Do you remember your registered email?"</string>
     <string name="make_selection">SELECTION</string>
     <string name="make_selection_detail">Select authentication method</string>
     <string name="via_sms">" Verify by phone number"</string>
@@ -157,8 +156,6 @@
         <item>Feedback of application</item>
         <item>Report error</item>
     </string-array>
-    <string name="voucher">Voucher</string>
-    <string name="already_got">Got</string>
     <string name="search_result_for">Result for</string>
     <string name="add_cart_success">Successfully added to cart!</string>
     <string name="remove_cart_success">Successfully removed from cart!</string>
@@ -168,8 +165,6 @@
     <string name="today">Today</string>
     <string name="deliver_now">Deliver now</string>
     <string name="choose_later_time">Please choose later time than the current!</string>
-    <string name="comment_title">COMMENT</string>
-    <string name="info_title">INFORMATION</string>
     <string name="use">Use</string>
     <string name="chose">Chose</string>
     <string name="apply_voucher_failed">Apply voucher failed. Check the condition again!</string>

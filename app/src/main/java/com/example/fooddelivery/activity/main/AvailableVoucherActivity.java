@@ -40,7 +40,7 @@ public class AvailableVoucherActivity extends AppCompatActivity {
     }
 
     private void Init() {
-        bt_back = findViewById(R.id.voucher_ib_back);
+        bt_back = findViewById(R.id.vc_bt_back);
 
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,13 +56,6 @@ public class AvailableVoucherActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(AvailableVoucherActivity.this, RecyclerView.VERTICAL, false);
         availableVoucher.setLayoutManager(linearLayoutManager);
         availableVoucher.setAdapter(voucherAdapter);
-
-        bt_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
     }
 
     @Override
