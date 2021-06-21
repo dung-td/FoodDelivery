@@ -33,6 +33,7 @@ import com.example.fooddelivery.activity.login.SignUpActivity_2;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.model.CallBackData;
+import com.example.fooddelivery.model.Comment;
 import com.example.fooddelivery.model.ModifyFirebase;
 import com.example.fooddelivery.model.Regex;
 import com.example.fooddelivery.model.User;
@@ -387,11 +388,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         checkExistedEmail(email, new CallBackData() {
             @Override
-            public void firebaseResponseCallback(String result) {
-
-            }
-
-            @Override
             public void firebaseResponseCallback(boolean result) {
                 if (result) {
                     et_Email.setError(getString(R.string.email_has_been_used));
@@ -401,6 +397,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 }else{
                     sendVerifyEmail(email);
                 }
+
+            }
+
+            @Override
+            public void callbackComment(Comment result) {
+
+            }
+
+            @Override
+            public void callbackListOrder() {
 
             }
         });

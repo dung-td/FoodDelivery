@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,6 @@ public class ListItemCommentFragment extends Fragment {
             public void onClick(View v) {
                 //getActivity().onBackPressed();
                 getFragmentManager().popBackStack();
-
             }
         });
     }
@@ -74,9 +74,20 @@ public class ListItemCommentFragment extends Fragment {
         bt_Back = (ImageButton)getView().findViewById(R.id.bt_fm_ordcmt_back);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        listOrderItem = LoginActivity.firebase.getListOrderedItems(listOrderItem.get(0).getOrder_id());
-    }
+//    boolean refresh = false;
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        refresh = true;
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//
+//        if (refresh)
+//            listOrderItem = LoginActivity.firebase.getListOrderedItems(listOrderItem.get(0).getOrder_id());
+//
+//        Log.e("listOrderItem", listOrderItem.get(0).getComment().getDetails());
+//    }
 }

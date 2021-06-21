@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.fragment.RatingItemFragment;
+import com.example.fooddelivery.model.Comment;
 import com.example.fooddelivery.model.OrderItem;
 import com.squareup.picasso.Picasso;
 
@@ -86,7 +87,7 @@ public class RatingOrderItemsAdapter extends BaseAdapter {
     }
 
     void openRatingItemFragment(OrderItem orderItem) {
-        RatingItemFragment nextFrag = new RatingItemFragment(orderItem);
+        RatingItemFragment nextFrag = new RatingItemFragment(orderItem, listOrderItem);
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, nextFrag, null)
                 .addToBackStack(null)
@@ -123,15 +124,12 @@ public class RatingOrderItemsAdapter extends BaseAdapter {
         comment.setText(listOrderItem.get(position).getComment().getDetails());
         userID.setText(listOrderItem.get(position).getComment().getUserName());
 
-
         star.setRating(Integer.parseInt(listOrderItem.get(position).getComment().getRating()));
-        //star.setNumStars(5);
 
         bt_Rate.setVisibility(View.GONE);
     }
 
-    void setRating()
-    {
+    void setRating() {
         avatar.setVisibility(View.GONE);
         date.setVisibility(View.GONE);
         comment.setVisibility(View.GONE);
@@ -141,8 +139,7 @@ public class RatingOrderItemsAdapter extends BaseAdapter {
         bt_Rate.setVisibility(View.VISIBLE);
     }
 
-    void setData(int position)
-    {
+    void setData(int position) {
         Picasso.get().load(listOrderItem.get(position).getProduct().getImage().get(0))
                 .into(productPhoto);
         setNameItem(position);

@@ -163,4 +163,5 @@
     <string name="send_comment_success">Gửi đánh giá thành công</string>
     <string name="send_comment_fail">Gửi đánh giá thất bại, vui lòng thử lại</string>
     <string name="rating_null">Chưa đánh giá</string>
+    <string name="enter_comment">Viết đánh giá</string>
 </resources>

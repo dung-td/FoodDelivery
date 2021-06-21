@@ -17,7 +17,7 @@
     <string name="account">Account</string>
     <string name="voucher_title">Voucher</string>
     <string name="user_info">Personal Information</string>
-    <string name="payment">Payment Methods</string>
+    <string name="payment">Payment Method</string>
     <string name="logout">Log Out</string>
     <string name="app_version">FoodDelivery 1.0</string>
     <string name="code">Code</string>
@@ -149,4 +149,5 @@
     <string name="send_comment_success">Send your rating successfully!</string>
     <string name="send_comment_fail">Send your rating fail. please try again</string>
     <string name="rating_null">Your rating is null</string>
+    <string name="enter_comment">Enter your comment</string>
 </resources>

@@ -34,10 +34,6 @@ public class GeneralOrdersFragment extends Fragment {
 
     public  GeneralOrdersFragment(ArrayList<Orders> listOrders) {
         this.listOrders = listOrders;
-        if (listOrders.size() == 0)
-            Log.e("General Orders Fragment", " size: 0");
-        else
-            Log.e("General Orders Fragment", Integer.toString(listOrders.size()));
     }
 
 

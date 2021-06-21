@@ -8,12 +8,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -458,7 +460,6 @@ public class ModifyFirebase {
     public ArrayList <OrderItem> getListOrderedItems(String orderID) {
         ArrayList <OrderItem> orderItemArrayList = new ArrayList<>();
 
-
         root.collection("User/" + userId + "/Order/").document(orderID)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -536,24 +537,23 @@ public class ModifyFirebase {
         if (commentId.equals("null"))
             return null;
 
-        root.collection("Product/" + productId + "/Comment")
-                .document(commentId)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot != null)
-                        {
-                            comment.setiD(commentId);
-                            comment.setDate(documentSnapshot.get("date").toString());
-                            comment.setDetails(documentSnapshot.get("details").toString());
-                            comment.setRating(documentSnapshot.get("rating").toString());
-                            comment.setUserName(documentSnapshot.get("userName").toString());
+            root.collection("Product/" + productId + "/Comment")
+                    .document(commentId)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot != null) {
+                                comment.setiD(commentId);
+                                comment.setDate(documentSnapshot.get("date").toString());
+                                comment.setDetails(documentSnapshot.get("details").toString());
+                                comment.setRating(documentSnapshot.get("rating").toString());
+                                comment.setUserName(documentSnapshot.get("userName").toString());
+                            }
                         }
-                    }
-                });
-
+                    });
         return comment;
+
     }
 
     public Orders getOrderById(String orderID){
@@ -571,7 +571,8 @@ public class ModifyFirebase {
                                 orders.discount = Integer.parseInt(documentSnapshot.get("discount").toString());
                                 orders.status = documentSnapshot.get("status").toString();
                                 orders.freightCost=Integer.parseInt(documentSnapshot.get("freight_cost").toString());
-                                orders.listOrderItems = getListOrderedItems(orderID);
+                                //orders.listOrderItems = getListOrderedItems(orderID);
+                                orders.setListOrderItems(getListOrderedItems(orderID));
                                 orders.method = documentSnapshot.get("payment_method").toString();
                                 orders.status = documentSnapshot.get("status").toString();
                                 orders.totalAmount = Integer.parseInt(documentSnapshot.get("total_amount").toString());
@@ -585,6 +586,7 @@ public class ModifyFirebase {
 
     public void getListOrdersOfUser() {
         root.collection("User/" + userId + "/Order")
+                .orderBy("time", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override

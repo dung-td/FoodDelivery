@@ -61,7 +61,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:id="@+id/im_fm_rt_pd_image"
-                    android:background="@drawable/trasenvang"/>
+                    android:background="@color/white"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,16 +121,30 @@
 
             </LinearLayout>
 
-            <RatingBar
+            <TextView
                 android:layout_below="@id/fm_rt_pd_ln1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_rt_pd_null_rating"
+                android:text="@string/rating_null"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/light_red"
+                android:textStyle="bold"
+                />
+
+            <RatingBar
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:foregroundGravity="right|top"
                 android:numStars="5"
                 android:stepSize="1"
                 android:id="@+id/star_fm_rt_pd"
+                android:focusable="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"/>
+                android:layout_below="@id/tv_rt_pd_null_rating"
+                />
 
             <EditText
                 android:gravity="top|left"
@@ -139,7 +153,7 @@
                 android:layout_below="@id/star_fm_rt_pd"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="30dp"
-                android:hint="Viết đánh giá"
+                android:hint="@string/enter_comment"
                 android:textColorHint="@color/black"
                 android:textColor="@color/black"
                 android:id="@+id/et_fm_rt_pd_cmt"

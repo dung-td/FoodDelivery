@@ -268,8 +268,6 @@ public class LoginActivity extends AppCompatActivity {
                 Activity.MODE_PRIVATE);
         language = prefs.getString(langPref, "");
 
-        Log.e("language", language);
-
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
 

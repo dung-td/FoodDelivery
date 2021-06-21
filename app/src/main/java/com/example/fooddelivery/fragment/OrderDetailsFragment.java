@@ -120,7 +120,7 @@ public class OrderDetailsFragment extends Fragment {
          tv_comment = (TextView)getView().findViewById(R.id.tv_fm_orddtail_comment);
          tv_idOrder = (TextView)getView().findViewById(R.id.tv_fm_orddtail_ordid);
 
-         bt_BuyAgain = (Button)getView().findViewById(R.id.bt_fm_orddtail_buy);
+         //bt_BuyAgain = (Button)getView().findViewById(R.id.bt_fm_orddtail_buy);
          bt_Back = (ImageButton) getView().findViewById(R.id.bt_fm_orddtail_back);
 
     }

@@ -259,19 +259,19 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <android.widget.Button
-                android:layout_height="wrap_content"
-                android:layout_width="200dp"
-                android:text="@string/order_received"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:background="@color/light_red"
-                android:layout_below="@id/fm_ordedtail_view3"
-                android:layout_marginTop="30dp"
-                android:layout_centerHorizontal="true"
-                android:id="@+id/bt_fm_orddtail_buy"
-                android:layout_marginBottom="100dp"
-                />
+<!--            <android.widget.Button-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_width="200dp"-->
+<!--                android:text="@string/order_received"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textStyle="bold"-->
+<!--                android:background="@color/light_red"-->
+<!--                android:layout_below="@id/fm_ordedtail_view3"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:id="@+id/bt_fm_orddtail_buy"-->
+<!--                android:layout_marginBottom="100dp"-->
+<!--                />-->
         </RelativeLayout>
     </ScrollView>
 

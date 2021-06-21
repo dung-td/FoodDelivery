@@ -21,12 +21,15 @@ import android.widget.Toast;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.model.CallBackData;
 import com.example.fooddelivery.model.Comment;
 import com.example.fooddelivery.model.OrderItem;
 import com.example.fooddelivery.model.Orders;
 import com.example.fooddelivery.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -54,15 +57,18 @@ public class RatingItemFragment extends Fragment {
     ImageView productPhoto;
     Button sendRating;
     ImageButton back ;
+    TextView nullRating;
 
     OrderItem orderItem;
+    ArrayList<OrderItem> listOrderItem = new ArrayList<>();
 
     public RatingItemFragment() {
         // Required empty public constructor
     }
 
-    public RatingItemFragment(OrderItem orderItem) {
+    public RatingItemFragment(OrderItem orderItem, ArrayList<OrderItem> listOrderItem) {
         this.orderItem = orderItem;
+        this.listOrderItem = listOrderItem;
     }
 
     @Override
@@ -109,6 +115,13 @@ public class RatingItemFragment extends Fragment {
                 }
             }
         });
+
+        rb.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                nullRating.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     void initView() {
@@ -122,6 +135,8 @@ public class RatingItemFragment extends Fragment {
          productPhoto = getView().findViewById(R.id.im_fm_rt_pd_image);
          sendRating = (Button)getView().findViewById(R.id.bt_fm_rt_pd_rating);
          back = (ImageButton)getView().findViewById(R.id.bt_fm_rt_pd_back);
+         nullRating = (TextView)getView().findViewById(R.id.tv_rt_pd_null_rating);
+         nullRating.setVisibility(View.INVISIBLE);
     }
 
     void setData(){
@@ -157,7 +172,6 @@ public class RatingItemFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         updateOrderItemComment(documentReference.getId());
-                        Toast.makeText(getContext() ,getString(R.string.send_comment_success), Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -171,133 +185,14 @@ public class RatingItemFragment extends Fragment {
 
     void updateOrderItemComment(String commentId) {
         //region LOAD_ORDER_ITEMS
-        ArrayList<OrderItem> orders = new ArrayList<>();
-        List<Map<String, Object>> listMap = new List<Map<String, Object>>() {
-            @Override
-            public int size() {
-                return 0;
-            }
+//        ArrayList<OrderItem> orders = new ArrayList<>();
+        ArrayList<Map<String, Object>> listMap = new ArrayList<>();
+//
+//        orders = LoginActivity.firebase.getListOrderedItems(orderItem.getOrder_id());
+//
 
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
 
-            @Override
-            public boolean contains(@Nullable Object o) {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            public Iterator<Map<String, Object>> iterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public Object[] toArray() {
-                return new Object[0];
-            }
-
-            @NonNull
-            @Override
-            public <T> T[] toArray(@NonNull T[] a) {
-                return null;
-            }
-
-            @Override
-            public boolean add(Map<String, Object> stringObjectMap) {
-                return false;
-            }
-
-            @Override
-            public boolean remove(@Nullable Object o) {
-                return false;
-            }
-
-            @Override
-            public boolean containsAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(@NonNull Collection<? extends Map<String, Object>> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(int index, @NonNull Collection<? extends Map<String, Object>> c) {
-                return false;
-            }
-
-            @Override
-            public boolean removeAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean retainAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public void clear() {
-
-            }
-
-            @Override
-            public Map<String, Object> get(int index) {
-                return null;
-            }
-
-            @Override
-            public Map<String, Object> set(int index, Map<String, Object> element) {
-                return null;
-            }
-
-            @Override
-            public void add(int index, Map<String, Object> element) {
-
-            }
-
-            @Override
-            public Map<String, Object> remove(int index) {
-                return null;
-            }
-
-            @Override
-            public int indexOf(@Nullable Object o) {
-                return 0;
-            }
-
-            @Override
-            public int lastIndexOf(@Nullable Object o) {
-                return 0;
-            }
-
-            @NonNull
-            @Override
-            public ListIterator<Map<String, Object>> listIterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public ListIterator<Map<String, Object>> listIterator(int index) {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public List<Map<String, Object>> subList(int fromIndex, int toIndex) {
-                return null;
-            }
-        };
-
-        orders = LoginActivity.firebase.getListOrderedItems(orderItem.getOrder_id());
-
-        for (OrderItem item: orders){
+        for (OrderItem item: listOrderItem){
             Map<String, Object> map = new HashMap<>();
 
             if (item.getProduct().getId().equals(orderItem.getProduct().getId()))
@@ -322,23 +217,24 @@ public class RatingItemFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-
+                        LoginActivity.firebase.getListOrdersOfUser();
+                        Toast.makeText(getContext(), getString(R.string.send_comment_success), Toast.LENGTH_LONG).show();
                     }
                 });
 
         //endregion
     }
 
-    boolean checkValidateRating()
-    {
-        if (rb.getRating() == 0 )
+    boolean checkValidateRating() {
+        if (rb.getRating() == 0.0f )
         {
-            rb.requestFocus();
-
+            Log.e("rating", Float.toString(rb.getRating()));
+            nullRating.setVisibility(View.VISIBLE);
             return false;
         }
-        if (et_Comment.getText().equals(""))
+        if (et_Comment.getText().toString().equals(""))
         {
+            Log.e("text", et_Comment.getText().toString());
             et_Comment.requestFocus();
             et_Comment.setError(getString(R.string.rating_null));
 
