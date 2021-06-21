@@ -68,7 +68,7 @@ public class RatingOrderItemsAdapter extends BaseAdapter {
 
         initView(convertView);
 
-        if (listOrderItem.get(position).getComment() == null)
+        if (listOrderItem.get(position).getComment().getiD().equals("null"))
             setRating();
         else
             setRated(position);
