@@ -82,12 +82,18 @@
     <string name="title_remove_data">Xóa dữ liệu</string>
     <string name="msg_remove_watched_data">Bạn chắc chắn muốn xóa danh sách đã xem?</string>
     <string name="msg_cancel">Hủy</string>
-
-    <string-array name="product_size">
-        <item>S</item>
-        <item>M</item>
-        <item>L</item>
-    </string-array>
+    <string name="search_result_for">Kết quả cho</string>
+    <string name="add_cart_success">Đã thêm vào giỏ hàng!</string>
+    <string name="remove_cart_success">Đã xóa khỏi giỏ hàng!</string>
+    <string name="payment_cod">Phương thức thanh toán: COD</string>
+    <string name="choose_order_time">Chọn thời gian giao hàng</string>
+    <string name="confirm">XÁC NHẬN</string>
+    <string name="today">Hôm nay</string>
+    <string name="deliver_now">Giao ngay</string>
+    <string name="choose_later_time">Vui lòng chọn thời gian trễ hơn thời gian hiện tại!</string>
+    <string name="chose">Đã chọn</string>
+    <string name="order_confirmation">Hãy chắc chắn bạn đã kiểm tra kỹ đơn hàng của mình. Bằng cách nhấn xác nhận bên dưới
+        sẽ hoàn tất việc đặt hàng và không thể hoàn tác.</string>
 
     <!--    <string name="first_step">Bước đầu tiên để bạn tham gia!</string>-->
     <string name="provide_otp_help">Vui lòng nhập mật mã OTP được gửi đến</string>
@@ -164,6 +170,8 @@
     <string name="comment_title">BÌNH LUẬN</string>
     <string name="info_title">THÔNG TIN</string>
     <string name="exist_voucher">Voucher đã ở trong ví của bạn</string>
+    <string name="use">Sử dụng</string>
+    <string name="apply_voucher_failed">Sử dụng voucher không thành công. Vui lòng kiểm tra lại điều kiện.</string>
     <string-array name="feedback_title">
         <item>Góp ý cho ứng dụng</item>
         <item>Báo lỗi</item>

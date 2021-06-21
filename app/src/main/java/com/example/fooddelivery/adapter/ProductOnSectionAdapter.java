@@ -111,7 +111,7 @@ public class ProductOnSectionAdapter extends RecyclerView.Adapter<ProductOnSecti
             }
         });
 
-        if (p.getType().equals("Drink")) {
+        if (p.getProductSize().get(0) != null) {
             ArrayAdapter<String> staticAdapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item, p.getProductSize());
             staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             holder.spinnerProductSize.setAdapter(staticAdapter);

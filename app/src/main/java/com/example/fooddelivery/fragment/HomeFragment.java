@@ -39,6 +39,7 @@ public class HomeFragment extends Fragment {
     FrameLayout cartBackground;
     public static boolean isWatchedFirstClick = true;
     public static boolean isSearchFirstClick = true;
+    public static boolean isCartFirstClick = true;
     public static TextView cartBadge;
     public static ItemOnMainAdapter itemOnMainAdapter;
     public static RecyclerView recyclerViewProducts;
@@ -138,6 +139,9 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initClickListener();
+        if (isCartFirstClick) {
+            LoginActivity.firebase.getProductInCart();
+        }
 
         recyclerViewProducts = (RecyclerView)getView().findViewById(R.id.recycler_view_products);
         recyclerViewProducts.setHasFixedSize(true);
@@ -152,10 +156,15 @@ public class HomeFragment extends Fragment {
         recyclerViewProducts.setAdapter(itemOnMainAdapter);
     }
 
+    @SuppressLint("SetTextI18n")
     public static void updateCartBadge() {
         if (LoginActivity.firebase.cartList != null && LoginActivity.firebase.cartList.size() > 0) {
             cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
             cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
+        }
+        else {
+            cartBadge.setText("");
+            cartBadge.getBackground().setTint(Color.TRANSPARENT);
         }
     }
 }

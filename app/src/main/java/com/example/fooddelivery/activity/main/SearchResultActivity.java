@@ -1,12 +1,14 @@
 package com.example.fooddelivery.activity.main;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -17,53 +19,63 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.ProductOnSectionAdapter;
-import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
 
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class FoodSectionActivity extends AppCompatActivity {
-    TextView textViewNoData;
+public class SearchResultActivity extends AppCompatActivity {
+
+    TextView textViewTitle, textViewNoData;
     ImageButton buttonBack;
     RecyclerView recyclerViewProduct;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_food_section);
+        overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        setContentView(R.layout.activity_search_result);
 
         initView();
         loadLanguage();
         initRecyclerViewProduct();
     }
 
+    @SuppressLint("SetTextI18n")
     private void initView() {
         buttonBack = findViewById(R.id.btn_back);
-        recyclerViewProduct = findViewById(R.id.recycler_view_product);
+        textViewTitle = findViewById(R.id.tv_title);
         textViewNoData = findViewById(R.id.tv_no_data);
+        recyclerViewProduct = findViewById(R.id.recycler_view_product);
+
+        String input = getIntent().getExtras().get("searchInput").toString();
+        textViewTitle.setText(Html.fromHtml(textViewTitle.getText() + " " +
+                "<strong>" + input + "</strong>"));
+
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FoodSectionActivity.super.onBackPressed();
+                SearchingActivity.searchingItemAdapter.notifyDataSetChanged();
+                SearchResultActivity.super.onBackPressed();
             }
         });
     }
 
-    private void initRecyclerViewProduct() {
-        ArrayList<Product> foodList = new ArrayList<>();
-        for (Product p : LoginActivity.firebase.productList) {
-            if (p.getType().equals("Food")) {
-                foodList.add(p);
-            }
-        }
+    @Override
+    public void onBackPressed() {
+        SearchingActivity.searchingItemAdapter.notifyDataSetChanged();
+        super.onBackPressed();
+    }
 
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerViewProduct.setLayoutManager(layoutManager);
-        ProductOnSectionAdapter productAdapter = new ProductOnSectionAdapter(this, foodList);
-        recyclerViewProduct.setAdapter(productAdapter);
+    private void initRecyclerViewProduct() {
+        if (!SearchingActivity.queryResult.isEmpty()) {
+            textViewNoData.setVisibility(View.INVISIBLE);
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            recyclerViewProduct.setLayoutManager(layoutManager);
+            ProductOnSectionAdapter productAdapter = new ProductOnSectionAdapter(this, SearchingActivity.queryResult);
+            recyclerViewProduct.setAdapter(productAdapter);
+        }
     }
 
     void loadLanguage() {

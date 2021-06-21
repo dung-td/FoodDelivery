@@ -121,11 +121,11 @@ public class OrderDetailsFragment extends Fragment {
     {
         Product drink = new Product();
         Product pho = new Product();
-        OrderItem itemPho =new OrderItem(1, pho , 2);
-        OrderItem itemDrink = new OrderItem(2, drink, 1);
+//        OrderItem itemPho =new OrderItem(1, pho , 2);
+//        OrderItem itemDrink = new OrderItem(2, drink, 1);
 
-        listOrderItem.add(itemPho);
-        listOrderItem.add(itemDrink);
+//        listOrderItem.add(itemPho);
+//        listOrderItem.add(itemDrink);
     }
 
     void OpenFragmentComment()

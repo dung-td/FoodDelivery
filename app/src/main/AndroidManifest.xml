@@ -27,6 +27,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".activity.main.FinishOrderActivity"></activity>
+        <activity android:name=".activity.main.ChangeOrderTimeActivity" />
+        <activity android:name=".activity.main.AvailableVoucherActivity" />
+        <activity android:name=".activity.VerifyPhoneActivity" />
+        <activity android:name=".activity.PaymentMethodActivity" />
+        <activity android:name=".activity.PersonalInfoActivity" />
         <activity android:name=".activity.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -52,6 +58,7 @@
         <activity android:name=".activity.me.FeedbackActivity" />
         <activity android:name=".activity.ProductActivity" />
         <activity android:name=".activity.main.SearchingActivity" />
+        <activity android:name=".activity.main.SearchResultActivity" />
         <activity android:name=".activity.main.DrinkSectionActivity" />
         <activity android:name=".activity.main.FavouriteSectionActivity" />
         <activity android:name=".activity.main.WatchedSectionActivity" />

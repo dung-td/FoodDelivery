@@ -1,9 +1,14 @@
 package com.example.fooddelivery.activity.main;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -19,6 +24,7 @@ import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class WatchedSectionActivity extends AppCompatActivity {
 
@@ -32,6 +38,7 @@ public class WatchedSectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_watched_section);
 
         initView();
+        loadLanguage();
         initRecyclerViewProduct();
     }
 
@@ -91,5 +98,22 @@ public class WatchedSectionActivity extends AppCompatActivity {
         recyclerViewProduct.setLayoutManager(layoutManager);
         ProductOnSectionAdapter productAdapter = new ProductOnSectionAdapter(this, watchedProduct);
         recyclerViewProduct.setAdapter(productAdapter);
+    }
+
+    void loadLanguage() {
+        String langPref = "lang_code";
+        SharedPreferences prefs = getSharedPreferences("MyPref",
+                Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+
+        Log.e("language", language);
+
+        Locale locale = new Locale(language);
+        locale.setDefault(locale);
+
+        Resources resources = this.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }
