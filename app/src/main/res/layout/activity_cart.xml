@@ -24,13 +24,13 @@
             android:background="@drawable/ic_baseline_arrow_back_24" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="wrap_content"
             android:text="@string/shopping_cart"
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:layout_marginStart="110dp"
+            android:textAlignment="center"
             android:layout_gravity="center"/>
     </LinearLayout>
 
@@ -45,7 +45,6 @@
 
 <!--            Address-->
             <RelativeLayout
-                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -69,8 +68,8 @@
                     android:textSize="17dp"
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"
-                    android:layout_marginStart="160dp"
-                    android:layout_toEndOf="@+id/tv_address_title"/>
+                    android:layout_marginEnd="15dp"
+                    android:layout_alignParentEnd="true"/>
 
                 <TextView
                     android:id="@+id/tv_user_name_phone"
@@ -98,7 +97,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/black"/>
 
 <!--            Time-->
@@ -110,7 +109,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="14dp"
                     android:layout_marginTop="5dp"
                     android:src="@drawable/ic_baseline_clock_24"/>
 
@@ -118,7 +117,6 @@
                     android:id="@+id/tv_order_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Giao ngay - 09:45 - Hôm nay"
                     android:textColor="@color/black"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
@@ -128,8 +126,8 @@
                     android:id="@+id/btn_change_order_time"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginStart="80dp"
+                    android:layout_marginStart="85dp"
+                    android:layout_gravity="center"
                     android:background="@drawable/ic_baseline_chevron_right_24"/>
             </LinearLayout>
 
@@ -139,33 +137,33 @@
                 android:background="@color/black"/>
 
 <!--            Items-->
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:scrollbars="none">
 
-             <TextView
-                 android:id="@+id/tv_merchant_name_cart"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_marginStart="15dp"
-                 android:layout_marginTop="5dp"
-                 android:text="Highland BigC - Dĩ An, Bình Dương"
-                 android:textColor="@color/black"
-                 android:textSize="20dp"
-                 android:textStyle="bold"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view_item_on_cart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="2dp"
-                android:layout_marginTop="5dp"
-                android:background="@color/white">
+                    <TextView
+                        android:id="@+id/tv_no_data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/no_data"
+                        android:textSize="17sp"
+                        android:layout_gravity="center"
+                        android:visibility="visible"/>
 
-
-            </androidx.recyclerview.widget.RecyclerView>
-            </LinearLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycler_view_item_on_cart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/white">
+                    </androidx.recyclerview.widget.RecyclerView>
+                </FrameLayout>
+            </ScrollView>
 
             <View
                 android:layout_width="match_parent"
@@ -225,7 +223,55 @@
                     android:id="@+id/tv_shipping_cost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="15000 đ"
+                    android:text="15000"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="15dp"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/dotted"/>
+
+<!--            Voucher discount-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_voucher_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/voucher"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="15dp"/>
+
+                <TextView
+                    android:id="@+id/tv_apply_voucher_failed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/apply_voucher_failed"
+                    android:textColor="@color/black"
+                    android:textStyle="italic"
+                    android:textSize="17dp"
+                    android:layout_below="@+id/tv_voucher_title"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="5dp"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/tv_voucher_discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
                     android:textColor="@color/black"
                     android:textSize="20dp"
                     android:layout_marginTop="5dp"
@@ -266,11 +312,6 @@
                     android:layout_marginEnd="15dp"/>
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="@drawable/dotted"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
@@ -279,27 +320,52 @@
 <!--            Voucher            -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_voucher"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/voucher_title"
                     android:textColor="@color/black"
                     android:textSize="17dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:drawablePadding="10dp"
                     app:drawableLeftCompat="@drawable/ic_baseline_voucher_24" />
+
+                <Button
+                    android:id="@+id/tv_voucher_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/voucher_title"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:layout_marginStart="40dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/tv_voucher"
+                    android:outlineSpotShadowColor="@color/white"
+                    android:visibility="invisible"/>
+
+                <ImageButton
+                    android:id="@+id/btn_remove_voucher"
+                    android:layout_width="35dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/black"
+                    android:src="@drawable/ic_baseline_clear_24"
+                    android:backgroundTint="@color/primaryColor"
+                    android:layout_toEndOf="@+id/tv_voucher_code"
+                    android:visibility="invisible"/>
 
                 <ImageButton
                     android:id="@+id/btn_choose_voucher"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="5dp"
+                    android:layout_centerVertical="true"
                     android:background="@drawable/ic_baseline_chevron_right_24"/>
             </RelativeLayout>
 
@@ -311,28 +377,19 @@
 <!--            Note-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/note"
+                    android:layout_centerVertical="true"
+                    android:text="@string/payment_cod"
                     android:textColor="@color/black"
                     android:textSize="17dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginStart="15dp"
                     android:drawablePadding="10dp"
                     app:drawableLeftCompat="@drawable/ic_baseline_notes_24" />
-
-                <ImageButton
-                    android:id="@+id/btn_note"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="7dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginEnd="25dp"
-                    android:background="@drawable/ic_baseline_chevron_right_24"/>
             </RelativeLayout>
 
             <View
@@ -342,14 +399,14 @@
 
 <!--            Nút thanh toán-->
             <Button
-                android:id="@+id/btn_proceed_payment"
+                android:id="@+id/btn_proceed_order"
                 android:layout_width="240dp"
                 android:layout_height="60dp"
                 android:text="@string/place_order"
                 android:textColor="@color/white"
                 android:textSize="20dp"
                 android:backgroundTint="@color/light_red"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center"/>
         </LinearLayout>
 

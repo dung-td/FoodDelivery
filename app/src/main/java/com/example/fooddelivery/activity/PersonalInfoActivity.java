@@ -30,6 +30,7 @@ import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.login.SignUpActivity_1;
 import com.example.fooddelivery.activity.login.SignUpActivity_2;
+import com.example.fooddelivery.activity.main.CartActivity;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.model.CallBackData;
@@ -275,6 +276,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
             }
         });
     }
+
     void updateAddress(){
         String address = et_Address.getText().toString();
 
@@ -285,6 +287,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         currentUser.setAddress(address);
                         progressBar.setVisibility(View.INVISIBLE);
+                        CartActivity.setUserInformation();
                         Toast.makeText(getApplicationContext(), getString(R.string.update_infodata_done), Toast.LENGTH_LONG).show();
                     }
                 });

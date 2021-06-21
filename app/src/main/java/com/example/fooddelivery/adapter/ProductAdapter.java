@@ -24,6 +24,7 @@ import com.example.fooddelivery.activity.MerchantActivity;
 import com.example.fooddelivery.activity.ProductActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.fragment.HomeFragment;
+import com.example.fooddelivery.model.ChosenItem;
 import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
 
@@ -93,7 +94,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             }
         });
 
-        if (p.getType().equals("Drink")) {
+        if (p.getProductSize().get(0) != null) {
             ArrayAdapter<String> staticAdapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item, p.getProductSize());
             staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             holder.spinnerProductSize.setAdapter(staticAdapter);
@@ -133,7 +134,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.buttonAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginActivity.firebase.cartList.add(p);
+                LoginActivity.firebase.cartList.add(new ChosenItem(p, holder.spinnerProductSize.getSelectedItem().toString(), "1"));
                 MerchantActivity.updateCart();
                 HomeFragment.updateCartBadge();
                 ProductActivity.updateCartBadge();

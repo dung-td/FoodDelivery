@@ -125,13 +125,13 @@ public class ListOrdersFragment extends Fragment {
     {
         ArrayList<OrderItem> listOrderItems = new ArrayList<>() ;
         Product product = new Product();
-        listOrderItems.add(new OrderItem(1, product, 2));
-        listOrderItems.add(new OrderItem(1, product, 2));
+//        listOrderItems.add(new OrderItem(1, product, 2));
+//        listOrderItems.add(new OrderItem(1, product, 2));
 
-        Orders orders = new Orders(1, 1, "abc", "1/1/2020", listOrderItems);
+//        Orders orders = new Orders(1, 1, "abc", "1/1/2020", listOrderItems);
 
-        listOrders.add(orders);
-        listOrders.add(orders);
-        listOrders.add(orders);
+//        listOrders.add(orders);
+//        listOrders.add(orders);
+//        listOrders.add(orders);
     }
 }

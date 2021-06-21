@@ -2,6 +2,7 @@ package com.example.fooddelivery.adapter;
 
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 import android.content.Context;
 import android.net.Uri;
 import android.view.View;
@@ -31,7 +32,6 @@ public class ImageAdapter extends PagerAdapter{
         ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         Glide.with(mContext).load(sliderImageId.get(position)).into(imageView);
-//        imageView.setImageResource(sliderImageId[position]);
         ((ViewPager) container).addView(imageView, 0);
         return imageView;
     }

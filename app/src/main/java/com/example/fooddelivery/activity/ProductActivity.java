@@ -9,11 +9,15 @@ import androidx.viewpager.widget.ViewPager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -30,11 +34,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.main.CartActivity;
 import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.adapter.CommentAdapter;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.fragment.HomeFragment;
+import com.example.fooddelivery.model.ChosenItem;
 import com.example.fooddelivery.model.Comment;
 import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.OnGetDataListener;
@@ -42,6 +48,7 @@ import com.example.fooddelivery.model.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import static android.graphics.Color.WHITE;
 
@@ -69,6 +76,7 @@ public class ProductActivity extends AppCompatActivity {
     List<Comment> commentList;
     ArrayList<String> productSize;
     Product product;
+    int index = 0;
     boolean isFavourite = false;
     boolean favouriteStateChange = false;
 
@@ -82,6 +90,7 @@ public class ProductActivity extends AppCompatActivity {
         fa = this;
 
         initView();
+        loadLanguage();
         changeToolbarButtonColorToLighter();
         changeLoveIcon();
         initProductImageViewPager();
@@ -94,22 +103,84 @@ public class ProductActivity extends AppCompatActivity {
         addProductToWatchedList();
     }
 
+    void loadLanguage() {
+        String langPref = "lang_code";
+        SharedPreferences prefs = getSharedPreferences("MyPref",
+                Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+
+        Log.e("language", language);
+
+        Locale locale = new Locale(language);
+        locale.setDefault(locale);
+
+        Resources resources = this.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
+
     private void addProductToCart() {
         buttonAddToCart.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                LoginActivity.firebase.cartList.add(product);
+                index = 0;
+                if (spinnerProductSize != null && spinnerProductSize.getSelectedItem() != null) {
+                    if (checkExistItemInCart()) {
+                        LoginActivity.firebase.cartList.get(index)
+                                .setQuantity((Integer.parseInt(LoginActivity.firebase.cartList.get(index).getQuantity()) + 1) + "");
+                        LoginActivity.firebase.updateProductQuantityInCart(LoginActivity.firebase.cartList.get(index));
+                    }
+                    else {
+                        LoginActivity.firebase.addProductToCart(new ChosenItem(product, spinnerProductSize.getSelectedItem().toString(), "1"), getApplicationContext());
+                        LoginActivity.firebase.cartList.add(new ChosenItem(product, spinnerProductSize.getSelectedItem().toString(), "1"));
+                    }
+                }
+                else {
+                    if (checkExistItemInCart()) {
+                        LoginActivity.firebase.cartList.get(index)
+                                .setQuantity((Integer.parseInt(LoginActivity.firebase.cartList.get(index).getQuantity()) + 1) + "");
+                        LoginActivity.firebase.updateProductQuantityInCart(LoginActivity.firebase.cartList.get(index));
+                    }
+                    else {
+                        LoginActivity.firebase.addProductToCart(new ChosenItem(product, "", "1"), getApplicationContext());
+                        LoginActivity.firebase.cartList.add(new ChosenItem(product, "", "1"));
+                    }
+                }
                 updateCartBadge();
             }
         });
     }
 
+    private boolean checkExistItemInCart() {
+        for (ChosenItem item : LoginActivity.firebase.cartList) {
+            if (item.getProduct().getId().equals(product.getId())) {
+                if (item.getSize().equals("")) {
+                    return true;
+                }
+                else {
+                    if (item.getSize().equals(spinnerProductSize.getSelectedItem().toString())) {
+                        return true;
+                    }
+                }
+            }
+            index++;
+        }
+        return false;
+    }
+
     public static void updateCartBadge() {
-        cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
-        cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
-        HomeFragment.updateCartBadge();
+        if (LoginActivity.firebase.cartList.size() > 0) {
+            cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
+            cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
+            HomeFragment.updateCartBadge();
+        }
+        else {
+            cartBadge.setText("");
+            cartBadge.getBackground().setTint(Color.TRANSPARENT);
+        }
     }
 
     private void addProductToFavourite() {
@@ -157,6 +228,15 @@ public class ProductActivity extends AppCompatActivity {
         relativeLayoutToolbar = findViewById(R.id.toolbar);
         imageViewMerchantLogo = findViewById(R.id.img_logo);
         spinnerProductSize = findViewById(R.id.spinner_size);
+
+        frameLayoutCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ProductActivity.this, CartActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
 
         //Cart icon
         if (LoginActivity.firebase.cartList.size() > 0) {
@@ -213,7 +293,7 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     private void initSpinnerProductSize() {
-        if (product.getType().equals("Drink")) {
+        if (product.getProductSize().get(0) != null) {
             ArrayAdapter<String> staticAdapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_item, productSize);
             staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinnerProductSize.setAdapter(staticAdapter);

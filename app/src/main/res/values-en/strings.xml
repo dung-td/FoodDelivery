@@ -22,7 +22,7 @@
     <string name="app_version">FoodDelivery 1.0</string>
     <string name="code">Code</string>
     <string name="voucher_date">Expiry Date</string>
-    <string name="voucher_detail">Details</string>
+    <string name="voucher_detail">Detail</string>
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
     <string name="login">"    LOGIN"</string>
@@ -72,7 +72,7 @@
     <string name="pass_must_match">Password is no match</string>
     <string name="pass_regex">Password must have at least 8 characters, contain lowercase letters, uppercase letters, numbers and special characters</string>
     <string name="pls_enter_address">Please enter your address</string>
-    <string name="shopping_cart">SHOPPING CART</string>
+    <string name="shopping_cart">CART</string>
     <string name="deliver_address">Delivery address</string>
     <string name="change">Change</string>
     <string name="total_amount">Total amount</string>
@@ -157,4 +157,21 @@
         <item>Feedback of application</item>
         <item>Report error</item>
     </string-array>
+    <string name="voucher">Voucher</string>
+    <string name="already_got">Got</string>
+    <string name="search_result_for">Result for</string>
+    <string name="add_cart_success">Successfully added to cart!</string>
+    <string name="remove_cart_success">Successfully removed from cart!</string>
+    <string name="payment_cod">Payment method: COD</string>
+    <string name="choose_order_time">Choose order time</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="today">Today</string>
+    <string name="deliver_now">Deliver now</string>
+    <string name="choose_later_time">Please choose later time than the current!</string>
+    <string name="comment_title">COMMENT</string>
+    <string name="info_title">INFORMATION</string>
+    <string name="use">Use</string>
+    <string name="chose">Chose</string>
+    <string name="apply_voucher_failed">Apply voucher failed. Check the condition again!</string>
+    <string name="order_confirmation">Make sure you have carefully checked your order. By clicking the button below, the order will finish and can\'t be undo.</string>
 </resources>

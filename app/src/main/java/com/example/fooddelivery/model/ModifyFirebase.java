@@ -1,6 +1,7 @@
 package com.example.fooddelivery.model;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.VerifyPhoneActivity;
+import com.example.fooddelivery.fragment.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,7 +27,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +43,7 @@ public class ModifyFirebase {
     private Uri[] image;
     private String collectionPath = "";
     public ArrayList<SearchString> searchList = new ArrayList<>();
-    public ArrayList<Product> cartList = new ArrayList<>();
+    public ArrayList<ChosenItem> cartList = new ArrayList<>();
     public ArrayList<Product> productList = new ArrayList<Product>();
     public ArrayList<String> watchedList = new ArrayList<>();
     public ArrayList<String> favouriteProductList = new ArrayList<String>();
@@ -86,8 +91,176 @@ public class ModifyFirebase {
                 });
     }
 
-    public void addProductToCart(String productId) {
+    public void removeProductFromCartWithContext(ChosenItem product, Context context) {
+        final String[] documentID = {""};
+        root.collection("User/" + userId + "/Cart/")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            if (document.get("ProductId").toString().equals(product.getProduct().getId())
+                                    && document.get("Size").toString().equals(product.getSize())) {
+                                documentID[0] = document.getId();
+                                break;
+                            }
+                        }
+                        root.collection("User/" + userId + "/Cart/")
+                                .document(documentID[0])
+                                .delete()
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(context, context.getString(R.string.remove_cart_success), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                });
+    }
 
+    public void removeProductFromCart() {
+        for (ChosenItem product : cartList) {
+            final String[] documentID = {""};
+            root.collection("User/" + userId + "/Cart/")
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                                if (document.get("ProductId").toString().equals(product.getProduct().getId())
+                                        && document.get("Size").toString().equals(product.getSize())) {
+                                    documentID[0] = document.getId();
+                                    break;
+                                }
+                            }
+                            root.collection("User/" + userId + "/Cart/")
+                                    .document(documentID[0])
+                                    .delete()
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    });
+                        }
+                    });
+        }
+        cartList.clear();
+    }
+
+    public void addProductToCart(ChosenItem product, Context context) {
+        Map<String, String> item = new HashMap<>();
+        item.put("ProductId", product.getProduct().getId());
+        item.put("Quantity", product.getQuantity());
+        item.put("Size", product.getSize());
+        root.collection("User/" + userId + "/Cart/")
+                .document()
+                .set(item)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, context.getString(R.string.add_cart_success), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    public void updateProductQuantityInCart(ChosenItem product) {
+        final String[] documentID = {""};
+        Map<String, Object> item = new HashMap<>();
+        item.put("Quantity", product.getQuantity());
+        root.collection("User/" + userId + "/Cart/")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            if (document.get("ProductId").toString().equals(product.getProduct().getId())
+                                    && document.get("Size").toString().equals(product.getSize())) {
+                                documentID[0] = document.getId();
+                                break;
+                            }
+                        }
+                        root.collection("User/" + userId + "/Cart/")
+                                .document(documentID[0])
+                                .update(item)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                    }
+                                });
+                    }
+                });
+    }
+
+    public void getProductInCart() {
+        cartList = new ArrayList<>();
+        root.collection("User/" + userId + "/Cart/")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            if (document == null)
+                                break;
+                            ChosenItem item = new ChosenItem();
+                            item.getProduct().setId((String) document.get("ProductId"));
+                            item.setSize((String)document.get("Size"));
+                            item.setQuantity((String)document.get("Quantity"));
+                            cartList.add(item);
+                        }
+                        HomeFragment.cartBadge.setText(cartList.size() + "");
+                        HomeFragment.cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
+                    }
+                });
+    }
+
+    public void addUserNewOrder(String discount, String freight_cost, String time, String totalAmount, String voucherId,
+                                final OnGetDataListener listener) {
+        listener.onStart();
+        Map<String, Object> item = new HashMap<>();
+        item.put("discount", discount);
+        item.put("freight_cost", freight_cost);
+        item.put("payment_method", "COD");
+        item.put("status", "Delivering");
+        item.put("time", time);
+        item.put("total_amount", totalAmount);
+        item.put("voucher", voucherId);
+        item.put("discount", discount);
+
+        Map<String, Object> items = new HashMap<>();
+        int index = 0;
+        for (ChosenItem product : cartList) {
+            Map<String, String> itemDetail = new HashMap<>();
+            String price = "";
+            if (product.getProduct().getProductSize().get(0) != null) {
+                price = product.getProduct().getPrice().get(product.getProduct().getProductSize().indexOf(product.getSize()));
+            }
+            else {
+                price = product.getProduct().getPrice().get(0);
+            }
+
+            itemDetail.put("comment", "null");
+            itemDetail.put("price", price);
+            itemDetail.put("product", product.getProduct().getId());
+            itemDetail.put("quantity", product.getQuantity());
+            itemDetail.put("size", product.getSize());
+            items.put(String.valueOf(index), itemDetail);
+            index++;
+        }
+
+        item.put("listItems", items);
+
+        root.collection("User/" + userId + "/Order/")
+                .document()
+                .set(item)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        removeProductFromCart();
+                        listener.onSuccess();
+                    }
+                });
     }
 
     public void addProductToWatched(String productId) {
@@ -340,6 +513,7 @@ public class ModifyFirebase {
 
     public void getSearchData(final OnGetDataListener listener) {
         listener.onStart();
+        searchList = new ArrayList<>();
         root.collection("User/" + userId + "/Search/")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -370,6 +544,30 @@ public class ModifyFirebase {
                             searchList.remove(search);
                         }
                     });
+        }
+        listener.onSuccess();
+    }
+
+    public void addSearchDataToFirebase(String input) {
+        Map<String, String> search = new HashMap<>();
+        search.put("SearchString", input);
+        root.collection("User/" + userId + "/Search/")
+                .document()
+                .set(search)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                    }
+                });
+    }
+
+    public void querySearch(ArrayList<Product> list, String input, final OnGetDataListener listener) {
+        listener.onStart();
+        for (Product p : productList) {
+            if (p.getName().toLowerCase().contains(input.toLowerCase()) ||
+                p.getEn_Name().toLowerCase().contains(input.toLowerCase())) {
+                list.add(p);
+            }
         }
         listener.onSuccess();
     }
