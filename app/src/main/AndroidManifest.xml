@@ -27,6 +27,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+
+        <meta-data android:name="com.google.android.geo.API_KET"
+            android:value="AIzaSyDz63zAchXW2wK3SY0HVzKgcqaCQPagxiE"/>
+
         <activity android:name=".activity.main.FinishOrderActivity"></activity>
         <activity android:name=".activity.main.ChangeOrderTimeActivity" />
         <activity android:name=".activity.main.AvailableVoucherActivity" />
@@ -40,10 +44,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.main.AvailableVoucherActivity" />
-        <activity android:name=".activity.VerifyPhoneActivity" />
-        <activity android:name=".activity.PaymentMethodActivity" />
-        <activity android:name=".activity.PersonalInfoActivity" />
         <activity android:name=".activity.login.SignUpActivity_1" />
         <activity android:name=".activity.login.SignUpActivity_2" />
         <activity android:name=".activity.login.ForgotPassActivity_1" />
@@ -70,10 +70,6 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />
-
-        <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyBBrmihhx3C-3kE47pd5ysOH6SUy5BVSFc" />
     </application>
 
 </manifest>
