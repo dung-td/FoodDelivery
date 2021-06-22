@@ -481,7 +481,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 });
         progressBar.setVisibility(View.INVISIBLE);
     }
-    //void updateEmail(String email) {
+//    void updateEmail(String email) {
 //        FirebaseFirestore root = FirebaseFirestore.getInstance();
 //        root.collection("User").document(userID)
 //                .update("email", email)

@@ -1,6 +1,7 @@
 package com.example.fooddelivery.fragment;
 
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -45,6 +46,8 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import static android.app.Activity.RESULT_OK;
+
 public class RatingItemFragment extends Fragment {
 
     RatingBar rb;
@@ -61,14 +64,20 @@ public class RatingItemFragment extends Fragment {
 
     OrderItem orderItem;
     ArrayList<OrderItem> listOrderItem = new ArrayList<>();
+    boolean ratingSuccess =false;
+    Comment returnComment;
+    int position;
+
+    static int LIST_RATING_FRAGMENT_CODE = 123456789;
 
     public RatingItemFragment() {
         // Required empty public constructor
     }
 
-    public RatingItemFragment(OrderItem orderItem, ArrayList<OrderItem> listOrderItem) {
+    public RatingItemFragment(OrderItem orderItem, ArrayList<OrderItem> listOrderItem, int position) {
         this.orderItem = orderItem;
         this.listOrderItem = listOrderItem;
+        this.position = position;
     }
 
     @Override
@@ -97,6 +106,17 @@ public class RatingItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                // getActivity().onBackPressed();
+               // getFragmentManager().popBackStack();
+                if (ratingSuccess) {
+                    Intent intent = new Intent(getContext(), RatingItemFragment.class);
+                    intent.putExtra("details", returnComment.getDetails());
+                    intent.putExtra("date", returnComment.getDate());
+                    intent.putExtra("username", returnComment.getUserName());
+                    intent.putExtra("rating", returnComment.getRating());
+                    intent.putExtra("position", Integer.toString(position));
+                    Log.e("put extra position ", Integer.toString(position));
+                    getTargetFragment().onActivityResult(getTargetRequestCode(), RESULT_OK, intent);
+                }
                 getFragmentManager().popBackStack();
             }
         });
@@ -158,7 +178,7 @@ public class RatingItemFragment extends Fragment {
 
     void addProductComment(String productID, Comment comment) {
         User user = LoginActivity.firebase.getUser();
-        Comment data = new Comment(
+         returnComment = new Comment(
                 comment.getDate(),
                 comment.getDetails(),
                 comment.getRating(),
@@ -167,7 +187,7 @@ public class RatingItemFragment extends Fragment {
 
         FirebaseFirestore root = FirebaseFirestore.getInstance();
         root.collection("Product/"+ productID +"/Comment")
-                .add(data)
+                .add(returnComment)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -196,7 +216,7 @@ public class RatingItemFragment extends Fragment {
             Map<String, Object> map = new HashMap<>();
 
             if (item.getProduct().getId().equals(orderItem.getProduct().getId()))
-                item.setComment(new Comment(commentId, "", "", "",""));
+                item.setComment(new Comment(commentId, "", "", "", ""));
 
             map.put("comment", item.getComment().getiD());
             map.put("price", item.getPrice());
@@ -219,6 +239,7 @@ public class RatingItemFragment extends Fragment {
                     public void onSuccess(Void aVoid) {
                         LoginActivity.firebase.getListOrdersOfUser();
                         Toast.makeText(getContext(), getString(R.string.send_comment_success), Toast.LENGTH_LONG).show();
+                        ratingSuccess = true;
                     }
                 });
 

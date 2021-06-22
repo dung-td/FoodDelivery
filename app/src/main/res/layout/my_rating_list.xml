@@ -162,6 +162,7 @@
             android:id="@+id/bt_cmt_rating"
             android:layout_below="@id/cmt_ln1"
             android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
             android:layout_width="200dp"

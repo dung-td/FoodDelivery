@@ -1,6 +1,8 @@
 package com.example.fooddelivery.adapter;
 
 import android.app.Activity;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,16 +31,19 @@ public class ViewPagerOrdersAdapter extends FragmentStatePagerAdapter {
 
         switch (position){
             case 0:
-                return new GeneralOrdersFragment(getListDelivering());
+                return new GeneralOrdersFragment(getListPending());
             case 1:
+                return new GeneralOrdersFragment(getListDelivering());
+            case 2:
                 return new GeneralOrdersFragment(getListHistory());
             default:
                 return new GeneralOrdersFragment(getListHistory());
         }
     }
 
-    @Override    public int getCount() {
-        return 2;
+    @Override
+    public int getCount() {
+        return 3;
     }
 
     @Override
@@ -46,13 +51,15 @@ public class ViewPagerOrdersAdapter extends FragmentStatePagerAdapter {
         String title ="";
         switch (position){
             case 0:
-                //title = Resources.getSystem().getString(R.string.delivering);
-                title = activity.getBaseContext().getResources().getString(R.string.delivering);
-
+                title = activity.getBaseContext().getResources().getString(R.string.pending);
                 break;
             case 1:
+                title = activity.getBaseContext().getResources().getString(R.string.delivering);
+                break;
+            case 2:
                 title = activity.getBaseContext().getResources().getString(R.string.history);
                 break;
+
         }
 
 
@@ -79,7 +86,24 @@ public class ViewPagerOrdersAdapter extends FragmentStatePagerAdapter {
 
         for (Orders orders : tmpList)
         {
-            if (!orders.getStatus().equals(OrderStatus.Delivering.toString()))
+          //  Log.e("order get status", orders.getStatus());
+            if (orders.getStatus().equals(OrderStatus.Succeeded.toString())
+            || orders.getStatus().equals(OrderStatus.Canceled.toString()))
+                listHistory.add(orders);
+        }
+        return  listHistory;
+    }
+
+    ArrayList<Orders> getListPending()
+    {
+        ArrayList<Orders> tmpList = LoginActivity.firebase.ordersList;
+        ArrayList<Orders> listHistory = new ArrayList<>();
+
+        for (Orders orders : tmpList)
+        {
+            if (orders.getStatus().equals(OrderStatus.Pending.toString()) ||
+                    orders.getStatus().equals(OrderStatus.Received.toString())
+            )
                 listHistory.add(orders);
         }
         return  listHistory;

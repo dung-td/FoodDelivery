@@ -150,4 +150,10 @@
     <string name="send_comment_fail">Send your rating fail. please try again</string>
     <string name="rating_null">Your rating is null</string>
     <string name="enter_comment">Enter your comment</string>
+    <string name="order_status">Order status</string>
+    <string name="pending">Pending</string>
+    <string name="order_cancel">Order cancel</string>
+    <string name="delivery_success">Successful delivery</string>
+    <string name="received_order">Accepted the order</string>
+    <string name="canceled_order_success">Successful cancel</string>
 </resources>

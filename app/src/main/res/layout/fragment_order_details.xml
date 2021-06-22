@@ -85,13 +85,22 @@
                     android:id="@+id/tv_fm_orddtail_method"
                     android:layout_below="@id/tv_fm_orddtail_time"
                     />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_status"
+                    android:textColor="@color/black"
+                    android:id="@+id/tv_fm_orddtail_status"
+                    android:layout_below="@id/tv_fm_orddtail_method"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/merchant"
                     android:textColor="@color/light_blue"
                     android:id="@+id/tv_fm_orddtail_merchant"
-                    android:layout_below="@id/tv_fm_orddtail_method"
+                    android:layout_below="@id/tv_fm_orddtail_status"
                     />
 
                 <TextView
@@ -102,6 +111,8 @@
                     android:textColor="@color/black"
                     android:id="@+id/tv_fm_orddtail_ordid"
                     android:layout_below="@id/tv_fm_orddtail_merchant"/>
+
+
 
             </RelativeLayout>
 
@@ -236,7 +247,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/rl_fm_orddtail_comment">
 
                     <TextView
                         android:id="@+id/rate"
@@ -259,19 +271,19 @@
                 </RelativeLayout>
             </LinearLayout>
 
-<!--            <android.widget.Button-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_width="200dp"-->
-<!--                android:text="@string/order_received"-->
-<!--                android:textColor="@color/white"-->
-<!--                android:textStyle="bold"-->
-<!--                android:background="@color/light_red"-->
-<!--                android:layout_below="@id/fm_ordedtail_view3"-->
-<!--                android:layout_marginTop="30dp"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:id="@+id/bt_fm_orddtail_buy"-->
-<!--                android:layout_marginBottom="100dp"-->
-<!--                />-->
+            <android.widget.Button
+                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:text="@string/order_cancel"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/light_red"
+                android:layout_below="@id/fm_ordedtail_view3"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/bt_fm_orddtail_cancel_ord"
+                android:layout_marginBottom="100dp"
+                />
         </RelativeLayout>
     </ScrollView>
 

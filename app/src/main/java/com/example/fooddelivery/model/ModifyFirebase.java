@@ -457,8 +457,6 @@ public class ModifyFirebase {
     //region ORDERS
     ArrayList<Map<String, String>> listMap = new ArrayList<>();
 
-
-
     public Product getProductById(String productID) {
         for (Product product : productList) {
             if (product.getId().equals(productID))
@@ -499,7 +497,7 @@ public class ModifyFirebase {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot != null) {
-                            Log.e(ORDER_TAG, "get order details: " + documentSnapshot.getId());
+                        //    Log.e(ORDER_TAG, "get order details: " + documentSnapshot.getId());
                             order.time = documentSnapshot.get("time").toString();
                             order.discount = Integer.parseInt(documentSnapshot.get("discount").toString());
                             order.status = documentSnapshot.get("status").toString();
@@ -547,7 +545,7 @@ public class ModifyFirebase {
 
                             for (Map item : listMap) {
 
-                                Log.e(ORDER_TAG, "get order products: " + documentSnapshot.getId() + item.get("product"));
+                                Log.e(ORDER_TAG, "get order products: " + documentSnapshot.getId() +" "+ item.get("product"));
 
                                 Product product = new Product();
                                 product = getProductById(item.get("product").toString());
@@ -586,18 +584,7 @@ public class ModifyFirebase {
     }
     //endregion
 
-
-    public boolean checkEmail(String email) {
-        root.collection("User")
-                .whereEqualTo("email", email)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    }
-                });
-        return false;
-    }
+    //region GET SET
 
     public Object getObject() {
         return object;
@@ -673,5 +660,17 @@ public class ModifyFirebase {
 
     public void setOrdersList(ArrayList<Orders> ordersList) {
         this.ordersList = ordersList;
+    }
+    //endregion
+    public boolean checkEmail(String email) {
+        root.collection("User")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    }
+                });
+        return false;
     }
 }

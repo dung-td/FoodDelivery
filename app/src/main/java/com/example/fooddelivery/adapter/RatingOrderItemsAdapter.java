@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.fragment.ListItemCommentFragment;
 import com.example.fooddelivery.fragment.RatingItemFragment;
 import com.example.fooddelivery.model.Comment;
 import com.example.fooddelivery.model.OrderItem;
@@ -26,6 +27,7 @@ public class RatingOrderItemsAdapter extends BaseAdapter {
     ArrayList<OrderItem> listOrderItem ;
     Activity activity;
     FragmentManager fragmentManager;
+    ListItemCommentFragment listItemCommentFragment;
 
     ImageView productPhoto ;
     TextView name ;
@@ -39,11 +41,14 @@ public class RatingOrderItemsAdapter extends BaseAdapter {
     TextView userID ;
     Button bt_Rate;
 
-    public RatingOrderItemsAdapter(Activity act, ArrayList<OrderItem> orderItems, FragmentManager fragmentManager)
+    static int LIST_RATING_FRAGMENT_CODE = 123456789;
+
+    public RatingOrderItemsAdapter(Activity act, ArrayList<OrderItem> orderItems, FragmentManager fragmentManager, ListItemCommentFragment listItemCommentFragment)
     {
         this.activity = act;
         this.listOrderItem = orderItems;
         this.fragmentManager = fragmentManager;
+        this.listItemCommentFragment = listItemCommentFragment;
     }
     @Override
     public int getCount() {
@@ -78,7 +83,7 @@ public class RatingOrderItemsAdapter extends BaseAdapter {
         bt_Rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openRatingItemFragment(listOrderItem.get(position));
+                openRatingItemFragment(listOrderItem.get(position), position);
 
             }
         });
@@ -86,8 +91,10 @@ public class RatingOrderItemsAdapter extends BaseAdapter {
         return convertView;
     }
 
-    void openRatingItemFragment(OrderItem orderItem) {
-        RatingItemFragment nextFrag = new RatingItemFragment(orderItem, listOrderItem);
+    void openRatingItemFragment(OrderItem orderItem, int position) {
+        RatingItemFragment nextFrag = new RatingItemFragment(orderItem, listOrderItem, position);
+        Log.e("position", Integer.toString(position));
+        nextFrag.setTargetFragment(listItemCommentFragment, LIST_RATING_FRAGMENT_CODE);
         fragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, nextFrag, null)
                 .addToBackStack(null)

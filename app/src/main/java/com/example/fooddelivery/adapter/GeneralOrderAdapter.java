@@ -103,11 +103,8 @@ public class GeneralOrderAdapter extends BaseAdapter {
 
         total_price.setText(Integer.toString(listOrders.get(position).getTotalAmount()));
 
-        if (listOrders.get(position).getStatus().equals(OrderStatus.Delivering.toString()))
-            status.setText(R.string.delivering);
-        else if (listOrders.get(position).getStatus().equals(OrderStatus.Canceled.toString()))
-            status.setText(R.string.canceled);
-        else status.setText(R.string.order_received);
+        setStatus(position);
+
     }
 
     void setNameItem(int position)
@@ -116,5 +113,26 @@ public class GeneralOrderAdapter extends BaseAdapter {
             name.setText(String.format(listOrders.get(position).getFirstOrderItems().getProduct().getName()));
         else
             name.setText(String.format(listOrders.get(position).getFirstOrderItems().getProduct().getEn_Name()));
+    }
+
+    void setStatus(int position)
+    {
+        String orderStatus = listOrders.get(position).getStatus();
+
+        if (orderStatus.equals(OrderStatus.Canceled.toString()))
+            status.setText(R.string.canceled);
+
+        if (orderStatus.equals(OrderStatus.Pending.toString()))
+            status.setText(R.string.pending);
+
+        if (orderStatus.equals(OrderStatus.Succeeded.toString()))
+            status.setText(R.string.delivery_success);
+
+        if (orderStatus.equals(OrderStatus.Received.toString()))
+            status.setText(R.string.received_order);
+
+        if (orderStatus.equals(OrderStatus.Delivering.toString()))
+            status.setText(R.string.delivering);
+
     }
 }
