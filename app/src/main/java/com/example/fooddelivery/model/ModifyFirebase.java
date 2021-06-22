@@ -3,6 +3,7 @@ package com.example.fooddelivery.model;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
+import android.util.ArrayMap;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -209,8 +211,6 @@ public class ModifyFirebase {
                             item.setQuantity((String)document.get("Quantity"));
                             cartList.add(item);
                         }
-                        HomeFragment.cartBadge.setText(cartList.size() + "");
-                        HomeFragment.cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
                     }
                 });
     }
@@ -218,6 +218,7 @@ public class ModifyFirebase {
     public void addUserNewOrder(String discount, String freight_cost, String time, String totalAmount, String voucherId,
                                 final OnGetDataListener listener) {
         listener.onStart();
+        String documentId = root.collection("User/" + userId + "/Order/").document().getId();
         Map<String, Object> item = new HashMap<>();
         item.put("discount", discount);
         item.put("freight_cost", freight_cost);
@@ -226,37 +227,34 @@ public class ModifyFirebase {
         item.put("time", time);
         item.put("total_amount", totalAmount);
         item.put("voucher", voucherId);
+        setVoucherUsed(voucherId);
         item.put("discount", discount);
 
-        Map<String, Object> items = new HashMap<>();
-        int index = 0;
-        for (ChosenItem product : cartList) {
-            Map<String, String> itemDetail = new HashMap<>();
-            String price = "";
-            if (product.getProduct().getProductSize().get(0) != null) {
-                price = product.getProduct().getPrice().get(product.getProduct().getProductSize().indexOf(product.getSize()));
-            }
-            else {
-                price = product.getProduct().getPrice().get(0);
-            }
-
-            itemDetail.put("comment", "null");
-            itemDetail.put("price", price);
-            itemDetail.put("product", product.getProduct().getId());
-            itemDetail.put("quantity", product.getQuantity());
-            itemDetail.put("size", product.getSize());
-            items.put(String.valueOf(index), itemDetail);
-            index++;
-        }
-
-        item.put("listItems", items);
-
         root.collection("User/" + userId + "/Order/")
-                .document()
+                .document(documentId)
                 .set(item)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        HashMap<String, Object> itemDetail = new HashMap<>();
+                        for (ChosenItem product : cartList) {
+                            itemDetail = new HashMap<>();
+                            String price = "";
+                            if (product.getProduct().getProductSize().get(0) != null) {
+                                price = product.getProduct().getPrice().get(product.getProduct().getProductSize().indexOf(product.getSize()));
+                            }
+                            else {
+                                price = product.getProduct().getPrice().get(0);
+                            }
+
+                            itemDetail.put("comment", "null");
+                            itemDetail.put("price", Integer.parseInt(price));
+                            itemDetail.put("product", product.getProduct().getId());
+                            itemDetail.put("quantity", Integer.parseInt(product.getQuantity()));
+                            itemDetail.put("size", product.getSize());
+                            root.collection("User/" + userId + "/Order/")
+                                    .document(documentId).update("listItems", FieldValue.arrayUnion(itemDetail));
+                        }
                         removeProductFromCart();
                         listener.onSuccess();
                     }
@@ -358,6 +356,14 @@ public class ModifyFirebase {
                         }
                     }
                 });
+    }
+
+    public void setVoucherUsed(String voucherId) {
+        root.collection("User/" + userId + "/Voucher/")
+                .document(voucherId)
+                .update("status", "Đã dùng");
+        voucherList.clear();
+        getVoucherList();
     }
 
     public void getComment() {
