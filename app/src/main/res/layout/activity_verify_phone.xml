@@ -14,8 +14,6 @@
         android:background="@drawable/elipse" />
 
 
-
-
     <androidx.cardview.widget.CardView
         android:layout_width="330dp"
         android:layout_height="350dp"

@@ -2,6 +2,7 @@ package com.example.fooddelivery.model;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.location.Address;
 import android.net.Uri;
 import android.util.ArrayMap;
 import android.util.Log;
@@ -35,6 +36,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
 
 
 public class ModifyFirebase {
@@ -606,7 +609,11 @@ public class ModifyFirebase {
                             DocumentSnapshot document = task.getResult();
                             if (document != null) {
                                 user.Email = document.get("email").toString();
-                                user.Address = document.get("address").toString();
+                                Map<String, Object> addressData = (Map<String, Object>) document.get("address");
+                                user.getAddress().setAddressLine(0, addressData.get("address").toString());
+                                user.getAddress().setLocality(addressData.get("city").toString());
+                                user.getAddress().setAdminArea(addressData.get("state").toString());
+                                user.getAddress().setCountryName(addressData.get("country").toString());
                                 user.First_Name = document.get("first_Name").toString();
                                 user.Last_Name = document.get("last_Name").toString();
                                 user.Phone_Number = document.get("phone_Number").toString();
@@ -633,18 +640,25 @@ public class ModifyFirebase {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(context, "Thêm voucher thành công, vào ví để kiểm tra!", Toast.LENGTH_SHORT);
+                        Toasty.success(context, "Thêm voucher thành công, vào ví để kiểm tra!", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     public void addNewUser(User user, String uid) {
-        Map<String, String> u = new HashMap<>();
+        Map<String, Object> u = new HashMap<>();
         u.put("first_Name", user.getFirst_Name());
         u.put("last_Name", user.getLast_Name());
-        u.put("address", user.getAddress());
+        Map<String, Object> addressData = new HashMap<>();
+        addressData.put("address", user.getAddress().getAddressLine(0));
+        addressData.put("city", user.getAddress().getLocality());
+        addressData.put("state", user.getAddress().getAdminArea());
+        addressData.put("country", user.getAddress().getCountryName());
+        addressData.put("latitude", user.getAddress().getLatitude());
+        addressData.put("longitude", user.getAddress().getLongitude());
         u.put("phone_Number", user.getPhone_Number());
         u.put("email", user.getEmail());
+        u.put("address", addressData);
         root.collection("User")
                 .document(uid)
                 .set(u)
@@ -672,6 +686,32 @@ public class ModifyFirebase {
             }
         });
         return uIDCheck;
+    }
+
+    public void updateUserAddress(final OnGetDataListener listener) {
+        listener.onStart();
+
+        Map<String, Object> docData = new HashMap<>();
+
+        Map<String, Object> addressData = new HashMap<>();
+        addressData.put("address", user.getAddress().getAddressLine(0));
+        addressData.put("city", user.getAddress().getLocality());
+        addressData.put("state", user.getAddress().getAdminArea());
+        addressData.put("country", user.getAddress().getCountryName());
+        addressData.put("latitude", user.getAddress().getLatitude());
+        addressData.put("longitude", user.getAddress().getLongitude());
+
+        docData.put("address", addressData);
+
+        root.collection("User/")
+                .document(userId)
+                .update(docData)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        listener.onSuccess();
+                    }
+                });
     }
 
     public Object getObject() {

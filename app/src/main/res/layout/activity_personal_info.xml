@@ -1,75 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.PersonalInfoActivity"
-    android:background="@color/gray">
+    android:background="@color/gray"
+    tools:context=".activity.PersonalInfoActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/perinfo_appbar"
-        android:background="@color/white">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:backgroundTint="@color/grey"
-                android:background="@drawable/ic_baseline_arrow_back_24"
-                android:layout_marginStart="15dp"
-                android:layout_centerVertical="true"
-                android:id="@+id/bt_perinfo_back"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/user_info"
-                android:textAllCaps="true"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"/>
-        </RelativeLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
+        android:id="@+id/perinfo_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/bt_perinfo_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:background="@drawable/ic_baseline_arrow_back_24"
+            android:backgroundTint="@color/grey" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/user_info"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/perinfo_rl1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/perinfo_appbar"
         android:layout_marginTop="20dp"
-        android:background="@color/white"
-        android:id="@+id/perinfo_rl1">
+        android:background="@color/white">
+
         <ImageView
+            android:id="@+id/im_perinfo"
             android:layout_width="90dp"
             android:layout_height="90dp"
-            android:background="@drawable/male_user_96px"
             android:layout_centerHorizontal="true"
-            android:id="@+id/im_perinfo"/>
+            android:background="@drawable/male_user_96px" />
 
         <TextView
             android:id="@+id/tv_perinfo_changeavatar"
-            android:layout_below="@id/im_perinfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/change"
-            android:clickable="true"
-            android:textColor="@color/light_blue"
+            android:layout_below="@id/im_perinfo"
             android:layout_alignParentRight="true"
             android:layout_marginRight="20dp"
-            android:textStyle="bold"/>
+            android:clickable="true"
+            android:text="@string/change"
+            android:textColor="@color/light_blue"
+            android:textStyle="bold" />
 
     </RelativeLayout>
-    <View style="@style/Divider.Horizontal"
-        android:layout_below="@id/perinfo_rl1"
-        />
+
+    <View
+        style="@style/Divider.Horizontal"
+        android:layout_below="@id/perinfo_rl1" />
 
     <RelativeLayout
         android:id="@+id/perinfo_rl2"
@@ -78,38 +75,35 @@
         android:layout_below="@id/perinfo_rl1"
         android:layout_marginTop="30dp"
         android:background="@color/white">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/full_name"
                 android:layout_marginLeft="20dp"
+                android:text="@string/full_name"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_perinfo_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Họ tên"
                 android:layout_marginLeft="20dp"
-                android:textSize="18dp"
+                android:text="Họ tên"
                 android:textColor="@color/black"
-                />
+                android:textSize="18dp" />
         </LinearLayout>
     </RelativeLayout>
-    <View style="@style/Divider.Horizontal"
-        android:layout_below="@id/perinfo_rl2"
-        />
 
 
-
-    <View style="@style/Divider.Horizontal"
-        android:layout_below="@id/perinfo_rl2"
-        />
+    <View
+        style="@style/Divider.Horizontal"
+        android:layout_below="@id/perinfo_rl2" />
 
     <RelativeLayout
         android:id="@+id/perinfo_rl4"
@@ -118,27 +112,28 @@
         android:layout_below="@id/perinfo_rl2"
         android:layout_marginTop="1dp"
         android:background="@color/white">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/phoneNumber"
                 android:layout_marginLeft="20dp"
+                android:text="@string/phoneNumber"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_perinfo_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Số điện thoại"
                 android:layout_marginLeft="20dp"
+                android:text="Số điện thoại"
                 android:textColor="@color/black"
-                android:textSize="18dp"
-                />
+                android:textSize="18dp" />
         </LinearLayout>
 
         <TextView
@@ -153,18 +148,20 @@
             android:text="@string/change"
             android:textColor="@color/light_blue"
             android:textStyle="bold" />
+
         <EditText
-            android:layout_marginTop="10dp"
             android:id="@+id/et_perinfo_phone"
-            android:layout_marginLeft="20dp"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:inputType="phone"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:inputType="phone"
+            android:textSize="18dp" />
     </RelativeLayout>
-    <View style="@style/Divider.Horizontal"
-        android:layout_below="@id/perinfo_rl4"
-        />
+
+    <View
+        style="@style/Divider.Horizontal"
+        android:layout_below="@id/perinfo_rl4" />
 
     <RelativeLayout
         android:id="@+id/perinfo_rl5"
@@ -173,27 +170,28 @@
         android:layout_below="@id/perinfo_rl4"
         android:layout_marginTop="1dp"
         android:background="@color/white">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email"
                 android:layout_marginLeft="20dp"
+                android:text="Email"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_perinfo_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:text="Email"
                 android:textColor="@color/black"
-                android:layout_marginLeft="20dp"
-                android:textSize="18dp"
-                />
+                android:textSize="18dp" />
         </LinearLayout>
 
         <TextView
@@ -210,19 +208,19 @@
             android:textStyle="bold" />
 
         <EditText
-            android:layout_marginTop="10dp"
             android:id="@+id/et_perinfo_email"
-            android:layout_marginLeft="20dp"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:textSize="18dp"
-            android:inputType="textEmailAddress"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:inputType="textEmailAddress"
+            android:textSize="18dp" />
     </RelativeLayout>
 
 
-    <View style="@style/Divider.Horizontal"
-        android:layout_below="@id/perinfo_rl5"
-        />
+    <View
+        style="@style/Divider.Horizontal"
+        android:layout_below="@id/perinfo_rl5" />
 
     <RelativeLayout
         android:id="@+id/perinfo_rl6"
@@ -231,27 +229,28 @@
         android:layout_below="@id/perinfo_rl5"
         android:layout_marginTop="1dp"
         android:background="@color/white">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
                 android:text="@string/deliver_address"
                 android:textColor="@color/black"
-                android:layout_marginLeft="20dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/tv_perinfo_address"
                 android:layout_width="260dp"
                 android:layout_height="wrap_content"
-                android:text="Địa chỉ"
                 android:layout_marginLeft="20dp"
-                android:textSize="18dp"
+                android:text="Địa chỉ"
                 android:textColor="@color/black"
-                />
+                android:textSize="18dp" />
 
 
         </LinearLayout>
@@ -270,27 +269,29 @@
             android:textStyle="bold" />
 
         <EditText
-            android:layout_marginTop="10dp"
             android:id="@+id/et_perinfo_address"
-            android:layout_marginLeft="20dp"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:textSize="18dp"/>
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:textSize="18dp" />
 
         <TextView
-            android:textColor="@color/black"
+            android:layout_below="@+id/et_perinfo_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/__default"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/__default"
+            android:textColor="@color/black"
             android:textSize="12dp"
-            android:layout_marginTop="50dp"
 
             />
     </RelativeLayout>
-    <View style="@style/Divider.Horizontal"
-        android:layout_below="@id/perinfo_rl6"
-        />
+
+    <View
+        style="@style/Divider.Horizontal"
+        android:layout_below="@id/perinfo_rl6" />
 
     <ProgressBar
         android:id="@+id/perinfo_wating"
@@ -299,4 +300,4 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="180dp"
         android:backgroundTint="@color/whiteTextColor" />
-    </RelativeLayout>
+</RelativeLayout>

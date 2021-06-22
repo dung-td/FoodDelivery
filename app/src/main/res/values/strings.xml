@@ -172,6 +172,7 @@
     <string name="exist_voucher">Voucher đã ở trong ví của bạn</string>
     <string name="use">Sử dụng</string>
     <string name="apply_voucher_failed">Sử dụng voucher không thành công. Vui lòng kiểm tra lại điều kiện.</string>
+    <string name="choose_on_map">Lựa chọn vị trí trên bản đồ</string>
     <string-array name="feedback_title">
         <item>Góp ý cho ứng dụng</item>
         <item>Báo lỗi</item>

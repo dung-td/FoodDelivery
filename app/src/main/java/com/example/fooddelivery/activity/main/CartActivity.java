@@ -237,8 +237,9 @@ public class CartActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public static void setUserInformation() {
         String name = LoginActivity.firebase.getUser().getLast_Name() + " " + LoginActivity.firebase.getUser().getFirst_Name();
-        textViewNamePhone.setText(name + " - " + LoginActivity.firebase.getUser().getPhone_Number());
-        textViewAddress.setText(LoginActivity.firebase.getUser().getAddress());
+        String phone = LoginActivity.firebase.getUser().getPhone_Number();
+        textViewNamePhone.setText(name + " - " + phone);
+        textViewAddress.setText(LoginActivity.firebase.getUser().getAddress().getAddressLine(0));
     }
 
     void loadLanguage() {

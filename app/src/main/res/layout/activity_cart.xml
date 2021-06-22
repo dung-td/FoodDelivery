@@ -8,18 +8,17 @@
     android:background="@color/white">
 
 <!--    Cart + Back button-->
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/white"
-        android:orientation="horizontal">
+        android:background="@color/white">
 
         <ImageButton
             android:id="@+id/btn_back"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginStart="15dp"
-            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_centerVertical="true"
             android:backgroundTint="@color/grey"
             android:background="@drawable/ic_baseline_arrow_back_24" />
 
@@ -28,11 +27,13 @@
             android:layout_height="wrap_content"
             android:text="@string/shopping_cart"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
             android:textStyle="bold"
             android:textAlignment="center"
             android:layout_gravity="center"/>
-    </LinearLayout>
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -57,7 +58,7 @@
                     android:textSize="17dp"
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"
-                    android:layout_marginStart="15dp"/>
+                    android:layout_marginStart="16dp"/>
 
                 <TextView
                     android:id="@+id/btn_change_address"
@@ -80,7 +81,7 @@
                     android:textSize="17dp"
                     android:layout_below="@+id/tv_address_title"
                     android:layout_marginTop="5dp"
-                    android:layout_marginStart="15dp"/>
+                    android:layout_marginStart="16dp"/>
 
                 <TextView
                     android:id="@+id/tv_user_address"
@@ -91,17 +92,19 @@
                     android:textSize="17dp"
                     android:layout_below="@+id/tv_user_name_phone"
                     android:layout_marginTop="5dp"
-                    android:layout_marginStart="15dp"/>
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"/>
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:background="@color/black"/>
 
 <!--            Time-->
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:orientation="horizontal">
@@ -109,7 +112,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginStart="14dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="5dp"
                     android:src="@drawable/ic_baseline_clock_24"/>
 
@@ -120,18 +123,21 @@
                     android:textColor="@color/black"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:textSize="17dp"/>
+                    android:textSize="17sp"/>
 
                 <ImageButton
                     android:id="@+id/btn_change_order_time"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginStart="85dp"
-                    android:layout_gravity="center"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="16dp"
+                    android:layout_centerVertical="true"
                     android:background="@drawable/ic_baseline_chevron_right_24"/>
-            </LinearLayout>
+            </RelativeLayout>
 
             <View
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black"/>

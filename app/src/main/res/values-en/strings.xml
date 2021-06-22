@@ -152,6 +152,7 @@
     <string name="comment_title">COMMENT</string>
     <string name="exist_voucher">This voucher is already in your voucher list</string>
     <string name="info_title">INFOMATION</string>
+    <string name="choose_on_map">Choose loaction on map</string>
     <string-array name="feedback_title">
         <item>Feedback of application</item>
         <item>Report error</item>
