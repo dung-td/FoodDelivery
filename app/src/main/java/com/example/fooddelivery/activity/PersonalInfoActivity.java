@@ -317,10 +317,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
 //        });
 //        progressBar.setVisibility(View.INVISIBLE);
 
-        String uri = getIntent().getStringExtra("uriAvatar");
-        if (uri!=null)
+        Uri uri = LoginActivity.firebase.getUser().getProfileImage();
+        if (uri !=null)
         {
-            Picasso.get().load(Uri.parse(uri)).into(iv_Avatar);
+            Picasso.get().load(uri).into(iv_Avatar);
         }
     }
 
