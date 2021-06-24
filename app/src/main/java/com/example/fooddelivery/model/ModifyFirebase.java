@@ -244,8 +244,7 @@ public class ModifyFirebase {
                             String price = "";
                             if (product.getProduct().getProductSize().get(0) != null) {
                                 price = product.getProduct().getPrice().get(product.getProduct().getProductSize().indexOf(product.getSize()));
-                            }
-                            else {
+                            } else {
                                 price = product.getProduct().getPrice().get(0);
                             }
 
@@ -261,8 +260,6 @@ public class ModifyFirebase {
                         listener.onSuccess();
                     }
                 });
-    public void addProductToCart(String productId) {
-
     }
 
     public void addProductToWatched(String productId) {
@@ -715,6 +712,9 @@ public class ModifyFirebase {
                     @Override
                     public void onSuccess(Void aVoid) {
                         listener.onSuccess();
+                    }
+                });
+    }
 
     //region ORDERS
     ArrayList<Map<String, String>> listMap = new ArrayList<>();

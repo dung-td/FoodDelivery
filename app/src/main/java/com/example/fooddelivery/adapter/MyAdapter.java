@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.fooddelivery.activity.MerchantActivity;
 import com.example.fooddelivery.fragment.CommentFragment;
 import com.example.fooddelivery.fragment.InfoFragment;
 import com.example.fooddelivery.fragment.ItemFragment;
@@ -26,14 +27,11 @@ public class MyAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                ItemFragment itemFragment = new ItemFragment();
+                ItemFragment itemFragment = new ItemFragment(MerchantActivity.merchant);
                 return itemFragment;
             case 1:
-                CommentFragment commentFragment = new CommentFragment();
+                InfoFragment commentFragment = new InfoFragment();
                 return commentFragment;
-            case 2:
-                InfoFragment infoFragment = new InfoFragment();
-                return infoFragment;
             default:
                 return null;
         }

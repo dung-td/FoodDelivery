@@ -52,7 +52,7 @@ public class MerchantActivity extends AppCompatActivity {
     LinearLayout linearLayoutBack, linearLayoutLove, linearLayoutMore;
     FrameLayout layoutCart;
     RelativeLayout relativeLayoutToolbar;
-    Merchant merchant;
+    static public Merchant merchant;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -105,7 +105,6 @@ public class MerchantActivity extends AppCompatActivity {
         }
 
         tabLayout.addTab(tabLayout.newTab().setText(R.string.menu_title));
-        tabLayout.addTab(tabLayout.newTab().setText(R.string.comment_title));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.info_title));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 

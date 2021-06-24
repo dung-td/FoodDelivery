@@ -99,14 +99,15 @@
             <Button
                 android:id="@+id/fb_bt_send"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
+                android:layout_height="60dp"
+                android:layout_below="@+id/feedback_details"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="100dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="50dp"
                 android:backgroundTint="@color/light_red"
                 android:text="@string/send_feedback"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
         </RelativeLayout>
     </FrameLayout>
 
