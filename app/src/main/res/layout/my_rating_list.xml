@@ -21,7 +21,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:id="@+id/im_cmt_image"
-                android:background="@drawable/trasenvang"/>
+                android:background="@color/white"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -101,62 +101,68 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cmt_star"
                 android:id="@+id/cmt_ln2"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
                 android:padding="20dp"
                 android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@color/light_blue"
+                    android:background="@color/white"
                     android:id="@+id/im_cmt_avatar"
                     />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginLeft="10dp"
                     >
 
-
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:id="@+id/im_cmt_rl1"
+                        >
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="userID"
                             android:textStyle="bold"
                             android:id="@+id/tv_cmt_userID"
-                            android:textSize="15dp"
+                            android:textSize="16dp"
                             />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Ngày"
+                            android:layout_marginTop="5dp"
+                            android:layout_toRightOf="@id/tv_cmt_userID"
                             android:layout_marginLeft="50dp"
                             android:id="@+id/tv_cmt_date"
                             android:textSize="10dp"
                             />
-                    </LinearLayout>
+                    </RelativeLayout>
 
                     <TextView
+                        android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Đây là bình luận"
+                        android:layout_below="@id/im_cmt_rl1"
                         android:id="@+id/tv_cmt_cmt"
                         />
-                </LinearLayout>
+                </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
 
         <android.widget.Button
             android:id="@+id/bt_cmt_rating"
             android:layout_below="@id/cmt_ln1"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="20dp"
             android:layout_centerHorizontal="true"
             android:layout_height="wrap_content"
             android:layout_width="200dp"

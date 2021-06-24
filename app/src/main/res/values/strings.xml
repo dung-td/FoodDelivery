@@ -177,4 +177,19 @@
         <item>Góp ý cho ứng dụng</item>
         <item>Báo lỗi</item>
     </string-array>
+    <string name="order_received">Đã nhận Đơn hàng</string>
+    <string name="canceled">Đã huỷ</string>
+    <string name="customer">Khách hàng</string>
+    <string name="time">Thời gian</string>
+    <string name="cod">Tiền mặt</string>
+    <string name="send_comment_success">Gửi đánh giá thành công</string>
+    <string name="send_comment_fail">Gửi đánh giá thất bại, vui lòng thử lại</string>
+    <string name="rating_null">Chưa đánh giá</string>
+    <string name="enter_comment">Viết đánh giá</string>
+    <string name="order_status">Trạng thái đơn hàng</string>
+    <string name="pending">Đang chờ</string>
+    <string name="order_cancel">Huỷ đơn đặt hàng</string>
+    <string name="delivery_success">Giao hàng thành công</string>
+    <string name="received_order">Tiếp nhận đơn hàng</string>
+    <string name="canceled_order_success">Huỷ đơn hàng thành công</string>
 </resources>

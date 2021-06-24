@@ -6,7 +6,6 @@ import android.location.Address;
 import android.net.Uri;
 import android.util.ArrayMap;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,17 +17,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -36,12 +32,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 
 
 public class ModifyFirebase {
     private static final String TAG = "firebaseFirstore";
+    private static final String ORDER_TAG = "ORDER";
     private Object object;
     private String docRef;
     private String userId;
@@ -55,6 +53,7 @@ public class ModifyFirebase {
     public ArrayList<Merchant> merchantList = new ArrayList<Merchant>();
     public ArrayList<Voucher> voucherList = new ArrayList<Voucher>();
     public ArrayList<Voucher> availableVoucherList = new ArrayList<Voucher>();
+    public ArrayList<Orders> ordersList = new ArrayList<>();
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
     private final boolean checkUsername = false;
@@ -262,6 +261,8 @@ public class ModifyFirebase {
                         listener.onSuccess();
                     }
                 });
+    public void addProductToCart(String productId) {
+
     }
 
     public void addProductToWatched(String productId) {
@@ -318,7 +319,7 @@ public class ModifyFirebase {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                            Log.d("GOT" , document.getId());
+                            Log.d("GOT", document.getId());
                             Voucher voucher = new Voucher();
                             voucher.setStatus(document.get("status").toString());
                             voucher.setId(document.getId());
@@ -400,6 +401,7 @@ public class ModifyFirebase {
 
     public void getData(final OnGetDataListener listener) {
         listener.onStart();
+
         //Load merchant list
         root.collection("Merchant/")
                 .get()
@@ -480,6 +482,7 @@ public class ModifyFirebase {
                                     }
                                 });
                     }
+
                 });
 
 
@@ -497,6 +500,8 @@ public class ModifyFirebase {
                 });
 
         //Load product in cart
+
+
     }
 
     public void loadFullListMerchantImage(Merchant merchant, final OnGetDataListener listener) {
@@ -618,7 +623,7 @@ public class ModifyFirebase {
                                 user.Last_Name = document.get("last_Name").toString();
                                 user.Phone_Number = document.get("phone_Number").toString();
 
-                                StorageReference fileRef = reference.child("UserImage/"+ userId);
+                                StorageReference fileRef = reference.child("UserImage/" + userId);
                                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                     @Override
                                     public void onSuccess(Uri uri) {
@@ -710,9 +715,138 @@ public class ModifyFirebase {
                     @Override
                     public void onSuccess(Void aVoid) {
                         listener.onSuccess();
+
+    //region ORDERS
+    ArrayList<Map<String, String>> listMap = new ArrayList<>();
+
+    public Product getProductById(String productID) {
+        for (Product product : productList) {
+            if (product.getId().equals(productID))
+                return product;
+        }
+        return null;
+    }
+
+    public void findCommentById(Comment comment, String productId, final OnGetDataListener listener) {
+        listener.onStart();
+        if (comment.getiD().equals("null")) {
+            listener.onSuccess();
+            return;
+        }
+        root.collection("Product/" + productId + "/Comment")
+                .document(comment.getiD())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot != null) {
+                            Log.e(ORDER_TAG, "Comment: " + comment.getiD() + "/" + productId);
+                            comment.setDate(documentSnapshot.get("date").toString());
+                            comment.setDetails(documentSnapshot.get("details").toString());
+                            comment.setRating(documentSnapshot.get("rating").toString());
+                            comment.setUserName(documentSnapshot.get("userName").toString());
+                            listener.onSuccess();
+                        }
                     }
                 });
     }
+
+    public void getOrderById(Orders order) {
+        root.collection("User/" + userId + "/Order")
+                .document(order.getOrderID())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot != null) {
+                        //    Log.e(ORDER_TAG, "get order details: " + documentSnapshot.getId());
+                            order.time = documentSnapshot.get("time").toString();
+                            order.discount = Integer.parseInt(documentSnapshot.get("discount").toString());
+                            order.status = documentSnapshot.get("status").toString();
+                            order.freightCost = Integer.parseInt(documentSnapshot.get("freight_cost").toString());
+                            order.method = documentSnapshot.get("payment_method").toString();
+                            order.status = documentSnapshot.get("status").toString();
+                            order.totalAmount = Integer.parseInt(documentSnapshot.get("total_amount").toString());
+                            order.voucherID = documentSnapshot.get("voucher").toString();
+                            getListOrderedItems(order);
+                        }
+                    }
+                });
+    }
+
+    public void getListOrdersOfUser() {
+        root.collection("User/" + userId + "/Order")
+                .orderBy("time", Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                            Log.e(ORDER_TAG, "get id: " + document.getId());
+                            Orders order = new Orders();
+                            order.setOrderID(document.getId());
+                            getOrderById(order);
+                        }
+
+                    }
+                });
+    }
+
+    public void getListOrderedItems(Orders order) {
+        ArrayList<OrderItem> orderItemArrayList = new ArrayList<>();
+
+        root.collection("User/" + userId + "/Order/").document(order.getOrderID())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+                        if (documentSnapshot != null) {
+
+                            listMap = (ArrayList<Map<String, String>>) documentSnapshot.get("listItems");
+
+                            for (Map item : listMap) {
+
+                                Log.e(ORDER_TAG, "get order products: " + documentSnapshot.getId() +" "+ item.get("product"));
+
+                                Product product = new Product();
+                                product = getProductById(item.get("product").toString());
+
+                                OrderItem orderItem = new OrderItem(
+                                        order.getOrderID(),
+                                        product,
+                                        Integer.parseInt(item.get("quantity").toString()),
+                                        Integer.parseInt(item.get("price").toString()),
+                                        item.get("size").toString()
+                                );
+
+                                Comment comment = new Comment();
+                                comment.setiD(item.get("comment").toString());
+
+                                findCommentById(comment, product.getId(), new OnGetDataListener() {
+                                    @Override
+                                    public void onStart() {
+
+                                    }
+
+                                    @Override
+                                    public void onSuccess() {
+                                        orderItem.setComment(comment);
+                                        orderItemArrayList.add(orderItem);
+                                        if (item == listMap.get(listMap.size() - 1)) {
+                                            order.setListOrderItems(orderItemArrayList);
+                                            ordersList.add(order);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+    }
+    //endregion
+
+    //region GET SET
 
     public Object getObject() {
         return object;
@@ -780,5 +914,25 @@ public class ModifyFirebase {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public ArrayList<Orders> getOrdersList() {
+        return ordersList;
+    }
+
+    public void setOrdersList(ArrayList<Orders> ordersList) {
+        this.ordersList = ordersList;
+    }
+    //endregion
+    public boolean checkEmail(String email) {
+        root.collection("User")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                    }
+                });
+        return false;
     }
 }

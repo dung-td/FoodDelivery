@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
         LoginActivity.firebase.getAvailableVoucherList();
         LoginActivity.firebase.getComment();
         LoginActivity.firebase.getUserInfo();
+        LoginActivity.firebase.getListOrdersOfUser();
     }
 
     private void initBottomNavigation() {
@@ -150,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                         temp = new HomeFragment();
                         break;
                     case R.id.nav_order:
-                        temp = new OrderFragment(MainActivity.this, returnLanguage());
+                        temp = new OrderFragment(MainActivity.this);
                         break;
                     case R.id.nav_me:
                         temp = new MeFragment();
@@ -176,4 +177,5 @@ public class MainActivity extends AppCompatActivity {
             return "en";
         return "vi";
     }
+
 }

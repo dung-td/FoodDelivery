@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.RatingProductFragment"
+    tools:context=".fragment.RatingItemFragment"
     >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -37,122 +37,146 @@
         </RelativeLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <RelativeLayout
+    <ScrollView
+        android:layout_below="@id/fm_orddtail_appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_marginTop="100dp"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/fm_rt_pd_ln1"
+            android:layout_height="match_parent"
             >
 
-            <!--            Image-->
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:id="@+id/im_fm_rt_pd_image"
-                android:background="@drawable/trasenvang"/>
-
             <LinearLayout
+                android:layout_marginTop="100dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="10dp">
+                android:orientation="horizontal"
+                android:id="@+id/fm_rt_pd_ln1"
+                >
 
-                <TextView
-                    android:id="@+id/tv_fm_rt_pd_productname"
+                <!--            Image-->
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:id="@+id/im_fm_rt_pd_image"
+                    android:background="@color/white"/>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20dp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:text="Tên sản phẩm"/>
-
-                <TextView
-                    android:id="@+id/tv_fm_rt_pd_productcate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:textColor="@color/black"
-                    android:textStyle="italic"
-                    android:text="Phân loại"/>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="vertical"
+                    android:layout_marginLeft="10dp">
 
                     <TextView
-                        android:id="@+id/tv_fm_rt_pd_quantity"
-                        android:layout_width="130dp"
+                        android:id="@+id/tv_fm_rt_pd_productname"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
+                        android:textSize="20dp"
                         android:textColor="@color/black"
-                        android:text="x1"/>
-
-                    <TextView
-                        android:id="@+id/tv_fm_rt_pd_price"
-                        android:layout_width="180dp"
-                        android:textAlignment="textEnd"
-                        android:layout_height="wrap_content"
-                        android:textSize="25dp"
                         android:textStyle="bold"
-                        android:textColor="@color/black"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="20dp"
-                        android:text="10.000"/>
-                </RelativeLayout>
+                        android:text="Tên sản phẩm"/>
 
+                    <TextView
+                        android:id="@+id/tv_fm_rt_pd_productcate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="@color/black"
+                        android:textStyle="italic"
+                        android:text="Phân loại"/>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_fm_rt_pd_quantity"
+                            android:layout_width="130dp"
+                            android:layout_height="wrap_content"
+                            android:textSize="15dp"
+                            android:textColor="@color/black"
+                            android:text="x1"/>
+
+                        <TextView
+                            android:id="@+id/tv_fm_rt_pd_price"
+                            android:layout_width="180dp"
+                            android:textAlignment="textEnd"
+                            android:layout_height="wrap_content"
+                            android:textSize="25dp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="20dp"
+                            android:text="10.000"/>
+                    </RelativeLayout>
+
+
+
+                </LinearLayout>
 
 
             </LinearLayout>
 
+            <TextView
+                android:layout_below="@id/fm_rt_pd_ln1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_rt_pd_null_rating"
+                android:text="@string/rating_null"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="@color/light_red"
+                android:textStyle="bold"
+                />
 
-        </LinearLayout>
+            <RatingBar
 
-        <RatingBar
-            android:layout_below="@id/fm_rt_pd_ln1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:foregroundGravity="right|top"
-            android:numStars="5"
-            android:stepSize="1"
-            android:id="@+id/star_fm_rt_pd"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:foregroundGravity="right|top"
+                android:numStars="5"
+                android:stepSize="1"
+                android:id="@+id/star_fm_rt_pd"
+                android:focusable="true"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/tv_rt_pd_null_rating"
+                />
 
-        <EditText
-            android:gravity="top|left"
-            android:layout_width="350dp"
-            android:layout_height="200dp"
-            android:layout_below="@id/star_fm_rt_pd"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:hint="Viết đánh giá"
-            android:textColorHint="@color/black"
-            android:textColor="@color/black"
-            android:id="@+id/et_fm_rt_pd_cmt"
-            android:background="@color/light_grey"/>
+            <EditText
+                android:gravity="top|left"
+                android:layout_width="350dp"
+                android:layout_height="200dp"
+                android:layout_below="@id/star_fm_rt_pd"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:hint="@string/enter_comment"
+                android:textColorHint="@color/black"
+                android:textColor="@color/black"
+                android:id="@+id/et_fm_rt_pd_cmt"
+                android:background="@color/light_grey"/>
 
-        <android.widget.Button
-            android:id="@+id/bt_fm_rt_pd_rating"
-            android:layout_below="@id/et_fm_rt_pd_cmt"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
-            android:layout_width="200dp"
-            android:textColor="@color/white"
-            android:background="@color/light_red"
-            android:text="@string/send_comment"
-            android:textStyle="bold"
-            android:layout_marginTop="30dp"
-            />
+            <android.widget.Button
+                android:id="@+id/bt_fm_rt_pd_rating"
+                android:layout_below="@id/et_fm_rt_pd_cmt"
+                android:layout_centerHorizontal="true"
+                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:textColor="@color/white"
+                android:background="@color/light_red"
+                android:text="@string/send_comment"
+                android:textStyle="bold"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="100dp"
+                />
 
-    </RelativeLayout>
+        </RelativeLayout>
+
+    </ScrollView>
+
 
 
 </RelativeLayout>

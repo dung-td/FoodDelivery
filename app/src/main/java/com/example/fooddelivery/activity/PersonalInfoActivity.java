@@ -28,6 +28,8 @@ import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.main.CartActivity;
 import com.example.fooddelivery.model.CallBackData;
 import com.example.fooddelivery.model.OnGetDataListener;
+import com.example.fooddelivery.model.Comment;
+import com.example.fooddelivery.model.ModifyFirebase;
 import com.example.fooddelivery.model.Regex;
 import com.example.fooddelivery.model.User;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -325,9 +327,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
 //        });
 //        progressBar.setVisibility(View.INVISIBLE);
 
-        String uri = getIntent().getStringExtra("uriAvatar");
-        if (uri != null) {
-            Picasso.get().load(Uri.parse(uri)).into(iv_Avatar);
+        Uri uri = LoginActivity.firebase.getUser().getProfileImage();
+        if (uri !=null)
+        {
+            Picasso.get().load(uri).into(iv_Avatar);
         }
     }
 
@@ -397,11 +400,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         checkExistedEmail(email, new CallBackData() {
             @Override
-            public void firebaseResponseCallback(String result) {
-
-            }
-
-            @Override
             public void firebaseResponseCallback(boolean result) {
                 if (result) {
                     et_Email.setError(getString(R.string.email_has_been_used));
@@ -411,6 +409,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 } else {
                     sendVerifyEmail(email);
                 }
+
+            }
+
+            @Override
+            public void callbackComment(Comment result) {
+
+            }
+
+            @Override
+            public void callbackListOrder() {
 
             }
         });
@@ -484,7 +492,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 });
         progressBar.setVisibility(View.INVISIBLE);
     }
-    //void updateEmail(String email) {
+//    void updateEmail(String email) {
 //        FirebaseFirestore root = FirebaseFirestore.getInstance();
 //        root.collection("User").document(userID)
 //                .update("email", email)
