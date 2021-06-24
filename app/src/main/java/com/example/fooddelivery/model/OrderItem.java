@@ -6,15 +6,22 @@ public class OrderItem {
     int quantity;
     int price;
     String size;
-
     Comment comment;
 
-    public OrderItem(String order_id, Product product, int quantity, int price, Comment comment, String size) {
+    public OrderItem(String order_id, Product product, int quantity, int price, String size, Comment comment) {
         this.order_id = order_id;
         this.product = product;
         this.quantity = quantity;
         this.price = price;
         this.comment = comment;
+        this.size = size;
+    }
+
+    public OrderItem(String order_id, Product product, int quantity, int price, String size) {
+        this.order_id = order_id;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
         this.size = size;
     }
 

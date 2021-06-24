@@ -1,9 +1,6 @@
 package com.example.fooddelivery.model;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import java.util.ArrayList;
 
 public class Orders {
     String orderID;
@@ -111,10 +108,12 @@ public class Orders {
     {
         int price = 0;
 
-//        for (OrderItem orderItem: listOrderItems)
-//            price = price + orderItem.getPrice() * orderItem.getQuantity();
+        for (OrderItem orderItem: listOrderItems)
+            price = price + orderItem.getPrice() * orderItem.getQuantity();
 
         return price;
     }
+
+
 }
 

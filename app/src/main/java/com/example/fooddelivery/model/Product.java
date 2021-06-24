@@ -91,6 +91,7 @@ public class Product implements Parcelable {
         CommentList = in.createTypedArrayList(Comment.CREATOR);
     }
 
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(Id);
@@ -106,6 +107,7 @@ public class Product implements Parcelable {
         dest.writeStringList(ProductSize);
         dest.writeTypedList(CommentList);
     }
+
 
     @Override
     public int describeContents() {

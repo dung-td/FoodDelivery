@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.me.LanguageSetting;
 import com.example.fooddelivery.adapter.ViewPagerOrdersAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -28,12 +29,11 @@ public class OrderFragment extends Fragment {
     ViewPager vp_orders;
     TabLayout tl_orders;
     Activity activity;
-    String language;
 
-    public OrderFragment(Activity activity, String language)
+
+    public OrderFragment(Activity activity)
     {
         this.activity = activity;
-        this.language = language;
     }
 
     @Nullable
@@ -55,12 +55,11 @@ public class OrderFragment extends Fragment {
         tl_orders.setupWithViewPager(vp_orders);
     }
 
-    public void setLocal()
-    {
+    public void setLocal() {
         String langCode;
         LanguageSetting languageSetting = new LanguageSetting();
         Log.e("Lang", languageSetting.getChosenLanguege());
-        if (language.equals("vi"))
+        if (LoginActivity.language.equals("vi"))
             langCode = "vi";
         else   {
             langCode ="en";

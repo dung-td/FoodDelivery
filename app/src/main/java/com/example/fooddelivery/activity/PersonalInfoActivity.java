@@ -1,23 +1,16 @@
 package com.example.fooddelivery.activity;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,18 +18,24 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
-import com.example.fooddelivery.activity.login.SignUpActivity_1;
-import com.example.fooddelivery.activity.login.SignUpActivity_2;
 import com.example.fooddelivery.activity.main.CartActivity;
-import com.example.fooddelivery.fragment.HomeFragment;
-import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.model.CallBackData;
+import com.example.fooddelivery.model.OnGetDataListener;
+import com.example.fooddelivery.model.Comment;
 import com.example.fooddelivery.model.ModifyFirebase;
 import com.example.fooddelivery.model.Regex;
 import com.example.fooddelivery.model.User;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,10 +43,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.SignInMethodQueryResult;
-import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -56,18 +51,16 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 
-import org.w3c.dom.Text;
-
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+
+import es.dmoral.toasty.Toasty;
+
 
 public class PersonalInfoActivity extends AppCompatActivity {
 
+    private static final int PLACE_PICKER_REQUEST = 1;
     EditText et_Email, et_Phone, et_Address;
     TextView tv_ChangeAvatar, tv_ChangeEmail, tv_ChangePhone, tv_ChangeAddress;
     TextView tv_Email, tv_Phone, tv_Address, tv_Name, tv_Username;
@@ -82,6 +75,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     String oldEmail, oldPhone, oldAddress;
     User currentUser = new User();
     String userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +105,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     void initView() {
-        bt_back = (ImageButton)findViewById(R.id.bt_perinfo_back);
+        bt_back = (ImageButton) findViewById(R.id.bt_perinfo_back);
         et_Email = (EditText) findViewById(R.id.et_perinfo_email);
         et_Phone = (EditText) findViewById(R.id.et_perinfo_phone);
         et_Address = (EditText) findViewById(R.id.et_perinfo_address);
@@ -124,11 +118,11 @@ public class PersonalInfoActivity extends AppCompatActivity {
         tv_Address = (TextView) findViewById(R.id.tv_perinfo_address);
         tv_Phone = (TextView) findViewById(R.id.tv_perinfo_phone);
         tv_Email = (TextView) findViewById(R.id.tv_perinfo_email);
-        tv_Name = (TextView)findViewById(R.id.tv_perinfo_name);
+        tv_Name = (TextView) findViewById(R.id.tv_perinfo_name);
 
         iv_Avatar = (ImageView) findViewById(R.id.im_perinfo);
 
-        progressBar = (ProgressBar)findViewById(R.id.perinfo_wating);
+        progressBar = (ProgressBar) findViewById(R.id.perinfo_wating);
         progressBar.setVisibility(View.INVISIBLE);
 
         et_Address.setVisibility(View.GONE);
@@ -149,8 +143,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     void finishChangeInfomation(EditText et_Info, TextView tv_Info, TextView confirm) {
-        if (et_Info.getText().toString().isEmpty())
-        {
+        if (et_Info.getText().toString().isEmpty()) {
             et_Info.setError(getString(R.string.data_empty));
             et_Info.requestFocus();
         } else {
@@ -166,20 +159,16 @@ public class PersonalInfoActivity extends AppCompatActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_perinfo_changeemail:
-                if (tv_ChangeEmail.getText().equals(getString(R.string.change))){
+                if (tv_ChangeEmail.getText().equals(getString(R.string.change))) {
                     beginChangeInfomation(et_Email, tv_Email, tv_ChangeEmail);
 
-                }
-                else {
-                    if (validEmail())
-                    {
-                        if (!oldEmail.equals(et_Email.getText().toString()))
-                        {
+                } else {
+                    if (validEmail()) {
+                        if (!oldEmail.equals(et_Email.getText().toString())) {
                             progressBar.setVisibility(View.VISIBLE);
                             progressBar.setIndeterminate(true);
                             changeEmail(et_Email.getText().toString());
-                        }
-                        else
+                        } else
                             progressBar.setVisibility(View.INVISIBLE);
 
                         if (newEmail || oldEmail.equals(et_Email.getText().toString())) {
@@ -192,22 +181,18 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
             case R.id.tv_perinfo_changephone:
 
-                if (tv_ChangePhone.getText().equals(getString(R.string.change))){
+                if (tv_ChangePhone.getText().equals(getString(R.string.change))) {
                     beginChangeInfomation(et_Phone, tv_Phone, tv_ChangePhone);
-                }
-                else {
-                    if (validPhone())
-                    {
+                } else {
+                    if (validPhone()) {
                         progressBar.setVisibility(View.VISIBLE);
                         progressBar.setIndeterminate(true);
                         Log.e("Old phone", oldPhone);
                         Log.e("newPhone", et_Phone.getText().toString());
-                        if (!oldPhone.equals(et_Phone.getText().toString()))
-                        {
+                        if (!oldPhone.equals(et_Phone.getText().toString())) {
                             Log.e("Change phone", "go to change phone" + et_Phone.getText().toString());
                             changePhone(et_Phone.getText().toString());
-                        }
-                        else
+                        } else
                             progressBar.setVisibility(View.INVISIBLE);
                         finishChangeInfomation(et_Phone, tv_Phone, tv_ChangePhone);
                     }
@@ -216,17 +201,14 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 break;
 
             case R.id.tv_perinfo_changeaddress:
-                if (tv_ChangeAddress.getText().equals(getString(R.string.change))){
-                    beginChangeInfomation(et_Address, tv_Address, tv_ChangeAddress);
-                }
-                else
-                {
-                    if (!oldAddress.equals(et_Address.getText().toString()) ) {
+                if (tv_ChangeAddress.getText().equals(getString(R.string.change))) {
+                    updateAddress();
+                } else {
+                    if (!oldAddress.equals(et_Address.getText().toString())) {
                         progressBar.setVisibility(View.VISIBLE);
                         progressBar.setIndeterminate(true);
                         updateAddress();
-                    }
-                    else
+                    } else
                         progressBar.setVisibility(View.INVISIBLE);
 
                     finishChangeInfomation(et_Address, tv_Address, tv_ChangeAddress);
@@ -250,11 +232,44 @@ public class PersonalInfoActivity extends AppCompatActivity {
             iv_Avatar.setImageURI(imageUri);
         }
 
+        if (requestCode == PLACE_PICKER_REQUEST && resultCode == RESULT_OK) {
+            Place place = PlacePicker.getPlace(data, this);
+
+            double latitude = place.getLatLng().latitude;
+            double longitude = place.getLatLng().longitude;
+
+            Geocoder geocoder;
+            List<Address> addresses = null;
+            geocoder = new Geocoder(this, Locale.getDefault());
+
+            try {
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            LoginActivity.firebase.getUser().setAddress(addresses.get(0));
+
+            LoginActivity.firebase.updateUserAddress(new OnGetDataListener() {
+                @Override
+                public void onStart() {
+
+                }
+
+                @Override
+                public void onSuccess() {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    et_Address.setText(LoginActivity.firebase.getUser().getAddress().getAddressLine(0));
+                    Toasty.success(getApplicationContext(), getString(R.string.update_infodata_done), Toasty.LENGTH_LONG).show();
+                }
+            });
+        }
+
         progressBar.setVisibility(View.INVISIBLE);
     }
 
     void updateAvatar() {
-        StorageReference fileRef = reference.child("UserImage/"+ userID);
+        StorageReference fileRef = reference.child("UserImage/" + userID);
 
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -268,7 +283,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(getApplicationContext(), getString(R.string.update_ava_done), Toast.LENGTH_LONG).show();
+                                        Toasty.success(getApplicationContext(), getString(R.string.update_ava_done), Toasty.LENGTH_LONG).show();
                                     }
                                 });
                     }
@@ -277,25 +292,18 @@ public class PersonalInfoActivity extends AppCompatActivity {
         });
     }
 
-    void updateAddress(){
-        String address = et_Address.getText().toString();
-
-        root.collection("User").document(userID)
-                .update("address", address)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        currentUser.setAddress(address);
-                        progressBar.setVisibility(View.INVISIBLE);
-                        CartActivity.setUserInformation();
-                        Toast.makeText(getApplicationContext(), getString(R.string.update_infodata_done), Toast.LENGTH_LONG).show();
-                    }
-                });
+    void updateAddress() {
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try {
+            startActivityForResult(builder.build(PersonalInfoActivity.this), PLACE_PICKER_REQUEST);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
     }
 
-    void loadInformation()
-    {
-        tv_Address.setText(currentUser.getAddress());
+
+    void loadInformation() {
+        tv_Address.setText(currentUser.getAddress().getAddressLine(0));
         tv_Phone.setText(currentUser.getPhone_Number());
         tv_Email.setText(currentUser.getEmail());
         tv_Name.setText(String.format("%s %s", currentUser.getLast_Name(), currentUser.getFirst_Name()));
@@ -319,10 +327,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
 //        });
 //        progressBar.setVisibility(View.INVISIBLE);
 
-        String uri = getIntent().getStringExtra("uriAvatar");
-        if (uri!=null)
+        Uri uri = LoginActivity.firebase.getUser().getProfileImage();
+        if (uri !=null)
         {
-            Picasso.get().load(Uri.parse(uri)).into(iv_Avatar);
+            Picasso.get().load(uri).into(iv_Avatar);
         }
     }
 
@@ -354,7 +362,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         return true;
     }
-    boolean validPhone(){
+
+    boolean validPhone() {
         if (et_Phone.getText().toString().length() != 10 ||
                 !et_Phone.getText().toString().startsWith("0")) {
             et_Phone.setError(getString(R.string.wrong_phone_format));
@@ -365,6 +374,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
     }
 
     boolean newEmail = false;
+
     void changeEmail(String email) {
 //        root.collection("User")
 //                .whereEqualTo("email", email)
@@ -390,27 +400,32 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
         checkExistedEmail(email, new CallBackData() {
             @Override
-            public void firebaseResponseCallback(String result) {
-
-            }
-
-            @Override
             public void firebaseResponseCallback(boolean result) {
                 if (result) {
                     et_Email.setError(getString(R.string.email_has_been_used));
                     et_Email.requestFocus();
                     Log.e(getString(R.string.email_has_been_used), getString(R.string.email_has_been_used));
                     progressBar.setVisibility(View.INVISIBLE);
-                }else{
+                } else {
                     sendVerifyEmail(email);
                 }
+
+            }
+
+            @Override
+            public void callbackComment(Comment result) {
+
+            }
+
+            @Override
+            public void callbackListOrder() {
 
             }
         });
 
     }
 
-    public void checkExistedEmail(String email, CallBackData callback){
+    public void checkExistedEmail(String email, CallBackData callback) {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
             @Override
@@ -439,8 +454,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
                                 et_Phone.setError(getString(R.string.phone_been_used));
                                 et_Phone.requestFocus();
-                            }
-                            else {
+                            } else {
                                 Intent verifyPhone = new Intent(PersonalInfoActivity.this, VerifyPhoneActivity.class);
                                 verifyPhone.putExtra("phone", phone);
                                 startActivity(verifyPhone);
@@ -453,7 +467,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
 
     private void sendVerifyEmail(String email) {
-        Toast.makeText(this, getString(R.string.verified_email_sent)+ " " +email, Toast.LENGTH_LONG).show();
+        Toasty.info(this, getString(R.string.verified_email_sent) + " " + email, Toasty.LENGTH_LONG).show();
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         user.verifyBeforeUpdateEmail(email)
@@ -464,7 +478,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                         user.reload();
                         if (task.isSuccessful() && user.isEmailVerified()) {
                             Log.e("verifyBeforeUpdateEmail", "verifyBeforeUpdateEmail");
-                           // updateEmail(email);
+                            // updateEmail(email);
                             newEmail = true;
                         }
                     }
@@ -473,19 +487,19 @@ public class PersonalInfoActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.e("Send email failed", e.getLocalizedMessage());
-                        Toast.makeText(getApplicationContext(), getString(R.string.verify_failed), Toast.LENGTH_LONG).show();
+                        Toasty.success(getApplicationContext(), getString(R.string.verify_failed), Toasty.LENGTH_LONG).show();
                     }
                 });
         progressBar.setVisibility(View.INVISIBLE);
     }
-    //void updateEmail(String email) {
+//    void updateEmail(String email) {
 //        FirebaseFirestore root = FirebaseFirestore.getInstance();
 //        root.collection("User").document(userID)
 //                .update("email", email)
 //                .addOnSuccessListener(new OnSuccessListener<Void>() {
 //                    @Override
 //                    public void onSuccess(Void aVoid) {
-//                        Toast.makeText(getApplicationContext(), getString(R.string.update_infodata_done), Toast.LENGTH_LONG).show();
+//                        Toasty.makeText(getApplicationContext(), getString(R.string.update_infodata_done), Toasty.LENGTH_LONG).show();
 //                    }
 //                });
 //    }

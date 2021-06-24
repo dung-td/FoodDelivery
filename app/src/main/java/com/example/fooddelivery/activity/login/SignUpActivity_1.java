@@ -2,36 +2,47 @@ package com.example.fooddelivery.activity.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.model.Regex;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class SignUpActivity_1 extends AppCompatActivity {
 
+    private static final int PLACE_PICKER_REQUEST = 1;
     EditText et_email, et_lastname, et_firstname,
-            et_phone, et_address, et_pass1, et_pass2;
+            et_phone, et_pass1, et_pass2;
     TextInputLayout ti_email;
     ImageView bt_next, bt_back;
-    TextView tv_haveaccont;
+    TextView tv_haveaccont, tv_address, tv_choosseAddress;
     ProgressDialog progressDialog;
     Regex regex;
     FirebaseFirestore root;
     String uid;
+    Address address;
 
 
     @Override
@@ -46,16 +57,17 @@ public class SignUpActivity_1 extends AppCompatActivity {
         root = FirebaseFirestore.getInstance();
         regex = new Regex();
         et_email = findViewById(R.id.su1_et_email);
-        et_lastname =findViewById(R.id.su1_et_lastname);
-        et_firstname =  findViewById(R.id.su1_et_firstname);
+        et_lastname = findViewById(R.id.su1_et_lastname);
+        et_firstname = findViewById(R.id.su1_et_firstname);
         et_phone = findViewById(R.id.su1_et_phone);
-        et_address =  findViewById(R.id.su1_et_address);
+        tv_address = findViewById(R.id.su1_tv_address);
         et_pass1 = findViewById(R.id.su1_et_pass);
         et_pass2 = findViewById(R.id.su1_et_repass);
         ti_email = findViewById(R.id.su1_ti_email);
-        bt_next =findViewById(R.id.su1_bt_next);
+        bt_next = findViewById(R.id.su1_bt_next);
         bt_back = findViewById(R.id.su1_bt_back);
         tv_haveaccont = findViewById(R.id.su1_tv_haveaccount);
+        tv_choosseAddress = findViewById(R.id.su1_tv_addresspicker);
 
         progressDialog = new ProgressDialog(SignUpActivity_1.this);
 
@@ -91,6 +103,43 @@ public class SignUpActivity_1 extends AppCompatActivity {
                 SignUpActivity_1.super.onBackPressed();
             }
         });
+
+        tv_choosseAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                try {
+                    startActivityForResult(builder.build(SignUpActivity_1.this), PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PLACE_PICKER_REQUEST && resultCode == RESULT_OK) {
+            Place place = PlacePicker.getPlace(data, this);
+
+            double latitude = place.getLatLng().latitude;
+            double longitude = place.getLatLng().longitude;
+
+            Geocoder geocoder;
+            List<Address> addresses = null;
+            geocoder = new Geocoder(this, Locale.getDefault());
+
+            try {
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            address = addresses.get(0);
+            tv_address.setText(address.getAddressLine(0));
+        }
     }
 
     private void checkEmail() {
@@ -116,13 +165,12 @@ public class SignUpActivity_1 extends AppCompatActivity {
                 });
     }
 
-    private void SendInformation(Intent nextSU)
-    {
+    private void SendInformation(Intent nextSU) {
         nextSU.putExtra("firstname", et_firstname.getText().toString());
-        nextSU.putExtra("lastname",et_lastname.getText().toString());
+        nextSU.putExtra("lastname", et_lastname.getText().toString());
         nextSU.putExtra("phone", et_phone.getText().toString());
         nextSU.putExtra("email", et_email.getText().toString());
-        nextSU.putExtra("address", et_address.getText().toString());
+        nextSU.putExtra("address", address);
         nextSU.putExtra("password", et_pass1.getText().toString());
         nextSU.putExtra("uid", uid);
     }
@@ -153,11 +201,11 @@ public class SignUpActivity_1 extends AppCompatActivity {
             et_phone.setError(getString(R.string.wrong_phone_format));
             et_phone.requestFocus();
             return false;
-        } else if (et_pass1.getText().toString().isEmpty())  {
+        } else if (et_pass1.getText().toString().isEmpty()) {
             et_pass1.setError(getString(R.string.please_enter_pass));
             et_pass1.requestFocus();
             return false;
-        } else if (et_pass2.getText().toString().isEmpty())  {
+        } else if (et_pass2.getText().toString().isEmpty()) {
             et_pass2.setError(getString(R.string.please_enter_pass));
             et_pass2.requestFocus();
             return false;
@@ -170,9 +218,9 @@ public class SignUpActivity_1 extends AppCompatActivity {
             et_pass1.setError(getString(R.string.pass_regex));
             et_pass1.requestFocus();
             return false;
-        } else if (et_address.getText().toString().isEmpty())  {
-            et_address.setError(getString(R.string.pls_enter_address));
-            et_address.requestFocus();
+        } else if (tv_address.getText().toString().equals(R.string.no_data)) {
+            tv_address.setError(getString(R.string.pls_enter_address));
+            tv_address.requestFocus();
             return false;
         }
         return true;

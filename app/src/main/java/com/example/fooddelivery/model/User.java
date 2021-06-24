@@ -1,19 +1,33 @@
 package com.example.fooddelivery.model;
 
+import android.location.Address;
 import android.net.Uri;
+
+import java.util.Locale;
 
 public class User {
     String First_Name;
     String Last_Name;
     String Phone_Number;
     String Email;
-    String Address;
+    Address Address;
     String Password;
     Uri ProfileImage;
 
-    public User() {}
+    public User() {
+        Locale locale = new Locale("Vietnamese", "Vietnam");
+        Address = new Address(locale);
+    }
 
-    public User(String first_Name, String last_Name, String phone_Number, String email, String address, String password) {
+    public User(String first_Name, String last_Name, String phone_Number, String email, String password) {
+        First_Name = first_Name;
+        Last_Name = last_Name;
+        Phone_Number = phone_Number;
+        Email = email;
+        Password = password;
+    }
+
+    public User(String first_Name, String last_Name, String phone_Number, String email, Address address, String password) {
         First_Name = first_Name;
         Last_Name = last_Name;
         Phone_Number = phone_Number;
@@ -22,7 +36,7 @@ public class User {
         Password = password;
     }
 
-    public User(String first_Name, String last_Name, String phone_Number, String email, String address, String password, Uri profileImage) {
+    public User(String first_Name, String last_Name, String phone_Number, String email, Address address, String password, Uri profileImage) {
         First_Name = first_Name;
         Last_Name = last_Name;
         Phone_Number = phone_Number;
@@ -64,11 +78,11 @@ public class User {
         Email = email;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return Address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         Address = address;
     }
 
