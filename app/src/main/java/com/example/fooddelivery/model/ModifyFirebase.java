@@ -225,7 +225,7 @@ public class ModifyFirebase {
         item.put("discount", discount);
         item.put("freight_cost", freight_cost);
         item.put("payment_method", "COD");
-        item.put("status", "Delivering");
+        item.put("status", "Pending");
         item.put("time", time);
         item.put("total_amount", totalAmount);
         item.put("voucher", voucherId);

@@ -56,8 +56,7 @@ public class SearchResultActivity extends AppCompatActivity {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SearchingActivity.searchingItemAdapter.notifyDataSetChanged();
-                SearchResultActivity.super.onBackPressed();
+                onBackPressed();
             }
         });
     }
@@ -65,6 +64,8 @@ public class SearchResultActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         SearchingActivity.searchingItemAdapter.notifyDataSetChanged();
+        if (SearchingActivity.searchData.size() == 1)
+            SearchingActivity.textViewNoSearches.setVisibility(View.INVISIBLE);
         super.onBackPressed();
     }
 

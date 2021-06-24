@@ -33,11 +33,12 @@ import java.util.Locale;
 
 public class SearchingActivity extends AppCompatActivity {
 
-    TextView textViewDeleteSearches, textViewNoSearches;
+    TextView textViewDeleteSearches;
+    static TextView textViewNoSearches;
     EditText editTextSearchInput;
-    RecyclerView recyclerViewSearches;
+    static RecyclerView recyclerViewSearches;
     ImageButton buttonBack, buttonClearText;
-    ArrayList<String> searchData;
+    static ArrayList<String> searchData = new ArrayList<>();
     public static ArrayList<Product> queryResult;
     public static SearchingItemAdapter searchingItemAdapter;
 
@@ -98,7 +99,7 @@ public class SearchingActivity extends AppCompatActivity {
         getSearchesList();
     }
 
-    private void setRecyclerViewSearchesAdapter () {
+    private void setRecyclerViewSearchesAdapter() {
         searchData = new ArrayList<>();
         for (SearchString search : LoginActivity.firebase.searchList) {
             searchData.add(search.getDetail());
@@ -110,9 +111,9 @@ public class SearchingActivity extends AppCompatActivity {
         else {
             textViewNoSearches.setVisibility(View.INVISIBLE);
             textViewDeleteSearches.setVisibility(View.VISIBLE);
-            searchingItemAdapter = new SearchingItemAdapter(this, searchData);
-            recyclerViewSearches.setAdapter(searchingItemAdapter);
         }
+        searchingItemAdapter = new SearchingItemAdapter(SearchingActivity.this, searchData);
+        recyclerViewSearches.setAdapter(searchingItemAdapter);
     }
 
     private void getSearchesList() {
@@ -126,12 +127,7 @@ public class SearchingActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess() {
                     HomeFragment.isSearchFirstClick = false;
-                    if (LoginActivity.firebase.searchList.size() == 0) {
-                        textViewNoSearches.setVisibility(View.VISIBLE);
-                    }
-                    else {
-                        setRecyclerViewSearchesAdapter();
-                    }
+                    setRecyclerViewSearchesAdapter();
                 }
             });
         }
@@ -158,6 +154,7 @@ public class SearchingActivity extends AppCompatActivity {
                     public void onSuccess() {
                         recyclerViewSearches.removeAllViewsInLayout();
                         recyclerViewSearches.invalidate();
+                        searchData.clear();
                         textViewNoSearches.setVisibility(View.VISIBLE);
                         textViewDeleteSearches.setVisibility(View.INVISIBLE);
                     }
@@ -177,6 +174,7 @@ public class SearchingActivity extends AppCompatActivity {
                     if (!checkIfSearchExist()) {
                         LoginActivity.firebase.addSearchDataToFirebase(editTextSearchInput.getText().toString());
                         searchData.add(editTextSearchInput.getText().toString());
+                        LoginActivity.firebase.searchList.add(new SearchString("", editTextSearchInput.getText().toString()));
                     }
 
                     queryResult = new ArrayList<>();
