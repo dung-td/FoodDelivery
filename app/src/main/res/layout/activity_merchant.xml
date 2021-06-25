@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="@color/white"
     tools:context=".activity.MerchantActivity">
 
 <!--    Content-->
@@ -43,7 +43,7 @@
             </RelativeLayout>
 
             <View
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black"/>
@@ -53,8 +53,8 @@
                 android:id="@+id/merchant_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp">
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp">
 
                 <ImageView
                     android:id="@+id/img_logo"
@@ -150,8 +150,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
                 android:background="@color/black"/>
 
 <!--            Voucher Box-->
@@ -159,7 +159,6 @@
                 android:id="@+id/voucher_box"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -196,8 +195,7 @@
             </RelativeLayout>
 
             <View
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black"/>

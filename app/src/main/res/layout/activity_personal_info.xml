@@ -252,7 +252,7 @@
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/tv_perinfo_address"
-                android:layout_width="260dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="Địa chỉ"
                 android:layout_marginTop="8dp"
@@ -280,6 +280,7 @@
 
         <EditText
             android:layout_marginTop="18dp"
+            android:layout_below="@+id/tv_perinfo_changeaddress"
             android:id="@+id/et_perinfo_address"
             android:layout_marginLeft="20dp"
             android:layout_width="300dp"
@@ -293,7 +294,8 @@
             android:text="@string/__default"
             android:layout_marginLeft="20dp"
             android:textSize="12dp"
-            android:layout_marginTop="58dp"
+            android:layout_below="@+id/tv_perinfo_changeaddress"
+            android:layout_marginTop="55dp"
             android:layout_marginBottom="8dp"
 
             />
