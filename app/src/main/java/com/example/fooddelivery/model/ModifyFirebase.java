@@ -1,18 +1,13 @@
 package com.example.fooddelivery.model;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.location.Address;
 import android.net.Uri;
-import android.util.ArrayMap;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.VerifyPhoneActivity;
-import com.example.fooddelivery.fragment.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,13 +21,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
 
@@ -209,8 +201,8 @@ public class ModifyFirebase {
                                 break;
                             ChosenItem item = new ChosenItem();
                             item.getProduct().setId((String) document.get("ProductId"));
-                            item.setSize((String)document.get("Size"));
-                            item.setQuantity((String)document.get("Quantity"));
+                            item.setSize((String) document.get("Size"));
+                            item.setQuantity((String) document.get("Quantity"));
                             cartList.add(item);
                         }
                     }
@@ -244,8 +236,7 @@ public class ModifyFirebase {
                             String price = "";
                             if (product.getProduct().getProductSize().get(0) != null) {
                                 price = product.getProduct().getPrice().get(product.getProduct().getProductSize().indexOf(product.getSize()));
-                            }
-                            else {
+                            } else {
                                 price = product.getProduct().getPrice().get(0);
                             }
 
@@ -261,6 +252,8 @@ public class ModifyFirebase {
                         listener.onSuccess();
                     }
                 });
+    }
+
     public void addProductToCart(String productId) {
 
     }
@@ -412,9 +405,17 @@ public class ModifyFirebase {
                             if (document == null)
                                 break;
                             Merchant merchant = new Merchant();
+
+                            Map<String, Object> addressData = (Map<String, Object>) document.get("address");
+                            merchant.getAddress().setAddressLine(0, addressData.get("address").toString());
+                            merchant.getAddress().setLocality(addressData.get("city").toString());
+                            merchant.getAddress().setAdminArea(addressData.get("state").toString());
+                            merchant.getAddress().setCountryName(addressData.get("country").toString());
+                            merchant.getAddress().setLatitude(Double.parseDouble(addressData.get("latitude").toString()));
+                            merchant.getAddress().setLongitude(Double.parseDouble(addressData.get("longitude").toString()));
+
                             merchant.setName((String) document.get("Name"));
-                            merchant.setAddress((String) document.get("Address"));
-                            merchant.setId((String) document.getId());
+                            merchant.setId(document.getId());
 
                             ArrayList<Uri> merchantImages = new ArrayList<Uri>();
                             root.collection("Merchant/" + merchant.getId() + "/Photos/")
@@ -579,7 +580,7 @@ public class ModifyFirebase {
         listener.onStart();
         for (Product p : productList) {
             if (p.getName().toLowerCase().contains(input.toLowerCase()) ||
-                p.getEn_Name().toLowerCase().contains(input.toLowerCase())) {
+                    p.getEn_Name().toLowerCase().contains(input.toLowerCase())) {
                 list.add(p);
             }
         }
@@ -619,6 +620,8 @@ public class ModifyFirebase {
                                 user.getAddress().setLocality(addressData.get("city").toString());
                                 user.getAddress().setAdminArea(addressData.get("state").toString());
                                 user.getAddress().setCountryName(addressData.get("country").toString());
+                                user.getAddress().setLatitude((Double) addressData.get("latitude"));
+                                user.getAddress().setLongitude((Double) addressData.get("longitude"));
                                 user.First_Name = document.get("first_Name").toString();
                                 user.Last_Name = document.get("last_Name").toString();
                                 user.Phone_Number = document.get("phone_Number").toString();
@@ -715,6 +718,9 @@ public class ModifyFirebase {
                     @Override
                     public void onSuccess(Void aVoid) {
                         listener.onSuccess();
+                    }
+                });
+    }
 
     //region ORDERS
     ArrayList<Map<String, String>> listMap = new ArrayList<>();
@@ -759,7 +765,7 @@ public class ModifyFirebase {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot != null) {
-                        //    Log.e(ORDER_TAG, "get order details: " + documentSnapshot.getId());
+                            //    Log.e(ORDER_TAG, "get order details: " + documentSnapshot.getId());
                             order.time = documentSnapshot.get("time").toString();
                             order.discount = Integer.parseInt(documentSnapshot.get("discount").toString());
                             order.status = documentSnapshot.get("status").toString();
@@ -807,7 +813,7 @@ public class ModifyFirebase {
 
                             for (Map item : listMap) {
 
-                                Log.e(ORDER_TAG, "get order products: " + documentSnapshot.getId() +" "+ item.get("product"));
+                                Log.e(ORDER_TAG, "get order products: " + documentSnapshot.getId() + " " + item.get("product"));
 
                                 Product product = new Product();
                                 product = getProductById(item.get("product").toString());
@@ -923,6 +929,7 @@ public class ModifyFirebase {
     public void setOrdersList(ArrayList<Orders> ordersList) {
         this.ordersList = ordersList;
     }
+
     //endregion
     public boolean checkEmail(String email) {
         root.collection("User")

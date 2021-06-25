@@ -1,26 +1,32 @@
 package com.example.fooddelivery.model;
 
+import android.location.Address;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
-public class Merchant implements Parcelable{
+public class Merchant implements Parcelable {
     private String Id;
     private String Name;
-    private String Address;
+    private Address Address;
     private String Email;
     private String Phone;
     private ArrayList<Uri> Image = new ArrayList<Uri>();
+    private List<Route> routes = new ArrayList<Route>();
 
     public Merchant() {
-        Id = Name = Address = Email = Phone = "Empty";
+        Locale locale = new Locale("Vietnamese", "Vietnam");
+        Address = new Address(locale);
+        Id = Name = Email = Phone = "Empty";
         Uri uri = Uri.parse("android.resource://com.example.merchanttask/drawable/untitled_icon");
         Image.add(uri);
     }
 
-    public Merchant(String name, String address) {
+    public Merchant(String name, Address address) {
         Name = name;
         Address = address;
         Email = Phone = "Empty";
@@ -37,7 +43,6 @@ public class Merchant implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(Id);
         dest.writeString(Name);
-        dest.writeString(Address);
         dest.writeString(Email);
         dest.writeString(Phone);
         dest.writeTypedList(Image);
@@ -46,7 +51,6 @@ public class Merchant implements Parcelable{
     protected Merchant(Parcel in) {
         Id = in.readString();
         Name = in.readString();
-        Address = in.readString();
         Email = in.readString();
         Phone = in.readString();
         Image = in.createTypedArrayList(Uri.CREATOR);
@@ -80,11 +84,11 @@ public class Merchant implements Parcelable{
         Name = name;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return Address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         Address = address;
     }
 
@@ -110,5 +114,13 @@ public class Merchant implements Parcelable{
 
     public void setImage(ArrayList<Uri> image) {
         Image = image;
+    }
+
+    public List<Route> getRoutes() {
+        return routes;
+    }
+
+    public void setRoutes(List<Route> routes) {
+        this.routes = routes;
     }
 }

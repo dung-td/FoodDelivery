@@ -1,13 +1,8 @@
 package com.example.fooddelivery.activity;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -32,20 +27,31 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 import com.bumptech.glide.Glide;
+import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.main.CartActivity;
 import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.adapter.CommentAdapter;
 import com.example.fooddelivery.adapter.ImageAdapter;
-import com.example.fooddelivery.R;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.ChosenItem;
 import com.example.fooddelivery.model.Comment;
+import com.example.fooddelivery.model.DirectionFinder;
+import com.example.fooddelivery.model.DirectionFinderListener;
 import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
+import com.example.fooddelivery.model.Route;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -64,6 +70,7 @@ public class ProductActivity extends AppCompatActivity {
     TextView textViewMerchantName;
     TextView textViewProductRating;
     TextView textViewTotalComment;
+    TextView textViewTimeDistacne;
     static TextView cartBadge;
     TextView textViewProductNameEn;
     ViewPager viewPagerImage;
@@ -91,6 +98,7 @@ public class ProductActivity extends AppCompatActivity {
 
         initView();
         loadLanguage();
+        getRoutes();
         changeToolbarButtonColorToLighter();
         changeLoveIcon();
         initProductImageViewPager();
@@ -132,19 +140,16 @@ public class ProductActivity extends AppCompatActivity {
                         LoginActivity.firebase.cartList.get(index)
                                 .setQuantity((Integer.parseInt(LoginActivity.firebase.cartList.get(index).getQuantity()) + 1) + "");
                         LoginActivity.firebase.updateProductQuantityInCart(LoginActivity.firebase.cartList.get(index));
-                    }
-                    else {
+                    } else {
                         LoginActivity.firebase.addProductToCart(new ChosenItem(product, spinnerProductSize.getSelectedItem().toString(), "1"), getApplicationContext());
                         LoginActivity.firebase.cartList.add(new ChosenItem(product, spinnerProductSize.getSelectedItem().toString(), "1"));
                     }
-                }
-                else {
+                } else {
                     if (checkExistItemInCart()) {
                         LoginActivity.firebase.cartList.get(index)
                                 .setQuantity((Integer.parseInt(LoginActivity.firebase.cartList.get(index).getQuantity()) + 1) + "");
                         LoginActivity.firebase.updateProductQuantityInCart(LoginActivity.firebase.cartList.get(index));
-                    }
-                    else {
+                    } else {
                         LoginActivity.firebase.addProductToCart(new ChosenItem(product, "", "1"), getApplicationContext());
                         LoginActivity.firebase.cartList.add(new ChosenItem(product, "", "1"));
                     }
@@ -159,8 +164,7 @@ public class ProductActivity extends AppCompatActivity {
             if (item.getProduct().getId().equals(product.getId())) {
                 if (item.getSize().equals("")) {
                     return true;
-                }
-                else {
+                } else {
                     if (item.getSize().equals(spinnerProductSize.getSelectedItem().toString())) {
                         return true;
                     }
@@ -176,8 +180,7 @@ public class ProductActivity extends AppCompatActivity {
             cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
             cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
             HomeFragment.updateCartBadge();
-        }
-        else {
+        } else {
             cartBadge.setText("");
             cartBadge.getBackground().setTint(Color.TRANSPARENT);
         }
@@ -192,8 +195,7 @@ public class ProductActivity extends AppCompatActivity {
                     buttonLove.setImageResource(R.drawable.ic_baseline_favourite_white_border_24);
                     LoginActivity.firebase.favouriteProductList.remove(product.getId());
                     LoginActivity.firebase.removeProductFromFavourite(getApplicationContext(), product.getId());
-                }
-                else {
+                } else {
                     isFavourite = true;
                     buttonLove.setImageResource(R.drawable.ic_baseline_favorite_24);
                     LoginActivity.firebase.favouriteProductList.add(product.getId());
@@ -219,6 +221,7 @@ public class ProductActivity extends AppCompatActivity {
         textViewProductRating = findViewById(R.id.tv_rating);
         textViewTotalComment = findViewById(R.id.tv_comment_total);
         textViewProductNameEn = findViewById(R.id.tv_product_name_en);
+        textViewTimeDistacne = findViewById(R.id.tv_time_distance);
         cartBadge = findViewById(R.id.cart_badge);
         viewPagerImage = findViewById(R.id.product_image);
         linearLayoutBack = findViewById(R.id.btn_back_background);
@@ -253,8 +256,8 @@ public class ProductActivity extends AppCompatActivity {
         productSize = new ArrayList<String>();
         productSize = product.getProductSize();
 
-        //Merchant info
-        textViewMerchantName.setText(product.getMerchant().getName() + " - " + product.getMerchant().getAddress());
+
+
         if (product.getMerchant().getImage().size() > 0) { //Merchant logo
             imageViewMerchantLogo.setBackground(null);
             Glide.with(getApplicationContext()).load(product.getMerchant().getImage().get(0)).into(imageViewMerchantLogo);
@@ -275,6 +278,53 @@ public class ProductActivity extends AppCompatActivity {
         //Init spinner
         initSpinnerProductSize();
     }
+
+    private void getRoutes() {
+        double latitude = 0.0;
+        double longitude = 0.0;
+        for (Merchant merchant : LoginActivity.firebase.merchantList) {
+
+            if (merchant.getRoutes().size() == 0) {
+
+                if (merchant.getId().equals(product.getMerchant().getId())) {
+                    latitude = merchant.getAddress().getLatitude();
+                    longitude = merchant.getAddress().getLongitude();
+
+                    textViewMerchantName.setText(String.format("%s - %s", merchant.getName(), merchant.getAddress().getAddressLine(0)));
+
+                    ProgressDialog progressDialog = new ProgressDialog(this);
+
+                    try {
+                        LatLng fromLatLng = new LatLng(latitude, longitude);
+                        LatLng toLatLng = new LatLng(LoginActivity.firebase.getUser().getAddress().getLatitude(), LoginActivity.firebase.getUser().getAddress().getLongitude());
+                        new DirectionFinder(new DirectionFinderListener() {
+                            @Override
+                            public void onDirectionFinderStart() {
+                                progressDialog.setMessage(getString(R.string.data_loading));
+                                progressDialog.show();
+                            }
+
+                            @Override
+                            public void onDirectionFinderSuccess(List<Route> route) {
+                                merchant.getRoutes().addAll(route);
+                                textViewTimeDistacne.setText(String.format("%s, %s", merchant.getRoutes().get(0).distance.text, merchant.getRoutes().get(0).duration.text));
+                                progressDialog.dismiss();
+                            }
+                        }, fromLatLng, toLatLng).execute();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+                }
+            } else {
+                textViewTimeDistacne.setText(String.format("%s, %s", merchant.getRoutes().get(0).distance.text, merchant.getRoutes().get(0).duration.text));
+                textViewMerchantName.setText(String.format("%s - %s", merchant.getName(), merchant.getAddress().getAddressLine(0)));
+            }
+
+        }
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -310,8 +360,7 @@ public class ProductActivity extends AppCompatActivity {
 
                 }
             });
-        }
-        else {
+        } else {
             spinnerProductSize.setVisibility(View.INVISIBLE);
         }
     }
@@ -342,7 +391,7 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     public void initRecyclerViewComment() {
-        RecyclerView recyclerViewComment = (RecyclerView)findViewById(R.id.recycler_view_comment);
+        RecyclerView recyclerViewComment = (RecyclerView) findViewById(R.id.recycler_view_comment);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewComment.setLayoutManager(layoutManager);
         getCommentList();
@@ -372,7 +421,7 @@ public class ProductActivity extends AppCompatActivity {
         });
     }
 
-    private void forwardMerchantActivity () {
+    private void forwardMerchantActivity() {
         buttonMerchantInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -448,14 +497,14 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     private void initButtonMoreMenuPopup() {
-        LayoutInflater layoutInflater= (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
+        LayoutInflater layoutInflater = (LayoutInflater) getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);
         final View popupView = layoutInflater.inflate(R.layout.more_popup_layout, null);
-        final PopupWindow popupWindow = new PopupWindow(popupView,330, LinearLayout.LayoutParams.WRAP_CONTENT);
+        final PopupWindow popupWindow = new PopupWindow(popupView, 330, LinearLayout.LayoutParams.WRAP_CONTENT);
 
         buttonMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(popupWindow.isShowing())
+                if (popupWindow.isShowing())
                     popupWindow.dismiss();
                 else
                     popupWindow.showAsDropDown(buttonMore, 105, 30);
@@ -483,7 +532,7 @@ public class ProductActivity extends AppCompatActivity {
         });
     }
 
-    private void addProductToWatchedList () {
+    private void addProductToWatchedList() {
         if (!LoginActivity.firebase.watchedList.contains(product.getId())) {
             LoginActivity.firebase.watchedList.add(product.getId());
             LoginActivity.firebase.addProductToWatched(product.getId());

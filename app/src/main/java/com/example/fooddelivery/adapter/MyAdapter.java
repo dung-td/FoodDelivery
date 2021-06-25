@@ -9,16 +9,19 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import com.example.fooddelivery.fragment.CommentFragment;
 import com.example.fooddelivery.fragment.InfoFragment;
 import com.example.fooddelivery.fragment.ItemFragment;
+import com.example.fooddelivery.model.Merchant;
 
 public class MyAdapter extends FragmentPagerAdapter {
 
+    Merchant merchant;
     private final Context myContext;
     int totalTabs;
 
-    public MyAdapter(Context context, FragmentManager fm, int totalTabs) {
+    public MyAdapter(Context context, FragmentManager fm, int totalTabs, Merchant merchant) {
         super(fm);
         myContext = context;
         this.totalTabs = totalTabs;
+        this.merchant = merchant;
     }
 
     // this is for fragment tabs
@@ -32,7 +35,7 @@ public class MyAdapter extends FragmentPagerAdapter {
                 CommentFragment commentFragment = new CommentFragment();
                 return commentFragment;
             case 2:
-                InfoFragment infoFragment = new InfoFragment();
+                InfoFragment infoFragment = new InfoFragment(merchant);
                 return infoFragment;
             default:
                 return null;

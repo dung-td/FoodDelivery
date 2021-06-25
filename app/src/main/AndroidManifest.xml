@@ -27,11 +27,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".activity.DirectionActivity"></activity>
 
-        <meta-data android:name="com.google.android.geo.API_KET"
-            android:value="AIzaSyDz63zAchXW2wK3SY0HVzKgcqaCQPagxiE"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDz63zAchXW2wK3SY0HVzKgcqaCQPagxiE" />
 
-        <activity android:name=".activity.main.FinishOrderActivity"></activity>
+        <activity android:name=".activity.main.FinishOrderActivity" />
         <activity android:name=".activity.main.ChangeOrderTimeActivity" />
         <activity android:name=".activity.main.AvailableVoucherActivity" />
         <activity android:name=".activity.VerifyPhoneActivity" />

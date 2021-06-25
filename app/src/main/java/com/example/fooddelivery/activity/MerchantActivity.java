@@ -1,6 +1,7 @@
 package com.example.fooddelivery.activity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -28,23 +29,36 @@ import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.adapter.MyAdapter;
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.model.DirectionFinder;
+import com.example.fooddelivery.model.DirectionFinderListener;
 import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.MyViewPager;
+import com.example.fooddelivery.model.Route;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.tabs.TabLayout;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static android.graphics.Color.WHITE;
 
 
-public class MerchantActivity extends AppCompatActivity {
-
+public class MerchantActivity extends AppCompatActivity{
     ScrollView scrollViewContent;
-    ImageView imageViewLogo, buttonBack, buttonMore, buttonCart;
+    ImageView imageViewLogo, buttonBack, buttonMore, buttonCart, buttonDetails;
     TextView textViewBannerIndex;
     TextView textViewMerchantName;
     TextView textViewRating;
     TextView textViewTime;
     TextView textViewDistance;
     TextView textViewVoucher;
+    ProgressDialog progressDialog;
     static TextView cartBadge;
     TabLayout tabLayout;
     MyViewPager viewPager;
@@ -74,6 +88,7 @@ public class MerchantActivity extends AppCompatActivity {
         buttonBack = findViewById(R.id.ic_back_arrow);
         buttonCart = findViewById(R.id.ic_cart);
         buttonMore = findViewById(R.id.ic_more);
+        buttonDetails = findViewById(R.id.ic_details);
         imageViewLogo = findViewById(R.id.img_logo);
         textViewBannerIndex = findViewById(R.id.tv_banner_index);
         textViewMerchantName = findViewById(R.id.tv_merchant_name);
@@ -90,9 +105,18 @@ public class MerchantActivity extends AppCompatActivity {
         layoutCart = findViewById(R.id.btn_cart_background);
         linearLayoutMore = findViewById(R.id.btn_more_background);
         relativeLayoutToolbar = findViewById(R.id.toolbar);
-        this.merchant = (Merchant) LoginActivity.firebase.productList.get(getIntent().
-                getIntExtra("ClickedProductIndex", 0)).getMerchant();
-        textViewMerchantName.setText(merchant.getName() + " - " + merchant.getAddress());
+        progressDialog = new ProgressDialog(MerchantActivity.this);
+
+        for (Merchant merchant : LoginActivity.firebase.merchantList) {
+            if (merchant.getId().equals(LoginActivity.firebase.productList.get(getIntent().
+                    getIntExtra("ClickedProductIndex", 0)).getMerchant().getId())) {
+                this.merchant = merchant;
+                break;
+            }
+        }
+        textViewMerchantName.setText(merchant.getName() + " - " + merchant.getAddress().getAddressLine(0));
+        textViewDistance.setText(merchant.getRoutes().get(0).distance.text);
+        textViewTime.setText(merchant.getRoutes().get(0).duration.text);
         if (merchant.getImage().size() > 0) {
             imageViewLogo.setBackground(null);
             Glide.with(getApplicationContext()).load(merchant.getImage().get(0)).into(imageViewLogo);
@@ -124,6 +148,15 @@ public class MerchantActivity extends AppCompatActivity {
                 MerchantActivity.super.onBackPressed();
             }
         });
+
+        buttonDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent direction = new Intent(MerchantActivity.this, DirectionActivity.class);
+                direction.putExtra("merchantId", merchant.getId());
+                startActivity(direction);
+            }
+        });
     }
 
     @SuppressLint("SetTextI18n")
@@ -134,7 +167,7 @@ public class MerchantActivity extends AppCompatActivity {
 
     private void initTabLayoutAndViewPager() {
 //        3 View Buttons ViewPager
-        MyAdapter adapter = new MyAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
+        MyAdapter adapter = new MyAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount(), merchant);
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
