@@ -5,12 +5,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<!--    <com.google.android.gms.maps.MapView-->
-<!--        android:id="@+id/map_location"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="250dp">-->
+    <fragment
+        android:id="@+id/map_location"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:name="com.google.android.gms.maps.SupportMapFragment">
 
-<!--    </com.google.android.gms.maps.MapView>-->
+    </fragment>
 
     <View
         android:layout_width="match_parent"

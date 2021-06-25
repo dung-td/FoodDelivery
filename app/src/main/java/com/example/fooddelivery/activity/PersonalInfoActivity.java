@@ -27,6 +27,7 @@ import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.main.CartActivity;
 import com.example.fooddelivery.model.CallBackData;
+import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Comment;
 import com.example.fooddelivery.model.ModifyFirebase;
@@ -246,6 +247,10 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 addresses = geocoder.getFromLocation(latitude, longitude, 1);
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+
+            for (Merchant merchant : LoginActivity.firebase.merchantList) {
+                merchant.getRoutes().clear();
             }
 
             LoginActivity.firebase.getUser().setAddress(addresses.get(0));

@@ -40,6 +40,7 @@ public class Product implements Parcelable {
         Create = new Timestamp(System.currentTimeMillis());
         Uri uri = Uri.parse("android.resource://com.example.merchanttask/drawable/untitled_icon");
         Image.add(uri);
+        Merchant = new Merchant();
     }
 
     public Product(String name, String rating, String status, String price, Uri image, Timestamp create) {
@@ -140,6 +141,8 @@ public class Product implements Parcelable {
 
     public void setMerchant(com.example.fooddelivery.model.Merchant merchant) {
         Merchant = merchant;
+        Merchant.setRoutes(merchant.getRoutes());
+        Merchant.setAddress(merchant.getAddress());
     }
 
     public String getSales() {

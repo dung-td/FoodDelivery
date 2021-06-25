@@ -60,7 +60,6 @@
                     android:id="@+id/img_logo"
                     android:layout_width="80dp"
                     android:layout_height="70dp"
-                    android:layout_marginStart="10dp"
                     android:layout_centerVertical="true"
                     android:background="@drawable/untitled_icon"/>
 
@@ -71,7 +70,7 @@
                     android:text="Highland BigC - Dĩ An, Bình Dương"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_toEndOf="@+id/img_logo"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="13dp"
@@ -135,6 +134,16 @@
                         android:layout_marginTop="3dp"
                         android:textColor="@color/black"/>
                 </LinearLayout>
+
+                <ImageView
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@id/detail_info"
+                    android:id="@+id/ic_details"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/ic_baseline_chevron_right_24"/>
 
             </RelativeLayout>
 

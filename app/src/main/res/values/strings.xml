@@ -192,4 +192,10 @@
     <string name="delivery_success">Giao hàng thành công</string>
     <string name="received_order">Tiếp nhận đơn hàng</string>
     <string name="canceled_order_success">Huỷ đơn hàng thành công</string>
+    <string name="location_details">Chi tiết </string>
+    <string name="delivery_from">Giao từ:</string>
+    <string name="delivery_to">Giao đến: </string>
+    <string name="time_direc">Thời gian dự kiến:</string>
+    <string name="distance_direc">Khoảng cách ước tính:</string>
+    <string name="your_position">Vị trí của bạn</string>
 </resources>
