@@ -30,10 +30,10 @@ public class MyAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                ItemFragment itemFragment = new ItemFragment(MerchantActivity.merchant);
+                ItemFragment itemFragment = new ItemFragment(merchant);
                 return itemFragment;
             case 1:
-                InfoFragment commentFragment = new InfoFragment();
+                InfoFragment commentFragment = new InfoFragment(merchant);
                 return commentFragment;
             case 2:
                 InfoFragment infoFragment = new InfoFragment(merchant);
