@@ -141,7 +141,7 @@ public class OrderDetailsFragment extends Fragment {
 
          rl_comment = (RelativeLayout) getView().findViewById(R.id.rl_fm_orddtail_comment);
          rl_comment.setVisibility(View.GONE);
-         bt_Cancel.setVisibility(View.GONE);
+         bt_Cancel.setVisibility(View.INVISIBLE);
 
     }
 

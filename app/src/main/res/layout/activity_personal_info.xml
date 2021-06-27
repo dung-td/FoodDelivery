@@ -190,7 +190,7 @@
                 android:textStyle="bold"/>
             <TextView
                 android:id="@+id/tv_perinfo_email"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="Email"
                 android:layout_marginTop="8dp"
@@ -241,6 +241,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:id="@+id/ln_adress"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -280,7 +281,6 @@
 
         <EditText
             android:layout_marginTop="18dp"
-            android:layout_below="@+id/tv_perinfo_changeaddress"
             android:id="@+id/et_perinfo_address"
             android:layout_marginLeft="20dp"
             android:layout_width="300dp"
@@ -294,8 +294,8 @@
             android:text="@string/__default"
             android:layout_marginLeft="20dp"
             android:textSize="12dp"
-            android:layout_below="@+id/tv_perinfo_changeaddress"
-            android:layout_marginTop="55dp"
+            android:layout_below="@id/ln_adress"
+            android:layout_marginTop="15dp"
             android:layout_marginBottom="8dp"
 
             />
