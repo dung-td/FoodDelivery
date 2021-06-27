@@ -198,4 +198,7 @@
     <string name="time_direc">Thời gian dự kiến:</string>
     <string name="distance_direc">Khoảng cách ước tính:</string>
     <string name="your_position">Vị trí của bạn</string>
+    <string name="title_invalid_order">Đơn hàng không hợp lệ</string>
+    <string name="title_different_merchant">Đơn đặt hàng của bạn gồm nhiều nhà bán khác nhau!
+        Vui lòng chọn mua sản phẩm từ một nhà bán trên mỗi đơn đặt hàng!</string>
 </resources>

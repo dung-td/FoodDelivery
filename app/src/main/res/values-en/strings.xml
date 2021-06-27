@@ -185,4 +185,12 @@
     <string name="delivery_success">Successful delivery</string>
     <string name="received_order">Accepted the order</string>
     <string name="canceled_order_success">Successful cancel</string>
+    <string name="title_different_merchant">Your order has more than one merchant! Please buy products from one merchant on each order!</string>
+    <string name="location_details">Detail</string>
+    <string name="delivery_from">Delivery from:</string>
+    <string name="delivery_to">Delivery to:</string>
+    <string name="time_direc">Estimated time:</string>
+    <string name="distance_direc">Estimated distance:</string>
+    <string name="your_position">Your location</string>
+    <string name="title_invalid_order">Invalid Order</string>
 </resources>

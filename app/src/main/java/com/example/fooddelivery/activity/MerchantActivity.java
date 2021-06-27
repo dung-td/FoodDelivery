@@ -25,6 +25,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.main.AvailableVoucherActivity;
+import com.example.fooddelivery.activity.main.CartActivity;
 import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.adapter.MyAdapter;
@@ -106,6 +107,15 @@ public class MerchantActivity extends AppCompatActivity{
         linearLayoutMore = findViewById(R.id.btn_more_background);
         relativeLayoutToolbar = findViewById(R.id.toolbar);
         progressDialog = new ProgressDialog(MerchantActivity.this);
+
+        layoutCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MerchantActivity.this, CartActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
 
         for (Merchant merchant : LoginActivity.firebase.merchantList) {
             if (merchant.getId().equals(LoginActivity.firebase.productList.get(getIntent().

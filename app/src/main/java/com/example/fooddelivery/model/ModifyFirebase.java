@@ -224,6 +224,7 @@ public class ModifyFirebase {
         setVoucherUsed(voucherId);
         item.put("discount", discount);
 
+        //add to user collection
         root.collection("User/" + userId + "/Order/")
                 .document(documentId)
                 .set(item)
@@ -248,14 +249,43 @@ public class ModifyFirebase {
                             root.collection("User/" + userId + "/Order/")
                                     .document(documentId).update("listItems", FieldValue.arrayUnion(itemDetail));
                         }
+//                        listener.onSuccess();
+                    }
+                });
+
+        //add to merchant collection
+        item.put("user_id", userId);
+        item.put("user_name", String.format("%s %s", user.getLast_Name(), user.getFirst_Name()));
+        item.put("user_phone_number", user.getPhone_Number());
+        item.put("user_address", user.getAddress().getAddressLine(0).toString());
+        root.collection("Merchant/" + cartList.get(0).getProduct().getMerchant().getId() + "/Order/")
+                .document(documentId)
+                .set(item)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        HashMap<String, Object> itemDetail = new HashMap<>();
+                        for (ChosenItem product : cartList) {
+                            itemDetail = new HashMap<>();
+                            String price = "";
+                            if (product.getProduct().getProductSize().get(0) != null) {
+                                price = product.getProduct().getPrice().get(product.getProduct().getProductSize().indexOf(product.getSize()));
+                            } else {
+                                price = product.getProduct().getPrice().get(0);
+                            }
+
+                            itemDetail.put("comment", "null");
+                            itemDetail.put("price", Integer.parseInt(price));
+                            itemDetail.put("product", product.getProduct().getId());
+                            itemDetail.put("quantity", Integer.parseInt(product.getQuantity()));
+                            itemDetail.put("size", product.getSize());
+                            root.collection("Merchant/" + cartList.get(0).getProduct().getMerchant().getId() + "/Order/")
+                                    .document(documentId).update("listItems", FieldValue.arrayUnion(itemDetail));
+                        }
                         removeProductFromCart();
                         listener.onSuccess();
                     }
                 });
-    }
-
-    public void addProductToCart(String productId) {
-
     }
 
     public void addProductToWatched(String productId) {

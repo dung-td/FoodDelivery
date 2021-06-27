@@ -2,6 +2,8 @@ package com.example.fooddelivery.activity.main;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -26,6 +28,8 @@ import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.ChosenItemAdapter;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.ChosenItem;
+import com.example.fooddelivery.model.Merchant;
+import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
 import com.example.fooddelivery.model.Voucher;
 
@@ -268,10 +272,31 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (LoginActivity.firebase.cartList.size() > 0) {
-                    Intent intent = new Intent(CartActivity.this, FinishOrderActivity.class);
-                    startActivityForResult(intent, LAUNCH_FINISH_ORDER_ACTIVITY);
+                    if (!checkDifferentMerchant()) {
+                        Intent intent = new Intent(CartActivity.this, FinishOrderActivity.class);
+                        startActivityForResult(intent, LAUNCH_FINISH_ORDER_ACTIVITY);
+                    }
+                    else {
+                        new AlertDialog.Builder(CartActivity.this)
+                                .setTitle(getString(R.string.title_invalid_order))
+                                .setMessage(getString(R.string.title_different_merchant))
+                                .setPositiveButton(android.R.string.ok, null)
+                                .setIcon(android.R.drawable.ic_dialog_info)
+                                .show();
+                    }
                 }
             }
         });
+    }
+
+    private boolean checkDifferentMerchant() {
+        String previousMerchant = LoginActivity.firebase.cartList.get(0).getProduct().getMerchant().getId();
+        for (ChosenItem chosenItem : LoginActivity.firebase.cartList) {
+            if (!chosenItem.getProduct().getMerchant().getId().equals(previousMerchant)) {
+                return true;
+            }
+            previousMerchant = chosenItem.getProduct().getMerchant().getId();
+        }
+        return false;
     }
 }
