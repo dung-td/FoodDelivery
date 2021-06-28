@@ -1,11 +1,16 @@
 package com.example.fooddelivery.activity.main;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        loadLanguage();
         initView();
         getData();
     }
@@ -167,10 +173,20 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    String returnLanguage() {
-        String str = getString(R.string.ic_home);
-        if (str.equals("Home"))
-            return "en";
-        return "vi";
+    void loadLanguage() {
+        String langPref = "lang_code";
+        SharedPreferences prefs = getSharedPreferences("MyPref",
+                Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+
+        Locale locale = new Locale(language);
+
+        Log.e("MainActivity language", language);
+        Locale.setDefault(locale);
+
+        Resources resources = this.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }

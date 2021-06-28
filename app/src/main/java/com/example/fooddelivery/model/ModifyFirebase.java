@@ -214,6 +214,10 @@ public class ModifyFirebase {
         listener.onStart();
         String documentId = root.collection("User/" + userId + "/Order/").document().getId();
         Map<String, Object> item = new HashMap<>();
+        item.put("user_id", userId);
+        item.put("user_name", String.format("%s %s", user.getLast_Name(), user.getFirst_Name()));
+        item.put("user_phone_number", user.getPhone_Number());
+        item.put("user_address", user.getAddress().getAddressLine(0).toString());
         item.put("discount", discount);
         item.put("freight_cost", freight_cost);
         item.put("payment_method", "COD");
@@ -254,10 +258,7 @@ public class ModifyFirebase {
                 });
 
         //add to merchant collection
-        item.put("user_id", userId);
-        item.put("user_name", String.format("%s %s", user.getLast_Name(), user.getFirst_Name()));
-        item.put("user_phone_number", user.getPhone_Number());
-        item.put("user_address", user.getAddress().getAddressLine(0).toString());
+
         root.collection("Merchant/" + cartList.get(0).getProduct().getMerchant().getId() + "/Order/")
                 .document(documentId)
                 .set(item)
@@ -336,6 +337,7 @@ public class ModifyFirebase {
     }
 
     public void getVoucherList() {
+        voucherList.clear();
         root.collection("User/" + userId + "/Voucher/")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -366,6 +368,7 @@ public class ModifyFirebase {
     }
 
     public void getAvailableVoucherList() {
+        availableVoucherList.clear();
         root.collection("Voucher/")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -804,6 +807,8 @@ public class ModifyFirebase {
                             order.status = documentSnapshot.get("status").toString();
                             order.totalAmount = Integer.parseInt(documentSnapshot.get("total_amount").toString());
                             order.voucherID = documentSnapshot.get("voucher").toString();
+                            order.user_name = documentSnapshot.get("user_name").toString();
+                            order.user_address = documentSnapshot.get("user_address").toString();
                             getListOrderedItems(order);
                         }
                     }
@@ -811,6 +816,7 @@ public class ModifyFirebase {
     }
 
     public void getListOrdersOfUser() {
+        ordersList.clear();
         root.collection("User/" + userId + "/Order")
                 .orderBy("time", Query.Direction.DESCENDING)
                 .get()

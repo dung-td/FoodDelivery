@@ -2,6 +2,7 @@ package com.example.fooddelivery.activity.login;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        loadLanguage();
+        loadLanguage(getApplicationContext());
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Init();
@@ -280,16 +281,16 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    void loadLanguage() {
+    public static void loadLanguage(Context context) {
         String langPref = "lang_code";
-        SharedPreferences prefs = getSharedPreferences("MyPref",
+        SharedPreferences prefs =context.getSharedPreferences("MyPref",
                 Activity.MODE_PRIVATE);
         language = prefs.getString(langPref, "");
 
         Locale locale = new Locale(language);
         Locale.setDefault(locale);
 
-        Resources resources = this.getResources();
+        Resources resources = context.getResources();
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());

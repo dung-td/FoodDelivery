@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.activity.me.SettingActivity;
 import com.google.android.material.textfield.TextInputLayout;
@@ -62,13 +63,17 @@ public class LanguageSetting extends AppCompatActivity {
                 if (chosenLanguege.equals("English"))
                 {
                     setLocal(LanguageSetting.this, "en");
+                    LoginActivity.language = "English";
                 }
 
                 if (chosenLanguege.equals("Tiếng Việt"))
                 {
                     setLocal(LanguageSetting.this, "vi");
+                    LoginActivity.language="Tiếng Việt";
+
                 }
 
+                LoginActivity.loadLanguage(getApplicationContext());
                 Intent main = new Intent(LanguageSetting.this, MainActivity.class);
                 startActivity(main);
             }
@@ -80,7 +85,7 @@ public class LanguageSetting extends AppCompatActivity {
     {
         Locale locale = new Locale(langCode);
         createShareReferences(langCode);
-        Locale.setDefault(locale);
+        locale.setDefault(locale);
 
         Resources resources = activity.getResources();
         Configuration config = resources.getConfiguration();
@@ -107,6 +112,7 @@ public class LanguageSetting extends AppCompatActivity {
         languages = getResources().getStringArray(R.array.languages);
         languageAdapter = new ArrayAdapter<>(LanguageSetting.this, R.layout.dropdown_item, languages);
         temp.setAdapter(languageAdapter);
+
     }
 
     public String getChosenLanguege() {

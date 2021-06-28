@@ -11,11 +11,13 @@ public class Orders {
     int totalAmount;
     String voucherID;
     String method;
+    String user_name;
+    String user_address;
     ArrayList<OrderItem> listOrderItems;
 
     public Orders(){}
 
-    public Orders(String status, String date, int discount, int freightCost, int totalAmount, String voucherID, String method, ArrayList<OrderItem> listOrderItems) {
+    public Orders(String status, String date, int discount, int freightCost, int totalAmount, String voucherID, String method, ArrayList<OrderItem> listOrderItems, String user_address, String user_name) {
         this.status = status;
         this.time = date;
         this.discount = discount;
@@ -24,6 +26,8 @@ public class Orders {
         this.voucherID = voucherID;
         this.method = method;
         this.listOrderItems = listOrderItems;
+        this.user_address=user_address;
+        this.user_name = user_name;
     }
 
     //region GET SET
@@ -97,6 +101,22 @@ public class Orders {
 
     public void setListOrderItems(ArrayList<OrderItem> listOrderItems) {
         this.listOrderItems = listOrderItems;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public String getUser_address() {
+        return user_address;
+    }
+
+    public void setUser_address(String user_address) {
+        this.user_address = user_address;
     }
 
     public OrderItem getFirstOrderItems() {

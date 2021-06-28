@@ -150,10 +150,10 @@ public class OrderDetailsFragment extends Fragment {
         String.format("%s %s", currentUser.getLast_Name(), currentUser.getFirst_Name());
 
         tv_nameCustomer.setText(getString(R.string.customer) +": "
-                +String.format("%s %s", currentUser.getLast_Name(), currentUser.getFirst_Name()));
+                +orders.getUser_name());
 
         tv_addressCustomer.setText(getString(R.string.address) +": "
-                + currentUser.getAddress());
+                + orders.getUser_address());
 
         tv_timeOrdered.setText(getString(R.string.time) +": "+
                 orders.getTime().toString());

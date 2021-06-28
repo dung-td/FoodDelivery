@@ -470,7 +470,6 @@ public class PersonalInfoActivity extends AppCompatActivity {
 
     }
 
-
     private void sendVerifyEmail(String email) {
         Toasty.info(this, getString(R.string.verified_email_sent) + " " + email, Toasty.LENGTH_LONG).show();
 

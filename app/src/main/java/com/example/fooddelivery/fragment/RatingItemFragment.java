@@ -37,6 +37,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firestore.v1.StructuredQuery;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -125,8 +126,9 @@ public class RatingItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (checkValidateRating()) {
+                    SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
                     Comment comment = new Comment(
-                            new Date().toString(),
+                            formatter.format(new Date()).toString(),
                             et_Comment.getText().toString(),
                             Integer.toString(rb.getNumStars())
                     );

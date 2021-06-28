@@ -1,5 +1,9 @@
 package com.example.fooddelivery.fragment;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +26,7 @@ import com.example.fooddelivery.model.Product;
 import com.example.fooddelivery.model.ProductStatus;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class GeneralOrdersFragment extends Fragment {
 
@@ -68,11 +73,6 @@ public class GeneralOrdersFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
 
 
 }
