@@ -26,6 +26,7 @@ import com.example.fooddelivery.model.CallBackData;
 import com.example.fooddelivery.model.Comment;
 import com.example.fooddelivery.model.OrderItem;
 import com.example.fooddelivery.model.Orders;
+import com.example.fooddelivery.model.Product;
 import com.example.fooddelivery.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -194,6 +195,7 @@ public class RatingItemFragment extends Fragment {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         updateOrderItemComment(documentReference.getId());
+                        updateRatingOfProduct();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -246,6 +248,33 @@ public class RatingItemFragment extends Fragment {
                 });
 
         //endregion
+    }
+
+
+    void updateRatingOfProduct()
+    {
+        //UPDATE SALES and RATING on Firebase
+        Product ratingProduct = LoginActivity.firebase.getProductById(orderItem.getProduct().getId());
+        if (ratingProduct != null){
+            float rating = (Integer.parseInt(ratingProduct.getSales())
+                    *Float.parseFloat(ratingProduct.getRating()) + Integer.parseInt(returnComment.getRating()))
+                    /(Integer.parseInt(ratingProduct.getSales()+1));
+
+            ratingProduct.setSales(String.valueOf(Integer.parseInt(ratingProduct.getSales())+1));
+            ratingProduct.setRating(String.valueOf(rating));
+
+            FirebaseFirestore root = FirebaseFirestore.getInstance();
+            root.collection("Product/")
+                    .document(ratingProduct.getId())
+                    .update("Sales",ratingProduct.getSales(),
+                            "Rating", ratingProduct.getRating())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                        }
+                    });
+        }
     }
 
     boolean checkValidateRating() {
