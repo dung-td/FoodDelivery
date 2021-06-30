@@ -129,7 +129,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/food"
                                 android:textColor="@color/black"
-                                android:textSize="16dp"
+                                android:textSize="16sp"
                                 android:layout_gravity="center_horizontal"/>
                         </LinearLayout>
 
@@ -154,7 +154,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/drink"
                                 android:textColor="@color/black"
-                                android:textSize="16dp"
+                                android:textSize="16sp"
                                 android:layout_gravity="center_horizontal"/>
                         </LinearLayout>
                     </LinearLayout>
@@ -196,7 +196,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/favorite"
                                 android:textColor="@color/black"
-                                android:textSize="16dp"
+                                android:textSize="16sp"
                                 android:layout_gravity="center_horizontal"/>
                         </LinearLayout>
 
@@ -221,7 +221,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="@string/watched"
                                 android:textColor="@color/black"
-                                android:textSize="16dp"
+                                android:textSize="16sp"
                                 android:layout_gravity="center_horizontal"/>
                         </LinearLayout>
                     </LinearLayout>

@@ -23,7 +23,7 @@
             android:background="@drawable/ic_baseline_arrow_back_24" />
 
         <TextView
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/shopping_cart"
             android:textColor="@color/black"
@@ -31,8 +31,7 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
             android:textStyle="bold"
-            android:textAlignment="center"
-            android:layout_toEndOf="@+id/btn_back"/>
+            android:textAlignment="center"/>
     </RelativeLayout>
 
     <ScrollView
@@ -55,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/deliver_address"
                     android:textColor="@color/black"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="16dp"/>
@@ -66,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/change"
                     android:textColor="@color/light_blue"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="15dp"
@@ -78,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:text="Mohamed Salah - 0918215950"
                     android:textColor="@color/black"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:layout_below="@+id/tv_address_title"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="16dp"/>
@@ -89,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:text="Đường Nguyễn Du, P. Dĩ An, TP. Dĩ An, T. Bình Dương, Vietnam"
                     android:textColor="@color/black"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:layout_below="@+id/tv_user_name_phone"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="16dp"
@@ -188,7 +187,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/sum_price"
                     android:textColor="@color/black"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="15dp"/>
@@ -199,7 +198,7 @@
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_marginTop="5dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="15dp"/>
@@ -217,14 +216,27 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/tv_distance_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/freight_cost"
                     android:textColor="@color/black"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="15dp"/>
+
+                <TextView
+                    android:id="@+id/tv_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(10km)"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    android:layout_marginStart="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/tv_distance_label"
+                    android:visibility="invisible"/>
 
                 <TextView
                     android:id="@+id/tv_shipping_cost"
@@ -232,7 +244,7 @@
                     android:layout_height="wrap_content"
                     android:text="15000"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_marginTop="5dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="15dp"/>
@@ -255,7 +267,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/voucher"
                     android:textColor="@color/black"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="15dp"/>
@@ -267,7 +279,7 @@
                     android:text="@string/apply_voucher_failed"
                     android:textColor="@color/black"
                     android:textStyle="italic"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:layout_below="@+id/tv_voucher_title"
                     android:layout_marginTop="2dp"
                     android:layout_marginStart="15dp"
@@ -280,7 +292,7 @@
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:textColor="@color/black"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_marginTop="5dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="15dp"/>
@@ -302,7 +314,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/total_amount"
                     android:textColor="@color/light_red"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:textStyle="bold"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="15dp"/>
@@ -313,7 +325,7 @@
                     android:layout_height="wrap_content"
                     android:text="0"
                     android:textColor="@color/light_red"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_marginTop="5dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="15dp"/>
@@ -336,7 +348,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/voucher_title"
                     android:textColor="@color/black"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:drawablePadding="10dp"
@@ -393,7 +405,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/payment_cod"
                     android:textColor="@color/black"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:layout_marginStart="15dp"
                     android:drawablePadding="10dp"
                     app:drawableLeftCompat="@drawable/ic_baseline_notes_24" />

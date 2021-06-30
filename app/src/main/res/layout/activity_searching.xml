@@ -34,7 +34,7 @@
                 android:layout_gravity="center"
                 android:hint="@string/what_r_u_lookin"
                 android:textColor="@color/black"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:singleLine="true"
                 android:background="@android:color/transparent"/>
 
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:text="@string/recent_search"
             android:textColor="@color/black"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textStyle="bold"/>
 
         <TextView
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/delete"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:textColor="@color/light_blue"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="15dp"/>
@@ -93,7 +93,7 @@
             android:layout_centerInParent="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="30dp"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:text="@string/no_search_data"
             android:visibility="invisible"/>
     </RelativeLayout>

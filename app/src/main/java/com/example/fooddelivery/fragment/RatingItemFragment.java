@@ -38,6 +38,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firestore.v1.StructuredQuery;
 import com.squareup.picasso.Picasso;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -256,17 +258,21 @@ public class RatingItemFragment extends Fragment {
         //UPDATE SALES and RATING on Firebase
         Product ratingProduct = LoginActivity.firebase.getProductById(orderItem.getProduct().getId());
         if (ratingProduct != null){
+            DecimalFormat df = new DecimalFormat("#.#");
+            df.setRoundingMode(RoundingMode.CEILING);
+
             float rating = (Integer.parseInt(ratingProduct.getSales())
-                    *Float.parseFloat(ratingProduct.getRating()) + Integer.parseInt(returnComment.getRating()))
-                    /(Integer.parseInt(ratingProduct.getSales()+1));
+                    * Float.parseFloat(ratingProduct.getRating()) + Integer.parseInt(returnComment.getRating()))
+                    / (Integer.parseInt(ratingProduct.getSales()) + 1);
+
 
             ratingProduct.setSales(String.valueOf(Integer.parseInt(ratingProduct.getSales())+1));
-            ratingProduct.setRating(String.valueOf(rating));
+            ratingProduct.setRating(String.valueOf(df.format(rating)));
 
             FirebaseFirestore root = FirebaseFirestore.getInstance();
             root.collection("Product/")
                     .document(ratingProduct.getId())
-                    .update("Sales",ratingProduct.getSales(),
+                    .update("Sales", ratingProduct.getSales(),
                             "Rating", ratingProduct.getRating())
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

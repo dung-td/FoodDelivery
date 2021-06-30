@@ -39,7 +39,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="3dp"
             android:textColor="@color/black"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:text="BigC, Quốc lộ 1K, Dĩ An, Bình Dương"/>
     </LinearLayout>
 
@@ -69,7 +69,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="3dp"
             android:textColor="@color/black"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:text="07:30 - 20:30"/>
 
         <TextView
@@ -79,7 +79,7 @@
             android:layout_marginStart="125dp"
             android:layout_marginTop="3dp"
             android:textColor="@color/light_blue"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:text="@string/closed"
             android:textStyle="bold"/>
     </LinearLayout>

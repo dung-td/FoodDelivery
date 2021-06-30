@@ -19,15 +19,15 @@
             android:background="@drawable/ic_baseline_arrow_back_24" />
 
         <TextView
-            android:layout_width="320dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/choose_order_time"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textAlignment="center"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/btn_back"/>
+            android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
     <TimePicker
