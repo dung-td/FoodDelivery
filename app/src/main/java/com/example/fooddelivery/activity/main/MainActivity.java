@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         LoginActivity.firebase.getAvailableVoucherList();
         LoginActivity.firebase.getComment();
         LoginActivity.firebase.getUserInfo();
-//        LoginActivity.firebase.getListOrdersOfUser();
+        LoginActivity.firebase.getListOrdersOfUser();
     }
 
     private void initBottomNavigation() {
@@ -154,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
                         temp = new HomeFragment();
                         break;
                     case R.id.nav_order:
-                        LoginActivity.firebase.getListOrdersOfUser();
                         temp = new OrderFragment(MainActivity.this);
                         break;
                     case R.id.nav_me:

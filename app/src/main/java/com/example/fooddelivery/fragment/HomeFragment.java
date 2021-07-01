@@ -149,7 +149,7 @@ public class HomeFragment extends Fragment {
         itemOnMainAdapter = new ItemOnMainAdapter(getContext(), LoginActivity.firebase.productList);
         GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
         int spanCount = 2;
-        int spacing = 40;
+        int spacing = 30;
         boolean includeEdge = true;
         recyclerViewProducts.addItemDecoration(new GridSpacingItemDecoration(spanCount, spacing, includeEdge));
         recyclerViewProducts.setLayoutManager(manager);
