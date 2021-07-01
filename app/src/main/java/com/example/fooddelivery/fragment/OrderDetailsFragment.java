@@ -1,26 +1,24 @@
 package com.example.fooddelivery.fragment;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.LinearLayoutCompat;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.OrderDetailAdapter;
+import com.example.fooddelivery.adapter.ViewPagerOrdersAdapter;
 import com.example.fooddelivery.model.OrderItem;
 import com.example.fooddelivery.model.OrderStatus;
 import com.example.fooddelivery.model.Orders;
@@ -31,17 +29,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+import es.dmoral.toasty.Toasty;
+
 public class OrderDetailsFragment extends Fragment {
-    TextView tv_nameCustomer ;
-    TextView tv_addressCustomer ;
+    TextView tv_nameCustomer;
+    TextView tv_addressCustomer;
     TextView tv_timeOrdered;
-    TextView tv_method ;
-    TextView tv_merchant ;
+    TextView tv_method;
+    TextView tv_merchant;
     TextView tv_status;
     TextView tv_idOrder;
 
     ListView lv_OrdersList;
-    OrderDetailAdapter adapter;
+    public OrderDetailAdapter adapter;
 
     TextView tv_tmpPrice;
     TextView tv_shipPrice;
@@ -51,7 +51,7 @@ public class OrderDetailsFragment extends Fragment {
     RelativeLayout rl_comment;
 
     Button bt_Cancel;
-    ImageButton bt_Back ;
+    ImageButton bt_Back;
 
     ArrayList<OrderItem> listOrderItem = new ArrayList<>();
     Orders orders;
@@ -62,7 +62,7 @@ public class OrderDetailsFragment extends Fragment {
     }
 
     public OrderDetailsFragment(Orders orders) {
-        this.orders=orders;
+        this.orders = orders;
         this.listOrderItem = orders.getListOrderItems();
     }
 
@@ -87,7 +87,12 @@ public class OrderDetailsFragment extends Fragment {
         bt_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().popBackStack();
+                if (getFragmentManager() != null) {
+                    getFragmentManager().popBackStack();
+                    ViewPagerOrdersAdapter.adapter1.adapter.notifyDataSetChanged();
+                    ViewPagerOrdersAdapter.adapter2.adapter.notifyDataSetChanged();
+                    ViewPagerOrdersAdapter.adapter0.adapter.notifyDataSetChanged();
+                }
             }
         });
 
@@ -110,7 +115,7 @@ public class OrderDetailsFragment extends Fragment {
 
 
     void OpenFragmentComment() {
-        ListItemCommentFragment nextFrag= new ListItemCommentFragment(listOrderItem);
+        ListItemCommentFragment nextFrag = new ListItemCommentFragment(listOrderItem);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, nextFrag, null)
                 .addToBackStack(null)
@@ -118,51 +123,51 @@ public class OrderDetailsFragment extends Fragment {
     }
 
     void initView() {
-         tv_nameCustomer = (TextView)getView().findViewById(R.id.tv_fm_orddtail_nameCus);
-         tv_addressCustomer = (TextView)getView().findViewById(R.id.tv_fm_orddtail_address);
-         tv_timeOrdered = (TextView)getView().findViewById(R.id.tv_fm_orddtail_time);
-         tv_method = (TextView)getView().findViewById(R.id.tv_fm_orddtail_method);
-         tv_merchant = (TextView)getView().findViewById(R.id.tv_fm_orddtail_merchant);
-         tv_status = (TextView)getView().findViewById(R.id.tv_fm_orddtail_status);
+        tv_nameCustomer = (TextView) getView().findViewById(R.id.tv_fm_orddtail_nameCus);
+        tv_addressCustomer = (TextView) getView().findViewById(R.id.tv_fm_orddtail_address);
+        tv_timeOrdered = (TextView) getView().findViewById(R.id.tv_fm_orddtail_time);
+        tv_method = (TextView) getView().findViewById(R.id.tv_fm_orddtail_method);
+        tv_merchant = (TextView) getView().findViewById(R.id.tv_fm_orddtail_merchant);
+        tv_status = (TextView) getView().findViewById(R.id.tv_fm_orddtail_status);
 
-         lv_OrdersList= (ListView) getView().findViewById(R.id.lv_orderdetails);
-         adapter = new OrderDetailAdapter(getActivity(), listOrderItem );
-         lv_OrdersList.setAdapter(adapter);
+        lv_OrdersList = (ListView) getView().findViewById(R.id.lv_orderdetails);
+        adapter = new OrderDetailAdapter(getActivity(), listOrderItem);
+        lv_OrdersList.setAdapter(adapter);
 
-         tv_tmpPrice = (TextView)getView().findViewById(R.id.tv_fm_orddtail_tmpprice);
-         tv_shipPrice = (TextView)getView().findViewById(R.id.tv_fm_orddtail_shipprice);
-         tv_voucher = (TextView)getView().findViewById(R.id.tv_fm_orddtail_voucher);
-         tv_totalPrice = (TextView)getView().findViewById(R.id.tv_fm_orddtail_totalprice);
-         tv_comment = (TextView)getView().findViewById(R.id.tv_fm_orddtail_comment);
-         tv_idOrder = (TextView)getView().findViewById(R.id.tv_fm_orddtail_ordid);
+        tv_tmpPrice = (TextView) getView().findViewById(R.id.tv_fm_orddtail_tmpprice);
+        tv_shipPrice = (TextView) getView().findViewById(R.id.tv_fm_orddtail_shipprice);
+        tv_voucher = (TextView) getView().findViewById(R.id.tv_fm_orddtail_voucher);
+        tv_totalPrice = (TextView) getView().findViewById(R.id.tv_fm_orddtail_totalprice);
+        tv_comment = (TextView) getView().findViewById(R.id.tv_fm_orddtail_comment);
+        tv_idOrder = (TextView) getView().findViewById(R.id.tv_fm_orddtail_ordid);
 
-         bt_Cancel = (Button)getView().findViewById(R.id.bt_fm_orddtail_cancel_ord);
-         bt_Back = (ImageButton) getView().findViewById(R.id.bt_fm_orddtail_back);
+        bt_Cancel = (Button) getView().findViewById(R.id.bt_fm_orddtail_cancel_ord);
+        bt_Back = (ImageButton) getView().findViewById(R.id.bt_fm_orddtail_back);
 
-         rl_comment = (RelativeLayout) getView().findViewById(R.id.rl_fm_orddtail_comment);
-         rl_comment.setVisibility(View.GONE);
-         bt_Cancel.setVisibility(View.INVISIBLE);
+        rl_comment = (RelativeLayout) getView().findViewById(R.id.rl_fm_orddtail_comment);
+        rl_comment.setVisibility(View.GONE);
+        bt_Cancel.setVisibility(View.INVISIBLE);
 
     }
 
-    void setData(){
+    void setData() {
         User currentUser = LoginActivity.firebase.getUser();
         String.format("%s %s", currentUser.getLast_Name(), currentUser.getFirst_Name());
 
-        tv_nameCustomer.setText(getString(R.string.customer) +": "
-                +orders.getUser_name());
+        tv_nameCustomer.setText(getString(R.string.customer) + ": "
+                + orders.getUser_name());
 
-        tv_addressCustomer.setText(getString(R.string.address) +": "
+        tv_addressCustomer.setText(getString(R.string.address) + ": "
                 + orders.getUser_address());
 
-        tv_timeOrdered.setText(getString(R.string.time) +": "+
+        tv_timeOrdered.setText(getString(R.string.time) + ": " +
                 orders.getTime().toString());
 
-        tv_status.setText(getString(R.string.order_status) +": "+
-        orders.getStatus());
+        tv_status.setText(getString(R.string.order_status) + ": " +
+                orders.getStatus());
 
         if (orders.getMethod().equals(PaymentMethod.COD.toString()))
-        tv_method.setText(getString(R.string.payment) + ": " + getString(R.string.cod));
+            tv_method.setText(getString(R.string.payment) + ": " + getString(R.string.cod));
 
 
         if (orders.getStatus().equals(OrderStatus.Succeeded.toString()))
@@ -183,13 +188,13 @@ public class OrderDetailsFragment extends Fragment {
     void cancelOrder() {
         FirebaseFirestore root = FirebaseFirestore.getInstance();
         String userID = LoginActivity.firebase.getUserId();
-        root.collection("User/"+ userID +"/Order")
+        root.collection("User/" + userID + "/Order")
                 .document(orders.getOrderID())
                 .update("status", OrderStatus.Canceled.toString())
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Toast.makeText(getContext(), getString(R.string.canceled_order_success), Toast.LENGTH_LONG).show();
+                        Toasty.success(getContext(), getString(R.string.canceled_order_success), Toast.LENGTH_LONG).show();
                     }
                 });
 

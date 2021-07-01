@@ -19,7 +19,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.me.LanguageSetting;
+import com.example.fooddelivery.adapter.GeneralOrderAdapter;
 import com.example.fooddelivery.adapter.ViewPagerOrdersAdapter;
+import com.example.fooddelivery.model.OnGetDataListener;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.Locale;
@@ -46,11 +48,11 @@ public class OrderFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.e("Order", "onCreate");
         setLocal();
         vp_orders=(ViewPager)getView().findViewById(R.id.fm_order_viewpager);
         tl_orders=(TabLayout)getView().findViewById(R.id.fm_order_tablayout);
         ViewPagerOrdersAdapter viewAdapter = new ViewPagerOrdersAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, activity);
-
         vp_orders.setAdapter(viewAdapter);
         tl_orders.setupWithViewPager(vp_orders);
     }

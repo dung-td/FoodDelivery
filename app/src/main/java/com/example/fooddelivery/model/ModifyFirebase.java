@@ -6,15 +6,19 @@ import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.fooddelivery.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -45,7 +49,7 @@ public class ModifyFirebase {
     public ArrayList<Merchant> merchantList = new ArrayList<Merchant>();
     public ArrayList<Voucher> voucherList = new ArrayList<Voucher>();
     public ArrayList<Voucher> availableVoucherList = new ArrayList<Voucher>();
-    public ArrayList<Orders> ordersList = new ArrayList<>();
+    public ArrayList<ArrayList<Orders>> orderList = new ArrayList<>();
     private FirebaseFirestore root = FirebaseFirestore.getInstance();
     private StorageReference reference = FirebaseStorage.getInstance().getReference();
     private final boolean checkUsername = false;
@@ -816,7 +820,13 @@ public class ModifyFirebase {
     }
 
     public void getListOrdersOfUser() {
-        ordersList.clear();
+        orderList.clear();
+        ArrayList<Orders> pendingList = new ArrayList<>();
+        ArrayList<Orders> deliveringList = new ArrayList<>();
+        ArrayList<Orders> historyList = new ArrayList<>();
+        orderList.add(pendingList);
+        orderList.add(deliveringList);
+        orderList.add(historyList);
         root.collection("User/" + userId + "/Order")
                 .orderBy("time", Query.Direction.DESCENDING)
                 .get()
@@ -837,7 +847,8 @@ public class ModifyFirebase {
     public void getListOrderedItems(Orders order) {
         ArrayList<OrderItem> orderItemArrayList = new ArrayList<>();
 
-        root.collection("User/" + userId + "/Order/").document(order.getOrderID())
+        root.collection("User/" + userId + "/Order/")
+                .document(order.getOrderID())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
@@ -877,10 +888,59 @@ public class ModifyFirebase {
                                         orderItemArrayList.add(orderItem);
                                         if (item == listMap.get(listMap.size() - 1)) {
                                             order.setListOrderItems(orderItemArrayList);
-                                            ordersList.add(order);
+
+                                            if (order.getStatus().equals(OrderStatus.Pending.toString())
+                                                    || order.getStatus().equals(OrderStatus.Received.toString()))
+                                                orderList.get(0).add(order);
+
+                                            if (order.getStatus().equals(OrderStatus.Delivering.toString()))
+                                                orderList.get(1).add(order);
+
+                                            if (order.getStatus().equals(OrderStatus.Succeeded.toString())
+                                                    || order.getStatus().equals(OrderStatus.Canceled.toString()))
+                                                orderList.get(2).add(order);
                                         }
                                     }
                                 });
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void OrderStatusChange(final OnGetDataListener listener) {
+        listener.onStart();
+        root.collection("User/" + userId + "/Order/")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null) {
+                            Log.e("REALTIME", error.getMessage());
+                            return;
+                        }
+
+                        if (value != null) {
+                            List<DocumentChange> documentChangeList = value.getDocumentChanges();
+                            for (DocumentChange document : documentChangeList) {
+                                Log.e("REALTIME--", document.getDocument().getId());
+                                Orders order = new Orders();
+                                order.setOrderID(document.getDocument().getId());
+
+                                for (ArrayList<Orders> arrayList : orderList) {
+                                    for (Orders o : arrayList) {
+                                        if (o.getOrderID().equals(order.getOrderID())) {
+                                            arrayList.remove(o);
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                getOrderById(order);
+
+                                if (document.getDocument().getId().equals(
+                                        documentChangeList.get(documentChangeList.size() - 1).getDocument().getId())) {
+                                    listener.onSuccess();
+                                }
                             }
                         }
                     }
@@ -958,12 +1018,12 @@ public class ModifyFirebase {
         this.user = user;
     }
 
-    public ArrayList<Orders> getOrdersList() {
-        return ordersList;
+    public ArrayList<ArrayList<Orders>> getOrderList() {
+        return orderList;
     }
 
-    public void setOrdersList(ArrayList<Orders> ordersList) {
-        this.ordersList = ordersList;
+    public void setOrderList(ArrayList<ArrayList<Orders>> orderList) {
+        this.orderList = orderList;
     }
 
     //endregion

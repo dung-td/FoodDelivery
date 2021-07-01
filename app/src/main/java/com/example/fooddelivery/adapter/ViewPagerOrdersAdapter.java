@@ -1,6 +1,8 @@
 package com.example.fooddelivery.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,24 +22,31 @@ import java.util.ArrayList;
 
 public class ViewPagerOrdersAdapter extends FragmentStatePagerAdapter {
     Activity activity;
+    @SuppressLint("StaticFieldLeak")
+    public static GeneralOrdersFragment adapter0 = new GeneralOrdersFragment(0);
+    @SuppressLint("StaticFieldLeak")
+    public static GeneralOrdersFragment adapter1 = new GeneralOrdersFragment(1);
+    @SuppressLint("StaticFieldLeak")
+    public static GeneralOrdersFragment adapter2 = new GeneralOrdersFragment(2);
+
     public ViewPagerOrdersAdapter(@NonNull FragmentManager fm, int behavior, Activity activity) {
         super(fm, behavior);
         this.activity = activity;
+        Log.e("Pager", "OnCreate");
     }
-
     @NonNull
     @Override
     public Fragment getItem(int position) {
-
-        switch (position){
+        Log.e("Switch", "Postion" + position);
+        switch (position) {
             case 0:
-                return new GeneralOrdersFragment(getListPending());
+                return adapter0;
             case 1:
-                return new GeneralOrdersFragment(getListDelivering());
+                return adapter1;
             case 2:
-                return new GeneralOrdersFragment(getListHistory());
+                return adapter2;
             default:
-                return new GeneralOrdersFragment(getListHistory());
+                return adapter2;
         }
     }
 
@@ -59,54 +68,7 @@ public class ViewPagerOrdersAdapter extends FragmentStatePagerAdapter {
             case 2:
                 title = activity.getBaseContext().getResources().getString(R.string.history);
                 break;
-
         }
-
-
         return title;
     }
-
-    ArrayList<Orders> getListDelivering()
-    {
-        ArrayList<Orders> tmpList = LoginActivity.firebase.ordersList;
-        ArrayList<Orders> listDelivering = new ArrayList<>();
-
-        for (Orders orders : tmpList)
-        {
-            if (orders.getStatus().equals(OrderStatus.Delivering.toString()))
-                listDelivering.add(orders);
-        }
-        return  listDelivering;
-    }
-
-    ArrayList<Orders> getListHistory()
-    {
-        ArrayList<Orders> tmpList = LoginActivity.firebase.ordersList;
-        ArrayList<Orders> listHistory = new ArrayList<>();
-
-        for (Orders orders : tmpList)
-        {
-          //  Log.e("order get status", orders.getStatus());
-            if (orders.getStatus().equals(OrderStatus.Succeeded.toString())
-            || orders.getStatus().equals(OrderStatus.Canceled.toString()))
-                listHistory.add(orders);
-        }
-        return  listHistory;
-    }
-
-    ArrayList<Orders> getListPending()
-    {
-        ArrayList<Orders> tmpList = LoginActivity.firebase.ordersList;
-        ArrayList<Orders> listHistory = new ArrayList<>();
-
-        for (Orders orders : tmpList)
-        {
-            if (orders.getStatus().equals(OrderStatus.Pending.toString()) ||
-                    orders.getStatus().equals(OrderStatus.Received.toString())
-            )
-                listHistory.add(orders);
-        }
-        return  listHistory;
-    }
-
 }
