@@ -178,14 +178,14 @@
                     android:layout_marginStart="20dp"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/ic_voucher"
-                    android:textSize="17dp"/>
+                    android:textSize="17sp"/>
 
                 <TextView
                     android:id="@+id/tv_voucher_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/voucher_detail"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginEnd="15dp"
                     android:layout_alignParentEnd="true"

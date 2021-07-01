@@ -51,7 +51,8 @@
             android:layout_marginStart="16dp"
             android:text="@string/delivery_from"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/tv_delivery_from_details"
@@ -62,7 +63,8 @@
             android:layout_marginEnd="16dp"
             android:text="Đông Hòa Dĩ An, Bình Dương"
             android:textSize="18sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:textColor="@color/black"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -80,7 +82,8 @@
             android:layout_marginStart="16dp"
             android:text="@string/delivery_to"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/tv_delivery_to_details"
@@ -91,7 +94,8 @@
             android:layout_marginEnd="16dp"
             android:text="Đông Hòa Dĩ An, Bình Dương"
             android:textSize="18sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/tv_change_address"
@@ -120,7 +124,8 @@
             android:layout_marginStart="16dp"
             android:text="@string/time_direc"
             android:textSize="18sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/tv_direc_distance"
@@ -131,7 +136,8 @@
             android:layout_marginEnd="16dp"
             android:text="@string/distance_direc"
             android:textSize="18sp"
-            android:textStyle="normal" />
+            android:textStyle="normal"
+            android:textColor="@color/black"/>
     </RelativeLayout>
 
     <LinearLayout

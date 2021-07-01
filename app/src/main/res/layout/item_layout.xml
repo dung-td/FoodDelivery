@@ -37,7 +37,7 @@
             android:layout_marginTop="5dp"
             android:text="Trà Sen Vàng"
             android:textColor="@color/black"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/tv_item_name_en"
@@ -49,7 +49,7 @@
             android:layout_marginStart="15dp"
             android:text="Golden Lotus Tea"
             android:textColor="@color/grey"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/tv_item_price"
@@ -61,7 +61,7 @@
             android:layout_marginTop="20dp"
             android:text="49.000 đ"
             android:textColor="@color/black"
-            android:textSize="28dp"/>
+            android:textSize="28sp"/>
 
         <Spinner
             android:id="@+id/spinner_size"

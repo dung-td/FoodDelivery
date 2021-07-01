@@ -489,6 +489,7 @@ public class ModifyFirebase {
                                             product.setEn_Name((String) document.get("Name_En"));
                                             product.setStatus((String) document.get("Status"));
                                             product.setPrice((ArrayList<String>) document.get("Price"));
+                                            product.setSales((String) document.get("Sales"));
                                             product.setProductSize((ArrayList<String>) document.get("Size"));
 //                                            product.setMerchant((Merchant) findMerchantFromId(((String) document.get("Merchant")).substring(9)));
                                             product.setRating((String) document.get("Rating"));

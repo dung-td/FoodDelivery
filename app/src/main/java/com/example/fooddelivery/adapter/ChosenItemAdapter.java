@@ -142,8 +142,10 @@ public class ChosenItemAdapter extends RecyclerView.Adapter<ChosenItemAdapter.Ch
                 LoginActivity.firebase.cartList.remove(p);
                 CartActivity.chosenItemAdapter.notifyDataSetChanged();
                 CartActivity.totalPrice = "0";
+                CartActivity.textViewDistance.setVisibility(View.INVISIBLE);
                 LoginActivity.firebase.removeProductFromCartWithContext(p, context);
                 CartActivity.updateTotalPriceAndCost();
+                CartActivity.getMerchantDistance();
                 if (!CartActivity.checkVoucherUtilization(CartActivity.voucherMinSumPrice)) {
                     CartActivity.cancelVoucher();
                 }

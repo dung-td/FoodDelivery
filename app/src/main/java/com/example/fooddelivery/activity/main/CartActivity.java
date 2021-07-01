@@ -3,6 +3,7 @@ package com.example.fooddelivery.activity.main;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,13 +29,21 @@ import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.ChosenItemAdapter;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.ChosenItem;
+import com.example.fooddelivery.model.DirectionFinder;
+import com.example.fooddelivery.model.DirectionFinderListener;
 import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
+import com.example.fooddelivery.model.Route;
 import com.example.fooddelivery.model.Voucher;
+import com.google.android.gms.maps.model.LatLng;
 
+import java.io.UnsupportedEncodingException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class CartActivity extends AppCompatActivity {
@@ -46,6 +55,7 @@ public class CartActivity extends AppCompatActivity {
     static TextView textViewNamePhone;
     static TextView textViewAddress;
     TextView textViewChangeAddress;
+    public static TextView textViewDistance;
     static TextView textViewApplyVoucherFailed;
     static TextView textViewOrderTime;
     static TextView textViewSumPrice;
@@ -67,6 +77,7 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         
         initView();
+        getMerchantDistance();
         loadLanguage();
         setUserInformation();
         initRecyclerViewItemOnCart();
@@ -90,6 +101,7 @@ public class CartActivity extends AppCompatActivity {
         textViewShippingCost = findViewById(R.id.tv_shipping_cost);
         textViewTotalCost = findViewById(R.id.tv_total_cost);
         textViewNoData = findViewById(R.id.tv_no_data);
+        textViewDistance = findViewById(R.id.tv_distance);
         textViewApplyVoucherFailed = findViewById(R.id.tv_apply_voucher_failed);
         textViewVoucherDiscount = findViewById(R.id.tv_voucher_discount);
 
@@ -298,5 +310,66 @@ public class CartActivity extends AppCompatActivity {
             previousMerchant = chosenItem.getProduct().getMerchant().getId();
         }
         return false;
+    }
+
+    public static void calculateShippingCost() {
+        DecimalFormat df = new DecimalFormat("#");
+        df.setRoundingMode(RoundingMode.CEILING);
+
+        int shippingCost = 0;
+        String distance = textViewDistance.getText().toString().substring(0, textViewDistance.getText().toString().indexOf(" "));
+        shippingCost = (Integer.parseInt(df.format(Float.parseFloat(distance))) / 3) * 5000;
+
+        textViewShippingCost.setText(String.valueOf(shippingCost));
+    }
+
+    public static void getMerchantDistance() {
+        if (LoginActivity.firebase.cartList.size() > 0) {
+            double latitude = 0.0;
+            double longitude = 0.0;
+            for (Merchant merchant : LoginActivity.firebase.merchantList) {
+
+                if (merchant.getRoutes().size() == 0) {
+
+                    String firstItemMerchantId = LoginActivity.firebase.getProductById(
+                            LoginActivity.firebase.cartList.get(0).getProduct().getId()).getMerchant().getId();
+                    if (firstItemMerchantId.equals(merchant.getId())) {
+                        latitude = merchant.getAddress().getLatitude();
+                        longitude = merchant.getAddress().getLongitude();
+
+                        try {
+                            LatLng fromLatLng = new LatLng(latitude, longitude);
+                            LatLng toLatLng = new LatLng(LoginActivity.firebase.getUser().getAddress().getLatitude(), LoginActivity.firebase.getUser().getAddress().getLongitude());
+                            new DirectionFinder(new DirectionFinderListener() {
+                                @Override
+                                public void onDirectionFinderStart() {
+                                }
+
+                                @Override
+                                public void onDirectionFinderSuccess(List<Route> route) {
+                                    merchant.getRoutes().addAll(route);
+                                    textViewDistance.setText(merchant.getRoutes().get(0).distance.text);
+                                    calculateShippingCost();
+                                    updateTotalPriceAndCost();
+                                    textViewDistance.setVisibility(View.VISIBLE);
+                                }
+                            }, fromLatLng, toLatLng).execute();
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
+                } else {
+                    textViewDistance.setText(merchant.getRoutes().get(0).distance.text);
+                    calculateShippingCost();
+                    updateTotalPriceAndCost();
+                    textViewDistance.setVisibility(View.VISIBLE);
+                }
+
+            }
+        }
+        else {
+            textViewDistance.setVisibility(View.INVISIBLE);
+        }
     }
 }

@@ -70,7 +70,7 @@ public class ProductActivity extends AppCompatActivity {
     TextView textViewMerchantName;
     TextView textViewProductRating;
     TextView textViewTotalComment;
-    TextView textViewTimeDistacne;
+    TextView textViewTimeDistance;
     static TextView cartBadge;
     TextView textViewProductNameEn;
     ViewPager viewPagerImage;
@@ -221,7 +221,7 @@ public class ProductActivity extends AppCompatActivity {
         textViewProductRating = findViewById(R.id.tv_rating);
         textViewTotalComment = findViewById(R.id.tv_comment_total);
         textViewProductNameEn = findViewById(R.id.tv_product_name_en);
-        textViewTimeDistacne = findViewById(R.id.tv_time_distance);
+        textViewTimeDistance = findViewById(R.id.tv_time_distance);
         cartBadge = findViewById(R.id.cart_badge);
         viewPagerImage = findViewById(R.id.product_image);
         linearLayoutBack = findViewById(R.id.btn_back_background);
@@ -307,7 +307,7 @@ public class ProductActivity extends AppCompatActivity {
                             @Override
                             public void onDirectionFinderSuccess(List<Route> route) {
                                 merchant.getRoutes().addAll(route);
-                                textViewTimeDistacne.setText(String.format("%s, %s", merchant.getRoutes().get(0).distance.text, merchant.getRoutes().get(0).duration.text));
+                                textViewTimeDistance.setText(String.format("%s, %s", merchant.getRoutes().get(0).distance.text, merchant.getRoutes().get(0).duration.text));
                                 progressDialog.dismiss();
                             }
                         }, fromLatLng, toLatLng).execute();
@@ -318,7 +318,7 @@ public class ProductActivity extends AppCompatActivity {
                     break;
                 }
             } else {
-                textViewTimeDistacne.setText(String.format("%s, %s", merchant.getRoutes().get(0).distance.text, merchant.getRoutes().get(0).duration.text));
+                textViewTimeDistance.setText(String.format("%s, %s", merchant.getRoutes().get(0).distance.text, merchant.getRoutes().get(0).duration.text));
                 textViewMerchantName.setText(String.format("%s - %s", merchant.getName(), merchant.getAddress().getAddressLine(0)));
             }
 
