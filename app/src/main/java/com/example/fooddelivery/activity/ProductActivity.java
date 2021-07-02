@@ -429,8 +429,8 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int index = 0;
-                for (int i = 0; index < LoginActivity.firebase.merchantList.size(); i++) {
-                    if (LoginActivity.firebase.merchantList.get(index).getId().equals(product.getMerchant().getId())) {
+                for (int i = 0; i < LoginActivity.firebase.merchantList.size(); i++) {
+                    if (LoginActivity.firebase.merchantList.get(i).getId().equals(product.getMerchant().getId())) {
                         index = i;
                         break;
                     }
@@ -446,8 +446,9 @@ public class ProductActivity extends AppCompatActivity {
                     public void onSuccess() {
                         progressBar.setVisibility(View.INVISIBLE);
                         buttonMerchantInfo.setVisibility(View.VISIBLE);
-                        Intent intent = new Intent(getApplicationContext(), MerchantActivity.class);
+                        Intent intent = new Intent(ProductActivity.this, MerchantActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("MerchantId", product.getMerchant().getId());
                         startActivity(intent);
                     }
                 });

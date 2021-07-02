@@ -118,8 +118,7 @@ public class MerchantActivity extends AppCompatActivity{
         });
 
         for (Merchant merchant : LoginActivity.firebase.merchantList) {
-            if (merchant.getId().equals(LoginActivity.firebase.productList.get(getIntent().
-                    getIntExtra("ClickedProductIndex", 0)).getMerchant().getId())) {
+            if (merchant.getId().equals(getIntent().getStringExtra("MerchantId"))) {
                 this.merchant = merchant;
                 break;
             }
