@@ -194,6 +194,15 @@
                     android:layout_marginTop="13dp"
                     android:textColor="@color/black"/>
 
+                <ProgressBar
+                    android:id="@+id/progress_load_merchant"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_below="@+id/tv_merchant_name"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:visibility="invisible"/>
+
                 <ImageView
                     android:id="@+id/btn_more_merchant_info"
                     android:layout_width="35dp"

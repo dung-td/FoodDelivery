@@ -201,4 +201,7 @@
     <string name="title_invalid_order">Đơn hàng không hợp lệ</string>
     <string name="title_different_merchant">Đơn đặt hàng của bạn gồm nhiều nhà bán khác nhau!
         Vui lòng chọn mua sản phẩm từ một nhà bán trên mỗi đơn đặt hàng!</string>
+    <string name="copied_to_clipboard">Đã sao chép vào bộ nhớ tạm!</string>
+    <string name="all">Tất cả</string>
+    <string name="high_rating">Đánh giá cao</string>
 </resources>

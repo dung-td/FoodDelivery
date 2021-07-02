@@ -193,4 +193,7 @@
     <string name="distance_direc">Estimated distance:</string>
     <string name="your_position">Your location</string>
     <string name="title_invalid_order">Invalid Order</string>
+    <string name="copied_to_clipboard">Copied to clipboard!</string>
+    <string name="all">All</string>
+    <string name="high_rating">High rating</string>
 </resources>
