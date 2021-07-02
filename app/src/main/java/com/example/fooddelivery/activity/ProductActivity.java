@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -76,6 +77,7 @@ public class ProductActivity extends AppCompatActivity {
     ViewPager viewPagerImage;
     ImageButton buttonAddToCart;
     Spinner spinnerProductSize;
+    ProgressBar progressBar;
 
     LinearLayout linearLayoutBack, linearLayoutLove, linearLayoutMore;
     FrameLayout frameLayoutCart;
@@ -231,6 +233,7 @@ public class ProductActivity extends AppCompatActivity {
         relativeLayoutToolbar = findViewById(R.id.toolbar);
         imageViewMerchantLogo = findViewById(R.id.img_logo);
         spinnerProductSize = findViewById(R.id.spinner_size);
+        progressBar = findViewById(R.id.progress_load_merchant);
 
         frameLayoutCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -435,11 +438,14 @@ public class ProductActivity extends AppCompatActivity {
                 LoginActivity.firebase.loadFullListMerchantImage(LoginActivity.firebase.merchantList.get(index), new OnGetDataListener() {
                     @Override
                     public void onStart() {
-
+                        buttonMerchantInfo.setVisibility(View.INVISIBLE);
+                        progressBar.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void onSuccess() {
+                        progressBar.setVisibility(View.INVISIBLE);
+                        buttonMerchantInfo.setVisibility(View.VISIBLE);
                         Intent intent = new Intent(getApplicationContext(), MerchantActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);

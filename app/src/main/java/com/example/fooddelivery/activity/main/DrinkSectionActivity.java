@@ -39,8 +39,8 @@ public class DrinkSectionActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.info_viewpager);
         tabLayout = findViewById(R.id.tab_button);
 
-        tabLayout.addTab(tabLayout.newTab().setText("GẦN ĐÂY"));
-        tabLayout.addTab(tabLayout.newTab().setText("ĐÁNH GIÁ CAO"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.all));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.high_rating));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         buttonBack.setOnClickListener(new View.OnClickListener() {

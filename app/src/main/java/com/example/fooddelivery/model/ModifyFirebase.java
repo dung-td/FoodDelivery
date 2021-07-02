@@ -453,6 +453,8 @@ public class ModifyFirebase {
                             merchant.getAddress().setLongitude(Double.parseDouble(addressData.get("longitude").toString()));
 
                             merchant.setName((String) document.get("Name"));
+                            merchant.setEmail((String) document.get("Email"));
+                            merchant.setPhone((String) document.get("Phone"));
                             merchant.setId(document.getId());
 
                             ArrayList<Uri> merchantImages = new ArrayList<Uri>();

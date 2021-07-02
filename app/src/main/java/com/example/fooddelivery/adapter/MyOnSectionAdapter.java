@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.fooddelivery.activity.login.LoginActivity;
+
 public class MyOnSectionAdapter extends FragmentPagerAdapter {
 
     private final Context myContext;
@@ -22,10 +24,10 @@ public class MyOnSectionAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                ItemOnSectionFragment itemFragment = new ItemOnSectionFragment();
+                ItemOnSectionFragment itemFragment = new ItemOnSectionFragment(0);
                 return itemFragment;
             case 1:
-                ItemOnSectionFragment itemFragment2 = new ItemOnSectionFragment();
+                ItemOnSectionFragment itemFragment2 = new ItemOnSectionFragment(1);
                 return itemFragment2;
             default:
                 return null;
