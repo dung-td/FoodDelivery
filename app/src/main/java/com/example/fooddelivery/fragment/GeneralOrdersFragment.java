@@ -1,6 +1,9 @@
 package com.example.fooddelivery.fragment;
 
-import android.app.ProgressDialog;
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,50 +19,28 @@ import androidx.fragment.app.Fragment;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.GeneralOrderAdapter;
-import com.example.fooddelivery.adapter.ViewPagerOrdersAdapter;
-import com.example.fooddelivery.model.OnGetDataListener;
+import com.example.fooddelivery.model.OrderItem;
+import com.example.fooddelivery.model.OrderStatus;
+import com.example.fooddelivery.model.Orders;
+import com.example.fooddelivery.model.Product;
+import com.example.fooddelivery.model.ProductStatus;
+
+import java.util.ArrayList;
+import java.util.Locale;
 
 public class GeneralOrdersFragment extends Fragment {
 
-    ProgressDialog progressDialog;
-    int Position;
     ListView lv_OrdersList;
-    GeneralOrderAdapter adapter;
+    ArrayList<Orders> listOrders = new ArrayList<>();
 
     public GeneralOrdersFragment() {
 
     }
 
-    public GeneralOrdersFragment(int Position) {
-        this.Position = Position;
-        Log.e("New Fragment", "Test: " + Position);
-        if (Position == 0)
-            getOrderChangeListener();
-
+    public  GeneralOrdersFragment(ArrayList<Orders> listOrders) {
+        this.listOrders = listOrders;
     }
 
-    private void getOrderChangeListener() {
-        LoginActivity.firebase.OrderStatusChange(new OnGetDataListener() {
-            @Override
-            public void onStart() {
-                // progressDialog.setMessage(getString(R.string.data_loading));
-                // progressDialog.show();
-            }
-
-            @Override
-            public void onSuccess() {
-                if (GeneralOrderAdapter.listOrders == null)
-                    return;
-
-                if (GeneralOrderAdapter.listOrders.size() == 0)
-                    return;
-
-                ViewPagerOrdersAdapter.adapter0.adapter.notifyDataSetChanged();
-                ViewPagerOrdersAdapter.adapter1.adapter.notifyDataSetChanged();
-                ViewPagerOrdersAdapter.adapter2.adapter.notifyDataSetChanged();
-            }
-        });
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,8 +51,8 @@ public class GeneralOrdersFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list_orders, container, false);
-        lv_OrdersList = (ListView) v.findViewById(R.id.lv_fm_listorders);
-        adapter = new GeneralOrderAdapter(getActivity(), Position);
+        lv_OrdersList= (ListView) v.findViewById(R.id.lv_fm_listorders);
+        GeneralOrderAdapter adapter = new GeneralOrderAdapter(getActivity(), listOrders);
         lv_OrdersList.setAdapter(adapter);
         return v;
     }
@@ -83,8 +64,7 @@ public class GeneralOrdersFragment extends Fragment {
         lv_OrdersList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                OrderDetailsFragment nextFrag = new OrderDetailsFragment(
-                        LoginActivity.firebase.orderList.get(Position).get(position));
+                OrderDetailsFragment nextFrag= new OrderDetailsFragment(listOrders.get(position));
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container, nextFrag, null)
                         .addToBackStack(null)
@@ -92,4 +72,7 @@ public class GeneralOrdersFragment extends Fragment {
             }
         });
     }
+
+
+
 }

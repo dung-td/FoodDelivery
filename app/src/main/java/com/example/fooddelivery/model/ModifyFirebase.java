@@ -55,6 +55,7 @@ public class ModifyFirebase {
     private final boolean checkUsername = false;
     private boolean uIDCheck = false;
     private User user = new User();
+    private int count;
 
     public ModifyFirebase() {
     }
@@ -803,22 +804,54 @@ public class ModifyFirebase {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot != null) {
-                            //    Log.e(ORDER_TAG, "get order details: " + documentSnapshot.getId());
-                            order.time = documentSnapshot.get("time").toString();
-                            order.discount = Integer.parseInt(documentSnapshot.get("discount").toString());
+
+                            boolean check = false;
                             order.status = documentSnapshot.get("status").toString();
-                            order.freightCost = Integer.parseInt(documentSnapshot.get("freight_cost").toString());
-                            order.method = documentSnapshot.get("payment_method").toString();
-                            order.status = documentSnapshot.get("status").toString();
-                            order.totalAmount = Integer.parseInt(documentSnapshot.get("total_amount").toString());
-                            order.voucherID = documentSnapshot.get("voucher").toString();
-                            order.user_name = documentSnapshot.get("user_name").toString();
-                            order.user_address = documentSnapshot.get("user_address").toString();
-                            getListOrderedItems(order);
+
+                            for (ArrayList<Orders> arrayList : orderList) {
+                                for (Orders o : arrayList) {
+                                    if (o.getOrderID().equals(order.getOrderID())) {
+                                        if (!o.getStatus().equals(order.getStatus())) {
+                                            check = true;
+                                            arrayList.remove(o);
+                                            Log.e("Remove", o.getOrderID());
+                                            order.time = documentSnapshot.get("time").toString();
+                                            order.discount = Integer.parseInt(documentSnapshot.get("discount").toString());
+                                            order.freightCost = Integer.parseInt(documentSnapshot.get("freight_cost").toString());
+                                            order.method = documentSnapshot.get("payment_method").toString();
+                                            order.status = documentSnapshot.get("status").toString();
+                                            order.totalAmount = Integer.parseInt(documentSnapshot.get("total_amount").toString());
+                                            order.voucherID = documentSnapshot.get("voucher").toString();
+                                            order.user_name = documentSnapshot.get("user_name").toString();
+                                            order.user_address = documentSnapshot.get("user_address").toString();
+                                            getListOrderedItems(order);
+                                            break;
+                                        } else
+                                            check = true;
+                                    }
+                                }
+                            }
+
+                            Log.e("Check", order.getOrderID() + "/" + check);
+
+                            if (!check) {
+                                //    Log.e(ORDER_TAG, "get order details: " + documentSnapshot.getId());
+                                order.time = documentSnapshot.get("time").toString();
+                                order.discount = Integer.parseInt(documentSnapshot.get("discount").toString());
+                                order.freightCost = Integer.parseInt(documentSnapshot.get("freight_cost").toString());
+                                order.method = documentSnapshot.get("payment_method").toString();
+                                order.status = documentSnapshot.get("status").toString();
+                                order.totalAmount = Integer.parseInt(documentSnapshot.get("total_amount").toString());
+                                order.voucherID = documentSnapshot.get("voucher").toString();
+                                order.user_name = documentSnapshot.get("user_name").toString();
+                                order.user_address = documentSnapshot.get("user_address").toString();
+                                getListOrderedItems(order);
+                            }
                         }
                     }
                 });
     }
+
 
     public void getListOrdersOfUser() {
         orderList.clear();
@@ -890,16 +923,27 @@ public class ModifyFirebase {
                                         if (item == listMap.get(listMap.size() - 1)) {
                                             order.setListOrderItems(orderItemArrayList);
 
-                                            if (order.getStatus().equals(OrderStatus.Pending.toString())
-                                                    || order.getStatus().equals(OrderStatus.Received.toString()))
-                                                orderList.get(0).add(order);
+                                            Log.e("Status", order.getStatus());
 
-                                            if (order.getStatus().equals(OrderStatus.Delivering.toString()))
+                                            if (order.getStatus().equals(OrderStatus.Pending.toString())
+                                                    || order.getStatus().equals(OrderStatus.Confirmed.toString())) {
+                                                Log.e("Add", order.getOrderID() + order.getStatus());
+                                                orderList.get(0).add(order);
+                                            }
+
+
+                                            if (order.getStatus().equals(OrderStatus.Delivering.toString())) {
+                                                Log.e("Add", order.getOrderID() + order.getStatus());
                                                 orderList.get(1).add(order);
+                                            }
+
 
                                             if (order.getStatus().equals(OrderStatus.Succeeded.toString())
-                                                    || order.getStatus().equals(OrderStatus.Canceled.toString()))
+                                                    || order.getStatus().equals(OrderStatus.Canceled.toString())) {
                                                 orderList.get(2).add(order);
+                                                Log.e("Add", order.getOrderID() + order.getStatus());
+                                            }
+
                                         }
                                     }
                                 });
@@ -925,16 +969,8 @@ public class ModifyFirebase {
                             for (DocumentChange document : documentChangeList) {
                                 Log.e("REALTIME--", document.getDocument().getId());
                                 Orders order = new Orders();
-                                order.setOrderID(document.getDocument().getId());
 
-                                for (ArrayList<Orders> arrayList : orderList) {
-                                    for (Orders o : arrayList) {
-                                        if (o.getOrderID().equals(order.getOrderID())) {
-                                            arrayList.remove(o);
-                                            break;
-                                        }
-                                    }
-                                }
+                                order.setOrderID(document.getDocument().getId());
 
                                 getOrderById(order);
 
@@ -946,10 +982,12 @@ public class ModifyFirebase {
                         }
                     }
                 });
-    }
-    //endregion
 
-    //region GET SET
+    }
+
+//endregion
+
+//region GET SET
 
     public Object getObject() {
         return object;

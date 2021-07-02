@@ -2,7 +2,7 @@ package com.example.fooddelivery.model;
 
 public enum OrderStatus {
     Pending,
-    Received,
+    Confirmed,
     Delivering,
     Canceled,
     Succeeded

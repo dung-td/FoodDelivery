@@ -1,6 +1,7 @@
 package com.example.fooddelivery.adapter;
 
 import android.app.Activity;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,9 +20,9 @@ public class voucherStatusAdapter extends FragmentStatePagerAdapter {
     }
 
 
+    @NonNull
     @Override
     public Fragment getItem(int position) {
-
         return new VoucherFragment(position);
     }
     // this counts total number of tabs

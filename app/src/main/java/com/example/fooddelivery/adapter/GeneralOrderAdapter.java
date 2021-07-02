@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
-import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.OrderStatus;
 import com.example.fooddelivery.model.Orders;
 import com.squareup.picasso.Picasso;
@@ -19,11 +18,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class GeneralOrderAdapter extends BaseAdapter {
-    public static ArrayList<Orders> listOrders;
+    ArrayList<Orders> listOrders ;
     Activity activity;
 
-    TextView merchant;
-    ImageView imageView;
+    TextView merchant ;
+    ImageView imageView ;
     TextView name;
     TextView category;
     TextView quantity;
@@ -33,13 +32,10 @@ public class GeneralOrderAdapter extends BaseAdapter {
     TextView total_price;
     TextView status;
 
-    int Status;
-
-    public GeneralOrderAdapter(Activity act, int status) {
-        Log.e("Adapter", "Create new: " + status);
+    public GeneralOrderAdapter(Activity act, ArrayList<Orders> orders)
+    {
         this.activity = act;
-        this.Status = status;
-        listOrders = LoginActivity.firebase.getOrderList().get(Status);
+        this.listOrders = orders;
         notifyDataSetChanged();
     }
 
@@ -68,23 +64,23 @@ public class GeneralOrderAdapter extends BaseAdapter {
         setData(position);
 
         return convertView;
-
     }
 
     void initView(View convertView) {
-        merchant = (TextView) convertView.findViewById(R.id.tv_ordlist_merchant);
+        merchant = (TextView)convertView.findViewById(R.id.tv_ordlist_merchant);
         imageView = (ImageView) convertView.findViewById(R.id.tv_ordlist_image);
-        name = (TextView) convertView.findViewById(R.id.tv_ordlist_productname);
-        category = (TextView) convertView.findViewById(R.id.tv_ordlist_productcate);
-        quantity = (TextView) convertView.findViewById(R.id.tv_ordlist_quantity);
-        price = (TextView) convertView.findViewById(R.id.tv_ordlist_price);
-        detail = (TextView) convertView.findViewById(R.id.tv_ordlist_details);
-        total = (TextView) convertView.findViewById(R.id.tv_ordlist_total);
-        total_price = (TextView) convertView.findViewById(R.id.tv_ordlist_totalprice);
-        status = (TextView) convertView.findViewById(R.id.tv_ordlist_status);
+        name = (TextView)convertView.findViewById(R.id.tv_ordlist_productname);
+        category = (TextView)convertView.findViewById(R.id.tv_ordlist_productcate);
+        quantity = (TextView)convertView.findViewById(R.id.tv_ordlist_quantity);
+        price = (TextView)convertView.findViewById(R.id.tv_ordlist_price);
+        detail = (TextView)convertView.findViewById(R.id.tv_ordlist_details);
+        total = (TextView)convertView.findViewById(R.id.tv_ordlist_total);
+        total_price = (TextView)convertView.findViewById(R.id.tv_ordlist_totalprice);
+        status = (TextView)convertView.findViewById(R.id.tv_ordlist_status);
     }
 
-    void setData(int position) {
+    void setData(int position)
+    {
         merchant.setText(listOrders.get(position).getFirstOrderItems().getProduct()
                 .getMerchant().getName());
 
@@ -96,11 +92,12 @@ public class GeneralOrderAdapter extends BaseAdapter {
         category.setText(listOrders.get(position).getFirstOrderItems().getSize());
 
 
-        quantity.setText(String.format("x%s", Integer.toString(listOrders.get(position).getFirstOrderItems().getQuantity())));
+        quantity.setText("x"
+                + Integer.toString(listOrders.get(position).getFirstOrderItems().getQuantity()));
 
         price.setText(Integer.toString(listOrders.get(position).getFirstOrderItems().getPrice()));
 
-        if (listOrders.get(position).getListOrderItems().size() > 1)
+        if(listOrders.get(position).getListOrderItems().size() > 1)
             detail.setText(R.string.continue_);
         else
             detail.setText("");
@@ -111,14 +108,16 @@ public class GeneralOrderAdapter extends BaseAdapter {
 
     }
 
-    void setNameItem(int position) {
+    void setNameItem(int position)
+    {
         if (LoginActivity.language.equals("vi"))
             name.setText(String.format(listOrders.get(position).getFirstOrderItems().getProduct().getName()));
         else
             name.setText(String.format(listOrders.get(position).getFirstOrderItems().getProduct().getEn_Name()));
     }
 
-    void setStatus(int position) {
+    void setStatus(int position)
+    {
         String orderStatus = listOrders.get(position).getStatus();
 
         if (orderStatus.equals(OrderStatus.Canceled.toString()))
@@ -130,10 +129,11 @@ public class GeneralOrderAdapter extends BaseAdapter {
         if (orderStatus.equals(OrderStatus.Succeeded.toString()))
             status.setText(R.string.delivery_success);
 
-        if (orderStatus.equals(OrderStatus.Received.toString()))
+        if (orderStatus.equals(OrderStatus.Confirmed.toString()))
             status.setText(R.string.received_order);
 
         if (orderStatus.equals(OrderStatus.Delivering.toString()))
             status.setText(R.string.delivering);
+
     }
 }
