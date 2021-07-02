@@ -53,6 +53,7 @@ public class GeneralOrdersFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_list_orders, container, false);
         lv_OrdersList= (ListView) v.findViewById(R.id.lv_fm_listorders);
         GeneralOrderAdapter adapter = new GeneralOrderAdapter(getActivity(), listOrders);
+        lv_OrdersList.setSaveEnabled(true);
         lv_OrdersList.setAdapter(adapter);
         return v;
     }

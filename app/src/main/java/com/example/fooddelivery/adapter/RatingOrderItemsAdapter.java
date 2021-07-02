@@ -84,7 +84,6 @@ public class RatingOrderItemsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 openRatingItemFragment(listOrderItem.get(position), position);
-
             }
         });
 

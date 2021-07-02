@@ -34,6 +34,7 @@ public class ListItemCommentFragment extends Fragment {
     ListView lv_Commented;
     RatingOrderItemsAdapter adapter;
     ImageButton bt_Back;
+    Boolean viewOnly = true;
 
     static int LIST_RATING_FRAGMENT_CODE = 123456789;
 
@@ -67,7 +68,12 @@ public class ListItemCommentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //getActivity().onBackPressed();
-                getFragmentManager().popBackStack();
+                if (viewOnly)
+                    getFragmentManager().popBackStack();
+                else {
+                    Intent goToMain = new Intent(getActivity(), OrderDetailsFragment.class);
+                    startActivity(goToMain);
+                }
             }
         });
     }
@@ -82,7 +88,7 @@ public class ListItemCommentFragment extends Fragment {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode==LIST_RATING_FRAGMENT_CODE){
+        if (resultCode == RESULT_OK && requestCode==LIST_RATING_FRAGMENT_CODE) {
             String details = data.getStringExtra("details");
             String rating = data.getStringExtra("rating");
             String username = data.getStringExtra("username");
@@ -92,10 +98,13 @@ public class ListItemCommentFragment extends Fragment {
 
             Comment comment = listOrderItem.get(position).getComment();
 
+
             comment.setDate(date);
             comment.setUserName(username);
             comment.setDetails(details);
             comment.setRating(rating);
+
+            viewOnly = false;
         }
     }
 }

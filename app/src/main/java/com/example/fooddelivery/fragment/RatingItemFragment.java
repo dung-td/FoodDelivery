@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.model.CallBackData;
 import com.example.fooddelivery.model.Comment;
 import com.example.fooddelivery.model.OrderItem;
@@ -49,6 +50,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+
+import es.dmoral.toasty.Toasty;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -203,8 +206,7 @@ public class RatingItemFragment extends Fragment {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getContext() ,getString(R.string.send_feedback_fail), Toast.LENGTH_LONG).show();
-
+                        Toasty.error(getContext() ,getString(R.string.send_feedback_fail), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -243,12 +245,12 @@ public class RatingItemFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        LoginActivity.firebase.getListOrdersOfUser();
-                        Toast.makeText(getContext(), getString(R.string.send_comment_success), Toast.LENGTH_LONG).show();
+                        Toasty.success(getContext(), getString(R.string.send_comment_success), Toast.LENGTH_LONG).show();
                         ratingSuccess = true;
+                        Intent goToMain = new Intent(getActivity(), MainActivity.class);
+                        startActivity(goToMain);
                     }
                 });
-
         //endregion
     }
 

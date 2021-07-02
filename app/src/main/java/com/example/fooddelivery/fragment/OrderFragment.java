@@ -52,6 +52,7 @@ public class OrderFragment extends Fragment {
                 Log.e("Reload", "test");
                 ViewPagerOrdersAdapter viewAdapter = new ViewPagerOrdersAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, activity);
                 vp_orders.setAdapter(viewAdapter);
+                vp_orders.setSaveEnabled(true);
                 viewAdapter.notifyDataSetChanged();
                 tl_orders.setupWithViewPager(vp_orders);
             }
@@ -71,6 +72,7 @@ public class OrderFragment extends Fragment {
         vp_orders = view.findViewById(R.id.fm_order_viewpager);
         tl_orders = view.findViewById(R.id.fm_order_tablayout);
         ViewPagerOrdersAdapter viewAdapter = new ViewPagerOrdersAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, activity);
+        vp_orders.setSaveEnabled(true);
         vp_orders.setAdapter(viewAdapter);
         tl_orders.setupWithViewPager(vp_orders);
     }
