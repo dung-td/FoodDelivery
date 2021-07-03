@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.activity.main.CartActivity;
 import com.example.fooddelivery.activity.main.DrinkSectionActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
@@ -77,7 +78,7 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 if (isWatchedFirstClick) {
                     isWatchedFirstClick = false;
-                    LoginActivity.firebase.getWatchedProductList(new OnGetDataListener() {
+                    WelcomeActivity.firebase.getWatchedProductList(new OnGetDataListener() {
                         @Override
                         public void onStart() {
 
@@ -140,13 +141,13 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initClickListener();
         if (isCartFirstClick) {
-            LoginActivity.firebase.getProductInCart();
+            WelcomeActivity.firebase.getProductInCart();
         }
 
         recyclerViewProducts = (RecyclerView)getView().findViewById(R.id.recycler_view_products);
         recyclerViewProducts.setHasFixedSize(true);
 
-        itemOnMainAdapter = new ItemOnMainAdapter(getContext(), LoginActivity.firebase.productList);
+        itemOnMainAdapter = new ItemOnMainAdapter(getContext(), WelcomeActivity.firebase.productList);
         GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
         int spanCount = 2;
         int spacing = 30;
@@ -158,8 +159,8 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     public static void updateCartBadge() {
-        if (LoginActivity.firebase.cartList != null && LoginActivity.firebase.cartList.size() > 0) {
-            cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
+        if (WelcomeActivity.firebase.cartList != null && WelcomeActivity.firebase.cartList.size() > 0) {
+            cartBadge.setText(WelcomeActivity.firebase.cartList.size() + "");
             cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
         }
         else {

@@ -1,11 +1,9 @@
 package com.example.fooddelivery.model;
 
 import android.os.AsyncTask;
-import android.os.Parcel;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
-
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,15 +14,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DirectionFinder {
     private static final String DIRECTION_URL_API = "https://maps.googleapis.com/maps/api/directions/json?";
-    private static final String GOOGLE_API_KEY = "AIzaSyAEsRAg_HS20UUQ3u3Y4rcRLq50WkplGI4";
+    private static final String GOOGLE_API_KEY = "AIzaSyAyKF4XRzjYmoXBh-hA3m7xFpkcr0MBaJM";
     private DirectionFinderListener listener;
     private LatLng origin;
     private LatLng destination;
@@ -43,8 +39,8 @@ public class DirectionFinder {
 
     private String createUrl() throws UnsupportedEncodingException {
         return DIRECTION_URL_API + "origin=" + origin.latitude + "," + origin.longitude
-                                + "&destination=" + destination.latitude + "," + destination.longitude
-                                + "&key=" + GOOGLE_API_KEY;
+                + "&destination=" + destination.latitude + "," + destination.longitude
+                + "&key=" + GOOGLE_API_KEY;
     }
 
     private class DownloadRawData extends AsyncTask<String, Void, String> {

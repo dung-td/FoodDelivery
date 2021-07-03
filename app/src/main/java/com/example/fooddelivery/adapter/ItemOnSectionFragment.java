@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.model.Product;
 
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class ItemOnSectionFragment extends Fragment {
         productListType = listType;
 
         //Toàn bộ drink
-        for (Product p : LoginActivity.firebase.productList) {
+        for (Product p : WelcomeActivity.firebase.productList) {
             if (p.getType().equals("Drink"))
                 productList.add(p);
         }

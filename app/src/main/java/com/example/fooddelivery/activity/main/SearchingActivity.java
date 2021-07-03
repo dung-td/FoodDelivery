@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.adapter.SearchingItemAdapter;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.fragment.HomeFragment;
@@ -101,7 +102,7 @@ public class SearchingActivity extends AppCompatActivity {
 
     private void setRecyclerViewSearchesAdapter() {
         searchData = new ArrayList<>();
-        for (SearchString search : LoginActivity.firebase.searchList) {
+        for (SearchString search : WelcomeActivity.firebase.searchList) {
             searchData.add(search.getDetail());
         }
         if (searchData.isEmpty()) {
@@ -118,7 +119,7 @@ public class SearchingActivity extends AppCompatActivity {
 
     private void getSearchesList() {
         if (HomeFragment.isSearchFirstClick) {
-            LoginActivity.firebase.getSearchData(new OnGetDataListener() {
+            WelcomeActivity.firebase.getSearchData(new OnGetDataListener() {
                 @Override
                 public void onStart() {
 
@@ -144,7 +145,7 @@ public class SearchingActivity extends AppCompatActivity {
         textViewDeleteSearches.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginActivity.firebase.removeSearchData(new OnGetDataListener() {
+                WelcomeActivity.firebase.removeSearchData(new OnGetDataListener() {
                     @Override
                     public void onStart() {
 
@@ -172,13 +173,13 @@ public class SearchingActivity extends AppCompatActivity {
                         !editTextSearchInput.getText().toString().equals("")) {
                     HomeFragment.isSearchFirstClick = true;
                     if (!checkIfSearchExist()) {
-                        LoginActivity.firebase.addSearchDataToFirebase(editTextSearchInput.getText().toString());
+                        WelcomeActivity.firebase.addSearchDataToFirebase(editTextSearchInput.getText().toString());
                         searchData.add(editTextSearchInput.getText().toString());
-                        LoginActivity.firebase.searchList.add(new SearchString("", editTextSearchInput.getText().toString()));
+                        WelcomeActivity.firebase.searchList.add(new SearchString("", editTextSearchInput.getText().toString()));
                     }
 
                     queryResult = new ArrayList<>();
-                    LoginActivity.firebase.querySearch(queryResult, editTextSearchInput.getText().toString(), new OnGetDataListener() {
+                    WelcomeActivity.firebase.querySearch(queryResult, editTextSearchInput.getText().toString(), new OnGetDataListener() {
                         @Override
                         public void onStart() {
 
@@ -197,7 +198,7 @@ public class SearchingActivity extends AppCompatActivity {
     }
 
     private boolean checkIfSearchExist() {
-        for (SearchString search : LoginActivity.firebase.searchList) {
+        for (SearchString search : WelcomeActivity.firebase.searchList) {
             if (search.getDetail().equals(editTextSearchInput.getText().toString())) {
                 return true;
             }

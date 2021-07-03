@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.model.Feedback;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -86,7 +87,7 @@ public class FeedbackActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         Feedback feedback = new Feedback();
-        feedback.setUserId(LoginActivity.userID);
+        feedback.setUserId(WelcomeActivity.userID);
         feedback.setSubject(choosenTopic);
         feedback.setDetails(et_details.getText().toString());
         String strDate =  new SimpleDateFormat("dd/MM/yyyy").format(new Date());

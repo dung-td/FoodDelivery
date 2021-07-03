@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.adapter.OrderDetailAdapter;
 import com.example.fooddelivery.model.OrderItem;
@@ -143,7 +144,7 @@ public class OrderDetailsFragment extends Fragment {
     }
 
     void setData() {
-        User currentUser = LoginActivity.firebase.getUser();
+        User currentUser = WelcomeActivity.firebase.getUser();
         String.format("%s %s", currentUser.getLast_Name(), currentUser.getFirst_Name());
 
         tv_nameCustomer.setText(getString(R.string.customer) + ": "
@@ -179,7 +180,7 @@ public class OrderDetailsFragment extends Fragment {
 
     void cancelOrder() {
         FirebaseFirestore root = FirebaseFirestore.getInstance();
-        String userID = LoginActivity.firebase.getUserId();
+        String userID = WelcomeActivity.firebase.getUserId();
         root.collection("User/" + userID + "/Order")
                 .document(orders.getOrderID())
                 .update("status", OrderStatus.Canceled.toString())

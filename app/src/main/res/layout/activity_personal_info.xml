@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.PersonalInfoActivity"
+    tools:context=".activity.me.PersonalInfoActivity"
     android:background="@color/gray">
 
 
@@ -269,13 +269,13 @@
             android:id="@+id/tv_perinfo_changeaddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
             android:layout_marginTop="8dp"
             android:clickable="true"
             android:onClick="onClick"
             android:text="@string/change"
+            android:layout_below="@+id/ln_adress"
             android:textColor="@color/light_blue"
             android:textStyle="bold" />
 

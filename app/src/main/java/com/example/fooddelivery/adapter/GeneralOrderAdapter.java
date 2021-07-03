@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.model.OrderStatus;
 import com.example.fooddelivery.model.Orders;
 import com.squareup.picasso.Picasso;
@@ -110,7 +111,7 @@ public class GeneralOrderAdapter extends BaseAdapter {
 
     void setNameItem(int position)
     {
-        if (LoginActivity.language.equals("vi"))
+        if (WelcomeActivity.language.equals("vi"))
             name.setText(String.format(listOrders.get(position).getFirstOrderItems().getProduct().getName()));
         else
             name.setText(String.format(listOrders.get(position).getFirstOrderItems().getProduct().getEn_Name()));

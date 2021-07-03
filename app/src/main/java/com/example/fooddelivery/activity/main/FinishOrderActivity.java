@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.OnGetDataListener;
 
@@ -86,7 +87,7 @@ public class FinishOrderActivity extends AppCompatActivity {
             public void onClick(View v) {
                 buttonConfirmOrder.setVisibility(View.INVISIBLE);
                 getOrderData();
-                LoginActivity.firebase.addUserNewOrder(discount, freight_cost, time, total_amount, voucherId, new OnGetDataListener() {
+                WelcomeActivity.firebase.addUserNewOrder(discount, freight_cost, time, total_amount, voucherId, new OnGetDataListener() {
                     @Override
                     public void onStart() {
                         progressBar.setVisibility(View.VISIBLE);

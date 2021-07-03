@@ -204,4 +204,7 @@
     <string name="copied_to_clipboard">Đã sao chép vào bộ nhớ tạm!</string>
     <string name="all">Tất cả</string>
     <string name="high_rating">Đánh giá cao</string>
+    <string name="change_language_success">Thay đổi ngôn ngữ thành công!</string>
+    <string name="not_receive_info_err">Không nhận được thông tin</string>
+    <string name="not_receive_info">Không nhận được thông tin</string>
 </resources>

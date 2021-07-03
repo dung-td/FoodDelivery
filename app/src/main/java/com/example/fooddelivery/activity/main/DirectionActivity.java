@@ -1,4 +1,4 @@
-package com.example.fooddelivery.activity;
+package com.example.fooddelivery.activity.main;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
-import com.example.fooddelivery.activity.main.MainActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.model.DirectionFinder;
 import com.example.fooddelivery.model.DirectionFinderListener;
 import com.example.fooddelivery.model.Merchant;
@@ -110,14 +110,14 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
                     e.printStackTrace();
                 }
 
-                for (Merchant merchant : LoginActivity.firebase.merchantList) {
+                for (Merchant merchant : WelcomeActivity.firebase.merchantList) {
                     merchant.getRoutes().clear();
                 }
 
-                LoginActivity.firebase.getUser().setAddress(addresses.get(0));
+                WelcomeActivity.firebase.getUser().setAddress(addresses.get(0));
 
-                LatLng toLatLng = new LatLng(LoginActivity.firebase.getUser().getAddress().getLatitude(),
-                                            LoginActivity.firebase.getUser().getAddress().getLongitude());
+                LatLng toLatLng = new LatLng(WelcomeActivity.firebase.getUser().getAddress().getLatitude(),
+                                            WelcomeActivity.firebase.getUser().getAddress().getLongitude());
 
                 sendRequest(toLatLng);
             }
@@ -134,7 +134,7 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
     private void getData() {
         Intent i = getIntent();
 
-        for (Merchant m : LoginActivity.firebase.merchantList) {
+        for (Merchant m : WelcomeActivity.firebase.merchantList) {
             if (m.getId().equals(getIntent().getStringExtra("merchantId"))) {
                 merchant = m;
                 break;
@@ -142,7 +142,7 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
         }
 
         tv_from.setText(merchant.getAddress().getAddressLine(0));
-        tv_to.setText(LoginActivity.firebase.getUser().getAddress().getAddressLine(0));
+        tv_to.setText(WelcomeActivity.firebase.getUser().getAddress().getAddressLine(0));
 
         initRoutes(merchant.getRoutes());
     }

@@ -1,4 +1,4 @@
-package com.example.fooddelivery.activity;
+package com.example.fooddelivery.activity.me;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,7 +16,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,13 +23,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.VerifyPhoneActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
-import com.example.fooddelivery.activity.main.CartActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.model.CallBackData;
 import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Comment;
-import com.example.fooddelivery.model.ModifyFirebase;
 import com.example.fooddelivery.model.Regex;
 import com.example.fooddelivery.model.User;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -69,8 +68,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
     ImageButton bt_back;
     ProgressBar progressBar;
     Uri imageUri;
-    private FirebaseFirestore root = FirebaseFirestore.getInstance();
-    private StorageReference reference = FirebaseStorage.getInstance().getReference();
+    private final FirebaseFirestore root = FirebaseFirestore.getInstance();
+    private final StorageReference reference = FirebaseStorage.getInstance().getReference();
 
     Regex regex = new Regex();
     String oldEmail, oldPhone, oldAddress;
@@ -130,8 +129,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
         et_Phone.setVisibility(View.GONE);
         et_Email.setVisibility(View.GONE);
 
-        currentUser = LoginActivity.firebase.getUser();
-        userID = LoginActivity.firebase.getUserId();
+        currentUser = WelcomeActivity.firebase.getUser();
+        userID = WelcomeActivity.firebase.getUserId();
     }
 
     void beginChangeInfomation(EditText et_Info, TextView tv_Info, TextView confirm) {
@@ -249,13 +248,13 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            for (Merchant merchant : LoginActivity.firebase.merchantList) {
+            for (Merchant merchant : WelcomeActivity.firebase.merchantList) {
                 merchant.getRoutes().clear();
             }
 
-            LoginActivity.firebase.getUser().setAddress(addresses.get(0));
+            WelcomeActivity.firebase.getUser().setAddress(addresses.get(0));
 
-            LoginActivity.firebase.updateUserAddress(new OnGetDataListener() {
+            WelcomeActivity.firebase.updateUserAddress(new OnGetDataListener() {
                 @Override
                 public void onStart() {
 
@@ -264,7 +263,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess() {
                     progressBar.setVisibility(View.INVISIBLE);
-                    et_Address.setText(LoginActivity.firebase.getUser().getAddress().getAddressLine(0));
+                    et_Address.setText(WelcomeActivity.firebase.getUser().getAddress().getAddressLine(0));
                     Toasty.success(getApplicationContext(), getString(R.string.update_infodata_done), Toasty.LENGTH_LONG).show();
                 }
             });
@@ -332,7 +331,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
 //        });
 //        progressBar.setVisibility(View.INVISIBLE);
 
-        Uri uri = LoginActivity.firebase.getUser().getProfileImage();
+        Uri uri = WelcomeActivity.firebase.getUser().getProfileImage();
         if (uri !=null)
         {
             Picasso.get().load(uri).into(iv_Avatar);
@@ -348,7 +347,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
         Log.e("language", language);
 
         Locale locale = new Locale(language);
-        locale.setDefault(locale);
+        Locale.setDefault(locale);
 
         Resources resources = this.getResources();
         Configuration config = resources.getConfiguration();

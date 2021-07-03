@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.fragment.GeneralOrdersFragment;
 import com.example.fooddelivery.model.OrderStatus;
 import com.example.fooddelivery.model.Orders;
@@ -32,13 +33,13 @@ public class ViewPagerOrdersAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new GeneralOrdersFragment(LoginActivity.firebase.orderList.get(0));
+                return new GeneralOrdersFragment(WelcomeActivity.firebase.orderList.get(0));
             case 1:
-                return new GeneralOrdersFragment(LoginActivity.firebase.orderList.get(1));
+                return new GeneralOrdersFragment(WelcomeActivity.firebase.orderList.get(1));
             case 2:
-                return new GeneralOrdersFragment(LoginActivity.firebase.orderList.get(2));
+                return new GeneralOrdersFragment(WelcomeActivity.firebase.orderList.get(2));
             default:
-                return new GeneralOrdersFragment(LoginActivity.firebase.orderList.get(2));
+                return new GeneralOrdersFragment(WelcomeActivity.firebase.orderList.get(2));
         }
     }
 

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.model.OrderItem;
 import com.squareup.picasso.Picasso;
 
@@ -78,7 +79,7 @@ public class OrderDetailAdapter extends BaseAdapter {
     }
 
     void setName(int position){
-        if (LoginActivity.language.equals("vi"))
+        if (WelcomeActivity.language.equals("vi"))
             name.setText(listOrderItem.get(position).getProduct().getName());
         else
             name.setText(listOrderItem.get(position).getProduct().getEn_Name());

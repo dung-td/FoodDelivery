@@ -15,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.fragment.ListItemCommentFragment;
 import com.example.fooddelivery.fragment.RatingItemFragment;
 import com.example.fooddelivery.model.Comment;
@@ -122,7 +123,7 @@ public class RatingOrderItemsAdapter extends BaseAdapter {
         userID.setVisibility(View.VISIBLE);
         star.setVisibility(View.VISIBLE);
 
-        Picasso.get().load(LoginActivity.firebase.getUser().getProfileImage())
+        Picasso.get().load(WelcomeActivity.firebase.getUser().getProfileImage())
                 .into(avatar);
 
 
@@ -154,7 +155,7 @@ public class RatingOrderItemsAdapter extends BaseAdapter {
     }
 
     void setNameItem(int position) {
-        if (LoginActivity.language.equals("vi"))
+        if (WelcomeActivity.language.equals("vi"))
             name.setText(String.format(listOrderItem.get(position).getProduct().getName()));
         else
             name.setText(String.format(listOrderItem.get(position).getProduct().getEn_Name()));

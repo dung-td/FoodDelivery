@@ -25,6 +25,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.fragment.NotificationFragment;
@@ -127,21 +128,21 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                for (Merchant merchant : LoginActivity.firebase.merchantList) {
+                for (Merchant merchant : WelcomeActivity.firebase.merchantList) {
                     merchant.getRoutes().clear();
                 }
 
-                LoginActivity.firebase.getUser().setAddress(addresses.get(0));
+                WelcomeActivity.firebase.getUser().setAddress(addresses.get(0));
             }
         }
     }
 
     private void getData() {
-        LoginActivity.firebase.getVoucherList();
-        LoginActivity.firebase.getAvailableVoucherList();
-        LoginActivity.firebase.getComment();
-        LoginActivity.firebase.getUserInfo();
-        LoginActivity.firebase.getListOrdersOfUser();
+        WelcomeActivity.firebase.getVoucherList();
+        WelcomeActivity.firebase.getAvailableVoucherList();
+        WelcomeActivity.firebase.getComment();
+        WelcomeActivity.firebase.getUserInfo();
+        WelcomeActivity.firebase.getListOrdersOfUser();
     }
 
     private void initBottomNavigation() {

@@ -3,8 +3,6 @@ package com.example.fooddelivery.activity.main;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -24,7 +22,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.PersonalInfoActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
+import com.example.fooddelivery.activity.me.PersonalInfoActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.ChosenItemAdapter;
 import com.example.fooddelivery.fragment.HomeFragment;
@@ -32,17 +31,14 @@ import com.example.fooddelivery.model.ChosenItem;
 import com.example.fooddelivery.model.DirectionFinder;
 import com.example.fooddelivery.model.DirectionFinderListener;
 import com.example.fooddelivery.model.Merchant;
-import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
 import com.example.fooddelivery.model.Route;
-import com.example.fooddelivery.model.Voucher;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.UnsupportedEncodingException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -167,11 +163,11 @@ public class CartActivity extends AppCompatActivity {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerViewItemOnCart.setLayoutManager(layoutManager);
         getChosenItemsList();
-        if (LoginActivity.firebase.cartList.size() > 0) {
+        if (WelcomeActivity.firebase.cartList.size() > 0) {
             textViewNoData.setVisibility(View.INVISIBLE);
         }
         totalPrice = "0";
-        chosenItemAdapter = new ChosenItemAdapter(this, LoginActivity.firebase.cartList);
+        chosenItemAdapter = new ChosenItemAdapter(this, WelcomeActivity.firebase.cartList);
         recyclerViewItemOnCart.setAdapter(chosenItemAdapter);
     }
 
@@ -180,12 +176,12 @@ public class CartActivity extends AppCompatActivity {
             HomeFragment.isCartFirstClick = false;
             itemList = new ArrayList<>();
             ArrayList<String> itemId = new ArrayList<>();
-            for (Product p : LoginActivity.firebase.productList) {
+            for (Product p : WelcomeActivity.firebase.productList) {
                 itemId.add(p.getId());
             }
-            for (ChosenItem item : LoginActivity.firebase.cartList) {
-                LoginActivity.firebase.cartList.get(LoginActivity.firebase.cartList.indexOf(item))
-                        .setProduct(LoginActivity.firebase.productList.get(itemId.indexOf(item.getProduct().getId())));
+            for (ChosenItem item : WelcomeActivity.firebase.cartList) {
+                WelcomeActivity.firebase.cartList.get(WelcomeActivity.firebase.cartList.indexOf(item))
+                        .setProduct(WelcomeActivity.firebase.productList.get(itemId.indexOf(item.getProduct().getId())));
             }
         }
     }
@@ -252,10 +248,10 @@ public class CartActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public static void setUserInformation() {
-        String name = LoginActivity.firebase.getUser().getLast_Name() + " " + LoginActivity.firebase.getUser().getFirst_Name();
-        String phone = LoginActivity.firebase.getUser().getPhone_Number();
+        String name = WelcomeActivity.firebase.getUser().getLast_Name() + " " + WelcomeActivity.firebase.getUser().getFirst_Name();
+        String phone = WelcomeActivity.firebase.getUser().getPhone_Number();
         textViewNamePhone.setText(name + " - " + phone);
-        textViewAddress.setText(LoginActivity.firebase.getUser().getAddress().getAddressLine(0));
+        textViewAddress.setText(WelcomeActivity.firebase.getUser().getAddress().getAddressLine(0));
     }
 
     void loadLanguage() {
@@ -283,7 +279,7 @@ public class CartActivity extends AppCompatActivity {
         buttonProceedOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (LoginActivity.firebase.cartList.size() > 0) {
+                if (WelcomeActivity.firebase.cartList.size() > 0) {
                     if (!checkDifferentMerchant()) {
                         Intent intent = new Intent(CartActivity.this, FinishOrderActivity.class);
                         startActivityForResult(intent, LAUNCH_FINISH_ORDER_ACTIVITY);
@@ -302,8 +298,8 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private boolean checkDifferentMerchant() {
-        String previousMerchant = LoginActivity.firebase.cartList.get(0).getProduct().getMerchant().getId();
-        for (ChosenItem chosenItem : LoginActivity.firebase.cartList) {
+        String previousMerchant = WelcomeActivity.firebase.cartList.get(0).getProduct().getMerchant().getId();
+        for (ChosenItem chosenItem : WelcomeActivity.firebase.cartList) {
             if (!chosenItem.getProduct().getMerchant().getId().equals(previousMerchant)) {
                 return true;
             }
@@ -324,22 +320,22 @@ public class CartActivity extends AppCompatActivity {
     }
 
     public static void getMerchantDistance() {
-        if (LoginActivity.firebase.cartList.size() > 0) {
+        if (WelcomeActivity.firebase.cartList.size() > 0) {
             double latitude = 0.0;
             double longitude = 0.0;
-            for (Merchant merchant : LoginActivity.firebase.merchantList) {
+            for (Merchant merchant : WelcomeActivity.firebase.merchantList) {
 
                 if (merchant.getRoutes().size() == 0) {
 
-                    String firstItemMerchantId = LoginActivity.firebase.getProductById(
-                            LoginActivity.firebase.cartList.get(0).getProduct().getId()).getMerchant().getId();
+                    String firstItemMerchantId = WelcomeActivity.firebase.getProductById(
+                            WelcomeActivity.firebase.cartList.get(0).getProduct().getId()).getMerchant().getId();
                     if (firstItemMerchantId.equals(merchant.getId())) {
                         latitude = merchant.getAddress().getLatitude();
                         longitude = merchant.getAddress().getLongitude();
 
                         try {
                             LatLng fromLatLng = new LatLng(latitude, longitude);
-                            LatLng toLatLng = new LatLng(LoginActivity.firebase.getUser().getAddress().getLatitude(), LoginActivity.firebase.getUser().getAddress().getLongitude());
+                            LatLng toLatLng = new LatLng(WelcomeActivity.firebase.getUser().getAddress().getLatitude(), WelcomeActivity.firebase.getUser().getAddress().getLongitude());
                             new DirectionFinder(new DirectionFinderListener() {
                                 @Override
                                 public void onDirectionFinderStart() {

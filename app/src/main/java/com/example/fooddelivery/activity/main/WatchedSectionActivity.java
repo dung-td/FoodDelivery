@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.adapter.ProductOnSectionAdapter;
 import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
@@ -61,7 +62,7 @@ public class WatchedSectionActivity extends AppCompatActivity {
                         .setMessage(getString(R.string.msg_remove_watched_data))
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                LoginActivity.firebase.removeWatchedProductData(new OnGetDataListener() {
+                                WelcomeActivity.firebase.removeWatchedProductData(new OnGetDataListener() {
                                     @Override
                                     public void onStart() {
 
@@ -85,8 +86,8 @@ public class WatchedSectionActivity extends AppCompatActivity {
 
     private void initRecyclerViewProduct() {
         ArrayList<Product> watchedProduct = new ArrayList<>();
-        for (Product p : LoginActivity.firebase.productList) {
-            if (LoginActivity.firebase.watchedList.contains(p.getId())) {
+        for (Product p : WelcomeActivity.firebase.productList) {
+            if (WelcomeActivity.firebase.watchedList.contains(p.getId())) {
                    watchedProduct.add(p);
             }
         }

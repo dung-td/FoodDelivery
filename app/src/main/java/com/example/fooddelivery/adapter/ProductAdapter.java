@@ -20,8 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.MerchantActivity;
-import com.example.fooddelivery.activity.ProductActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
+import com.example.fooddelivery.activity.main.MerchantActivity;
+import com.example.fooddelivery.activity.main.ProductActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.ChosenItem;
@@ -51,7 +52,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product p = products.get(position);
-        if (LoginActivity.firebase.favouriteProductList.contains(p.getId())) {
+        if (WelcomeActivity.firebase.favouriteProductList.contains(p.getId())) {
             holder.isFavourite = true;
             holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_24);
         }
@@ -115,17 +116,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.imageViewLove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (LoginActivity.firebase.favouriteProductList.contains(p.getId())) {
+                if (WelcomeActivity.firebase.favouriteProductList.contains(p.getId())) {
                     holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-                    LoginActivity.firebase.favouriteProductList.remove(p.getId());
-                    LoginActivity.firebase.removeProductFromFavourite(context, p.getId());
+                    WelcomeActivity.firebase.favouriteProductList.remove(p.getId());
+                    WelcomeActivity.firebase.removeProductFromFavourite(context, p.getId());
                     holder.isFavourite = false;
                     HomeFragment.itemOnMainAdapter.notifyDataSetChanged();
                 }
                 else {
                     holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_24);
-                    LoginActivity.firebase.favouriteProductList.add(p.getId());
-                    LoginActivity.firebase.addProductToFavourite(context, p.getId());
+                    WelcomeActivity.firebase.favouriteProductList.add(p.getId());
+                    WelcomeActivity.firebase.addProductToFavourite(context, p.getId());
                     holder.isFavourite = true;
                     HomeFragment.itemOnMainAdapter.notifyDataSetChanged();
                 }
@@ -134,7 +135,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.buttonAddItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginActivity.firebase.cartList.add(new ChosenItem(p, holder.spinnerProductSize.getSelectedItem().toString(), "1"));
+                WelcomeActivity.firebase.cartList.add(new ChosenItem(p, holder.spinnerProductSize.getSelectedItem().toString(), "1"));
                 MerchantActivity.updateCart();
                 HomeFragment.updateCartBadge();
                 ProductActivity.updateCartBadge();

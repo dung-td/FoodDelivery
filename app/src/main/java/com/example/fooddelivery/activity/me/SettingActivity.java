@@ -22,8 +22,8 @@ public class SettingActivity extends AppCompatActivity {
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent meFragment = new Intent(SettingActivity.this, MeFragment.class);
-                startActivity(meFragment);
+                SettingActivity.super.onBackPressed();
+                finish();
             }
         });
 
@@ -41,6 +41,5 @@ public class SettingActivity extends AppCompatActivity {
         bt_language = findViewById(R.id.st_ib_language);
         bt_notification = findViewById(R.id.st_ib_notification);
         bt_account = findViewById(R.id.st_ib_account);
-
     }
 }

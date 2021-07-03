@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.model.CallBackData;
 import com.example.fooddelivery.model.Comment;
@@ -178,14 +179,14 @@ public class RatingItemFragment extends Fragment {
     }
 
     void setNameItem() {
-        if (LoginActivity.language.equals("vi"))
+        if (WelcomeActivity.language.equals("vi"))
             nameProduct.setText(String.format(orderItem.getProduct().getName()));
         else
             nameProduct.setText(String.format(orderItem.getProduct().getEn_Name()));
     }
 
     void addProductComment(String productID, Comment comment) {
-        User user = LoginActivity.firebase.getUser();
+        User user = WelcomeActivity.firebase.getUser();
          returnComment = new Comment(
                 comment.getDate(),
                 comment.getDetails(),
@@ -216,7 +217,7 @@ public class RatingItemFragment extends Fragment {
 //        ArrayList<OrderItem> orders = new ArrayList<>();
         ArrayList<Map<String, Object>> listMap = new ArrayList<>();
 //
-//        orders = LoginActivity.firebase.getListOrderedItems(orderItem.getOrder_id());
+//        orders = WelcomeActivity.firebase.getListOrderedItems(orderItem.getOrder_id());
 //
 
 
@@ -239,7 +240,7 @@ public class RatingItemFragment extends Fragment {
 
         //region UPDATE DATABASE
         FirebaseFirestore root = FirebaseFirestore.getInstance();
-        root.collection("User/"+ LoginActivity.firebase.getUserId()+"/Order/")
+        root.collection("User/"+ WelcomeActivity.firebase.getUserId()+"/Order/")
                 .document(orderItem.getOrder_id())
                 .update("listItems",listMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -258,7 +259,7 @@ public class RatingItemFragment extends Fragment {
     void updateRatingOfProduct()
     {
         //UPDATE SALES and RATING on Firebase
-        Product ratingProduct = LoginActivity.firebase.getProductById(orderItem.getProduct().getId());
+        Product ratingProduct = WelcomeActivity.firebase.getProductById(orderItem.getProduct().getId());
         if (ratingProduct != null){
             DecimalFormat df = new DecimalFormat("#.#");
             df.setRoundingMode(RoundingMode.CEILING);

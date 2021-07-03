@@ -27,7 +27,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activity.DirectionActivity"></activity>
+
+        <activity android:name=".activity.login.WelcomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".activity.main.DirectionActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -37,15 +46,9 @@
         <activity android:name=".activity.main.ChangeOrderTimeActivity" />
         <activity android:name=".activity.main.AvailableVoucherActivity" />
         <activity android:name=".activity.VerifyPhoneActivity" />
-        <activity android:name=".activity.PaymentMethodActivity" />
-        <activity android:name=".activity.PersonalInfoActivity" />
-        <activity android:name=".activity.login.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".activity.me.PaymentMethodActivity" />
+        <activity android:name=".activity.me.PersonalInfoActivity" />
+        <activity android:name=".activity.login.LoginActivity" />
         <activity android:name=".activity.login.SignUpActivity_1" />
         <activity android:name=".activity.login.SignUpActivity_2" />
         <activity android:name=".activity.login.ForgotPassActivity_1" />
@@ -58,14 +61,14 @@
         <activity android:name=".activity.me.LanguageSetting" />
         <activity android:name=".activity.main.CartActivity" />
         <activity android:name=".activity.me.FeedbackActivity" />
-        <activity android:name=".activity.ProductActivity" />
+        <activity android:name=".activity.main.ProductActivity" />
         <activity android:name=".activity.main.SearchingActivity" />
         <activity android:name=".activity.main.SearchResultActivity" />
         <activity android:name=".activity.main.DrinkSectionActivity" />
         <activity android:name=".activity.main.FavouriteSectionActivity" />
         <activity android:name=".activity.main.WatchedSectionActivity" />
         <activity android:name=".activity.main.FoodSectionActivity" />
-        <activity android:name=".activity.MerchantActivity" />
+        <activity android:name=".activity.main.MerchantActivity" />
         <activity
             android:name=".activity.main.MainActivity"
             android:windowSoftInputMode="adjustPan" />

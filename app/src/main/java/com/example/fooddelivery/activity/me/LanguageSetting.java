@@ -19,12 +19,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.activity.main.MainActivity;
 import com.example.fooddelivery.activity.me.SettingActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Locale;
+
+import es.dmoral.toasty.Toasty;
 
 public class LanguageSetting extends AppCompatActivity {
     Button bt_save;
@@ -45,8 +47,8 @@ public class LanguageSetting extends AppCompatActivity {
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent settingActivity = new Intent(LanguageSetting.this, SettingActivity.class);
-                startActivity(settingActivity);
+                LanguageSetting.super.onBackPressed();
+                finish();
             }
         });
 
@@ -63,17 +65,18 @@ public class LanguageSetting extends AppCompatActivity {
                 if (chosenLanguege.equals("English"))
                 {
                     setLocal(LanguageSetting.this, "en");
-                    LoginActivity.language = "English";
+                    WelcomeActivity.language = "English";
                 }
 
                 if (chosenLanguege.equals("Tiếng Việt"))
                 {
                     setLocal(LanguageSetting.this, "vi");
-                    LoginActivity.language="Tiếng Việt";
+                    WelcomeActivity.language="Tiếng Việt";
 
                 }
 
-                LoginActivity.loadLanguage(getApplicationContext());
+                Toasty.success(LanguageSetting.this, getString(R.string.change_language_success)).show();
+                WelcomeActivity.loadLanguage(getApplicationContext());
                 Intent main = new Intent(LanguageSetting.this, MainActivity.class);
                 startActivity(main);
             }
@@ -100,7 +103,7 @@ public class LanguageSetting extends AppCompatActivity {
 
         editor.putString("lang_code", langCode);  // Saving string
 
-        editor.commit();
+        editor.apply();
 
         Log.e("Save ", langCode);
     }

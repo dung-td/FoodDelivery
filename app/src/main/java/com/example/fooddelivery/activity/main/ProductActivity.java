@@ -1,4 +1,4 @@
-package com.example.fooddelivery.activity;
+package com.example.fooddelivery.activity.main;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -37,8 +37,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
-import com.example.fooddelivery.activity.main.CartActivity;
-import com.example.fooddelivery.activity.main.MainActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.adapter.CommentAdapter;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.fragment.HomeFragment;
@@ -139,21 +138,21 @@ public class ProductActivity extends AppCompatActivity {
                 index = 0;
                 if (spinnerProductSize != null && spinnerProductSize.getSelectedItem() != null) {
                     if (checkExistItemInCart()) {
-                        LoginActivity.firebase.cartList.get(index)
-                                .setQuantity((Integer.parseInt(LoginActivity.firebase.cartList.get(index).getQuantity()) + 1) + "");
-                        LoginActivity.firebase.updateProductQuantityInCart(LoginActivity.firebase.cartList.get(index));
+                        WelcomeActivity.firebase.cartList.get(index)
+                                .setQuantity((Integer.parseInt(WelcomeActivity.firebase.cartList.get(index).getQuantity()) + 1) + "");
+                        WelcomeActivity.firebase.updateProductQuantityInCart(WelcomeActivity.firebase.cartList.get(index));
                     } else {
-                        LoginActivity.firebase.addProductToCart(new ChosenItem(product, spinnerProductSize.getSelectedItem().toString(), "1"), getApplicationContext());
-                        LoginActivity.firebase.cartList.add(new ChosenItem(product, spinnerProductSize.getSelectedItem().toString(), "1"));
+                        WelcomeActivity.firebase.addProductToCart(new ChosenItem(product, spinnerProductSize.getSelectedItem().toString(), "1"), getApplicationContext());
+                        WelcomeActivity.firebase.cartList.add(new ChosenItem(product, spinnerProductSize.getSelectedItem().toString(), "1"));
                     }
                 } else {
                     if (checkExistItemInCart()) {
-                        LoginActivity.firebase.cartList.get(index)
-                                .setQuantity((Integer.parseInt(LoginActivity.firebase.cartList.get(index).getQuantity()) + 1) + "");
-                        LoginActivity.firebase.updateProductQuantityInCart(LoginActivity.firebase.cartList.get(index));
+                        WelcomeActivity.firebase.cartList.get(index)
+                                .setQuantity((Integer.parseInt(WelcomeActivity.firebase.cartList.get(index).getQuantity()) + 1) + "");
+                        WelcomeActivity.firebase.updateProductQuantityInCart(WelcomeActivity.firebase.cartList.get(index));
                     } else {
-                        LoginActivity.firebase.addProductToCart(new ChosenItem(product, "", "1"), getApplicationContext());
-                        LoginActivity.firebase.cartList.add(new ChosenItem(product, "", "1"));
+                        WelcomeActivity.firebase.addProductToCart(new ChosenItem(product, "", "1"), getApplicationContext());
+                        WelcomeActivity.firebase.cartList.add(new ChosenItem(product, "", "1"));
                     }
                 }
                 updateCartBadge();
@@ -162,7 +161,7 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     private boolean checkExistItemInCart() {
-        for (ChosenItem item : LoginActivity.firebase.cartList) {
+        for (ChosenItem item : WelcomeActivity.firebase.cartList) {
             if (item.getProduct().getId().equals(product.getId())) {
                 if (item.getSize().equals("")) {
                     return true;
@@ -178,8 +177,8 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     public static void updateCartBadge() {
-        if (LoginActivity.firebase.cartList.size() > 0) {
-            cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
+        if (WelcomeActivity.firebase.cartList.size() > 0) {
+            cartBadge.setText(WelcomeActivity.firebase.cartList.size() + "");
             cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
             HomeFragment.updateCartBadge();
         } else {
@@ -195,13 +194,13 @@ public class ProductActivity extends AppCompatActivity {
                 if (isFavourite) {
                     isFavourite = false;
                     buttonLove.setImageResource(R.drawable.ic_baseline_favourite_white_border_24);
-                    LoginActivity.firebase.favouriteProductList.remove(product.getId());
-                    LoginActivity.firebase.removeProductFromFavourite(getApplicationContext(), product.getId());
+                    WelcomeActivity.firebase.favouriteProductList.remove(product.getId());
+                    WelcomeActivity.firebase.removeProductFromFavourite(getApplicationContext(), product.getId());
                 } else {
                     isFavourite = true;
                     buttonLove.setImageResource(R.drawable.ic_baseline_favorite_24);
-                    LoginActivity.firebase.favouriteProductList.add(product.getId());
-                    LoginActivity.firebase.addProductToFavourite(getApplicationContext(), product.getId());
+                    WelcomeActivity.firebase.favouriteProductList.add(product.getId());
+                    WelcomeActivity.firebase.addProductToFavourite(getApplicationContext(), product.getId());
                 }
             }
         });
@@ -245,8 +244,8 @@ public class ProductActivity extends AppCompatActivity {
         });
 
         //Cart icon
-        if (LoginActivity.firebase.cartList.size() > 0) {
-            cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
+        if (WelcomeActivity.firebase.cartList.size() > 0) {
+            cartBadge.setText(WelcomeActivity.firebase.cartList.size() + "");
             cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
         }
 
@@ -285,7 +284,7 @@ public class ProductActivity extends AppCompatActivity {
     private void getRoutes() {
         double latitude = 0.0;
         double longitude = 0.0;
-        for (Merchant merchant : LoginActivity.firebase.merchantList) {
+        for (Merchant merchant : WelcomeActivity.firebase.merchantList) {
 
             if (merchant.getRoutes().size() == 0) {
 
@@ -299,7 +298,7 @@ public class ProductActivity extends AppCompatActivity {
 
                     try {
                         LatLng fromLatLng = new LatLng(latitude, longitude);
-                        LatLng toLatLng = new LatLng(LoginActivity.firebase.getUser().getAddress().getLatitude(), LoginActivity.firebase.getUser().getAddress().getLongitude());
+                        LatLng toLatLng = new LatLng(WelcomeActivity.firebase.getUser().getAddress().getLatitude(), WelcomeActivity.firebase.getUser().getAddress().getLongitude());
                         new DirectionFinder(new DirectionFinderListener() {
                             @Override
                             public void onDirectionFinderStart() {
@@ -429,13 +428,13 @@ public class ProductActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int index = 0;
-                for (int i = 0; i < LoginActivity.firebase.merchantList.size(); i++) {
-                    if (LoginActivity.firebase.merchantList.get(i).getId().equals(product.getMerchant().getId())) {
+                for (int i = 0; i < WelcomeActivity.firebase.merchantList.size(); i++) {
+                    if (WelcomeActivity.firebase.merchantList.get(i).getId().equals(product.getMerchant().getId())) {
                         index = i;
                         break;
                     }
                 }
-                LoginActivity.firebase.loadFullListMerchantImage(LoginActivity.firebase.merchantList.get(index), new OnGetDataListener() {
+                WelcomeActivity.firebase.loadFullListMerchantImage(WelcomeActivity.firebase.merchantList.get(index), new OnGetDataListener() {
                     @Override
                     public void onStart() {
                         buttonMerchantInfo.setVisibility(View.INVISIBLE);
@@ -540,9 +539,9 @@ public class ProductActivity extends AppCompatActivity {
     }
 
     private void addProductToWatchedList() {
-        if (!LoginActivity.firebase.watchedList.contains(product.getId())) {
-            LoginActivity.firebase.watchedList.add(product.getId());
-            LoginActivity.firebase.addProductToWatched(product.getId());
+        if (!WelcomeActivity.firebase.watchedList.contains(product.getId())) {
+            WelcomeActivity.firebase.watchedList.add(product.getId());
+            WelcomeActivity.firebase.addProductToWatched(product.getId());
         }
     }
 }

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.adapter.ProductAdapter;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.model.Merchant;
@@ -25,7 +26,7 @@ public class ItemFragment extends Fragment {
 
     public ItemFragment(Merchant merchant) {
         productList = new ArrayList<>();
-        for (Product p : LoginActivity.firebase.productList) {
+        for (Product p : WelcomeActivity.firebase.productList) {
             if (p.getMerchant().getId().equals(merchant.getId())) {
                 productList.add(p);
             }

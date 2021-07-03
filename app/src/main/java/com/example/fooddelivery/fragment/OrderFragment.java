@@ -18,6 +18,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.activity.me.LanguageSetting;
 import com.example.fooddelivery.adapter.ViewPagerOrdersAdapter;
 import com.example.fooddelivery.model.OnGetDataListener;
@@ -38,7 +39,7 @@ public class OrderFragment extends Fragment {
     }
 
     private void getOrderChangeListener() {
-        LoginActivity.firebase.OrderStatusChange(new OnGetDataListener() {
+        WelcomeActivity.firebase.OrderStatusChange(new OnGetDataListener() {
             @Override
             public void onStart() {
                 progressDialog = new ProgressDialog(activity);
@@ -81,7 +82,7 @@ public class OrderFragment extends Fragment {
         String langCode;
         LanguageSetting languageSetting = new LanguageSetting();
         Log.e("Lang", languageSetting.getChosenLanguege());
-        if (LoginActivity.language.equals("vi"))
+        if (WelcomeActivity.language.equals("vi"))
             langCode = "vi";
         else {
             langCode = "en";

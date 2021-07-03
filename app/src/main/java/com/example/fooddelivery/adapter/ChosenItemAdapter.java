@@ -18,7 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.ProductActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
+import com.example.fooddelivery.activity.main.ProductActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.main.CartActivity;
 import com.example.fooddelivery.fragment.HomeFragment;
@@ -84,7 +85,7 @@ public class ChosenItemAdapter extends RecyclerView.Adapter<ChosenItemAdapter.Ch
                             Intent intent = new Intent(context, ProductActivity.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("Product", (Parcelable) p.getProduct());
-                            if (LoginActivity.firebase.favouriteProductList.contains(p.getProduct().getId()))
+                            if (WelcomeActivity.firebase.favouriteProductList.contains(p.getProduct().getId()))
                                 intent.putExtra("IsFavourite", true);
                             else intent.putExtra("IsFavourite", false);
                             context.startActivity(intent);
@@ -95,7 +96,7 @@ public class ChosenItemAdapter extends RecyclerView.Adapter<ChosenItemAdapter.Ch
                     Intent intent = new Intent(context, ProductActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("Product", (Parcelable) p.getProduct());
-                    if (LoginActivity.firebase.favouriteProductList.contains(p.getProduct().getId()))
+                    if (WelcomeActivity.firebase.favouriteProductList.contains(p.getProduct().getId()))
                         intent.putExtra("IsFavourite", true);
                     else intent.putExtra("IsFavourite", false);
                     context.startActivity(intent);
@@ -109,7 +110,7 @@ public class ChosenItemAdapter extends RecyclerView.Adapter<ChosenItemAdapter.Ch
                 p.setQuantity((Integer.parseInt(p.getQuantity()) + 1) + "");
                 holder.textViewPrice.setText((Integer.parseInt((String) holder.textViewQuantity.getText()) *
                         Integer.parseInt(basic_price)) + "");
-                LoginActivity.firebase.updateProductQuantityInCart(p);
+                WelcomeActivity.firebase.updateProductQuantityInCart(p);
 
                 CartActivity.totalPrice = (Integer.parseInt(CartActivity.totalPrice) + Integer.parseInt(basic_price)) + "";
                 CartActivity.updateTotalPriceAndCost();
@@ -126,7 +127,7 @@ public class ChosenItemAdapter extends RecyclerView.Adapter<ChosenItemAdapter.Ch
                     p.setQuantity((Integer.parseInt(p.getQuantity()) - 1) + "");
                     holder.textViewPrice.setText((Integer.parseInt((String) holder.textViewQuantity.getText()) *
                             Integer.parseInt(basic_price)) + "");
-                    LoginActivity.firebase.updateProductQuantityInCart(p);
+                    WelcomeActivity.firebase.updateProductQuantityInCart(p);
 
                     CartActivity.totalPrice = (Integer.parseInt(CartActivity.totalPrice) - Integer.parseInt(basic_price)) + "";
                     CartActivity.updateTotalPriceAndCost();
@@ -139,11 +140,11 @@ public class ChosenItemAdapter extends RecyclerView.Adapter<ChosenItemAdapter.Ch
         holder.buttonRemoveItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginActivity.firebase.cartList.remove(p);
+                WelcomeActivity.firebase.cartList.remove(p);
                 CartActivity.chosenItemAdapter.notifyDataSetChanged();
                 CartActivity.totalPrice = "0";
                 CartActivity.textViewDistance.setVisibility(View.INVISIBLE);
-                LoginActivity.firebase.removeProductFromCartWithContext(p, context);
+                WelcomeActivity.firebase.removeProductFromCartWithContext(p, context);
                 CartActivity.updateTotalPriceAndCost();
                 CartActivity.getMerchantDistance();
                 if (!CartActivity.checkVoucherUtilization(CartActivity.voucherMinSumPrice)) {

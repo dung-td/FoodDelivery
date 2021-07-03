@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.adapter.ChosenItemAdapter;
 import com.example.fooddelivery.adapter.ProductAdapter;
 import com.example.fooddelivery.adapter.ProductOnSectionAdapter;
@@ -57,8 +58,8 @@ public class FavouriteSectionActivity extends AppCompatActivity {
 
     private void initRecyclerViewProduct() {
         ArrayList<Product> favouriteList = new ArrayList<>();
-        for (Product p: LoginActivity.firebase.productList) {
-            if (LoginActivity.firebase.favouriteProductList.contains(p.getId())) {
+        for (Product p: WelcomeActivity.firebase.productList) {
+            if (WelcomeActivity.firebase.favouriteProductList.contains(p.getId())) {
                 favouriteList.add(p);
             }
         }

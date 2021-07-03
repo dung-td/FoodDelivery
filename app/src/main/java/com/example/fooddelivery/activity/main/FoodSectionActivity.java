@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.adapter.ProductOnSectionAdapter;
 import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
@@ -54,7 +55,7 @@ public class FoodSectionActivity extends AppCompatActivity {
 
     private void initRecyclerViewProduct() {
         ArrayList<Product> foodList = new ArrayList<>();
-        for (Product p : LoginActivity.firebase.productList) {
+        for (Product p : WelcomeActivity.firebase.productList) {
             if (p.getType().equals("Food")) {
                 foodList.add(p);
             }

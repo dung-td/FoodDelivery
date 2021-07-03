@@ -1,4 +1,4 @@
-package com.example.fooddelivery.activity;
+package com.example.fooddelivery.activity.main;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -24,28 +23,13 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.activity.login.LoginActivity;
-import com.example.fooddelivery.activity.main.AvailableVoucherActivity;
-import com.example.fooddelivery.activity.main.CartActivity;
-import com.example.fooddelivery.activity.main.MainActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.adapter.ImageAdapter;
 import com.example.fooddelivery.adapter.MyAdapter;
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.model.DirectionFinder;
-import com.example.fooddelivery.model.DirectionFinderListener;
 import com.example.fooddelivery.model.Merchant;
 import com.example.fooddelivery.model.MyViewPager;
-import com.example.fooddelivery.model.Route;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.material.tabs.TabLayout;
-
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static android.graphics.Color.WHITE;
 
@@ -117,7 +101,7 @@ public class MerchantActivity extends AppCompatActivity{
             }
         });
 
-        for (Merchant merchant : LoginActivity.firebase.merchantList) {
+        for (Merchant merchant : WelcomeActivity.firebase.merchantList) {
             if (merchant.getId().equals(getIntent().getStringExtra("MerchantId"))) {
                 this.merchant = merchant;
                 break;
@@ -132,8 +116,8 @@ public class MerchantActivity extends AppCompatActivity{
         }
 
         //Cart icon
-        if (LoginActivity.firebase.cartList.size() > 0) {
-            cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
+        if (WelcomeActivity.firebase.cartList.size() > 0) {
+            cartBadge.setText(WelcomeActivity.firebase.cartList.size() + "");
             cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
         }
 
@@ -169,7 +153,7 @@ public class MerchantActivity extends AppCompatActivity{
 
     @SuppressLint("SetTextI18n")
     public static void updateCart() {
-        cartBadge.setText(LoginActivity.firebase.cartList.size() + "");
+        cartBadge.setText(WelcomeActivity.firebase.cartList.size() + "");
         cartBadge.getBackground().setTint(Color.parseColor("#57BFFF"));
     }
 

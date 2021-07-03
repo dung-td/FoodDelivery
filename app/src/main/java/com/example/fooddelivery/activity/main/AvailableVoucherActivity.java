@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.adapter.VoucherAdapter;
 import com.example.fooddelivery.adapter.VoucherAdapter2;
 import com.example.fooddelivery.model.Voucher;
@@ -68,7 +69,7 @@ public class AvailableVoucherActivity extends AppCompatActivity {
     private void initUserAvailableVoucherList() {
         @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         vouchers = new ArrayList<>();
-        for (Voucher v : LoginActivity.firebase.voucherList) {
+        for (Voucher v : WelcomeActivity.firebase.voucherList) {
             try {
                 if ((format.parse(v.getDate())).after(new Date())) {
                     if (v.getStatus().equals("Hiện có")) {
