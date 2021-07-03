@@ -7,6 +7,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,15 +47,14 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
 
     private static final int PLACE_PICKER_REQUEST = 1;
     GoogleMap mMaps;
-    LatLng fromLatLng, toLatLng;
 
     TextView tv_from, tv_to, tv_time, tv_distance, tv_change;
+    ImageButton bt_back;
     ProgressDialog progressDialog;
     ArrayList<Polyline> polylinePaths;
     ArrayList<Marker> originMarkers;
     ArrayList<Marker> destinationMarkers;
     Merchant merchant;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,7 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
         tv_time = findViewById(R.id.tv_direc_time);
         tv_distance = findViewById(R.id.tv_direc_distance);
         tv_change = findViewById(R.id.tv_change_address);
+        bt_back = findViewById(R.id.direc_bt_back);
 
         progressDialog = new ProgressDialog(DirectionActivity.this);
 
@@ -85,6 +87,14 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
                 } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        bt_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DirectionActivity.super.onBackPressed();
+                finish();
             }
         });
     }

@@ -134,6 +134,7 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CartActivity.this, AvailableVoucherActivity.class);
+                intent.putExtra("Type", "Order");
                 startActivityForResult(intent, LAUNCH_CHOOSE_VOUCHER_ACTIVITY);
             }
         });

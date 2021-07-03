@@ -1,10 +1,12 @@
 package com.example.fooddelivery.activity.me;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.main.AvailableVoucherActivity;
 import com.example.fooddelivery.adapter.voucherStatusAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -23,6 +26,8 @@ public class VoucherActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     ImageButton bt_back;
+    Button bt_find;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +40,18 @@ public class VoucherActivity extends AppCompatActivity {
 
     private void Init() {
         bt_back = findViewById(R.id.vc_bt_back);
+        bt_find = findViewById(R.id.vc_bt_find);
         viewPager = findViewById(R.id.info_viewpager);
         tabLayout = findViewById(R.id.tab_button);
+
+        bt_find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent availableVoucher = new Intent(VoucherActivity.this, AvailableVoucherActivity.class);
+                availableVoucher.putExtra("Type", "Merchant");
+                startActivity(availableVoucher);
+            }
+        });
 
         bt_back.setOnClickListener(new View.OnClickListener() {
             @Override

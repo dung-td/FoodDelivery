@@ -127,7 +127,7 @@
     <string name="see_comment">Xem đánh giá</string>
     <string name="buy_again">Mua lần nữa</string>
     <string name="send_comment">Gửi đánh giá</string>
-    <string name="more">Thêm nữa...</string>
+    <string name="more">Thêm nữa…</string>
     <string name="product">sản phẩm</string>
     <string name="delivering">Đang giao</string>
     <string name="history">Lịch sử</string>
@@ -156,7 +156,7 @@
     <string name="send_feedback_fail">Gửi góp ý thất bại, vui lòng thử lại</string>
     <string name="voucher">Mã khuyến mại</string>
     <string name="already_got">Đã lấy</string>
-    <string name="checking_info">Đang kiểm tra thông tin...</string>
+    <string name="checking_info">Đang kiểm tra thông tin…</string>
     <string name="error_happend_try_again">Đã có lỗi xảy ra, vui lòng thử lại!</string>
     <string name="wrong_otp">Sai mật mã OTP</string>
     <string name="expired_code">Mã đã hết hạn</string>
@@ -193,9 +193,9 @@
     <string name="received_order">Tiếp nhận đơn hàng</string>
     <string name="canceled_order_success">Huỷ đơn hàng thành công</string>
     <string name="location_details">Chi tiết </string>
-    <string name="delivery_from">Giao từ:</string>
+    <string name="delivery_from">Giao từ: </string>
     <string name="delivery_to">Giao đến: </string>
-    <string name="time_direc">Thời gian dự kiến:</string>
+    <string name="time_direc">Thời gian dự kiến: </string>
     <string name="distance_direc">Khoảng cách ước tính:</string>
     <string name="your_position">Vị trí của bạn</string>
     <string name="title_invalid_order">Đơn hàng không hợp lệ</string>
@@ -205,6 +205,6 @@
     <string name="all">Tất cả</string>
     <string name="high_rating">Đánh giá cao</string>
     <string name="change_language_success">Thay đổi ngôn ngữ thành công!</string>
-    <string name="not_receive_info_err">Không nhận được thông tin</string>
-    <string name="not_receive_info">Không nhận được thông tin</string>
+    <string name="get">Lấy</string>
+    <string name="find_more_voucher">Tìm thêm mã giảm giá!</string>
 </resources>

@@ -25,7 +25,7 @@
     <string name="voucher_detail">Detail</string>
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
-    <string name="login">"    LOGIN"</string>
+    <string name="login">LOGIN</string>
     <string name="have_account_login">Having a account?  Log in now!</string>
     <string name="forgot_pass">Forgot Password</string>
     <string name="new_register">New user? Sign up now!</string>
@@ -196,4 +196,7 @@
     <string name="copied_to_clipboard">Copied to clipboard!</string>
     <string name="all">All</string>
     <string name="high_rating">High rating</string>
+    <string name="change_language_success">Change language successful!</string>
+    <string name="get">Get</string>
+    <string name="find_more_voucher">Tìm thêm mã giảm giá!</string>
 </resources>

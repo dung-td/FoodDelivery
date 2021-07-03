@@ -20,7 +20,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="15dp"
             android:background="@drawable/ic_baseline_arrow_back_24"
-            android:backgroundTint="@color/black" />
+            android:backgroundTint="@color/grey" />
 
         <TextView
             android:id="@+id/direc_title"
@@ -61,7 +61,7 @@
             android:layout_below="@id/delivery_from"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Đông Hòa Dĩ An, Bình Dương"
+            android:text="@string/no_data"
             android:textSize="18sp"
             android:textStyle="italic"
             android:textColor="@color/black"/>
@@ -92,7 +92,7 @@
             android:layout_below="@id/delivery_to"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Đông Hòa Dĩ An, Bình Dương"
+            android:text="@string/no_data"
             android:textSize="18sp"
             android:textStyle="italic"
             android:textColor="@color/black"/>
@@ -144,7 +144,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/direc_details">
-
 
         <fragment
             android:id="@+id/direc_map"

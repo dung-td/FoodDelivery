@@ -129,6 +129,7 @@ public class MerchantActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 Intent avalableVoucher = new Intent(MerchantActivity.this, AvailableVoucherActivity.class);
+                avalableVoucher.putExtra("Type", "Merchant");
                 startActivity(avalableVoucher);
             }
         });
