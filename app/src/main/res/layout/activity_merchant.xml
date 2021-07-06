@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
-    tools:context=".activity.MerchantActivity">
+    android:background="@color/white"
+    tools:context=".activity.main.MerchantActivity">
 
 <!--    Content-->
     <ScrollView
@@ -43,6 +43,7 @@
             </RelativeLayout>
 
             <View
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black"/>
@@ -51,13 +52,14 @@
             <RelativeLayout
                 android:id="@+id/merchant_info"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp">
 
                 <ImageView
                     android:id="@+id/img_logo"
                     android:layout_width="80dp"
                     android:layout_height="70dp"
-                    android:layout_marginStart="10dp"
                     android:layout_centerVertical="true"
                     android:background="@drawable/untitled_icon"/>
 
@@ -68,7 +70,7 @@
                     android:text="Highland BigC - Dĩ An, Bình Dương"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_toEndOf="@+id/img_logo"
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="13dp"
@@ -133,12 +135,23 @@
                         android:textColor="@color/black"/>
                 </LinearLayout>
 
+                <ImageView
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@id/detail_info"
+                    android:id="@+id/ic_details"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/ic_baseline_chevron_right_24"/>
+
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="7dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="8dp"
                 android:background="@color/black"/>
 
 <!--            Voucher Box-->
@@ -146,7 +159,6 @@
                 android:id="@+id/voucher_box"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -166,14 +178,14 @@
                     android:layout_marginStart="20dp"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@+id/ic_voucher"
-                    android:textSize="17dp"/>
+                    android:textSize="17sp"/>
 
                 <TextView
                     android:id="@+id/tv_voucher_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/voucher_detail"
-                    android:textSize="18dp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     android:layout_marginEnd="15dp"
                     android:layout_alignParentEnd="true"
@@ -183,6 +195,7 @@
             </RelativeLayout>
 
             <View
+                android:layout_marginTop="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black"/>

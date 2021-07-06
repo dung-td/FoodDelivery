@@ -9,7 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.model.OrderItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -17,10 +20,16 @@ public class OrderDetailAdapter extends BaseAdapter {
     ArrayList<OrderItem> listOrderItem ;
     Activity activity;
 
-    public OrderDetailAdapter(Activity act, ArrayList<OrderItem> orderItems)
+    ImageView imageView ;
+    TextView name;
+    TextView category;
+    TextView quantity;
+    TextView price;
+
+    public OrderDetailAdapter(Activity act, ArrayList<OrderItem> listOrderItem)
     {
         this.activity = act;
-        this.listOrderItem = orderItems;
+        this.listOrderItem = listOrderItem;
     }
     @Override
     public int getCount() {
@@ -42,21 +51,37 @@ public class OrderDetailAdapter extends BaseAdapter {
         LayoutInflater inflater = activity.getLayoutInflater();
         convertView = inflater.inflate(R.layout.order_details, null);
 
-
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.im_orddetail_image);
-        TextView name = (TextView)convertView.findViewById(R.id.tv_orddetail_productname);
-        TextView category = (TextView)convertView.findViewById(R.id.tv_orddetail_productcate);
-        TextView quantity = (TextView)convertView.findViewById(R.id.tv_orddetail_quantity);
-        TextView price = (TextView)convertView.findViewById(R.id.tv_orddetail_price);
-
-        imageView.setImageResource(R.drawable.trasenvang);
-        name.setText(listOrderItem.get(position).getProduct().getName());
-        category.setText("Loại hàng");
-        // quantity.setText(listOrderItem.get(position).getQuantity());
-        quantity.setText("x2");
-        price.setText(listOrderItem.get(position).getProduct().getPrice().get(0));
+        initView(convertView);
+        setData(position);
 
         return convertView;
 
+    }
+
+    void initView(View convertView)
+    {
+        imageView = (ImageView) convertView.findViewById(R.id.im_orddetail_image);
+        name = (TextView)convertView.findViewById(R.id.tv_orddetail_productname);
+        category = (TextView)convertView.findViewById(R.id.tv_orddetail_productcate);
+        quantity = (TextView)convertView.findViewById(R.id.tv_orddetail_quantity);
+        price = (TextView)convertView.findViewById(R.id.tv_orddetail_price);
+    }
+
+    void setData(int position)
+    {
+        Picasso.get().load(listOrderItem.get(position).getProduct().getImage().get(0))
+                .into(imageView);
+
+        setName(position);
+        category.setText(listOrderItem.get(position).getSize());
+        quantity.setText("x"+Integer.toString(listOrderItem.get(position).getQuantity()));
+        price.setText(Integer.toString(listOrderItem.get(position).getPrice()));
+    }
+
+    void setName(int position){
+        if (WelcomeActivity.language.equals("vi"))
+            name.setText(listOrderItem.get(position).getProduct().getName());
+        else
+            name.setText(listOrderItem.get(position).getProduct().getEn_Name());
     }
 }

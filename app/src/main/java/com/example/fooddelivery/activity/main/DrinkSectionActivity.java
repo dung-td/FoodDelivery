@@ -2,7 +2,12 @@ package com.example.fooddelivery.activity.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -10,6 +15,8 @@ import com.example.fooddelivery.adapter.MyOnSectionAdapter;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.model.MyViewPager;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.Locale;
 
 public class DrinkSectionActivity extends AppCompatActivity {
 
@@ -23,6 +30,7 @@ public class DrinkSectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_drink_section);
 
         initView();
+        loadLanguage();
         initTabLayoutAndViewPager();
     }
 
@@ -31,8 +39,8 @@ public class DrinkSectionActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.info_viewpager);
         tabLayout = findViewById(R.id.tab_button);
 
-        tabLayout.addTab(tabLayout.newTab().setText("GẦN ĐÂY"));
-        tabLayout.addTab(tabLayout.newTab().setText("ĐÁNH GIÁ CAO"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.all));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.high_rating));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
@@ -74,5 +82,22 @@ public class DrinkSectionActivity extends AppCompatActivity {
         } else {
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
         }
+    }
+
+    void loadLanguage() {
+        String langPref = "lang_code";
+        SharedPreferences prefs = getSharedPreferences("MyPref",
+                Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+
+        Log.e("language", language);
+
+        Locale locale = new Locale(language);
+        locale.setDefault(locale);
+
+        Resources resources = this.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }

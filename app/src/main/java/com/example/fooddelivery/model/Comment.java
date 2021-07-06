@@ -21,6 +21,19 @@ public class Comment implements Parcelable {
         this.rating = rating;
     }
 
+    public Comment(String date, String details, String rating, String userName) {
+        this.userName = userName;
+        this.date = date;
+        this.details = details;
+        this.rating = rating;
+    }
+
+    public Comment(String date, String details, String rating) {
+        this.date = date;
+        this.details = details;
+        this.rating = rating;
+    }
+
     @Override
     public int describeContents() {
         return 0;

@@ -77,7 +77,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/su1_ti_firstname"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="16dp"
                             android:hint="@string/last_name"
                             android:textColorHint="@color/black"
                             app:boxBackgroundColor="@color/whiteTextColor"
@@ -102,7 +102,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/su1_ti_lastname"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="16dp"
                             android:hint="@string/login_email_hint"
                             android:textColorHint="@color/black"
                             app:boxBackgroundColor="@color/whiteTextColor"
@@ -127,7 +127,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/su1_ti_email"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="16dp"
                             android:hint="@string/phoneNumber"
                             android:textColorHint="@color/black"
                             app:boxBackgroundColor="@color/whiteTextColor"
@@ -148,36 +148,12 @@
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/su1_ti_address"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/su1_ti_phone"
-                            android:layout_marginTop="20dp"
-                            android:hint="@string/address"
-                            android:textColorHint="@color/black"
-                            app:boxBackgroundColor="@color/whiteTextColor"
-                            app:boxStrokeColor="@color/black"
-                            app:boxStrokeWidthFocused="2dp"
-                            app:endIconMode="clear_text"
-                            app:endIconTint="@color/black"
-                            app:startIconDrawable="@drawable/ic_baseline_home_24"
-                            app:startIconTint="@color/black">
-                            <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/su1_et_address"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:inputType="text"
-                                android:maxLines="1" />
-                        </com.google.android.material.textfield.TextInputLayout>
-
-                        <com.google.android.material.textfield.TextInputLayout
                             android:id="@+id/su1_ti_pass"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@id/su1_ti_address"
-                            android:layout_marginTop="20dp"
+                            android:layout_below="@id/su1_ti_phone"
+                            android:layout_marginTop="16dp"
                             android:hint="@string/login_password_hint"
                             android:textColorHint="@color/black"
                             app:boxBackgroundColor="@color/whiteTextColor"
@@ -202,7 +178,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@id/su1_ti_pass"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="16dp"
                             android:hint="@string/confirm_password"
                             android:textColorHint="@color/black"
                             app:boxBackgroundColor="@color/whiteTextColor"
@@ -220,6 +196,40 @@
                                 android:inputType="textPassword"
                                 android:maxLines="1" />
                         </com.google.android.material.textfield.TextInputLayout>
+
+                        <TextView
+                            android:id="@+id/su1_tv_address_title"
+                            android:layout_below="@+id/su1_ti_repass"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_marginStart="8dp"
+                            android:layout_marginTop="16dp"
+                            android:textStyle="bold"
+                            android:text="@string/address"/>
+
+                        <TextView
+                            android:id="@+id/su1_tv_address"
+                            android:layout_below="@+id/su1_tv_address_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:layout_marginStart="8dp"
+                            android:textStyle="bold"
+                            android:layout_marginTop="8dp"
+                            android:text="@string/no_data"/>
+
+                        <TextView
+                            android:id="@+id/su1_tv_addresspicker"
+                            android:layout_below="@+id/su1_tv_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            android:textColor="@color/primaryColor"
+                            android:textStyle="italic"
+                            android:layout_alignParentRight="true"
+                            android:text="@string/choose_on_map"/>
+
                     </RelativeLayout>
                 </ScrollView>
 

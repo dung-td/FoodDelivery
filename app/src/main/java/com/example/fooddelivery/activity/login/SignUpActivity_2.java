@@ -2,6 +2,7 @@ package com.example.fooddelivery.activity.login;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.location.Address;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -145,13 +146,14 @@ public class SignUpActivity_2 extends AppCompatActivity {
     private User GetExtras() {
         Intent i = getIntent();
         uid = i.getStringExtra("uid");
-        return new User(
+        User user = new User(
                 i.getStringExtra("firstname"),
                 i.getStringExtra("lastname"),
                 i.getStringExtra("phone"),
                 i.getStringExtra("email"),
-                i.getStringExtra("address"),
                 i.getStringExtra("password"));
+        user.setAddress((Address) i.getSerializableExtra("address"));
+        return user;
     }
 
     private void sendVerificationCode(String phoneNumber) {
@@ -181,7 +183,7 @@ public class SignUpActivity_2 extends AppCompatActivity {
                                 Log.d(TAG, "signInWithCredential:success");
                                 FirebaseUser user = task.getResult().getUser();
                                 uid = user.getUid();
-                                if (!LoginActivity.firebase.checkUID(uid))
+                                if (!WelcomeActivity.firebase.checkUID(uid))
                                     addNewUser(user);
                                 loginComplete();
                             } else {
@@ -221,11 +223,11 @@ public class SignUpActivity_2 extends AppCompatActivity {
             }
         });
 
-        LoginActivity.firebase.addNewUser(userInfo, uid);
+        WelcomeActivity.firebase.addNewUser(userInfo, uid);
     }
 
     private void loginComplete() {
-        LoginActivity.userID = mAuth.getCurrentUser().getUid();
+        WelcomeActivity.userID = mAuth.getCurrentUser().getUid();
         Intent mainActivity = new Intent(SignUpActivity_2.this, MainActivity.class);
         startActivity(mainActivity);
     }

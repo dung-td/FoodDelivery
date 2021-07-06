@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.adapter.VoucherAdapter;
 import com.example.fooddelivery.model.Voucher;
 
@@ -53,7 +54,7 @@ public class VoucherFragment extends Fragment {
 
     private void InitList() {
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        for (Voucher v : LoginActivity.firebase.voucherList) {
+        for (Voucher v : WelcomeActivity.firebase.voucherList) {
             try {
                 if (format.parse(v.getDate()).after(new Date())) {
                     switch (v.getStatus()) {

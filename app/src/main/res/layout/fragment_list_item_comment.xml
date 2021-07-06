@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.ListItemCommentFragment"
+    android:background="@color/gray">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/fm_ordcmt_appbar"
+        android:layout_marginBottom="50dp">
+        <ListView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:divider="@color/gray"
+            android:dividerHeight="15dp"
+            android:id="@+id/lv_fm_ordcmt"
+            android:layout_marginBottom="20dp"
+            />
+    </RelativeLayout>
+
+<!--    <ListView-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:layout_marginLeft="10dp"-->
+<!--        android:layout_marginRight="10dp"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/white"-->
+<!--        android:divider="@color/gray"-->
+<!--        android:dividerHeight="15dp"-->
+<!--        android:id="@+id/lv_fm_ordcmt"-->
+<!--        android:layout_marginBottom="50dp"-->
+<!--        android:layout_below="@id/fm_ordcmt_appbar"-->
+<!--        />-->
+    <RelativeLayout
+        android:id="@+id/fm_ordcmt_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white">
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:backgroundTint="@color/grey"
+            android:background="@drawable/ic_baseline_arrow_back_24"
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/bt_fm_ordcmt_back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/your_comment"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginStart="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -2,6 +2,7 @@ package com.example.fooddelivery.activity.login;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -20,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.main.MainActivity;
-import com.example.fooddelivery.model.ModifyFirebase;
+import com.example.fooddelivery.activity.me.LanguageSetting;
 import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Regex;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -45,7 +46,6 @@ import es.dmoral.toasty.Toasty;
 
 
 public class LoginActivity extends AppCompatActivity {
-
     String uID;
     private static final String TAG = "GOOGLE SIGN IN";
     EditText et_email, et_pass;
@@ -55,8 +55,6 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
-    public static ModifyFirebase firebase;
-    public static String userID;
     private ProgressDialog progressDialog;
     FirebaseFirestore root;
 
@@ -64,26 +62,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            loginComplete();
-        }
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
-        loadLanguage();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         Init();
+        setLocal();
         createGoogleSignInRequest();
     }
 
     private void Init() {
         mAuth = FirebaseAuth.getInstance();
-        firebase = new ModifyFirebase();
         et_email = findViewById(R.id.lg_et_email);
         et_pass = findViewById(R.id.lg_et_password);
         bt_login = findViewById(R.id.lg_bt_login);
@@ -230,15 +218,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginComplete() {
-        userID = mAuth.getUid();
-        firebase.setUserId(userID);
-        firebase.getData(new OnGetDataListener() {
+        WelcomeActivity.userID = mAuth.getUid();
+        WelcomeActivity.firebase.setUserId(WelcomeActivity.userID);
+        WelcomeActivity.firebase.getData(new OnGetDataListener() {
             @Override
             public void onStart() {
                 progressDialog.setMessage(getString(R.string.data_loading));
                 progressDialog.show();
             }
-            
+
             @Override
             public void onSuccess() {
                 if (progressDialog != null && progressDialog.isShowing()) {
@@ -279,26 +267,28 @@ public class LoginActivity extends AppCompatActivity {
         return true;
     }
 
-    void loadLanguage() {
-        String langPref = "lang_code";
-        SharedPreferences prefs = getSharedPreferences("MyPref",
-                Activity.MODE_PRIVATE);
-        String language = prefs.getString(langPref, "");
+    private void navigateToMainActivity() {
+        Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(mainActivity);
+        finish();
+    }
 
-        Log.e("language", language);
+    public void setLocal() {
+        String langCode;
+        LanguageSetting languageSetting = new LanguageSetting();
+        Log.e("Lang", languageSetting.getChosenLanguege());
+        if (WelcomeActivity.language.equals("vi"))
+            langCode = "vi";
+        else {
+            langCode = "en";
+        }
 
-        Locale locale = new Locale(language);
+        Locale locale = new Locale(langCode);
         Locale.setDefault(locale);
 
         Resources resources = this.getResources();
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
-    }
-
-    private void navigateToMainActivity() {
-        Intent mainActivity = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(mainActivity);
-        finish();
     }
 }

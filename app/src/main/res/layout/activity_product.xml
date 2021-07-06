@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.ProductActivity"
+    tools:context=".activity.main.ProductActivity"
     android:background="@color/white">
 
     <ScrollView
@@ -28,8 +28,7 @@
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/product_image"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp">
-                </androidx.viewpager.widget.ViewPager>
+                    android:layout_height="250dp"></androidx.viewpager.widget.ViewPager>
 
                 <TextView
                     android:id="@+id/tv_image_index"
@@ -42,6 +41,7 @@
             </RelativeLayout>
 
             <View
+                android:layout_marginBottom="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black"/>
@@ -59,8 +59,8 @@
                     android:text="PhinDi Hạnh Nhân"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="20dp"
-                    android:layout_marginStart="15dp"
+                    android:textSize="20sp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-condensed-light"/>
 
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:text="4.9"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="13dp"
                     android:textColor="@color/black"/>
 
@@ -90,7 +90,7 @@
                     android:text="15 m, 2.5 km"
                     android:layout_below="@id/ic_star"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="7dp"
                     android:textColor="@color/black"/>
 
@@ -100,7 +100,7 @@
                     android:layout_height="wrap_content"
                     android:text="Iced PHIN Coffee with Almond Milk"
                     android:layout_below="@id/tv_product_name_vn"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="5dp"
                     android:textColor="@color/grey"/>
 
@@ -110,15 +110,15 @@
                     android:layout_height="wrap_content"
                     android:text="49.000 đ"
                     android:layout_below="@id/tv_product_name_en"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="12dp"
                     android:textColor="@color/black"
-                    android:textSize="30dp"
+                    android:textSize="30sp"
                     android:textStyle="bold"/>
 
                 <Spinner
                     android:id="@+id/spinner_size"
-                    android:layout_width="30dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_toEndOf="@+id/tv_product_price"
                     android:layout_below="@+id/tv_product_name_en"
@@ -133,7 +133,7 @@
                     android:layout_height="50dp"
                     android:layout_below="@id/tv_time_distance"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/plus_80px"/>
 
@@ -142,19 +142,22 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@color/black"/>
 
 <!--            Merchant Name-->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
 
                 <ImageView
                     android:id="@+id/img_logo"
                     android:layout_width="80dp"
                     android:layout_height="70dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_centerVertical="true"
                     android:background="@drawable/untitled_icon"/>
 
                 <TextView
@@ -163,11 +166,11 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/img_logo"
                     android:text="Highland BigC - Dĩ An, Bình Dương"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="16dp"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:textSize="23dp"
+                    android:textSize="24sp"
+                    android:layout_marginLeft="16dp"
                     android:fontFamily="sans-serif-condensed-light"/>
 
                 <ImageView
@@ -184,21 +187,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="4.5"
-                    android:textSize="17dp"
+                    android:textSize="17sp"
                     android:layout_toEndOf="@id/img_logo"
                     android:layout_below="@+id/tv_merchant_name"
                     android:layout_marginStart="50dp"
                     android:layout_marginTop="13dp"
                     android:textColor="@color/black"/>
 
+                <ProgressBar
+                    android:id="@+id/progress_load_merchant"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_below="@+id/tv_merchant_name"
+                    android:layout_marginTop="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:visibility="invisible"/>
+
                 <ImageView
                     android:id="@+id/btn_more_merchant_info"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_below="@+id/tv_merchant_name"
+                    android:layout_marginTop="9dp"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="10dp"
                     android:src="@drawable/ic_baseline_chevron_right_24"/>
             </RelativeLayout>
 
@@ -206,8 +217,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/black"
-                android:layout_marginTop="5dp"/>
-
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -226,7 +237,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/customer_comment"
                         android:textColor="@color/black"
-                        android:textSize="17dp"
+                        android:textSize="17sp"
                         android:layout_marginStart="15dp"/>
 
                     <TextView
@@ -261,8 +272,8 @@
             android:id="@+id/btn_back_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
             android:background="@drawable/circle_toolbar_button_background">
 
             <ImageView
@@ -277,7 +288,7 @@
             android:id="@+id/btn_love_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="210dp"
             android:layout_toEndOf="@+id/btn_back_background"
             android:background="@drawable/circle_toolbar_button_background">
@@ -327,10 +338,11 @@
             android:id="@+id/btn_more_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="16dp"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/btn_cart_background"
             android:background="@drawable/circle_toolbar_button_background">
+
             <ImageView
                 android:id="@+id/ic_more"
                 android:layout_width="35dp"

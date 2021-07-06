@@ -5,49 +5,24 @@
     android:layout_height="match_parent"
     tools:context=".fragment.OrderDetailsFragment"
     android:background="@color/gray"
-    android:padding="10dp"
     >
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:id="@+id/fm_orddtail_appbar"
-        android:background="@color/white">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:backgroundTint="@color/grey"
-                android:background="@drawable/ic_baseline_arrow_back_24"
-                android:layout_marginStart="15dp"
-                android:layout_centerVertical="true"
-                android:id="@+id/bt_fm_orddtail_back"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/order_detail"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"/>
-        </RelativeLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
     <ScrollView
+        android:padding="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/fm_orddtail_appbar">
+        android:layout_below="@id/order_detail_bar"
+        android:layout_marginTop="10dp"
+        android:scrollbars="vertical"
+        android:fillViewport="true"
+        android:layout_marginBottom="50dp"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="150dp"
+            >
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,13 +60,22 @@
                     android:id="@+id/tv_fm_orddtail_method"
                     android:layout_below="@id/tv_fm_orddtail_time"
                     />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_status"
+                    android:textColor="@color/black"
+                    android:id="@+id/tv_fm_orddtail_status"
+                    android:layout_below="@id/tv_fm_orddtail_method"
+                    />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/merchant"
                     android:textColor="@color/light_blue"
                     android:id="@+id/tv_fm_orddtail_merchant"
-                    android:layout_below="@id/tv_fm_orddtail_method"
+                    android:layout_below="@id/tv_fm_orddtail_status"
                     />
 
                 <TextView
@@ -103,18 +87,9 @@
                     android:id="@+id/tv_fm_orddtail_ordid"
                     android:layout_below="@id/tv_fm_orddtail_merchant"/>
 
+
+
             </RelativeLayout>
-
-            <!--        <RelativeLayout-->
-            <!--            android:layout_width="match_parent"-->
-            <!--            android:layout_height="match_parent"-->
-            <!--            android:id="@+id/fm_orddtail_view2"-->
-            <!--            android:layout_below="@id/fm_orddtail_view1"-->
-            <!--            android:layout_marginTop="20dp"-->
-            <!--            android:background="@color/white">-->
-
-            <!--           -->
-            <!--        </RelativeLayout>-->
 
             <com.example.fooddelivery.adapter.NonScrollListView
                 android:layout_width="match_parent"
@@ -236,7 +211,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/rl_fm_orddtail_comment">
 
                     <TextView
                         android:id="@+id/rate"
@@ -262,17 +238,48 @@
             <android.widget.Button
                 android:layout_height="wrap_content"
                 android:layout_width="200dp"
-                android:text="@string/buy_again"
+                android:text="@string/order_cancel"
                 android:textColor="@color/white"
                 android:textStyle="bold"
                 android:background="@color/light_red"
                 android:layout_below="@id/fm_ordedtail_view3"
                 android:layout_marginTop="30dp"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/bt_fm_orddtail_buy"
-                android:layout_marginBottom="90dp"
+                android:id="@+id/bt_fm_orddtail_cancel_ord"
+                android:layout_marginBottom="100dp"
                 />
         </RelativeLayout>
+
     </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/order_detail_bar"
+        android:background="@color/white">
+
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:backgroundTint="@color/grey"
+            android:background="@drawable/ic_baseline_arrow_back_24"
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/bt_fm_orddtail_back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/order_detail"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:layout_marginStart="100dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/black"
+
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+
+
 
 </RelativeLayout>

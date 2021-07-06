@@ -1,12 +1,10 @@
 package com.example.fooddelivery.adapter;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,28 +12,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
-import com.example.fooddelivery.model.ModifyFirebase;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.model.Product;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ItemOnSectionFragment extends Fragment {
 
     private static List<Product> productList;
+    int productListType = 0;
 
-    public ItemOnSectionFragment() {
+    public ItemOnSectionFragment(int listType) {
         productList = new ArrayList<>();
-        ArrayList<Product> list = new ArrayList<>();
-        for (Product p : LoginActivity.firebase.productList) {
+        productListType = listType;
+
+        //Toàn bộ drink
+        for (Product p : WelcomeActivity.firebase.productList) {
             if (p.getType().equals("Drink"))
                 productList.add(p);
         }
@@ -53,7 +47,22 @@ public class ItemOnSectionFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view_item);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        ProductOnSectionAdapter productAdapter = new ProductOnSectionAdapter(getContext(), productList);
-        recyclerView.setAdapter(productAdapter);
+        ProductOnSectionAdapter productAdapter;
+        if (productListType == 0) {
+            productAdapter = new ProductOnSectionAdapter(getContext(), productList);
+            recyclerView.setAdapter(productAdapter);
+        }
+        else {
+            //Drink được đánh giá cao
+            if (productListType == 1) {
+                ArrayList<Product> list = new ArrayList<>();
+                for (Product p : productList) {
+                    if (Float.parseFloat(p.getRating()) > 4.6)
+                        list.add(p);
+                }
+                productAdapter = new ProductOnSectionAdapter(getContext(), list);
+                recyclerView.setAdapter(productAdapter);
+            }
+        }
     }
 }

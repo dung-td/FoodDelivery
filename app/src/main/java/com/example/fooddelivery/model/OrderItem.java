@@ -1,22 +1,38 @@
 package com.example.fooddelivery.model;
 
 public class OrderItem {
-    int order_id;
+    String order_id;
     Product product;
     int quantity;
+    int price;
+    String size;
+    Comment comment;
 
-    public OrderItem(int order_id, Product product, int quantity) {
+    public OrderItem(String order_id, Product product, int quantity, int price, String size, Comment comment) {
         this.order_id = order_id;
         this.product = product;
         this.quantity = quantity;
+        this.price = price;
+        this.comment = comment;
+        this.size = size;
     }
 
+    public OrderItem(String order_id, Product product, int quantity, int price, String size) {
+        this.order_id = order_id;
+        this.product = product;
+        this.quantity = quantity;
+        this.price = price;
+        this.size = size;
+    }
+
+    public OrderItem(){}
+
     //region GET_SET
-    public int getOrder_id() {
+    public String getOrder_id() {
         return order_id;
     }
 
-    public void setOrder_id(int order_id) {
+    public void setOrder_id(String order_id) {
         this.order_id = order_id;
     }
 
@@ -35,5 +51,30 @@ public class OrderItem {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public Comment getComment() {
+        return comment;
+    }
+
+    public void setComment(Comment comment) {
+        this.comment = comment;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
     //endregion
 }

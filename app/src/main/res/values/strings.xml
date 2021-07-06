@@ -82,12 +82,18 @@
     <string name="title_remove_data">Xóa dữ liệu</string>
     <string name="msg_remove_watched_data">Bạn chắc chắn muốn xóa danh sách đã xem?</string>
     <string name="msg_cancel">Hủy</string>
-
-    <string-array name="product_size">
-        <item>S</item>
-        <item>M</item>
-        <item>L</item>
-    </string-array>
+    <string name="search_result_for">Kết quả cho</string>
+    <string name="add_cart_success">Đã thêm vào giỏ hàng!</string>
+    <string name="remove_cart_success">Đã xóa khỏi giỏ hàng!</string>
+    <string name="payment_cod">Phương thức thanh toán: COD</string>
+    <string name="choose_order_time">Chọn thời gian giao hàng</string>
+    <string name="confirm">XÁC NHẬN</string>
+    <string name="today">Hôm nay</string>
+    <string name="deliver_now">Giao ngay</string>
+    <string name="choose_later_time">Vui lòng chọn thời gian trễ hơn thời gian hiện tại!</string>
+    <string name="chose">Đã chọn</string>
+    <string name="order_confirmation">Hãy chắc chắn bạn đã kiểm tra kỹ đơn hàng của mình. Bằng cách nhấn xác nhận bên dưới
+        sẽ hoàn tất việc đặt hàng và không thể hoàn tác.</string>
 
     <!--    <string name="first_step">Bước đầu tiên để bạn tham gia!</string>-->
     <string name="provide_otp_help">Vui lòng nhập mật mã OTP được gửi đến</string>
@@ -121,7 +127,7 @@
     <string name="see_comment">Xem đánh giá</string>
     <string name="buy_again">Mua lần nữa</string>
     <string name="send_comment">Gửi đánh giá</string>
-    <string name="more">Thêm nữa...</string>
+    <string name="more">Thêm nữa…</string>
     <string name="product">sản phẩm</string>
     <string name="delivering">Đang giao</string>
     <string name="history">Lịch sử</string>
@@ -150,7 +156,7 @@
     <string name="send_feedback_fail">Gửi góp ý thất bại, vui lòng thử lại</string>
     <string name="voucher">Mã khuyến mại</string>
     <string name="already_got">Đã lấy</string>
-    <string name="checking_info">Đang kiểm tra thông tin...</string>
+    <string name="checking_info">Đang kiểm tra thông tin…</string>
     <string name="error_happend_try_again">Đã có lỗi xảy ra, vui lòng thử lại!</string>
     <string name="wrong_otp">Sai mật mã OTP</string>
     <string name="expired_code">Mã đã hết hạn</string>
@@ -164,8 +170,41 @@
     <string name="comment_title">BÌNH LUẬN</string>
     <string name="info_title">THÔNG TIN</string>
     <string name="exist_voucher">Voucher đã ở trong ví của bạn</string>
+    <string name="use">Sử dụng</string>
+    <string name="apply_voucher_failed">Sử dụng voucher không thành công. Vui lòng kiểm tra lại điều kiện.</string>
+    <string name="choose_on_map">Lựa chọn vị trí trên bản đồ</string>
     <string-array name="feedback_title">
         <item>Góp ý cho ứng dụng</item>
         <item>Báo lỗi</item>
     </string-array>
+    <string name="order_received">Đã nhận Đơn hàng</string>
+    <string name="canceled">Đã huỷ</string>
+    <string name="customer">Khách hàng</string>
+    <string name="time">Thời gian</string>
+    <string name="cod">Tiền mặt</string>
+    <string name="send_comment_success">Gửi đánh giá thành công</string>
+    <string name="send_comment_fail">Gửi đánh giá thất bại, vui lòng thử lại</string>
+    <string name="rating_null">Chưa đánh giá</string>
+    <string name="enter_comment">Viết đánh giá</string>
+    <string name="order_status">Trạng thái đơn hàng</string>
+    <string name="pending">Đang chờ</string>
+    <string name="order_cancel">Huỷ đơn đặt hàng</string>
+    <string name="delivery_success">Giao hàng thành công</string>
+    <string name="received_order">Tiếp nhận đơn hàng</string>
+    <string name="canceled_order_success">Huỷ đơn hàng thành công</string>
+    <string name="location_details">Chi tiết </string>
+    <string name="delivery_from">Giao từ: </string>
+    <string name="delivery_to">Giao đến: </string>
+    <string name="time_direc">Thời gian dự kiến: </string>
+    <string name="distance_direc">Khoảng cách ước tính:</string>
+    <string name="your_position">Vị trí của bạn</string>
+    <string name="title_invalid_order">Đơn hàng không hợp lệ</string>
+    <string name="title_different_merchant">Đơn đặt hàng của bạn gồm nhiều nhà bán khác nhau!
+        Vui lòng chọn mua sản phẩm từ một nhà bán trên mỗi đơn đặt hàng!</string>
+    <string name="copied_to_clipboard">Đã sao chép vào bộ nhớ tạm!</string>
+    <string name="all">Tất cả</string>
+    <string name="high_rating">Đánh giá cao</string>
+    <string name="change_language_success">Thay đổi ngôn ngữ thành công!</string>
+    <string name="get">Lấy</string>
+    <string name="find_more_voucher">Tìm thêm mã giảm giá!</string>
 </resources>

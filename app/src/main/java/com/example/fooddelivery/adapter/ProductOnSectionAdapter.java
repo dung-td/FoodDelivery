@@ -19,7 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.ProductActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
+import com.example.fooddelivery.activity.main.ProductActivity;
 import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.OnGetDataListener;
@@ -49,7 +50,7 @@ public class ProductOnSectionAdapter extends RecyclerView.Adapter<ProductOnSecti
     @Override
     public void onBindViewHolder(@NonNull ProductOnSectionAdapter.ProductViewHolder holder, int position) {
         Product p = products.get(position);
-        if (LoginActivity.firebase.favouriteProductList.contains(p.getId())) {
+        if (WelcomeActivity.firebase.favouriteProductList.contains(p.getId())) {
             holder.isFavourite = true;
             holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_24);
         }
@@ -94,24 +95,24 @@ public class ProductOnSectionAdapter extends RecyclerView.Adapter<ProductOnSecti
         holder.imageViewLove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (LoginActivity.firebase.favouriteProductList.contains(p.getId())) {
+                if (WelcomeActivity.firebase.favouriteProductList.contains(p.getId())) {
                     holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_border_24);
-                    LoginActivity.firebase.favouriteProductList.remove(p.getId());
-                    LoginActivity.firebase.removeProductFromFavourite(context, p.getId());
+                    WelcomeActivity.firebase.favouriteProductList.remove(p.getId());
+                    WelcomeActivity.firebase.removeProductFromFavourite(context, p.getId());
                     holder.isFavourite = false;
                     HomeFragment.itemOnMainAdapter.notifyDataSetChanged();
                 }
                 else {
                     holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_24);
-                    LoginActivity.firebase.favouriteProductList.add(p.getId());
-                    LoginActivity.firebase.addProductToFavourite(context, p.getId());
+                    WelcomeActivity.firebase.favouriteProductList.add(p.getId());
+                    WelcomeActivity.firebase.addProductToFavourite(context, p.getId());
                     holder.isFavourite = true;
                     HomeFragment.itemOnMainAdapter.notifyDataSetChanged();
                 }
             }
         });
 
-        if (p.getType().equals("Drink")) {
+        if (p.getProductSize().get(0) != null) {
             ArrayAdapter<String> staticAdapter = new ArrayAdapter(context, android.R.layout.simple_spinner_item, p.getProductSize());
             staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             holder.spinnerProductSize.setAdapter(staticAdapter);

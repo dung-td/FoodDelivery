@@ -17,15 +17,15 @@
     <string name="account">Account</string>
     <string name="voucher_title">Voucher</string>
     <string name="user_info">Personal Information</string>
-    <string name="payment">Payment Methods</string>
+    <string name="payment">Payment Method</string>
     <string name="logout">Log Out</string>
     <string name="app_version">FoodDelivery 1.0</string>
     <string name="code">Code</string>
     <string name="voucher_date">Expiry Date</string>
-    <string name="voucher_detail">Details</string>
+    <string name="voucher_detail">Detail</string>
     <string name="login_email_hint">Email</string>
     <string name="login_password_hint">Password</string>
-    <string name="login">"    LOGIN"</string>
+    <string name="login">LOGIN</string>
     <string name="have_account_login">Having a account?  Log in now!</string>
     <string name="forgot_pass">Forgot Password</string>
     <string name="new_register">New user? Sign up now!</string>
@@ -42,7 +42,6 @@
     <string name="or_verify_mail">Or verify with the inbox sent to your email</string>
     <string name="use_phone">Use phone number</string>
     <string name="continue_">Continue</string>
-    <string name="provide_info_help">" Please provide your information for us to help you. Do you remember your registered email?"</string>
     <string name="make_selection">SELECTION</string>
     <string name="make_selection_detail">Select authentication method</string>
     <string name="via_sms">" Verify by phone number"</string>
@@ -72,7 +71,7 @@
     <string name="pass_must_match">Password is no match</string>
     <string name="pass_regex">Password must have at least 8 characters, contain lowercase letters, uppercase letters, numbers and special characters</string>
     <string name="pls_enter_address">Please enter your address</string>
-    <string name="shopping_cart">SHOPPING CART</string>
+    <string name="shopping_cart">CART</string>
     <string name="deliver_address">Delivery address</string>
     <string name="change">Change</string>
     <string name="total_amount">Total amount</string>
@@ -153,8 +152,51 @@
     <string name="comment_title">COMMENT</string>
     <string name="exist_voucher">This voucher is already in your voucher list</string>
     <string name="info_title">INFOMATION</string>
+    <string name="choose_on_map">Choose loaction on map</string>
     <string-array name="feedback_title">
         <item>Feedback of application</item>
         <item>Report error</item>
     </string-array>
+    <string name="search_result_for">Result for</string>
+    <string name="add_cart_success">Successfully added to cart!</string>
+    <string name="remove_cart_success">Successfully removed from cart!</string>
+    <string name="payment_cod">Payment method: COD</string>
+    <string name="choose_order_time">Choose order time</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="today">Today</string>
+    <string name="deliver_now">Deliver now</string>
+    <string name="choose_later_time">Please choose later time than the current!</string>
+    <string name="use">Use</string>
+    <string name="chose">Chose</string>
+    <string name="apply_voucher_failed">Apply voucher failed. Check the condition again!</string>
+    <string name="order_confirmation">Make sure you have carefully checked your order. By clicking the button below, the order will finish and can\'t be undo.</string>
+    <string name="order_received">Received this Order</string>
+    <string name="canceled">Canceled</string>
+    <string name="customer">Customer</string>
+    <string name="time">Time</string>
+    <string name="cod">Cash on delivery</string>
+    <string name="send_comment_success">Send your rating successfully!</string>
+    <string name="send_comment_fail">Send your rating fail. please try again</string>
+    <string name="rating_null">Your rating is null</string>
+    <string name="enter_comment">Enter your comment</string>
+    <string name="order_status">Order status</string>
+    <string name="pending">Pending</string>
+    <string name="order_cancel">Order cancel</string>
+    <string name="delivery_success">Successful delivery</string>
+    <string name="received_order">Accepted the order</string>
+    <string name="canceled_order_success">Successful cancel</string>
+    <string name="title_different_merchant">Your order has more than one merchant! Please buy products from one merchant on each order!</string>
+    <string name="location_details">Detail</string>
+    <string name="delivery_from">Delivery from:</string>
+    <string name="delivery_to">Delivery to:</string>
+    <string name="time_direc">Estimated time:</string>
+    <string name="distance_direc">Estimated distance:</string>
+    <string name="your_position">Your location</string>
+    <string name="title_invalid_order">Invalid Order</string>
+    <string name="copied_to_clipboard">Copied to clipboard!</string>
+    <string name="all">All</string>
+    <string name="high_rating">High rating</string>
+    <string name="change_language_success">Change language successful!</string>
+    <string name="get">Get</string>
+    <string name="find_more_voucher">Tìm thêm mã giảm giá!</string>
 </resources>

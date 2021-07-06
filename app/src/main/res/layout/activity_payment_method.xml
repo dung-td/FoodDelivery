@@ -4,50 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.PaymentMethodActivity">
+    tools:context=".activity.me.PaymentMethodActivity"
+    android:background="@color/light_grey">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:id="@+id/method_appbar"
         android:background="@color/white">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <ImageButton
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:backgroundTint="@color/grey"
+            android:background="@drawable/ic_baseline_arrow_back_24"
+            android:layout_marginStart="15dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/bt_method_back"/>
 
-            <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:backgroundTint="@color/grey"
-                android:background="@drawable/ic_baseline_arrow_back_24"
-                android:layout_marginStart="15dp"
-                android:layout_centerVertical="true"
-                android:id="@+id/bt_method_back"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/payment"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"/>
-        </RelativeLayout>
-
-    </com.google.android.material.appbar.AppBarLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/payment"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/method_rl1"
         android:layout_below="@id/method_appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="25dp"
+        android:background="@color/white">
         <ImageView
             android:layout_marginLeft="20dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/cash"
             android:id="@+id/im_method_cash"
             />
@@ -73,69 +69,70 @@
             android:layout_marginTop="3dp"
             />
     </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/fm_method_rl2"
-        android:layout_below="@id/method_rl1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
-        <ImageView
-            android:layout_marginLeft="20dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/momoicon"
-            android:id="@+id/im_method_momo"
-            />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toRightOf="@id/im_method_momo"
-            android:layout_marginLeft="20dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ví Momo"
-                android:layout_centerVertical="true"
-                android:textColor="@color/black"
-                />
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/fm_method_rl2"-->
+<!--        android:layout_below="@id/method_rl1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:background="@color/white">-->
+<!--        <ImageView-->
+<!--            android:layout_marginLeft="20dp"-->
+<!--            android:layout_width="40dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:background="@drawable/momoicon"-->
+<!--            android:id="@+id/im_method_momo"-->
+<!--            />-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_toRightOf="@id/im_method_momo"-->
+<!--            android:layout_marginLeft="20dp">-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Ví Momo"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:textColor="@color/black"-->
+<!--                />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0383303061"
-                android:layout_centerVertical="true"
-                android:id="@+id/tv_method_momophone"
-                />
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="0383303061"-->
+<!--                android:layout_centerVertical="true"-->
+<!--                android:id="@+id/tv_method_momophone"-->
+<!--                />-->
+<!--        </LinearLayout>-->
 
 
-        <TextView
-            android:layout_centerInParent="true"
-            android:id="@+id/tv_method_changemomo"
-            android:layout_marginRight="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/change"
-            android:textStyle="bold"
-            android:textColor="@color/light_blue"
-            android:clickable="true"
-            />
+<!--        <TextView-->
+<!--            android:layout_centerInParent="true"-->
+<!--            android:id="@+id/tv_method_changemomo"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/change"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="@color/light_blue"-->
+<!--            android:clickable="true"-->
+<!--            />-->
 
-        <ImageView
-            android:id="@+id/im_method_momocheck"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/check"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/im_method_momocheck"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="30dp"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginRight="30dp"-->
+<!--            android:background="@drawable/check"/>-->
 
-        <View style="@style/Divider.Horizontal"
-            android:layout_below="@id/im_method_momo"
-            android:layout_marginTop="3dp"
-            />
-    </RelativeLayout>
+<!--        <View style="@style/Divider.Horizontal"-->
+<!--            android:layout_below="@id/im_method_momo"-->
+<!--            android:layout_marginTop="3dp"-->
+<!--            />-->
+<!--    </RelativeLayout>-->
 
     <android.widget.Button
         android:id="@+id/bt_paymentmethod_save"
@@ -145,7 +142,7 @@
         android:background="@color/light_red"
         android:text="@string/save_change"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="50dp"
         android:textColor="@color/white"
         android:textStyle="bold" />
 

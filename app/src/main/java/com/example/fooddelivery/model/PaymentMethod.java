@@ -1,4 +1,5 @@
 package com.example.fooddelivery.model;
 
-public class ProductOnCart {
+public enum PaymentMethod {
+    COD
 }

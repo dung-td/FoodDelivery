@@ -18,7 +18,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/im_orddetail_image"
-            android:background="@drawable/trasenvang"/>
+            android:background="@color/white"
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
