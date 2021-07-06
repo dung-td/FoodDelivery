@@ -10,24 +10,31 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.adapter.NotificationAdapter;
-import com.example.fooddelivery.model.Notification;
-import com.example.fooddelivery.model.Product;
-import com.example.fooddelivery.model.ProductStatus;
+import com.example.fooddelivery.model.MyNotification;
+import com.example.fooddelivery.model.OnGetDataListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationFragment extends Fragment {
-    List<Notification> notifications;
-
+    List<MyNotification> notifications;
+    RecyclerView recyclerView;
+    private static NotificationAdapter mAdapter = null;
     public NotificationFragment() {
-        notifications = new ArrayList<>();
-        notifications.add(new Notification(1, "Phở", "Done", "19/1/1341"));
-        notifications.add(new Notification(1, "Phở", "Done", "19/1/1341"));
-        notifications.add(new Notification(1, "Phở", "Done", "19/1/1341"));
+        this.notifications = LoginActivity.firebase.notifications;
     }
 
     @Override
@@ -37,10 +44,17 @@ public class NotificationFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        RecyclerView recyclerView = (RecyclerView)getView().findViewById(R.id.notification_recycler);
+        recyclerView = (RecyclerView)getView().findViewById(R.id.notification_recycler);
         NotificationAdapter notificationAdapter = new NotificationAdapter(getContext(), notifications);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
+        notificationAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(notificationAdapter);
+        mAdapter = notificationAdapter;
+    }
+
+    public static NotificationAdapter getAdapter()
+    {
+        return mAdapter;
     }
 }

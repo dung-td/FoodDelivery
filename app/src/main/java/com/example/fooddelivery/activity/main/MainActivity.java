@@ -1,5 +1,9 @@
 package com.example.fooddelivery.activity.main;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -9,7 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -23,6 +29,8 @@ import com.example.fooddelivery.fragment.NotificationFragment;
 import com.example.fooddelivery.fragment.OrderFragment;
 import com.example.fooddelivery.model.CallBackData;
 import com.example.fooddelivery.model.ModifyFirebase;
+import com.example.fooddelivery.model.MyNotification;
+import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
 import com.example.fooddelivery.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -90,6 +98,25 @@ public class MainActivity extends AppCompatActivity {
         LoginActivity.firebase.getAvailableVoucherList();
         LoginActivity.firebase.getComment();
         LoginActivity.firebase.getUserInfo();
+        LoginActivity.firebase.getNotificationList(new OnGetDataListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onSuccess() {
+                for (MyNotification notification : LoginActivity.firebase.notifications)
+                {
+                    if (notification.getStatus().equals("false"))
+                    {
+                        sendNotification(notification.getTitle(), notification.getDesc());
+                        LoginActivity.firebase.updateNotificationStatus(notification.getId());
+                    }
+                }
+            }
+        });
     }
 
     private void initBottomNavigation() {
@@ -129,5 +156,28 @@ public class MainActivity extends AppCompatActivity {
         return "vi";
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void sendNotification(String title, String message)
+    {
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this, "channel1")
+                        .setSmallIcon(R.drawable.ic_add_img)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setCategory(NotificationCompat.CATEGORY_MESSAGE);
 
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    "channel1",
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        notificationManager.notify(0, notificationBuilder.build());
+    }
 }
