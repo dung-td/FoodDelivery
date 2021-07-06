@@ -1,28 +1,28 @@
 package com.example.fooddelivery.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.model.Notification;
-import com.example.fooddelivery.model.Product;
+import com.example.fooddelivery.activity.NotificationDetailActivity;
+import com.example.fooddelivery.model.MyNotification;
 
 import java.util.List;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
-    Context context;
-    List<Notification> notifications;
+    private final Context context;
+    private final List<MyNotification> notifications;
 
-    public NotificationAdapter(){}
-
-    public NotificationAdapter(Context context, List<Notification> notifications) {
+    public NotificationAdapter(Context context, List<MyNotification> notifications) {
         this.context = context;
         this.notifications = notifications;
     }
@@ -36,9 +36,20 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     @Override
     public void onBindViewHolder(@NonNull NotificationViewHolder holder, int position) {
-        Notification n = notifications.get(position);
+        MyNotification n = notifications.get(position);
         holder.tvTitle.setText(n.getTitle());
         holder.tvDesc.setText(n.getDesc());
+        holder.tvTime.setText(n.getTime());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, NotificationDetailActivity.class);
+                //intent.putExtra("Title", n.getTitle());
+                intent.putExtra("Notification", (Parcelable) n);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -48,12 +59,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     public static final class NotificationViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitle, tvDesc;
+        TextView tvTitle, tvDesc, tvTime;
         public NotificationViewHolder(@NonNull View itemView) {
             super(itemView);
 
             tvTitle = itemView.findViewById(R.id.notification_title);
             tvDesc = itemView.findViewById(R.id.notification_description);
+            tvTime = itemView.findViewById(R.id.notification_time);
         }
     }
 }

@@ -1,5 +1,9 @@
 package com.example.fooddelivery.activity.main;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.os.Build;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -17,8 +21,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -30,6 +36,15 @@ import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.fragment.NotificationFragment;
 import com.example.fooddelivery.fragment.OrderFragment;
+import com.example.fooddelivery.model.CallBackData;
+import com.example.fooddelivery.model.ModifyFirebase;
+import com.example.fooddelivery.model.MyNotification;
+import com.example.fooddelivery.model.OnGetDataListener;
+import com.example.fooddelivery.model.Product;
+import com.example.fooddelivery.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.example.fooddelivery.model.DirectionFinder;
 import com.example.fooddelivery.model.DirectionFinderListener;
 import com.example.fooddelivery.model.Merchant;
@@ -143,6 +158,25 @@ public class MainActivity extends AppCompatActivity {
         WelcomeActivity.firebase.getComment();
         WelcomeActivity.firebase.getUserInfo();
         WelcomeActivity.firebase.getListOrdersOfUser();
+        WelcomeActivity.firebase.getNotificationList(new OnGetDataListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onSuccess() {
+                for (MyNotification notification : LoginActivity.firebase.notifications)
+                {
+                    if (notification.getStatus().equals("false"))
+                    {
+                        sendNotification(notification.getTitle(), notification.getDesc());
+                        LoginActivity.firebase.updateNotificationStatus(notification.getId());
+                    }
+                }
+            }
+        });
     }
 
     private void initBottomNavigation() {
@@ -179,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("MyPref",
                 Activity.MODE_PRIVATE);
         String language = prefs.getString(langPref, "");
-
+      
         Locale locale = new Locale(language);
 
         Log.e("MainActivity language", language);
@@ -189,5 +223,30 @@ public class MainActivity extends AppCompatActivity {
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void sendNotification(String title, String message)
+    {
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this, "channel1")
+                        .setSmallIcon(R.drawable.ic_add_img)
+                        .setContentTitle(title)
+                        .setContentText(message)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setCategory(NotificationCompat.CATEGORY_MESSAGE);
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    "channel1",
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        notificationManager.notify(0, notificationBuilder.build());
     }
 }

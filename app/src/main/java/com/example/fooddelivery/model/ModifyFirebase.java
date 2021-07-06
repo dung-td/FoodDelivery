@@ -9,6 +9,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.NotificationActivity;
+import com.example.fooddelivery.adapter.NotificationAdapter;
+import com.example.fooddelivery.fragment.NotificationFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +45,7 @@ public class ModifyFirebase {
     private String userId;
     private Uri[] image;
     private String collectionPath = "";
+    public ArrayList<MyNotification> notifications = new ArrayList<>();
     public ArrayList<SearchString> searchList = new ArrayList<>();
     public ArrayList<ChosenItem> cartList = new ArrayList<>();
     public ArrayList<Product> productList = new ArrayList<Product>();
@@ -322,6 +327,63 @@ public class ModifyFirebase {
                     });
         }
         listener.onSuccess();
+    }
+
+    public void getNotificationList(final OnGetDataListener listener) {
+        listener.onStart();
+        root.collection("User/" + userId + "/Notification")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error != null)
+                        {
+                            Log.e(TAG, "onEvent------------------------", error);
+                        }
+                        if (value != null)
+                        {
+                            List<DocumentChange> snapshotList = value.getDocumentChanges();
+
+                            for (DocumentChange snapshot : snapshotList)
+                            {
+                                for (MyNotification noti : notifications)
+                                {
+                                    if (snapshot.getDocument().getId() == noti.getId()) {
+                                        notifications.remove(noti);
+                                        break;
+                                    }
+                                }
+
+                                MyNotification notification = new MyNotification();
+                                notification.setId(snapshot.getDocument().getId());
+                                notification.setTitle(snapshot.getDocument().get("Title").toString());
+                                notification.setDesc(snapshot.getDocument().get("Detail").toString());
+                                notification.setTime(snapshot.getDocument().get("Date").toString());
+                                notification.setStatus(snapshot.getDocument().get("Status").toString());
+
+                                notifications.add(notification);
+                            }
+
+                            Collections.reverse(notifications);
+
+                            listener.onSuccess();
+
+                            if (NotificationFragment.getAdapter() != null)
+                            {
+                                NotificationFragment.getAdapter().notifyDataSetChanged();
+                            }
+                        } else {
+                            Log.e(TAG, "onEvent querry was null-----------------");
+                        }
+                    }
+                });
+
+    }
+
+    public void updateNotificationStatus(String id)
+    {
+        root.collection("User/" + userId + "/Notification/")
+                .document(id)
+                .update("Status", "true");
     }
 
     public void getWatchedProductList(final OnGetDataListener listener) {

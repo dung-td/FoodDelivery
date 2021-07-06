@@ -27,7 +27,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-
+        <activity android:name=".activity.NotificationDetailActivity" />
+        <activity android:name=".activity.login.LoginActivity">
         <activity android:name=".activity.login.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
