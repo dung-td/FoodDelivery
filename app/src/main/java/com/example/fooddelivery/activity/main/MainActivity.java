@@ -42,6 +42,8 @@ import com.example.fooddelivery.model.MyNotification;
 import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Product;
 import com.example.fooddelivery.model.User;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -52,8 +54,6 @@ import com.example.fooddelivery.model.OnGetDataListener;
 import com.example.fooddelivery.model.Route;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -167,12 +167,12 @@ public class MainActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onSuccess() {
-                for (MyNotification notification : LoginActivity.firebase.notifications)
+                for (MyNotification notification : WelcomeActivity.firebase.notifications)
                 {
                     if (notification.getStatus().equals("false"))
                     {
                         sendNotification(notification.getTitle(), notification.getDesc());
-                        LoginActivity.firebase.updateNotificationStatus(notification.getId());
+                        WelcomeActivity.firebase.updateNotificationStatus(notification.getId());
                     }
                 }
             }

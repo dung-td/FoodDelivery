@@ -207,4 +207,5 @@
     <string name="change_language_success">Thay đổi ngôn ngữ thành công!</string>
     <string name="get">Lấy</string>
     <string name="find_more_voucher">Tìm thêm mã giảm giá!</string>
+    <string name="noti_title">Thông báo</string>
 </resources>

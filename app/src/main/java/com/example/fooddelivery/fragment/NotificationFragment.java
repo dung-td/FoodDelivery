@@ -14,6 +14,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.activity.login.LoginActivity;
+import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.adapter.NotificationAdapter;
 import com.example.fooddelivery.model.MyNotification;
 import com.example.fooddelivery.model.OnGetDataListener;
@@ -34,7 +35,7 @@ public class NotificationFragment extends Fragment {
     RecyclerView recyclerView;
     private static NotificationAdapter mAdapter = null;
     public NotificationFragment() {
-        this.notifications = LoginActivity.firebase.notifications;
+        this.notifications = WelcomeActivity.firebase.notifications;
     }
 
     @Override

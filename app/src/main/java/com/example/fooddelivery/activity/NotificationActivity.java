@@ -32,7 +32,6 @@ public class NotificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_notification);
-        notifications = LoginActivity.firebase.notifications;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)

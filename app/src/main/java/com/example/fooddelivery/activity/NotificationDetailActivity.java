@@ -52,37 +52,9 @@ public class NotificationDetailActivity extends AppCompatActivity {
             @SuppressLint("UseCompatLoadingForDrawables")
             @Override
             public void onClick(View v) {
-                sendNotification();
                 NotificationDetailActivity.super.onBackPressed();
             }
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    public void sendNotification()
-    {
-        String title = this.title.getText().toString();
-        String message = this.description.getText().toString();
-
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this, "channel1")
-                .setSmallIcon(R.drawable.ic_add_img)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE);
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(
-                    "channel1",
-                    "Channel human readable title",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        notificationManager.notify(0, notificationBuilder.build());
-    }
 }

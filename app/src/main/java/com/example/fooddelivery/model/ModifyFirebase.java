@@ -1,5 +1,6 @@
 package com.example.fooddelivery.model;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -28,7 +29,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -297,6 +300,29 @@ public class ModifyFirebase {
                         listener.onSuccess();
                     }
                 });
+
+        //add notification
+        MyNotification notification = new MyNotification();
+        notification.setTitle("Cập nhật đơn hàng");
+        notification.setDesc("Đơn hàng " + documentId + " của bạn đã đặt thành công và đang chờ xác nhận!");
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        time = format.format(Calendar.getInstance().getTime()).toString();
+        notification.setTime(time);
+        Map<String, String> noti = new HashMap<>();
+        noti.put("Title", notification.getTitle());
+        noti.put("Detail", notification.getDesc());
+        noti.put("Date", notification.getTime());
+        noti.put("Status", "false");
+        root.collection("User/" + userId + "/Notification/")
+                .document()
+                .set(noti)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
     }
 
     public void addProductToWatched(String productId) {
@@ -345,9 +371,11 @@ public class ModifyFirebase {
 
                             for (DocumentChange snapshot : snapshotList)
                             {
+                                Log.d(TAG, snapshot.getDocument().getId());
                                 for (MyNotification noti : notifications)
                                 {
-                                    if (snapshot.getDocument().getId() == noti.getId()) {
+                                    if (snapshot.getDocument().getId().equals(noti.getId())) {
+                                        Log.d(TAG, "Deleted");
                                         notifications.remove(noti);
                                         break;
                                     }
