@@ -1030,6 +1030,7 @@ public class ModifyFirebase {
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (error != null) {
                             Log.e("REALTIME", error.getMessage());
+                            listener.onSuccess();
                             return;
                         }
 
@@ -1049,6 +1050,8 @@ public class ModifyFirebase {
                                 }
                             }
                         }
+                        else
+                            listener.onSuccess();
                     }
                 });
 

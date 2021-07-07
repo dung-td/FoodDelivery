@@ -160,6 +160,29 @@ public class SignUpActivity_1 extends AppCompatActivity {
                                 et_email.setError(getString(R.string.email_has_been_used));
                                 et_email.requestFocus();
                             } else {
+                                checkPhone();
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void checkPhone() {
+        String phone = et_phone.getText().toString();
+        if (phone.length() == 9)
+            phone = "0" + et_phone.getText().toString();
+        root.collection("User")
+                .whereEqualTo("phone_Number", phone)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if (!task.getResult().isEmpty()) {
+                                progressDialog.dismiss();
+                                et_phone.setError(getString(R.string.phone_been_used));
+                                et_phone.requestFocus();
+                            } else {
                                 progressDialog.dismiss();
                                 Intent signUp2 = new Intent(SignUpActivity_1.this, SignUpActivity_2.class);
                                 SendInformation(signUp2);

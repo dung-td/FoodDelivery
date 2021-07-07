@@ -281,7 +281,6 @@ public class SignUpActivity_2 extends AppCompatActivity {
                                 });
                     }
                 });
-
     }
 
     private void loginComplete() {
