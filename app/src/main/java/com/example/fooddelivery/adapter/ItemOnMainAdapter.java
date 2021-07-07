@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,8 @@ public class ItemOnMainAdapter extends RecyclerView.Adapter<ItemOnMainAdapter.It
             holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_border_24);
         }
         holder.textViewItemPrice.setText(p.getPrice().get(0) + " d");
-        holder.textViewItemName.setText(p.getName());
+        //holder.textViewItemName.setText(p.getName());
+        setNameItem(holder, p);
         holder.textViewRating.setText(p.getRating());
         if (p.getMerchant() != null)
             holder.textViewItemMerchant.setText(p.getMerchant().getName());
@@ -133,5 +135,13 @@ public class ItemOnMainAdapter extends RecyclerView.Adapter<ItemOnMainAdapter.It
             textViewRating = itemView.findViewById(R.id.tv_rating);
             cardViewProduct = itemView.findViewById(R.id.cardview_product);
         }
+    }
+
+    void setNameItem(ItemOnMainViewHolder holder, Product p)
+    {
+        if (WelcomeActivity.language.equals("vi"))
+            holder.textViewItemName.setText(p.getName());
+        else
+            holder.textViewItemName.setText(p.getEn_Name());
     }
 }

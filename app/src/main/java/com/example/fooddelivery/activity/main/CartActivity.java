@@ -357,10 +357,14 @@ public class CartActivity extends AppCompatActivity {
                         break;
                     }
                 } else {
-                    textViewDistance.setText(merchant.getRoutes().get(0).distance.text);
-                    calculateShippingCost();
-                    updateTotalPriceAndCost();
-                    textViewDistance.setVisibility(View.VISIBLE);
+                    String firstItemMerchantId = WelcomeActivity.firebase.getProductById(
+                            WelcomeActivity.firebase.cartList.get(0).getProduct().getId()).getMerchant().getId();
+                    if (firstItemMerchantId.equals(merchant.getId())) {
+                        textViewDistance.setText(merchant.getRoutes().get(0).distance.text);
+                        calculateShippingCost();
+                        updateTotalPriceAndCost();
+                        textViewDistance.setVisibility(View.VISIBLE);
+                    }
                 }
 
             }

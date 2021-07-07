@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,7 +59,8 @@ public class ProductOnSectionAdapter extends RecyclerView.Adapter<ProductOnSecti
             holder.isFavourite = false;
             holder.imageViewLove.setImageResource(R.drawable.ic_baseline_favorite_border_24);
         }
-        holder.textViewName.setText(p.getName() + " - " + p.getMerchant().getName());
+       // holder.textViewName.setText(p.getName() + " - " + p.getMerchant().getName());
+        setNameItem(holder, p);
         holder.imageViewProduct.setImageDrawable(null);
         Glide.with(context).load(p.getImage().get(0)).into(holder.imageViewProduct);
         holder.textViewPrice.setText(p.getPrice().get(0) + " d");
@@ -158,5 +160,14 @@ public class ProductOnSectionAdapter extends RecyclerView.Adapter<ProductOnSecti
             spinnerProductSize = itemView.findViewById(R.id.spinner_size);
             cardViewProduct = itemView.findViewById(R.id.cardview_product);
         }
+    }
+
+    void setNameItem(ProductOnSectionAdapter.ProductViewHolder holder, Product p)
+    {
+        Log.e("Welcome languge", WelcomeActivity.language);
+        if (WelcomeActivity.language.equals("vi"))
+            holder.textViewName.setText(p.getName());
+        else
+            holder.textViewName.setText(p.getEn_Name());
     }
 }

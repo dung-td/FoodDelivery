@@ -22,6 +22,7 @@
         tools:context=".activity.login.LoginActivity">
 
         <FrameLayout
+            android:id="@+id/lg_frame1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -46,6 +47,27 @@
                     android:text="@string/have_account_login" />
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/language_hint"
+                    android:hint="@string/language"
+                    android:background="@color/white"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="200dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/lg_atcp_language"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:text="@string/language_vn"
+                        android:inputType="none"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/textInputEmail"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
@@ -54,7 +76,8 @@
                     android:hint="@string/login_email_hint"
                     android:textColorHint="@color/black"
                     app:endIconMode="clear_text"
-                    app:startIconDrawable="@drawable/ic_baseline_alternate_email_24">
+                    app:startIconDrawable="@drawable/ic_baseline_alternate_email_24"
+                    >
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/lg_et_email"
@@ -177,5 +200,7 @@
             android:layout_marginRight="11dp"
             android:src="@drawable/ic_add_img"
             tools:ignore="NotSibling"/>
+
+
     </RelativeLayout>
 </ScrollView>

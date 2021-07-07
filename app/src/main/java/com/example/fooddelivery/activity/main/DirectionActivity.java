@@ -1,11 +1,16 @@
 package com.example.fooddelivery.activity.main;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -48,7 +53,7 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
     private static final int PLACE_PICKER_REQUEST = 1;
     GoogleMap mMaps;
 
-    TextView tv_from, tv_to, tv_time, tv_distance, tv_change;
+    TextView tv_from, tv_to, tv_time, tv_distance, tv_change, tv_delivery_from_title, tv_delivery_to_title;
     ImageButton bt_back;
     ProgressDialog progressDialog;
     ArrayList<Polyline> polylinePaths;
@@ -62,6 +67,7 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
         setContentView(R.layout.activity_direction);
 
         Init();
+        loadLanguage();
     }
 
     private void Init() {
@@ -70,6 +76,8 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
         tv_time = findViewById(R.id.tv_direc_time);
         tv_distance = findViewById(R.id.tv_direc_distance);
         tv_change = findViewById(R.id.tv_change_address);
+        tv_delivery_from_title = findViewById(R.id.delivery_from);
+        tv_delivery_to_title = findViewById(R.id.delivery_to);
         bt_back = findViewById(R.id.direc_bt_back);
 
         progressDialog = new ProgressDialog(DirectionActivity.this);
@@ -239,5 +247,22 @@ public class DirectionActivity extends FragmentActivity implements OnMapReadyCal
 
             polylinePaths.add(mMaps.addPolyline(polylineOptions));
         }
+    }
+
+    void loadLanguage() {
+        String langPref = "lang_code";
+        SharedPreferences prefs = getSharedPreferences("MyPref",
+                Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+
+        Locale locale = new Locale(language);
+
+        Log.e("MainActivity language", language);
+        Locale.setDefault(locale);
+
+        Resources resources = getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }

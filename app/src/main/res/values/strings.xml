@@ -164,7 +164,6 @@
     <string name="use_email">Sử dụng email</string>
     <string name="use_phoneNum">Sử dụng số điện thoại</string>
     <string name="provide_email_help">Cung cấp thông tin để chúng tôi giúp bạn\nBạn có nhớ email đã đăng ký?</string>
-    <string name="provide_phone_help">Cung cấp thông tin để chúng tôi giúp bạn\nBạn có nhớ số điện thoại đã đăng ký?</string>
     <string name="email_sent_to_your_mailbox">Một email hướng dẫn\nđã được gửi đến hòm thư của bạn</string>
     <string name="menu_title">MENU</string>
     <string name="comment_title">BÌNH LUẬN</string>
@@ -209,4 +208,5 @@
     <string name="find_more_voucher">Tìm thêm mã giảm giá!</string>
     <string name="noti_title">Thông báo</string>
     <string name="signup_success">Đăng ký thành công! Vui lòng đăng nhập</string>
+    <string name="provide_phone_help">Cung cấp thông tin để chúng tôi giúp bạn Bạn có nhớ số điện thoại đã đăng ký?</string>
 </resources>

@@ -17,7 +17,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,36 +29,22 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.login.LoginActivity;
 import com.example.fooddelivery.activity.login.WelcomeActivity;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.fragment.MeFragment;
 import com.example.fooddelivery.fragment.NotificationFragment;
 import com.example.fooddelivery.fragment.OrderFragment;
-import com.example.fooddelivery.model.CallBackData;
-import com.example.fooddelivery.model.ModifyFirebase;
 import com.example.fooddelivery.model.MyNotification;
 import com.example.fooddelivery.model.OnGetDataListener;
-import com.example.fooddelivery.model.Product;
-import com.example.fooddelivery.model.User;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.example.fooddelivery.model.DirectionFinder;
-import com.example.fooddelivery.model.DirectionFinderListener;
 import com.example.fooddelivery.model.Merchant;
-import com.example.fooddelivery.model.OnGetDataListener;
-import com.example.fooddelivery.model.Route;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Locale;
 
@@ -74,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         loadLanguage();
+        setContentView(R.layout.activity_main);
         initView();
         getData();
     }
@@ -171,7 +156,17 @@ public class MainActivity extends AppCompatActivity {
                 {
                     if (notification.getStatus().equals("false"))
                     {
-                        sendNotification(notification.getTitle(), notification.getDesc());
+                        String langPref = "lang_code";
+                        SharedPreferences prefs = getSharedPreferences("MyPref",
+                                Activity.MODE_PRIVATE);
+                        String language = prefs.getString(langPref, "");
+                        if (language.equals("vi")) {
+                            sendNotification(notification.getTitle_vn(), notification.getDesc_vn());
+                        }
+                        else {
+                            sendNotification(notification.getTitle_en(), notification.getDesc_en());
+                        }
+
                         WelcomeActivity.firebase.updateNotificationStatus(notification.getId());
                     }
                 }
@@ -180,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initBottomNavigation() {
+        WelcomeActivity.loadLanguage(getApplicationContext());
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -226,13 +222,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void sendNotification(String title, String message)
-    {
+    public void sendNotification(String title, String message) {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, "channel1")
-                        .setSmallIcon(R.drawable.ic_add_img)
+                        .setSmallIcon(R.drawable.ic_baseline_add_shopping_cart_24)
                         .setContentTitle(title)
                         .setContentText(message)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
                         .setCategory(NotificationCompat.CATEGORY_MESSAGE);
 

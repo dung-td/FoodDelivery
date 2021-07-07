@@ -65,13 +65,13 @@ public class LanguageSetting extends AppCompatActivity {
                 if (chosenLanguege.equals("English"))
                 {
                     setLocal(LanguageSetting.this, "en");
-                    WelcomeActivity.language = "English";
+                    WelcomeActivity.language = "en";
                 }
 
                 if (chosenLanguege.equals("Tiếng Việt"))
                 {
                     setLocal(LanguageSetting.this, "vi");
-                    WelcomeActivity.language="Tiếng Việt";
+                    WelcomeActivity.language="vi";
 
                 }
 
@@ -111,10 +111,23 @@ public class LanguageSetting extends AppCompatActivity {
     private void Init() {
         bt_save = findViewById(R.id.st_lg_bt_save);
         bt_back = findViewById(R.id.st_lg_ib_back);
+
         temp = findViewById(R.id.auto_language);
         languages = getResources().getStringArray(R.array.languages);
         languageAdapter = new ArrayAdapter<>(LanguageSetting.this, R.layout.dropdown_item, languages);
-        temp.setAdapter(languageAdapter);
+
+
+        temp.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (WelcomeActivity.language.equals("vi"))
+                    temp.setText(languages[1]);
+                else
+                    temp.setText(languages[0]);
+
+                temp.setAdapter(languageAdapter);
+            }
+        }, 10);
 
     }
 

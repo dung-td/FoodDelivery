@@ -54,7 +54,6 @@ public class SearchingItemAdapter extends RecyclerView.Adapter<SearchingItemAdap
 
     public class SearchingItemViewHolder extends RecyclerView.ViewHolder {
 
-
         TextView textViewSearchInput;
         ImageButton buttonUp;
 

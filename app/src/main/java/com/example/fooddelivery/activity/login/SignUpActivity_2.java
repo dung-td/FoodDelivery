@@ -1,7 +1,12 @@
 package com.example.fooddelivery.activity.login;
 
 import android.app.ProgressDialog;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -34,6 +39,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import es.dmoral.toasty.Toasty;
@@ -58,6 +64,7 @@ public class SignUpActivity_2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocal();
         setContentView(R.layout.activity_sign_up_2);
 
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -139,12 +146,20 @@ public class SignUpActivity_2 extends AppCompatActivity {
 
         userInfo = new User();
         getExtras();
-
-        Spanny spanny = new Spanny("Nhập mã xác được được \n gửi đến số ")
-                .append(userInfo.getPhone_Number(), new StyleSpan(Typeface.BOLD_ITALIC));
-        tv_sms.setText(spanny);
-
+      
         progressDialog = new ProgressDialog(this);
+
+        if (WelcomeActivity.language.equals("vi")) {
+            Spanny spanny = new Spanny("Nhập mã xác được được \n gửi đến số ")
+                    .append(userInfo.getPhone_Number(), new StyleSpan(Typeface.BOLD_ITALIC));
+            tv_sms.setText(spanny);
+        } else {
+            Spanny spanny = new Spanny("Please enter the verify code \n sent to ")
+                    .append(userInfo.getPhone_Number(), new StyleSpan(Typeface.BOLD_ITALIC));
+            tv_sms.setText(spanny);
+        }
+
+        mAuth = FirebaseAuth.getInstance();
     }
 
     private void getExtras() {
@@ -449,5 +464,23 @@ public class SignUpActivity_2 extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void setLocal() {
+        String langCode;
+
+        if (WelcomeActivity.language.equals("vi"))
+            langCode = "vi";
+        else {
+            langCode = "en";
+        }
+
+        Locale locale = new Locale(langCode);
+        Locale.setDefault(locale);
+
+        Resources resources = this.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }
