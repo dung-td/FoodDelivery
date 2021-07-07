@@ -252,6 +252,8 @@ public class PersonalInfoActivity extends AppCompatActivity {
                 merchant.getRoutes().clear();
             }
 
+            tv_Address.setText(addresses.get(0).getAddressLine(0));
+
             WelcomeActivity.firebase.getUser().setAddress(addresses.get(0));
 
             WelcomeActivity.firebase.updateUserAddress(new OnGetDataListener() {
@@ -287,6 +289,7 @@ public class PersonalInfoActivity extends AppCompatActivity {
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
+                                        WelcomeActivity.firebase.getUser().setProfileImage(imageUri);
                                         Toasty.success(getApplicationContext(), getString(R.string.update_ava_done), Toasty.LENGTH_LONG).show();
                                     }
                                 });

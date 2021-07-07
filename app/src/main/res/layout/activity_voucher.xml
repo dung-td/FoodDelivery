@@ -58,6 +58,7 @@
 
 
             <androidx.viewpager.widget.ViewPager
+                android:layout_below="@id/tab_button"
                 android:id="@+id/info_viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
@@ -74,7 +75,8 @@
                 android:backgroundTint="@color/light_red"
                 android:text="@string/find_more_voucher"
                 android:textColor="@color/white"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="invisible"/>
         </RelativeLayout>
     </ScrollView>
 </LinearLayout>

@@ -46,7 +46,6 @@ public class MeFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         Init();
 
 
@@ -112,9 +111,7 @@ public class MeFragment extends Fragment {
         bt_feedback = getView().findViewById(R.id.me_ib_feedback);
         bt_info = getView().findViewById(R.id.me_ib_info);
         bt_payment = getView().findViewById(R.id.me_ib_payment);
-
         imageUser = getView().findViewById(R.id.img_user);
-
         tv_userName = getView().findViewById(R.id.me_fl_name);
     }
 

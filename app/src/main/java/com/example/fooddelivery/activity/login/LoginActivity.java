@@ -110,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.setMessage("Đăng nhập...");
+                progressDialog.setMessage(getString(R.string.loging));
                 progressDialog.show();
                 loginWithEmailAndPassWord();
             }
@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
         iv_google_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog.setMessage("Đăng nhập...");
+                progressDialog.setMessage(getString(R.string.loging));
                 progressDialog.show();
                 signInWithGoogle();
             }
@@ -152,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (languages[position].equals("Tiếng Việt")) {
                     setLocal(LoginActivity.this, "vi");
                     WelcomeActivity.language = "vi";
-                }else{
+                } else{
                     setLocal(LoginActivity.this, "en");
                     WelcomeActivity.language = "en";
                 }
