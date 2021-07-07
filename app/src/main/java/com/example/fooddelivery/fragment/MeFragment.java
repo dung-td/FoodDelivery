@@ -48,8 +48,6 @@ public class MeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         Init();
-
-
         loadInfo();
 
         bt_setting.setOnClickListener(new View.OnClickListener() {
