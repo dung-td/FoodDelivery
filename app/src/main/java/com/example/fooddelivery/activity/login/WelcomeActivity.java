@@ -36,9 +36,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-//            getUserData();
-            FirebaseAuth.getInstance().signOut();
-            navigateToLogin();
+            getUserData();
+//            FirebaseAuth.getInstance().signOut();
+//            navigateToLogin();
         } else {
             navigateToLogin();
         }
