@@ -2,6 +2,7 @@ package com.example.fooddelivery.activity.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -17,12 +18,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.binaryfork.spanny.Spanny;
 import com.example.fooddelivery.R;
 import com.example.fooddelivery.model.OnGetDataListener;
+import com.example.fooddelivery.model.SmsBroadcastReceiver;
 import com.example.fooddelivery.model.User;
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.auth.api.phone.SmsRetrieverClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseException;
@@ -35,10 +40,15 @@ import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import es.dmoral.toasty.Toasty;
 
 public class SignUpActivity_2 extends AppCompatActivity {
+    private static final int REQ_USER_CONSENT = 200;
+    SmsBroadcastReceiver smsBroadcastReceiver;
+
     EditText et_code_1, et_code_2, et_code_3, et_code_4, et_code_5, et_code_6;
     Button bt_finish, bt_resend;
     ImageView bt_back;
@@ -59,6 +69,8 @@ public class SignUpActivity_2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_2);
+
+        startSmartUserConsent();
 
         mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             @Override
@@ -122,6 +134,69 @@ public class SignUpActivity_2 extends AppCompatActivity {
                 resendVeritificationCode(userInfo.getPhone_Number());
             }
         });
+    }
+
+    private void startSmartUserConsent() {
+
+        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        client.startSmsUserConsent(null);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQ_USER_CONSENT){
+
+            if ((resultCode == RESULT_OK) && (data != null)){
+
+                String message = data.getStringExtra(SmsRetriever.EXTRA_SMS_MESSAGE);
+                getOtpFromMessage(message);
+
+
+            }
+        }
+    }
+
+    private void getOtpFromMessage(String message) {
+        Pattern otpPattern = Pattern.compile("(|^)\\d{6}");
+        Matcher matcher = otpPattern.matcher(message);
+        if (matcher.find()){
+            Toasty.success(this, "Thanh Cong").show();
+        }
+    }
+
+    private void registerBroadcastReceiver(){
+
+        smsBroadcastReceiver = new SmsBroadcastReceiver();
+
+        smsBroadcastReceiver.listener = new SmsBroadcastReceiver.SmsReceiverListener() {
+            @Override
+            public void OnSuccess(Intent intent) {
+                startActivityForResult(intent,REQ_USER_CONSENT);
+            }
+
+            @Override
+            public void OnFailure() {
+
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION);
+        registerReceiver(smsBroadcastReceiver,intentFilter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        registerBroadcastReceiver();
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(smsBroadcastReceiver);
     }
 
     private void Init() {
