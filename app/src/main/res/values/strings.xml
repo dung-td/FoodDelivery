@@ -208,4 +208,5 @@
     <string name="get">Lấy</string>
     <string name="find_more_voucher">Tìm thêm mã giảm giá!</string>
     <string name="noti_title">Thông báo</string>
+    <string name="signup_success">Đăng ký thành công! Vui lòng đăng nhập</string>
 </resources>

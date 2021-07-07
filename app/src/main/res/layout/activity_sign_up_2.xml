@@ -143,22 +143,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/button_background_blue"
-                android:text="@string/send_again"
+                android:text="@string/resend"
                 android:textAllCaps="false"
                 android:textColor="@color/whiteTextColor" />
 
 
-            <TextView
-                android:id="@+id/su2_tv_emailhelper"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/su2_bt_send"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
-                android:gravity="center_horizontal"
-                android:text="@string/or_verify_mail"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

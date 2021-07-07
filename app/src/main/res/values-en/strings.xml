@@ -30,7 +30,7 @@
     <string name="forgot_pass">Forgot Password</string>
     <string name="new_register">New user? Sign up now!</string>
     <string name="other_method">Login with</string>
-    <string name="first_step">First step for you to involve!</string>
+    <string name="first_step">First step\nfor you to involve!</string>
     <string name="have_account">Having a account?</string>
     <string name="first_name">Surname and middle name</string>
     <string name="last_name">First Name</string>

@@ -20,6 +20,8 @@ public class User {
     }
 
     public User(String first_Name, String last_Name, String phone_Number, String email, String password) {
+        Locale locale = new Locale("Vietnamese", "Vietnam");
+        Address = new Address(locale);
         First_Name = first_Name;
         Last_Name = last_Name;
         Phone_Number = phone_Number;

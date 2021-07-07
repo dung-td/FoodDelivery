@@ -1,8 +1,10 @@
 package com.example.fooddelivery.activity.login;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
@@ -42,15 +44,18 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
     String phoneNumber;
     String codeByUser;
     String verificationId;
-
+    ProgressDialog progressDialog;
     FirebaseAuth mAuth;
+    PhoneAuthProvider.ForceResendingToken token;
 
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
         @Override
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationId = s;
+            token = forceResendingToken;
             Log.d(TAG, "CODE SEND");
+            progressDialog.dismiss();
         }
 
         @Override
@@ -65,6 +70,8 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
             Toasty.error(ForgotPassActivity_3.this, getString(R.string.error_happend_try_again)).show();
+            Log.e("SMS", e.getMessage());
+            progressDialog.dismiss();
         }
     };
 
@@ -75,6 +82,7 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
 
         Init();
 
+        progressDialog = new ProgressDialog(this);
         sendVerificationCode(phoneNumber);
     }
 
@@ -127,13 +135,24 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
                 ForgotPassActivity_3.super.onBackPressed();
             }
         });
+
+        tv_resend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendVerificationCode(phoneNumber);
+            }
+        });
     }
 
     private void sendVerificationCode(String phoneNumber) {
+        progressDialog.setMessage(getString(R.string.data_loading));
+        progressDialog.show();
+        timeLeftInMillis = 60000;
+        startStop();
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
                         .setPhoneNumber("+84" + phoneNumber)       // Phone number to verify
-                        .setTimeout(1L, TimeUnit.SECONDS) // Timeout and unit
+                        .setTimeout(50L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
                         .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                         .build();
@@ -173,6 +192,53 @@ public class ForgotPassActivity_3 extends AppCompatActivity {
     private void continueFP4() {
         Intent forgotPass4 = new Intent(ForgotPassActivity_3.this, ForgotPassActivity_4.class);
         startActivity(forgotPass4);
+    }
+
+    long timeLeftInMillis = 60000;
+    boolean timerRunning = false;
+    CountDownTimer countDownTimer;
+
+    private void startStop() {
+        if (timerRunning) {
+            stopTimer();
+        } else {
+            startTimer();
+        }
+    }
+
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                updateTimer();
+            }
+
+            @Override
+            public void onFinish() {
+                tv_resend.setEnabled(true);
+                tv_resend.setText(getString(R.string.resend));
+                tv_resend.setTextColor(getResources().getColor(R.color.primaryColor));
+            }
+        }.start();
+
+        timerRunning = true;
+    }
+
+    private void updateTimer() {
+        int seconds = (int) timeLeftInMillis / 1000;
+        tv_resend.setText(String.format("%s (%d)", getString(R.string.resend), seconds));
+        if (timeLeftInMillis > 0) {
+            tv_resend.setEnabled(false);
+            tv_resend.setTextColor(getResources().getColor(R.color.light_grey));
+        }
+        if (timeLeftInMillis <= 0)
+            countDownTimer.onFinish();
+    }
+
+    private void stopTimer() {
+        countDownTimer.cancel();
+        timerRunning = false;
     }
 
     private void setTextChangedListener() {

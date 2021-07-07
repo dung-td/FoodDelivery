@@ -170,7 +170,12 @@ public class SignUpActivity_1 extends AppCompatActivity {
         nextSU.putExtra("lastname", et_lastname.getText().toString());
         nextSU.putExtra("phone", et_phone.getText().toString());
         nextSU.putExtra("email", et_email.getText().toString());
-        nextSU.putExtra("address", address);
+        nextSU.putExtra("address", address.getAddressLine(0));
+        nextSU.putExtra("city", address.getLocality());
+        nextSU.putExtra("state", address.getAdminArea());
+        nextSU.putExtra("country", address.getCountryName());
+        nextSU.putExtra("latitude", address.getLatitude());
+        nextSU.putExtra("longitude", address.getLongitude());
         nextSU.putExtra("password", et_pass1.getText().toString());
         nextSU.putExtra("uid", uid);
     }
@@ -196,8 +201,8 @@ public class SignUpActivity_1 extends AppCompatActivity {
             et_phone.setError(getString(R.string.pls_enter_phone));
             et_phone.requestFocus();
             return false;
-        } else if (et_phone.getText().toString().length() != 10 ||
-                !et_phone.getText().toString().startsWith("0")) {
+        } else if (et_phone.getText().toString().length() < 9 ||
+                et_phone.getText().toString().length() > 10) {
             et_phone.setError(getString(R.string.wrong_phone_format));
             et_phone.requestFocus();
             return false;
@@ -218,7 +223,7 @@ public class SignUpActivity_1 extends AppCompatActivity {
             et_pass1.setError(getString(R.string.pass_regex));
             et_pass1.requestFocus();
             return false;
-        } else if (tv_address.getText().toString().equals(R.string.no_data)) {
+        } else if (tv_address.getText().toString().equals(getString(R.string.no_data))) {
             tv_address.setError(getString(R.string.pls_enter_address));
             tv_address.requestFocus();
             return false;

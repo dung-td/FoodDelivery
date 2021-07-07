@@ -68,6 +68,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textPersonName"
+                                android:text="Tong Duc"
                                 android:maxLines="1" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,6 +94,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textPersonName"
+                                android:text="Dung"
                                 android:maxLines="1" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,6 +120,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textEmailAddress"
+                                android:text="justaguyoninternetxyz@gmail.com"
                                 android:maxLines="1" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -144,6 +147,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="phone"
+                                android:text="932696361"
                                 android:maxLines="1" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -169,6 +173,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:inputType="textPassword"
+                                android:text="Dung2406@"
                                 android:maxLines="1" />
                         </com.google.android.material.textfield.TextInputLayout>
 
@@ -193,8 +198,9 @@
                                 android:id="@+id/su1_et_repass"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:text="Dung2406@"
                                 android:inputType="textPassword"
-                                android:maxLines="1" />
+                                android:maxLines="1"/>
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <TextView

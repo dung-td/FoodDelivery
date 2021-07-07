@@ -1,13 +1,10 @@
 package com.example.fooddelivery.activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.style.StyleSpan;
 import android.util.Log;
@@ -17,33 +14,26 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.binaryfork.spanny.Spanny;
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.login.ForgotPassActitivy_5;
-import com.example.fooddelivery.activity.login.ForgotPassActivity_2;
-import com.example.fooddelivery.activity.login.ForgotPassActivity_3;
-import com.example.fooddelivery.activity.login.SignUpActivity_2;
-import com.example.fooddelivery.model.User;
-import com.example.fooddelivery.model.modifiedFirebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import es.dmoral.toasty.Toasty;
 
 public class VerifyPhoneActivity extends AppCompatActivity {
 
@@ -57,7 +47,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
     String userID = user.getUid();
-
+    ProgressDialog progressDialog = new ProgressDialog(this);
     FirebaseAuth mAuth;
 
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -65,6 +55,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
         public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             verificationId = s;
+            progressDialog.dismiss();
         }
 
         @Override
@@ -77,7 +68,9 @@ public class VerifyPhoneActivity extends AppCompatActivity {
 
         @Override
         public void onVerificationFailed(@NonNull FirebaseException e) {
-
+            Toasty.error(VerifyPhoneActivity.this, getString(R.string.error_happend_try_again)).show();
+            Log.e("SMS", e.getMessage());
+            progressDialog.dismiss();
         }
     };
 
@@ -119,15 +112,65 @@ public class VerifyPhoneActivity extends AppCompatActivity {
     }
 
     private void sendVerificationCode(String phoneNumber) {
+        progressDialog.setMessage(getString(R.string.data_loading));
+        progressDialog.show();
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber("+84" + phoneNumber)       // Phone number to verify
-                        .setTimeout(1L, TimeUnit.SECONDS) // Timeout and unit
+                        .setPhoneNumber(phoneNumber)       // Phone number to verify
+                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
                         .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
                         .build();
         PhoneAuthProvider.verifyPhoneNumber(options);
     }
+
+    long timeLeftInMillis = 60000;
+    boolean timerRunning = false;
+    CountDownTimer countDownTimer;
+
+    private void startStop() {
+        if (timerRunning) {
+            stopTimer();
+        } else {
+            startTimer();
+        }
+    }
+
+    private void startTimer() {
+        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeLeftInMillis = millisUntilFinished;
+                updateTimer();
+            }
+
+            @Override
+            public void onFinish() {
+                bt_resend.setEnabled(true);
+                bt_resend.setText(getString(R.string.resend));
+                bt_resend.setBackground(getResources().getDrawable(R.drawable.button_background_blue));
+            }
+        }.start();
+
+        timerRunning = true;
+    }
+
+    private void updateTimer() {
+        int seconds = (int) timeLeftInMillis / 1000;
+        bt_resend.setText(String.format("%s (%d)", getString(R.string.resend), seconds));
+        if (timeLeftInMillis > 0) {
+            bt_resend.setEnabled(false);
+            bt_resend.setBackground(getResources().getDrawable(R.drawable.button_background_grey));
+        }
+        if (timeLeftInMillis <= 0)
+            countDownTimer.onFinish();
+    }
+
+    private void stopTimer() {
+        countDownTimer.cancel();
+        timerRunning = false;
+    }
+
 
     private void setTextChangedListener() {
         et_code_1.addTextChangedListener(new TextWatcher() {
@@ -257,9 +300,9 @@ public class VerifyPhoneActivity extends AppCompatActivity {
     }
 
     void updatePhone() {
-         FirebaseFirestore root = FirebaseFirestore.getInstance();
+        FirebaseFirestore root = FirebaseFirestore.getInstance();
 
-         Log.e("Update phone", phoneNumber.toString());
+        Log.e("Update phone", phoneNumber.toString());
         root.collection("User").document(userID)
                 .update("phone_Number", phoneNumber)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
