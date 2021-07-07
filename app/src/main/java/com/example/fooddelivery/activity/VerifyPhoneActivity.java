@@ -63,6 +63,7 @@ public class VerifyPhoneActivity extends AppCompatActivity {
             String code = phoneAuthCredential.getSmsCode();
             if (code != null) {
                 verifyCodeAndUpdate(code);
+                progressDialog.dismiss();
             }
         }
 
