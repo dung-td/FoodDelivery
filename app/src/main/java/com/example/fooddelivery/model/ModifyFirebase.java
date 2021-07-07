@@ -369,19 +369,15 @@ public class ModifyFirebase {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null)
-                        {
+                        if (error != null) {
                             Log.e(TAG, "onEvent------------------------", error);
                         }
-                        if (value != null)
-                        {
+                        if (value != null) {
                             List<DocumentChange> snapshotList = value.getDocumentChanges();
 
-                            for (DocumentChange snapshot : snapshotList)
-                            {
+                            for (DocumentChange snapshot : snapshotList) {
                                 Log.d(TAG, snapshot.getDocument().getId());
-                                for (MyNotification noti : notifications)
-                                {
+                                for (MyNotification noti : notifications) {
                                     if (snapshot.getDocument().getId().equals(noti.getId())) {
                                         Log.d(TAG, "Deleted");
                                         notifications.remove(noti);
@@ -405,8 +401,7 @@ public class ModifyFirebase {
 
                             listener.onSuccess();
 
-                            if (NotificationFragment.getAdapter() != null)
-                            {
+                            if (NotificationFragment.getAdapter() != null) {
                                 NotificationFragment.getAdapter().notifyDataSetChanged();
                             }
                         } else {
@@ -417,8 +412,7 @@ public class ModifyFirebase {
 
     }
 
-    public void updateNotificationStatus(String id)
-    {
+    public void updateNotificationStatus(String id) {
         root.collection("User/" + userId + "/Notification/")
                 .document(id)
                 .update("Status", "true");
@@ -728,16 +722,6 @@ public class ModifyFirebase {
         listener.onSuccess();
     }
 
-    public void insertDataFirestore(String id) {
-        root.collection(collectionPath).document(id).set(object)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        docRef = id;
-                    }
-                });
-    }
-
     private Merchant findMerchantFromId(String id) {
         for (Merchant mer : merchantList) {
             if (mer.getId().equals(id))
@@ -794,7 +778,8 @@ public class ModifyFirebase {
                 });
     }
 
-    public void addNewUser(User user, String uid) {
+    public void addNewUser(User user, String uid, final OnGetDataListener listener) {
+        listener.onStart();
         Map<String, Object> u = new HashMap<>();
         u.put("first_Name", user.getFirst_Name());
         u.put("last_Name", user.getLast_Name());
@@ -808,33 +793,15 @@ public class ModifyFirebase {
         u.put("phone_Number", user.getPhone_Number());
         u.put("email", user.getEmail());
         u.put("address", addressData);
-        root.collection("User")
+        root.collection("User/")
                 .document(uid)
                 .set(u)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-
+                        listener.onSuccess();
                     }
                 });
-    }
-
-    public boolean checkUID(String uID) {
-        uIDCheck = false;
-        root.collection("User").document(uID).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        uIDCheck = true;
-                        documentSnapshot.get("name");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-
-            }
-        });
-        return uIDCheck;
     }
 
     public void updateUserAddress(final OnGetDataListener listener) {
@@ -1168,15 +1135,4 @@ public class ModifyFirebase {
     }
 
     //endregion
-    public boolean checkEmail(String email) {
-        root.collection("User")
-                .whereEqualTo("email", email)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                    }
-                });
-        return false;
-    }
 }

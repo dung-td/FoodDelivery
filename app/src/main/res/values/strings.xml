@@ -207,5 +207,6 @@
     <string name="get">Lấy</string>
     <string name="find_more_voucher">Tìm thêm mã giảm giá!</string>
     <string name="noti_title">Thông báo</string>
+    <string name="signup_success">Đăng ký thành công! Vui lòng đăng nhập</string>
     <string name="provide_phone_help">Cung cấp thông tin để chúng tôi giúp bạn Bạn có nhớ số điện thoại đã đăng ký?</string>
 </resources>

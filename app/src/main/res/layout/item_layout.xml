@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cardview_product"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
@@ -18,7 +17,7 @@
             android:layout_height="120dp"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:src="@drawable/untitled_icon"/>
+            android:src="@drawable/untitled_icon" />
 
         <ImageView
             android:id="@+id/ic_love_item"
@@ -26,53 +25,53 @@
             android:layout_height="25dp"
             android:layout_alignTop="@+id/img_item"
             android:layout_marginStart="110dp"
-            android:src="@drawable/ic_baseline_favorite_border_24"/>
+            android:src="@drawable/ic_baseline_favorite_border_24" />
 
         <TextView
             android:id="@+id/tv_item_name_vn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/img_item"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/img_item"
             android:text="Trà Sen Vàng"
             android:textColor="@color/black"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_item_name_en"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/img_item"
             android:layout_below="@+id/tv_item_name_vn"
-            android:layout_marginTop="15dp"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@+id/img_item"
             android:text="Golden Lotus Tea"
             android:textColor="@color/grey"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv_item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/img_item"
             android:layout_below="@+id/tv_item_name_en"
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/img_item"
             android:text="49.000 đ"
             android:textColor="@color/black"
-            android:textSize="28sp"/>
+            android:textSize="28sp" />
 
         <Spinner
             android:id="@+id/spinner_size"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_toEndOf="@+id/tv_item_price"
             android:layout_below="@+id/tv_item_name_en"
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
-            android:spinnerMode="dropdown"
-            android:background="@drawable/shape"/>
+            android:layout_toEndOf="@+id/tv_item_price"
+            android:background="@drawable/shape"
+            android:spinnerMode="dropdown" />
 
         <ImageButton
             android:id="@+id/btn_add_item"
@@ -80,14 +79,15 @@
             android:layout_height="50dp"
             android:layout_below="@id/tv_item_name_en"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"
             android:layout_marginTop="7dp"
-            android:background="@drawable/plus_80px"/>
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/plus_80px"
+            android:visibility="invisible" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@drawable/dotted"
-            android:layout_below="@+id/tv_item_price"/>
+            android:layout_below="@+id/tv_item_price"
+            android:background="@drawable/dotted" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
