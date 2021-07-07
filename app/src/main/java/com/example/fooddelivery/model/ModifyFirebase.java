@@ -3,6 +3,7 @@ package com.example.fooddelivery.model;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
+import android.text.Html;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -10,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.fooddelivery.R;
-import com.example.fooddelivery.activity.NotificationActivity;
-import com.example.fooddelivery.adapter.NotificationAdapter;
 import com.example.fooddelivery.fragment.NotificationFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -303,15 +302,24 @@ public class ModifyFirebase {
 
         //add notification
         MyNotification notification = new MyNotification();
-        notification.setTitle("Cập nhật đơn hàng");
-        notification.setDesc("Đơn hàng " + documentId + " của bạn đã đặt thành công và đang chờ xác nhận!");
+        //Set vietnamese content
+        notification.setTitle_vn("Cập nhật đơn hàng");
+        notification.setDesc_vn("Đơn hàng " + documentId + " của bạn đã đặt thành công và đang chờ xác nhận!");
+
+        //Set english content
+        notification.setTitle_en("Update order");
+        notification.setDesc_en("Order "+ documentId + " has been placed successfully and waiting for merchant confirmation!");
+
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
         time = format.format(Calendar.getInstance().getTime()).toString();
+
         notification.setTime(time);
         Map<String, String> noti = new HashMap<>();
-        noti.put("Title", notification.getTitle());
-        noti.put("Detail", notification.getDesc());
+        noti.put("Title_Vn", notification.getTitle_vn());
+        noti.put("Detail_Vn", notification.getDesc_vn());
+        noti.put("Title_En", notification.getTitle_en());
+        noti.put("Detail_En", notification.getDesc_en());
         noti.put("Date", notification.getTime());
         noti.put("Status", "false");
         root.collection("User/" + userId + "/Notification/")
@@ -383,8 +391,10 @@ public class ModifyFirebase {
 
                                 MyNotification notification = new MyNotification();
                                 notification.setId(snapshot.getDocument().getId());
-                                notification.setTitle(snapshot.getDocument().get("Title").toString());
-                                notification.setDesc(snapshot.getDocument().get("Detail").toString());
+                                notification.setTitle_vn(snapshot.getDocument().get("Title_Vn").toString());
+                                notification.setDesc_vn(snapshot.getDocument().get("Detail_Vn").toString());
+                                notification.setTitle_en(snapshot.getDocument().get("Title_En").toString());
+                                notification.setDesc_en(snapshot.getDocument().get("Detail_En").toString());
                                 notification.setTime(snapshot.getDocument().get("Date").toString());
                                 notification.setStatus(snapshot.getDocument().get("Status").toString());
 

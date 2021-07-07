@@ -2,13 +2,9 @@ package com.example.fooddelivery.activity;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import android.annotation.SuppressLint;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -41,8 +37,8 @@ public class NotificationDetailActivity extends AppCompatActivity {
         buttonBack = findViewById(R.id.ic_back_arrow);
         notification = (MyNotification)getIntent().getParcelableExtra("Notification");
 //
-        title.setText(notification.getTitle());
-        description.setText(notification.getDesc());
+        title.setText(notification.getTitle_vn());
+        description.setText(notification.getDesc_vn());
         time.setText(notification.getTime());
 
         this.notificationManagerCompat = NotificationManagerCompat.from(this);
