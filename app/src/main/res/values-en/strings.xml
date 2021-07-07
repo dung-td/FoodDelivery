@@ -146,7 +146,6 @@
     <string name="use_email">Use email</string>
     <string name="use_phoneNum">Use phone number</string>
     <string name="provide_email_help">Please provide us your informations\nDo you remember your registered email?</string>
-    <string name="provide_phone_help">Cung cấp thông tin để chúng tôi giúp bạn\nDo you remember your registered phone number?</string>
     <string name="email_sent_to_your_mailbox">An email has been sent to you\nwith password reset instructions</string>
     <string name="menu_title">MENU</string>
     <string name="comment_title">COMMENT</string>
@@ -200,4 +199,5 @@
     <string name="get">Get</string>
     <string name="find_more_voucher">Tìm thêm mã giảm giá!</string>
     <string name="noti_title">Notification</string>
+    <string name="provide_phone_help">Please provide us your information. Do you remember your registerd phone number?</string>
 </resources>

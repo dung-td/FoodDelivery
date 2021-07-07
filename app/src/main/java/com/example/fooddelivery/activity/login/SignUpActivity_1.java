@@ -2,9 +2,12 @@ package com.example.fooddelivery.activity.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fooddelivery.R;
+import com.example.fooddelivery.activity.me.LanguageSetting;
 import com.example.fooddelivery.model.Regex;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -48,6 +52,7 @@ public class SignUpActivity_1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocal();
         setContentView(R.layout.activity_sign_up_1);
 
         Init();
@@ -224,5 +229,23 @@ public class SignUpActivity_1 extends AppCompatActivity {
             return false;
         }
         return true;
+    }
+
+    public void setLocal() {
+        String langCode;
+
+        if (WelcomeActivity.language.equals("vi"))
+            langCode = "vi";
+        else {
+            langCode = "en";
+        }
+
+        Locale locale = new Locale(langCode);
+        Locale.setDefault(locale);
+
+        Resources resources = this.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }

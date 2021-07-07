@@ -2,6 +2,8 @@ package com.example.fooddelivery.activity.login;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -22,6 +24,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Locale;
+
 import es.dmoral.toasty.Toasty;
 
 public class ForgotPassActivity_1 extends AppCompatActivity {
@@ -37,6 +41,7 @@ public class ForgotPassActivity_1 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocal();
         setContentView(R.layout.activity_forgot_pass_1);
 
         Init();
@@ -155,5 +160,23 @@ public class ForgotPassActivity_1 extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    public void setLocal() {
+        String langCode;
+
+        if (WelcomeActivity.language.equals("vi"))
+            langCode = "vi";
+        else {
+            langCode = "en";
+        }
+
+        Locale locale = new Locale(langCode);
+        Locale.setDefault(locale);
+
+        Resources resources = this.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
     }
 }

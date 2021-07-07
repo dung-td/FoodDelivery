@@ -25,6 +25,7 @@ import com.example.fooddelivery.activity.main.CartActivity;
 import com.example.fooddelivery.fragment.HomeFragment;
 import com.example.fooddelivery.model.ChosenItem;
 import com.example.fooddelivery.model.OnGetDataListener;
+import com.example.fooddelivery.model.Product;
 
 import java.util.ArrayList;
 
@@ -50,7 +51,8 @@ public class ChosenItemAdapter extends RecyclerView.Adapter<ChosenItemAdapter.Ch
     @Override
     public void onBindViewHolder(@NonNull ChosenItemViewHolder holder, int position) {
         ChosenItem p = items.get(position);
-        holder.textViewItemName.setText(p.getProduct().getName());
+       // holder.textViewItemName.setText(p.getProduct().getName());
+        setNameItem(holder, p);
         holder.textViewMerchantName.setText(p.getProduct().getMerchant().getName());
         holder.textViewQuantity.setText(p.getQuantity());
         if (p.getProduct().getProductSize().get(0) != null) {
@@ -180,5 +182,15 @@ public class ChosenItemAdapter extends RecyclerView.Adapter<ChosenItemAdapter.Ch
             buttonRemoveQuantity = itemView.findViewById(R.id.btn_remove_quantity);
             buttonRemoveItem = itemView.findViewById(R.id.btn_remove_item);
         }
+    }
+
+    void setNameItem(ChosenItemViewHolder holder, ChosenItem chosenItem) {
+        Log.e("Welcome languge", WelcomeActivity.language);
+        Log.e("vi",chosenItem.getProduct().getName() );
+        Log.e("eng", chosenItem.getProduct().getEn_Name());
+        if (WelcomeActivity.language.equals("vi"))
+            holder.textViewItemName.setText(chosenItem.getProduct().getName());
+        else
+            holder.textViewItemName.setText(chosenItem.getProduct().getEn_Name());
     }
 }

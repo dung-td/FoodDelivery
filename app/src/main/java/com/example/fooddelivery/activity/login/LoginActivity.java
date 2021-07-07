@@ -2,7 +2,6 @@ package com.example.fooddelivery.activity.login;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -10,6 +9,9 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -58,15 +60,19 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     FirebaseFirestore root;
 
+    String[] languages;
+    ArrayAdapter<String> languageAdapter;
+    AutoCompleteTextView autoLanguage;
+
     public LoginActivity() {
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setLocal();
         setContentView(R.layout.activity_login);
         Init();
-        setLocal();
         createGoogleSignInRequest();
     }
 
@@ -83,6 +89,23 @@ public class LoginActivity extends AppCompatActivity {
         root = FirebaseFirestore.getInstance();
 
         progressDialog = new ProgressDialog(LoginActivity.this);
+
+        autoLanguage = findViewById(R.id.lg_atcp_language);
+        languages = getResources().getStringArray(R.array.languages);
+        languageAdapter = new ArrayAdapter<>(LoginActivity.this, R.layout.dropdown_item, languages);
+
+
+        autoLanguage.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (WelcomeActivity.language.equals("vi"))
+                    autoLanguage.setText(languages[1]);
+                else
+                    autoLanguage.setText(languages[0]);
+
+                autoLanguage.setAdapter(languageAdapter);
+            }
+        }, 10);
 
         bt_login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +145,24 @@ public class LoginActivity extends AppCompatActivity {
                 register();
             }
         });
+
+        autoLanguage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (languages[position].equals("Tiếng Việt")) {
+                    setLocal(LoginActivity.this, "vi");
+                    WelcomeActivity.language = "vi";
+                }else{
+                    setLocal(LoginActivity.this, "en");
+                    WelcomeActivity.language = "en";
+                }
+
+                recreate();
+//                finish();
+//                startActivity(getIntent());
+            }
+        });
+
     }
 
     private void createGoogleSignInRequest() {
@@ -275,8 +316,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void setLocal() {
         String langCode;
-        LanguageSetting languageSetting = new LanguageSetting();
-        Log.e("Lang", languageSetting.getChosenLanguege());
+
         if (WelcomeActivity.language.equals("vi"))
             langCode = "vi";
         else {
@@ -290,5 +330,29 @@ public class LoginActivity extends AppCompatActivity {
         Configuration config = resources.getConfiguration();
         config.setLocale(locale);
         resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
+
+    public void setLocal(Activity activity, String langCode)
+    {
+        Locale locale = new Locale(langCode);
+        createShareReferences(langCode);
+        locale.setDefault(locale);
+
+        Resources resources = activity.getResources();
+        Configuration config = resources.getConfiguration();
+        config.setLocale(locale);
+        resources.updateConfiguration(config, resources.getDisplayMetrics());
+    }
+
+    public void createShareReferences(String langCode)
+    {
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putString("lang_code", langCode);  // Saving string
+
+        editor.apply();
+
+        Log.e("Save ", langCode);
     }
 }

@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         loadLanguage();
+        setContentView(R.layout.activity_main);
         initView();
         getData();
     }
@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initBottomNavigation() {
+        WelcomeActivity.loadLanguage(getApplicationContext());
         bottomNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -221,8 +222,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void sendNotification(String title, String message)
-    {
+    public void sendNotification(String title, String message) {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, "channel1")
                         .setSmallIcon(R.drawable.ic_baseline_add_shopping_cart_24)
