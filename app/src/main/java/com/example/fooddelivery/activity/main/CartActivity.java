@@ -189,9 +189,16 @@ public class CartActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     public static void updateTotalPriceAndCost() {
-        textViewSumPrice.setText(totalPrice);
-        textViewTotalCost.setText((Integer.parseInt(totalPrice) + Integer.parseInt(textViewShippingCost.getText().toString())
-            - Integer.parseInt(textViewVoucherDiscount.getText().toString())) + " d");
+        if (totalPrice != null) {
+            textViewSumPrice.setText(totalPrice);
+            textViewTotalCost.setText((Integer.parseInt(totalPrice) + Integer.parseInt(textViewShippingCost.getText().toString())
+                    - Integer.parseInt(textViewVoucherDiscount.getText().toString())) + " d");
+        }
+        else {
+            textViewSumPrice.setText("0");
+            textViewTotalCost.setText((Integer.parseInt(textViewSumPrice.getText().toString()) + Integer.parseInt(textViewShippingCost.getText().toString())
+                    - Integer.parseInt(textViewVoucherDiscount.getText().toString())) + " d");
+        }
     }
 
     @SuppressLint("SetTextI18n")
